@@ -1,31 +1,48 @@
-{include file="header.tpl" title="J-Club - G&auml;stebuch"}
-{popup_init src="./overlib/overlib.js"}
+<div id="background_content">&nbsp;</div>
 <div id="contentContainer">
 	<div id="content">
-
-	<A href="mypage.html" {popup sticky=false caption="mypage contents"
-text="<img src=http://localhost/phpmyadmin/themes/xampp/img/b_sqlhelp.png> Ein kleines Bild" snapx=10 snapy=10}>mypage</A><br />
-	{$test_out}<br />
-		{section name=gbook  loop=$guestbook}
-		<table cellpadding="0" cellspacing="0" align="center" class="content_tab">
+		<table width = 100% class="content_tab">
 		<tr>
-		<td class="content_tab_header" colspan="2">
-		{$guestbook[gbook].title}
-		</td>
-		</tr>
-		<tr>
-		<td class="content_tab_content1">
-		{$guestbook[gbook].text}
-		</td>
-		<td class="content_tab_content2">
-		<img src="style/icons/date.png" /> {$guestbook[gbook].datum}<br />
-		<img src="style/icons/user.png" /> {$guestbook[gbook].name}<br />
-		<a href="mailto:{$guestbook[gbook].mail}"><img src="style/icons/email.png" /> E-mail</a><br />
-		<a href="{$guestbook[gbook].webpage}"><img src="style/icons/link.png" /> Website</a>
-		</td>
+		<td><a href="?nav_id={$local_link}&action=new">Neuer Eintrag</a></td><td align="right">{if $entrys lte 1}{$entrys} Eintrag{else}{$entrys} Eintr&auml;ge{/if}</td>
 		</tr>
 		</table>
-		{/section}
+		{foreach item=book  from=$gbook}
+		<table cellpadding="0" cellspacing="0" align="center" class="content_tab">
+			<tr>
+			<td class="content_tab_header" colspan="2">
+			{$book.title}
+			</td>
+			</tr>
+			<tr>
+			<td class="content_tab_content1">
+			{$book.content}
+			</td>
+			<td class="content_tab_content2">
+			<img src="templates/style/icons/date.png" /> {$book.time}<br />
+			<img src="templates/style/icons/user.png" /> {$book.name}<br />
+			<a href="mailto:{$book.email}"><img src="templates/style/icons/email.png" /> E-mail</a><br />
+			<a href="{$book.hp}"><img src="templates/style/icons/link.png" /> Website</a>
+			</td>
+			</tr>
+			{* Innere Schlaufe für das Auslesen der Kommentare *}
+			{foreach key=schluessel item=comment from=$book.comments}
+			</tr>
+			<tr>
+			<td class="content_tab_content1">
+			{$comment.comment_content}
+			</td>
+			<td class="content_tab_content2">
+			<img src="templates/style/icons/date.png" /> {$comment.comment_time}<br />
+			<img src="templates/style/icons/user.png" /> {$comment.comment_name}<br />
+			<a href="mailto:{$comment.comment_email}"><img src="templates/style/icons/email.png" /> E-mail</a><br />
+			<a href="{$comment.comment_hp}"><img src="templates/style/icons/link.png" /> Website</a>
+			</td>
+			</tr>
+			{/foreach}
+			<tr>
+			<td colspan="2" class="content_tab_content1" align="center"><a href="?nav_id={$local_link}&action=comment&id={$book.ID}">Neuer Kommentar</a></td></tr>
+		</table>
+		{/foreach}
+		Erstellt in {$generated_time}s
 	</div>
 </div>
-{include file="footer.tpl" title=foo}

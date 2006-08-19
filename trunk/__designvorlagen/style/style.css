@@ -6,11 +6,11 @@ body {
 a:link, a:visited {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	text-decoration: underline;
+	text-decoration: none; 
 	color: #FF9900
 }
 a:hover {
-	text-decoration: none;
+	color: #505050;
 }
 
 img {
@@ -50,14 +50,14 @@ img {
 	font-size: 11px;
 	font-weight: bolder;
 	text-decoration: none;
-	color: #A67D2A;
-	padding: 5px 10px 5px 18px;
+	color: #505050;
+	padding: 5px 10px 5px 15px;
 	background-image: url(images/nav1.png);
 	background-repeat: no-repeat;
 	background-position: left;
 }
 #navigation a:hover {
-	color: #505050;
+	color: #A67D2A;
 	background-image: url(images/nav2.png);
 	background-repeat: no-repeat;
 	background-position: left;
@@ -79,7 +79,7 @@ img {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	text-decoration: none;
-	line-height: 15px;
+	line-height: 15px; 
 	color: #A67D2A;
 	padding: 1px 15px 1px 15px;
 	display: block;
@@ -97,7 +97,6 @@ img {
 .subnav2 a:link, .subnav2 a:visited {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 10px;
-	text-decoration: none;
 	font-weight: normal;
 	color: #A67D2A;
 	padding: 2px 15px 2px 32px;
@@ -116,7 +115,6 @@ img {
 .subnav3 a:link, .subnav3 a:visited {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 9px;
-	text-decoration: none;
 	font-weight: normal;
 	color: #A67D2A;
 	padding: 0px 15px 0px 50px;
@@ -154,7 +152,7 @@ img {
 #content {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 12px;
-	text-decoration: none;
+	text-decoration: none; 
 	text-align: justify;
 	line-height: 20px;
 	color: #505050;
@@ -196,9 +194,13 @@ img {
 	font-weight: bolder;
 	padding: 5px 10px 5px 10px;
 }
-.content_tab_content2 a:link, .content_tab_content2 a:visited, .content_tab_content2 a:hover {
-	color: #FF9900;
+.content_tab_content2 a:link, .content_tab_content2 a:visited {
+	color: #505050;
 	text-decoration: none;
+}
+
+.content_tab_content2 a:hover {
+	color: #FCAB03;
 }
 
 .content_formailer {
@@ -206,61 +208,6 @@ img {
 	margin-bottom:10px;
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 12px;
-}
-
-
-
-.formailer_header {
-	background-color: #FCAB03;
-	border: 1px solid #BF8202;
-	width: 600px;
-	height: 25px;
-	padding: 0px 10px 0px 10px;
-}
-.formailer_header_input {
-	background-color: #FCAB03;
-	border: 0px;
-	width: 100%;
-	font-weight: bolder;
-}
-.formailer_txt {
-	background-color: #FEDA8D;
-	width: 425px;
-	border-right: 1px solid #BF8202;
-	border-bottom: 1px solid #BF8202;
-	border-left: 1px solid #BF8202;
-	line-height: 20px;
-	padding: 5px 5px 5px 5px;
-}
-.formailer_txt_textarea {
-	background-color: #FFFFFF;
-	border: 1px solid #BF8202;
-	padding: 2px 2px 2px 2px;
-	width: 100%;
-}
-.formailer_adress {
-	width: 175px;
-	background-color: #FEDA8D;
-	border-right: 1px solid #BF8202;
-	border-bottom: 1px solid #BF8202;
-	line-height: 25px;
-	vertical-align: top;
-	font-weight: bolder;
-	padding: 5px 10px 5px 10px;
-}
-.formailer_adress_input, .formailer_adress_input {
-	background-color: #FFFFFF;
-	border: 1px solid #BF8202;
-	padding: 2px 2px 2px 2px;
-}
-
-.formailer_options {
-	padding: 3px 3px 3px 3px;
-	background-color: #FEDA8D;
-	border-left: 1px solid #BF8202;
-	border-right: 1px solid #BF8202;
-	border-bottom: 1px solid #BF8202;
-	text-align: center;
 }
 
 #footerContainer {
@@ -276,7 +223,7 @@ img {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	font-weight: bolder;
-	text-decoration: none;
+	text-decoration: none; 
 	color: #505050;
 	margin: 0px;
 }

@@ -1,80 +1,173 @@
 <?php
-require('./modules/mysql.class.php');
-require('./Smarty/Smarty.class.php');
 
-$smarty = new Smarty();
-$smarty->compile_check = true;
-$smarty->debugging = false;
+/* 	 Index.php
+	*Diese Seite ist für die Anzeig der Navigation veranwortlich
+	*und lädt die notwendigen Module
+	*
+*/
 
-$mysql = new mysql();
+$microtime = microtime();
+
+require_once('./includes/globals.php');
+//$smarty->debugging = true;
 
 /* Aufbau der Navigation */
 /* Auslesen der Top-Navigation */
-$mysql->query("SELECT * FROM menu WHERE menu_topid=0 ORDER BY menu_position ASC");
-$nav_array =array();
+
+$mysql->query("SELECT menu_ID, menu_name FROM menu WHERE menu_topid=0 ORDER BY menu_position ASC");
+$nav_array = array();
 $i = 0;
 while ($nav_data = $mysql->fetcharray()) {
 	$nav_array[$i] = array('menu_ID'=>$nav_data["menu_ID"], 'menu_name'=>$nav_data["menu_name"]);
 	$i++;
 }
+
 $smarty->assign("nav", $nav_array);
 
+/* Kontrolle der Get-Variable $_GET['nav_id']. Zur Vereinfachung in $nav_id gespeichert*/ 
 $nav_id = $_GET["nav_id"];
 if ($nav_id <= 0) {
 	$nav_id = $nav_array[0]['menu_ID'];
 }
 
-/*Hier werden alle Verweise ausgelesen, wie: 
-**Zugehörigkeit einer höheren Navigation, ob Modul oder Page, und welche ID*/
+
+/*Hier werden alle Verweise ausgelesen: ID, höhere Navigation (topid), Position, Name, 
+**Zugehörige Seite (page) und ob Modul oder Page £*/
 $mysql->query("SELECT * FROM menu WHERE menu_ID = $nav_id");
 $page_data = $mysql->fetcharray();
+
 $page_id = $page_data["menu_page"];
 
-/*Das Auslesen der Navigationen im Submenu. Welche überhaupt, ob ein SubSubMenu vorhanden usw*/
-if ($page_data["menu_topid"] == 0) {
-	$mysql->query("SELECT * FROM menu WHERE menu_topid=$nav_id ORDER BY menu_position ASC");
-	$subnav_array =array();
+
+
+/*----------------------------------------------------------------------
+*Der gerade aktive Navigationslink und alle direkt darüberlingende Links 
+*werden im Array $subnav_activ_array gespeichert.
+*Die Stufe wird in $invlevel gespeichert.
+-----------------------------------------------------------------*/
+
+$child_array = array();
+$root_array = array();
+//Verkehrte Stufe. Beginnt bei 1!!!!
+$invlevel = 1;
+
+//Alle Einträge unterhalb des $nav_id Eintrags werden gelesen
+//Sie haben den $invlevel 1
+$mysql->query("SELECT menu_ID, menu_topid, menu_name FROM menu WHERE menu_topid = $nav_id ORDER BY menu_position");
+$i = 0;
+while ($subnav_data = $mysql->fetcharray()) {
+	$child_array[$i] = array('menu_ID'=>$subnav_data["menu_ID"], 'menu_name'=>$subnav_data["menu_name"], 'menu_topid'=>$subnav_data["menu_topid"], 'level'=>$invlevel);
+	$i++;
+}
+
+//Die nächsthöhere TopID
+$next_topid = $page_data["menu_topid"];
+
+//Solange durchlaufen lassen, bis die menu_topid 0 ist, das heisst, wenn man zur $nav kommen würde
+//
+while (($next_topid != 0 || $next_topid != false))	{
+	$mysql->query("SELECT menu_ID, menu_topid, menu_name FROM menu WHERE menu_topid = $next_topid ORDER BY menu_position ASC");
+	
 	$i = 0;
-	while ($subnav_data = $mysql->fetcharray()) {
-		$subnav_array[$i] = array('menu_ID'=>$subnav_data["menu_ID"], 'menu_name'=>$subnav_data["menu_name"]);
+	
+	//Wenn es unterhalb nichts gibt, wird die menu_topid gesetzt
+	if(empty($child_array[0]["menu_topid"])) {
+		$top_id = $nav_id;
+	} else {
+		$top_id = $child_array[0]["menu_topid"];
+	}
+	
+	//Erhöhung des $invlevels, da eine Stufe weiter oben
+	$invlevel++;
+	//Die Tabelle auslesen
+	while($subnav_data = $mysql->fetcharray()) {
+		$root_array[$i] = array('menu_ID'=>$subnav_data["menu_ID"], 'menu_name'=>$subnav_data["menu_name"], 'menu_topid'=>$subnav_data["menu_topid"], 'level'=>$invlevel);
+		
+		//Wenn die ID die Top_id des Child-Array ist, heisst das, liegt direkt darüber
+		//Array werden zusammengefügt und $i wird hochgezählt, damit nichts überschrieben wird
+		
+		if($root_array[$i]["menu_ID"] == $top_id) {
+			
+			$root_array = array_merge($root_array, $child_array);
+			$i = count($root_array);
+			//Minus 1, weil es sonst einen Zwischenraum gibt. Z.B. $root_array[2], dann $root_array[4]
+			$i = $i - 1; 
+		}
 		$i++;
 	}
-	$smarty->assign("subnav", $subnav_array);
-}
-/*********************************************************************/
-else {
-	$mysql->query("SELECT * FROM menu WHERE menu_topid=$page_data[menu_topid] ORDER BY menu_position ASC");
+	
+	$child_array = $root_array;
+	$root_array = array();
+	/*-----------------------------
+	**Naechste top_id herausfinden */
+	
+	//Hier wird noch mit der alten $next_topid gerechnet. Die Topid vom höheren Menu wird gelesen
+	$mysql->query("SELECT menu_topid FROM menu WHERE menu_ID = $next_topid LIMIT 1");
+	$subnav_data = $mysql->fetcharray();
+	//Neues $next_topid
+	$next_topid = $subnav_data["menu_topid"];
+	
 
-	$subnav_array = array();
-	$i = 0;
-	while ($subnav_data = $mysql->fetcharray()) {
-		$subnav_array[$i] = array('menu_ID'=>$subnav_data["menu_ID"], 'menu_name'=>$subnav_data["menu_name"]);
-		$i++;		
-	}
-	$smarty->assign("subnav", $subnav_array);
+} 
+
+/*-------------
+**Die $invlevels müssen noch umgekehrt werden, weil das Tiefste jetzt das 1 ist.
+**Das oberste wird jetzt die kleinste Zahl und die wird immer grösser, je tiefer
+**man geht
+--------------*/
+
+//Das höchste Level wird abgespeichtert
+$highlevel = $invlevel;
+
+$invlevel = 0;
+$number = count($child_array);
+
+//Die Umrechnunsschleife, die Levels werden neu gesetzt: Das Höchste jetzt das Tiefste und umgekehrt
+for($i = 0; $i < $number; $i++) {
+	$invlevel = $child_array[$i]['level'];
+	$child_array[$i]['level'] = $highlevel - $invlevel + 1;
 }
 
-/*Da ja nicht nur reiner Text sondern auch Module weitergegeben werden können,  wird hier geschaut ob es ein Modul oder eine Page ist.
-Einfach erweiterbar durch einen weiteren enum-Eintrag in der DB und die Erweiterung hier*/
+//Die Subnav_array mit dem vollständigen child_array füllen
+$subnav_array = $child_array;
+
+$smarty->assign("subnav", $subnav_array);
+
+/*Da ja nicht nur reiner Text sondern auch Module weitergegeben werden können, wird hier geschaut, 
+ob es ein Modul oder eine Page ist. Einfach erweiterbar durch einen weiteren enum-Eintrag in der DB 
+und die Erweiterung hier*/
+
 switch ($page_data["menu_pagetyp"]) {
-	case "pag": 
+	case "pag":
 		$mysql->query("SELECT * FROM content WHERE content_ID = $page_id");
 		$data = $mysql->fetcharray();
 		$content_title = $data["content_title"];
 		$content_text = $data["content_text"];
-		
+	
 		if ($content_title == "" && $content_text == "") {
 			$content_title = "JClub-Noch kein Inhalt";
-			$content_text = "Keine Daten gefunden";	
+			$content_text = "Keine Daten gefunden";
 		}
+		
+		/*Das Index.tpl ist das Haupttemplate. In ihm werden die anderen Templates gespeichert.
+		  Hier das main.tpl*/
+		
 		$smarty->assign("content_title", $content_title);
 		$smarty->assign("content_text", $content_text);
+		$smarty->assign("file", "main.tpl");
 		$smarty->display("index.tpl");
 	break;
+	
 	case "mod":
-		$smarty->assign("content_title", "Module-Fehler");
-		$smarty->assign("content_text", "Module werden leider noch nicht unterst&uuml;tzt.<br />"
-										."Comming soon :-)");
-		$smarty->display("index.tpl");		 
+		$mysql->query("SELECT * FROM modules WHERE modules_ID = $page_id");
+		$module = $mysql->fetcharray();
+		include ("./modules/".$module["modules_name"]);
+		
+		/* $mod_tpl aus der include-Datei */
+		$smarty->assign("file", $mod_tpl);
+		$smarty->display("index.tpl");
+		
 	break;
 }
+
+?>
