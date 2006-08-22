@@ -15,7 +15,7 @@
 *
 * Funktionsbeschrieb:
 ** __construct($server, $name, $user, $pw, [$newcon])
-** Das Konstrukt dieser Klasse
+** 
 *
 ** connect()
 ** Öffnet die Verbindung zum Server (wird beim Erstellen des Objekts
@@ -26,6 +26,9 @@
 *
 ** num_rows()
 ** Analog mysql_num_rows
+*
+**error($errorcode, $errortext)
+**Gibt die Fehler aus
 *
 ** disconnect()
 ** Analog mysql_close (Wird vom Destruktor aufgerufen)
@@ -45,6 +48,16 @@ class mysql {
 	private $server_link;
 	private $result;
 	
+	/**
+	 * Das Konstrukt dieser Klasse
+	 *
+	 * @param string $server
+	 * @param string $name
+	 * @param string $user
+	 * @param string $pw
+	 * @param string $newcon
+	 */
+	
 	function __construct($server, $name, $user, $pw, $newcon = 1) {
 		
 		$this->mysql_server = $server;
@@ -55,15 +68,33 @@ class mysql {
 		$this->connect();
 	}
 	
+	/**
+	 * Öffnet die Verbindung zum Server (wird beim Erstellen des Objekts
+	 * aufgerufen
+	 *
+	 */
+	
 	private function connect() {
 		
 		$this->server_link = mysql_connect($this->mysql_server, $this->mysql_user, $this->mysql_pw, $this->new_c);
-		mysql_select_db($this->mysql_db, $this->server_link) or die(mysql_error());
+		mysql_select_db($this->mysql_db, $this->server_link) or $this->error(mysql_errno(), mysql_error());
 	}
 	
+	/**
+	 * Sendet eine Anfrage an MySQL
+	 *
+	 * @param string $query
+	 */
+	
 	public function query($query) {
-		$this->result = mysql_query($query, $this->server_link) or die(mysql_error());
+		$this->result = mysql_query($query, $this->server_link) or $this->error(mysql_errno(), mysql_error());
 	}
+	
+	/**
+	 * Liefert einen Datensatz als Array
+	 *
+	 * @return array|boolean
+	 */
 	
 	public function fetcharray() {
 		
@@ -82,21 +113,60 @@ class mysql {
 		
 	}
 	
+	/**
+	 * Liefert die Anzahl der Datensätze im Ergebnis
+	 *
+	 * @return int
+	 */
+	
 	public function num_rows() {
 		$number = mysql_num_rows($this->result);
 		return $number;
 	}
+	
+	/**
+	 * Liefert die Anzahl betroffener Datensätze einer vorhergehenden MySQL Operation
+	 *
+	 * @return int
+	 */
 	
 	public function affected_rows() {
 		$number = mysql_affected_rows($this->result);
 		return $number;
 	}
 	
+	/**
+	 * Gibt die Fehler aus
+	 *
+	 * @param string $errorcode
+	 * @param string $errortext
+	 */
+	private function error($errorcode, $errortext) {
+
+	$errorstring = "Die Datenbankverbindung wurde wegen Fehlern abgebrochen!<br />\n"
+				  ."Fehlercode: $errorcode<br />\n"
+				  ."Fehlernachricht: $errortext";
+	
+	die($errorstring);
+	}
+	
+	/**
+	 * Trennt die Verbindung zur Datenbank
+	 * (@link mysql_close)
+	 *
+	 */
+	
 	private function disconnect() {
 		mysql_close($this->server_link);
 	}
 	
-	function __destruct() {
+	/**
+	 * Der Destruktor dieser Klasse
+	 * (@link $this->disconnect)
+	 */
+	
+	public function __destruct() {
 		$this->disconnect();
-	}	
+	}
+
 };

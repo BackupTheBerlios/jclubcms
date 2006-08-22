@@ -8,7 +8,7 @@
 	* Sie ist _NICHT_ zuständig für die Administration des Gästebuches
 	*
 	*/
-	$mysql = new mysql($db_server, $db_name, $db_user, $db_pw);
+	
 	
 //$smarty->debugging = true;
 	switch ($_GET["action"]) {

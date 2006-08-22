@@ -2,7 +2,7 @@
 //Config laden
 require_once('./config/config.inc.php');
 
-//Module laden
+//notwendige Module laden
 require('./modules/mysql.class.php');
 require('./modules/timeparser.class.php');
 require('./Smarty/Smarty.class.php');
