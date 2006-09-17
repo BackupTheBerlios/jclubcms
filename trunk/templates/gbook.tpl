@@ -40,7 +40,7 @@
 			</tr>
 			{/foreach}
 			<tr>
-			<td colspan="2" class="content_tab_content1" align="center"><a href="?nav_id={$local_link}&action=comment&id={$book.ID}">Neuer Kommentar</a></td></tr>
+			<td colspan="2" class="content_tab_content1" align="center"><a href="?nav_id={$local_link}&action=comment&ref_ID={$book.ID}">Neuer Kommentar</a></td></tr>
 		</table>
 		{/foreach}
 		Erstellt in {$generated_time}s

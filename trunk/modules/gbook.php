@@ -90,14 +90,17 @@
 		
 		*/	
 		case "comment":
+			$timeparser = new timeparser($time_format);
+			
 			$button_click = $_REQUEST["btn_send"];
 			$content = $_REQUEST["content"];
 			$name = $_REQUEST["name"];
 			$email = $_REQUEST["email"];
 			$hp = $_REQUEST["hp"];
-			$ref_ID = $_REQUEST["id"];
+			$ref_ID = $_REQUEST["ref_ID"];
 			
 			if($button_click == "Senden") {
+				
 				
 				if ($content == "" || $content == $gbook_entry_content) {
 					$feedback_title= $gbook_onerror_title_de;
@@ -145,6 +148,50 @@
 				** Hier wird der Gästebucheintrag ausgelesen, nochmal ausgegeben, entweder
 				** unterhalb oder oberhalb des Formulars.
 				**/
+				
+				/*
+				---------------------------------------------------------------------
+				-- Auslesen des vorhergehenden Posts --
+				---------------------------------------------------------------------
+				*/
+				$mysql->query("SELECT * FROM `gbook` WHERE gbook_ID=$ref_ID");
+				$gbook_array = array();
+				$i = 0;
+				while ($main_entries = $mysql->fetcharray()) {
+/*----------------------------------------------------------------------
+* Für die Kommentare wird ein eigenes Array gebraucht, welches unten
+* abgefüllt wird.
+* Dieses Array wird nachher in das $gbook_array=>comments gelegt, und
+* nachher an Smarty weitergereicht.
+*---------------------------------------------------------------------*/
+				  	$com_mysql = new mysql($db_server, $db_name, $db_user, $db_pw);
+					
+					$com_mysql->query("SELECT * FROM `gbook` WHERE gbook_ref_ID = $ref_ID ORDER BY `gbook_time`ASC");
+				  	$comment_array = array();
+				  	$j = 0;
+				  	while ($comment_entries = $com_mysql->fetcharray()) {
+						$comment_array[$j] = array('comment_title'=>$comment_entries["comment_gbook_title"], 'comment_content'=>$comment_entries["gbook_content"], 'comment_name'=>$comment_entries["gbook_name"], 'comment_email'=>$comment_entries["gbook_email"], 'comment_hp'=>$comment_entries["gbook_hp"], 'comment_time'=>$timeparser->time_output($comment_entries["gbook_time"]));
+						$j++;   
+					}
+
+/*----------------------------------------------------------------------
+* $gbook_array beinhaltet alle Daten der Gästebucheinträge und deren
+* Kommentare (comments=>$comment_array) der angezeigten Seite
+* 
+* Smarty liest nachher das Array mit Hilfe von {foreach} aus
+*---------------------------------------------------------------------*/			  	
+					$gbook_array[$i] = array('ID'=>$main_entries["gbook_ID"], 'title'=>$main_entries["gbook_title"], 'content'=>$main_entries["gbook_content"], 'name'=>$main_entries["gbook_name"], 'email'=>$main_entries["gbook_email"], 'hp'=>$main_entries["gbook_hp"], 'time'=>$timeparser->time_output($main_entries["gbook_time"]), 'comments'=>$comment_array);
+					$gbook_IDs[$i] = $main_entries["gbook_ID"];
+					$i++;
+				
+//__destruct des hier angelegten Objekts.				
+					$com_mysql->__destruct;	  
+				}		
+				$smarty->assign("gbook", $gbook_array);
+				/*
+				---------------------------------------------------------------------
+				*/
+				
 				$smarty->assign("ref_ID", $ref_ID);
 				$smarty->assign("nav_id", $nav_id);
 				$smarty->assign("entry_title", $gbook_entry['title']);

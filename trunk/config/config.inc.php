@@ -2,9 +2,9 @@
 
 /*DB-Einstellungen*/
 $db_server = "localhost";
-$db_name = "jclubbeta";
-$db_user = "jclubbeta";
-$db_pw ="jclubbeta";
+$db_name = "jclub-beta";
+$db_user = "root";
+$db_pw ="";
 
 
 /*Gallery-Einstellungen*/
