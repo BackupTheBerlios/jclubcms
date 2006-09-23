@@ -1,6 +1,6 @@
 <?php
 
-	/*
+	/**
 	* Dieses Modul ist für die Anzeige des Gästebuches verantwortlich,
 	* für die Naviagtion im Gästebuch, und auch noch für das Erstellen
 	* der Einträge.
@@ -8,10 +8,22 @@
 	* Sie ist _NICHT_ zuständig für die Administration des Gästebuches
 	*
 	*/
+	require_once("./config/gbook_textes.inc.php");
+	require_once("./modules/mail.class.php");	
 	
+	//$smarty->debugging = true;
 	
-//$smarty->debugging = true;
-	switch ($_GET["action"]) {
+	/**
+	 * Es gibt 3 Actionen, die getrennt ausgeführt werden.
+	 * 1. New: Ein neuer Eintrag in das Gästebuch
+	 * 2. Comment: Einen Kommentar zu einem bestehenden Eintrag
+	 * 3. default: Ansehen des Gästebuches.
+	 */
+	$action = $_GET["action"];
+	switch ($action) {
+		/**
+		 * Einen neuen Eintrag erstellen in das Gästebuch.
+		 */
 		case "new":
 			$button_click = $_REQUEST["btn_send"];
 			$title = $_REQUEST["title"];
@@ -21,6 +33,15 @@
 			$hp = $_REQUEST["hp"];
 			
 			if($button_click == "Senden") {
+				
+				/**
+				 * Zwingende Angaben sind immer:
+				 * * Einen Titel
+				 * * Einen Text
+				 * * Einen Namen
+				 * * eine EMail-Adresse
+				 */
+				
 				if ($title == "" || $title==$gbook_entry_title) {
 					$feedback_title= $gbook_onerror_title_de;
 					$feedback_content= $gbook_title_onerror_de;
@@ -45,23 +66,34 @@
 					$feedback_link = "JavaScript:history.back()";
 					$feedback_linktext = "Zur&uuml;ck";
 				}
-				elseif ($hp == $gbook_entry_hp) {
-					$feedback_title= $gbook_onerror_title_de;
-					$feedback_content= $gbook_hp_onerror_de;
-					$feedback_link = "JavaScript:history.back()";
-					$feedback_linktext = "Zur&uuml;ck";
-				}
-				else {
-					//EMail-Possible-Check
-					//HP-Check
-					//Sichern
+						else {
+					/**
+					 * Wenn die angegebene HP nicht verändert wurde, soll der Eintrag leer sein.
+					 */
+					if ($hp == $gbook_entry_hp) {
+					$hp = "";
+					}
+					$mailcheck = new mail($email);
+					$mailerrorcode = $mailcheck->mailcheck();
+					echo "<b>".$mailerrorcode."</b>";
+					if ($mailerrorcode > 0) {
+						$feedback_title= $gbook_onerror_title_de;
+						$feedback_content= $gbook_email_checkfaild_de;
+						$feedback_link = "JavaScript:history.back()";
+						$feedback_linktext = "Zur&uuml;ck";						
+					}
+					else {
+						
 					$mysql->query("INSERT INTO gbook (gbook_time, gbook_name, gbook_email, gbook_hp, gbook_title, gbook_content) VALUES (NOW(), '$name', '$email', '$hp', '$title', '$content')");
 					$feedback_title= $gbook_allright_title;
 					$feedback_content= "Dein Eintrag wurde gespeichert, und steht sofort im GB zur Verfügung";
 					$feedback_link = "?nav_id=$nav_id";
 					$feedback_linktext = $gbook_allright_link;
+					}
 				}
-				
+				/**
+				 * Smarty-Arbeit
+				 */
 				$smarty->assign("feedback_title", $feedback_title);
 				$smarty->assign("feedback_content", $feedback_content);
 				$smarty->assign("link", $feedback_link);
@@ -70,6 +102,9 @@
 								
 			}
 			else {
+				/**
+				 * Smarty-Arbeit
+				 */
 				$smarty->assign("nav_id", $nav_id);
 				$smarty->assign("entry_title", $gbook_entry_title);
 				$smarty->assign("entry_content", $gbook_entry_content);
@@ -78,17 +113,18 @@
 				$smarty->assign("entry_hp", $gbook_entry_hp);
 				$mod_tpl = "gbook_new_entry.tpl";
 			}
+			/**
+			 * Destrukt der angelegten MySQL-Objekten
+			 */
+			$com_mysql->__destruct;	 
 			break;
-/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-		/*
-		Kurzer Ideenbeschrieb, ist im Moment eine Kopie von "new"
-		Thema: Gästebuch
-		Ziel: Kommentar anfügen
-		
-		Absicht: Den Gästebucheintrag nochmal anzeigen, und unten den Kommentar anfügen lassen.
-		
-		*/	
+		/**
+		 * Erstellt einen Kommentar zu einem bestehenden Eintrag.
+		 * Als Referenz wird immer der Haupteintrag genommen, um so effizient zusammenhängende Beiträge zu suchen.
+		 * 
+		 * Weiter wird auch der zu kommentierende Beitrag mit allen Kommentären nochmal angezeigt,
+		 * um sich den Text besser zurecht zu legen.
+		 */
 		case "comment":
 			$timeparser = new timeparser($time_format);
 			
@@ -101,7 +137,14 @@
 			
 			if($button_click == "Senden") {
 				
-				
+				/**
+				 * Zwingende Angaben sind immer:
+				 * * Einen Titel
+				 * * Einen Text
+				 * * Einen Namen
+				 * * eine EMail-Adresse
+				 */
+							
 				if ($content == "" || $content == $gbook_entry_content) {
 					$feedback_title= $gbook_onerror_title_de;
 					$feedback_content= $gbook_content_onerror_de;
@@ -120,21 +163,31 @@
 					$feedback_link = "JavaScript:history.back()";
 					$feedback_linktext = "Zur&uuml;ck";
 				}
-				elseif ($hp == $gbook_entry_hp) {
-					$feedback_title= $gbook_onerror_title_de;
-					$feedback_content= $gbook_hp_onerror_de;
-					$feedback_link = "JavaScript:history.back()";
-					$feedback_linktext = "Zur&uuml;ck";
-				}
 				else {
 					//EMail-Possible-Check
 					//HP-Check
 					//Sichern
-					$mysql->query("INSERT INTO gbook (gbook_ref_ID, gbook_time, gbook_name, gbook_email, gbook_hp, gbook_title, gbook_content) VALUES ('$ref_ID', NOW(), '$name', '$email', '$hp', '$title', '$content')");
-					$feedback_title= $gbook_allright_title;
-					$feedback_content= "Dein Eintrag wurde gespeichert, und steht sofort im GB zur Verfügung";
-					$feedback_link = "?nav_id=$nav_id";
-					$feedback_linktext = $gbook_allright_link;
+					/**
+					 * Wenn die angegebene HP nicht verändert wurde, soll der Eintrag leer sein.
+					 */
+					if ($hp == $gbook_entry_hp) {
+					$hp = "";
+					}
+					$mailcheck = new mail($email);
+					$mailerrorcode = $mailcheck->mailcheck();
+					if ($mailerrorcode > 0) {
+						$feedback_title= $gbook_onerror_title_de;
+						$feedback_content= $gbook_email_checkfaild_de;
+						$feedback_link = "JavaScript:history.back()";
+						$feedback_linktext = "Zur&uuml;ck";						
+					}
+					else {
+						$mysql->query("INSERT INTO gbook (gbook_ref_ID, gbook_time, gbook_name, gbook_email, gbook_hp, gbook_title, gbook_content) VALUES ('$ref_ID', NOW(), '$name', '$email', '$hp', '$title', '$content')");
+						$feedback_title= $gbook_allright_title;
+						$feedback_content= "Dein Eintrag wurde gespeichert, und steht sofort im GB zur Verfügung";
+						$feedback_link = "?nav_id=$nav_id";
+						$feedback_linktext = $gbook_allright_link;
+					}
 				}
 				$smarty->assign("feedback_content", $feedback_content);
 				$smarty->assign("link", $feedback_link);
@@ -158,12 +211,13 @@
 				$gbook_array = array();
 				$i = 0;
 				while ($main_entries = $mysql->fetcharray()) {
-/*----------------------------------------------------------------------
-* Für die Kommentare wird ein eigenes Array gebraucht, welches unten
-* abgefüllt wird.
-* Dieses Array wird nachher in das $gbook_array=>comments gelegt, und
-* nachher an Smarty weitergereicht.
-*---------------------------------------------------------------------*/
+					
+					/*----------------------------------------------------------------------
+					* Für die Kommentare wird ein eigenes Array gebraucht, welches unten
+					* abgefüllt wird.
+					* Dieses Array wird nachher in das $gbook_array=>comments gelegt, und
+					* nachher an Smarty weitergereicht.
+					*---------------------------------------------------------------------*/
 				  	$com_mysql = new mysql($db_server, $db_name, $db_user, $db_pw);
 					
 					$com_mysql->query("SELECT * FROM `gbook` WHERE gbook_ref_ID = $ref_ID ORDER BY `gbook_time`ASC");
@@ -173,24 +227,26 @@
 						$comment_array[$j] = array('comment_title'=>$comment_entries["comment_gbook_title"], 'comment_content'=>$comment_entries["gbook_content"], 'comment_name'=>$comment_entries["gbook_name"], 'comment_email'=>$comment_entries["gbook_email"], 'comment_hp'=>$comment_entries["gbook_hp"], 'comment_time'=>$timeparser->time_output($comment_entries["gbook_time"]));
 						$j++;   
 					}
-
-/*----------------------------------------------------------------------
-* $gbook_array beinhaltet alle Daten der Gästebucheinträge und deren
-* Kommentare (comments=>$comment_array) der angezeigten Seite
-* 
-* Smarty liest nachher das Array mit Hilfe von {foreach} aus
-*---------------------------------------------------------------------*/			  	
+					
+					/*----------------------------------------------------------------------
+					* $gbook_array beinhaltet alle Daten der Gästebucheinträge und deren
+					* Kommentare (comments=>$comment_array) der angezeigten Seite
+					* 
+					* Smarty liest nachher das Array mit Hilfe von {foreach} aus
+					*---------------------------------------------------------------------*/			  	
 					$gbook_array[$i] = array('ID'=>$main_entries["gbook_ID"], 'title'=>$main_entries["gbook_title"], 'content'=>$main_entries["gbook_content"], 'name'=>$main_entries["gbook_name"], 'email'=>$main_entries["gbook_email"], 'hp'=>$main_entries["gbook_hp"], 'time'=>$timeparser->time_output($main_entries["gbook_time"]), 'comments'=>$comment_array);
 					$gbook_IDs[$i] = $main_entries["gbook_ID"];
 					$i++;
 				
-//__destruct des hier angelegten Objekts.				
+					/**
+					 * Destrukt der angelegten Objekten
+					 */
 					$com_mysql->__destruct;	  
 				}		
 				$smarty->assign("gbook", $gbook_array);
-				/*
-				---------------------------------------------------------------------
-				*/
+				/**
+				 * Smarty-Arbeit
+				 */
 				
 				$smarty->assign("ref_ID", $ref_ID);
 				$smarty->assign("nav_id", $nav_id);
@@ -203,8 +259,14 @@
 			}
 			break;
 			
-/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+		/**
+		 * Liest alle Beiträge aus dem Gästebuch aus.
+		 * Zuerst werden nur die Haupteinträge ausgelesen, und nachher Rekursiv die
+		 * dazugehörigen Kommentare.
+		 * 
+		 * Abgefüllt werden die Daten alle in ein Array, welches an Smarty weitergegeben
+		 * wird, und die Daten nachher ausgibt.
+		 */
 		default:
 			$smarty->assign("local_link", $nav_id);
 			$timeparser = new timeparser($time_format);
@@ -226,12 +288,9 @@
 			$gbook_array = array();
 			$i = 0;
 			while ($main_entries = $mysql->fetcharray()) {
-/*----------------------------------------------------------------------
-* Für die Kommentare wird ein eigenes Array gebraucht, welches unten
-* abgefüllt wird.
-* Dieses Array wird nachher in das $gbook_array=>comments gelegt, und
-* nachher an Smarty weitergereicht.
-*---------------------------------------------------------------------*/
+				/**
+				 * Hier kommt ein Kommentar
+				 */
 			  	$com_mysql = new mysql($db_server, $db_name, $db_user, $db_pw);
 				
 				$com_mysql->query("SELECT * FROM `gbook` WHERE gbook_ref_ID = $main_entries[gbook_ID] ORDER BY `gbook_time`ASC");
@@ -241,26 +300,32 @@
 					$comment_array[$j] = array('comment_title'=>$comment_entries["comment_gbook_title"], 'comment_content'=>$comment_entries["gbook_content"], 'comment_name'=>$comment_entries["gbook_name"], 'comment_email'=>$comment_entries["gbook_email"], 'comment_hp'=>$comment_entries["gbook_hp"], 'comment_time'=>$timeparser->time_output($comment_entries["gbook_time"]));
 					$j++;   
 				}
-
-/*----------------------------------------------------------------------
-* $gbook_array beinhaltet alle Daten der Gästebucheinträge und deren
-* Kommentare (comments=>$comment_array) der angezeigten Seite
-* 
-* Smarty liest nachher das Array mit Hilfe von {foreach} aus
-*---------------------------------------------------------------------*/			  	
+				
+				/*----------------------------------------------------------------------
+				* $gbook_array beinhaltet alle Daten der Gästebucheinträge und deren
+				* Kommentare (comments=>$comment_array) der angezeigten Seite
+				* 
+				* Smarty liest nachher das Array mit Hilfe von {foreach} aus
+				*---------------------------------------------------------------------*/			  	
 				$gbook_array[$i] = array('ID'=>$main_entries["gbook_ID"], 'title'=>$main_entries["gbook_title"], 'content'=>$main_entries["gbook_content"], 'name'=>$main_entries["gbook_name"], 'email'=>$main_entries["gbook_email"], 'hp'=>$main_entries["gbook_hp"], 'time'=>$timeparser->time_output($main_entries["gbook_time"]), 'comments'=>$comment_array);
 				$gbook_IDs[$i] = $main_entries["gbook_ID"];
 				$i++;
 				
-//__destruct des hier angelegten Objekts.				
+				/**
+				* Destrukt der angelegten Objekten
+				*/ 				
 				$com_mysql->__destruct;	  
 			}
 			$timeparser->__destruct();
 			$microtime = microtime()-$microtime;
 			$microtime=round($microtime, 3);
+			
+			/**
+			 * Smarty-Arbeit
+			 */
+			
 			$smarty->assign("generated_time", $microtime);			
 			$smarty->assign("gbook", $gbook_array);
 			$mod_tpl = "gbook.tpl";
 	}
-		
 ?>

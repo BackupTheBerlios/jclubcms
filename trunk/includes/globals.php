@@ -14,5 +14,4 @@ $smarty->debugging = false;
 
 //Mysql-Objekt
 $mysql = new mysql($db_server, $db_name, $db_user, $db_pw);
-
 ?>
