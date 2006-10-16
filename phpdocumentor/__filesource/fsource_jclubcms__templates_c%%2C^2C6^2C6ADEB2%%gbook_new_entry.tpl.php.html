@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>File Source for %%2C^2C6^2C6ADEB2%%gbook_new_entry.tpl.php</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+						<h1>Source for file %%2C^2C6^2C6ADEB2%%gbook_new_entry.tpl.php</h1>
+<p>Documentation is available at <a href="../jclubcms/_templates_c_%%2C^2C6^2C6ADEB2%%gbook_new_entry_tpl_php.html">%%2C^2C6^2C6ADEB2%%gbook_new_entry.tpl.php</a></p>
+<div class="src-code">
+<pre><ol><li><a name="a1"></a><span class="src-php">&lt;?php </span><span class="src-comm">/* Smarty version 2.6.13, created on 2006-09-17 21:35:44</span></li>
+<li><a name="a2"></a><span class="src-comm">         compiled from gbook_new_entry.tpl */ </span><span class="src-php">?&gt;</span></li>
+<li><a name="a3"></a>&lt;div id=&quot;background_content&quot;&gt;&amp;nbsp;&lt;/div&gt;</li>
+<li><a name="a4"></a>&lt;div id=&quot;contentContainer&quot;&gt;</li>
+<li><a name="a5"></a>    &lt;div id=&quot;content&quot;&gt;</li>
+<li><a name="a6"></a>        &lt;table width = 100% class=&quot;content_tab&quot;&gt;</li>
+<li><a name="a7"></a>        &lt;/table&gt;</li>
+<li><a name="a8"></a>        &lt;form method=&quot;post&quot; action=&quot;?nav_id=<span class="src-php">&lt;?php </span>echo <span class="src-var">$this</span><span class="src-sym">-&gt;</span><span class="src-id">_tpl_vars</span><span class="src-sym">[</span><span class="src-str">'nav_id'</span><span class="src-sym">]</span><span class="src-sym">; </span><span class="src-php">?&gt;</span></li>
+<li><a name="a9"></a>&amp;action=new&quot;&gt;</li>
+<li><a name="a10"></a>        &lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; align=&quot;center&quot; class=&quot;content_tab&quot;&gt;</li>
+<li><a name="a11"></a>            &lt;tr&gt;</li>
+<li><a name="a12"></a>            &lt;td class=&quot;formailer_header&quot; colspan=&quot;2&quot;&gt;&lt;input class=&quot;formailer_header_input&quot; name=&quot;title&quot; type=&quot;text&quot; onclick=&quot;select()&quot; value=&quot;<span class="src-php">&lt;?php </span>echo <span class="src-var">$this</span><span class="src-sym">-&gt;</span><span class="src-id">_tpl_vars</span><span class="src-sym">[</span><span class="src-str">'entry_title'</span><span class="src-sym">]</span><span class="src-sym">; </span><span class="src-php">?&gt;</span></li>
+<li><a name="a13"></a>&quot; /&gt;</li>
+<li><a name="a14"></a>            &lt;/td&gt;</li>
+<li><a name="a15"></a>            &lt;/tr&gt;</li>
+<li><a name="a16"></a>            &lt;tr&gt;</li>
+<li><a name="a17"></a>            &lt;td class=&quot;formailer_txt&quot;&gt;</li>
+<li><a name="a18"></a>            &lt;textarea class=&quot;formailer_txt_textarea&quot; name=&quot;content&quot; onclick=&quot;select()&quot; cols=&quot;38&quot; rows=&quot;5&quot;&gt;<span class="src-php">&lt;?php </span>echo <span class="src-var">$this</span><span class="src-sym">-&gt;</span><span class="src-id">_tpl_vars</span><span class="src-sym">[</span><span class="src-str">'entry_content'</span><span class="src-sym">]</span><span class="src-sym">; </span><span class="src-php">?&gt;</span></li>
+<li><a name="a19"></a>&lt;/textarea&gt;&lt;/td&gt;</li>
+<li><a name="a20"></a>            &lt;td class=&quot;formailer_adress&quot;&gt;</li>
+<li><a name="a21"></a>            &lt;img src=&quot;templates/style/icons/user.png&quot; /&gt; &lt;input class=&quot;formailer_adress_input&quot; onclick=&quot;select()&quot; name=&quot;name&quot; type=&quot;text&quot; value=&quot;<span class="src-php">&lt;?php </span>echo <span class="src-var">$this</span><span class="src-sym">-&gt;</span><span class="src-id">_tpl_vars</span><span class="src-sym">[</span><span class="src-str">'entry_name'</span><span class="src-sym">]</span><span class="src-sym">; </span><span class="src-php">?&gt;</span></li>
+<li><a name="a22"></a>&quot; /&gt;&lt;br /&gt;</li>
+<li><a name="a23"></a>            &lt;img src=&quot;templates/style/icons/email.png&quot; /&gt; &lt;input class=&quot;formailer_adress_input&quot; onclick=&quot;select()&quot; name=&quot;email&quot; type=&quot;text&quot; value=&quot;<span class="src-php">&lt;?php </span>echo <span class="src-var">$this</span><span class="src-sym">-&gt;</span><span class="src-id">_tpl_vars</span><span class="src-sym">[</span><span class="src-str">'entry_email'</span><span class="src-sym">]</span><span class="src-sym">; </span><span class="src-php">?&gt;</span></li>
+<li><a name="a24"></a>&quot; /&gt;&lt;br /&gt;</li>
+<li><a name="a25"></a>            &lt;img src=&quot;templates/style/icons/link.png&quot; /&gt; &lt;input class=&quot;formailer_adress_input&quot; onclick=&quot;select()&quot; name=&quot;hp&quot; type=&quot;text&quot; value=&quot;<span class="src-php">&lt;?php </span>echo <span class="src-var">$this</span><span class="src-sym">-&gt;</span><span class="src-id">_tpl_vars</span><span class="src-sym">[</span><span class="src-str">'entry_hp'</span><span class="src-sym">]</span><span class="src-sym">; </span><span class="src-php">?&gt;</span></li>
+<li><a name="a26"></a>&quot; /&gt;&lt;/a&gt;</li>
+<li><a name="a27"></a>            &lt;/td&gt;</li>
+<li><a name="a28"></a>            &lt;/tr&gt;</li>
+<li><a name="a29"></a>            &lt;tr&gt;</li>
+<li><a name="a30"></a>                &lt;td class=&quot;formailer_options&quot; colspan=&quot;2&quot;&gt;&lt;input type=&quot;submit&quot; name=&quot;btn_send&quot; value=&quot;Senden&quot;&gt;&lt;input name=&quot;Clear&quot; type=&quot;reset&quot; id=&quot;Clear&quot; value=&quot;Zur&amp;uuml;cksetzen&quot;&gt;&lt;/td&gt;</li>
+<li><a name="a31"></a>            &lt;/tr&gt;</li>
+<li><a name="a32"></a>        &lt;/table&gt;</li>
+<li><a name="a33"></a>    &lt;/div&gt;</li>
+<li><a name="a34"></a>&lt;/div&gt;</li>
+</ol></pre>
+</div>
+	<p class="notes" id="credit">
+		Documentation generated on Mon, 16 Oct 2006 22:16:39 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.3.0RC3</a>
+	</p>
+	</body>
+</html>

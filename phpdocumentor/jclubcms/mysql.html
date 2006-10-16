@@ -1,0 +1,610 @@
+<html>
+<head>
+<title>Docs For Class mysql</title>
+<link rel="stylesheet" type="text/css" href="../media/style.css">
+</head>
+<body>
+
+<table border="0" cellspacing="0" cellpadding="0" height="48" width="100%">
+  <tr>
+    <td class="header_top">jclubcms</td>
+  </tr>
+  <tr><td class="header_line"><img src="../media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
+  <tr>
+    <td class="header_menu">
+  		  [ <a href="../classtrees_jclubcms.html" class="menu">class tree: jclubcms</a> ]
+		  [ <a href="../elementindex_jclubcms.html" class="menu">index: jclubcms</a> ]
+		  [ <a href="../elementindex.html" class="menu">all elements</a> ]
+    </td>
+  </tr>
+  <tr><td class="header_line"><img src="../media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
+</table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="200" class="menu">
+      <b>Packages:</b><br />
+              <a href="../li_jclubcms.html">jclubcms</a><br />
+              <a href="../li_Smarty.html">Smarty</a><br />
+            <br /><br />
+                        <b>Files:</b><br />
+      	  <div class="package">
+			<a href="../jclubcms/_config_config_inc_php.html">		config.inc.php
+		</a><br>
+			<a href="../jclubcms/_admin_php_content_php.html">		content.php
+		</a><br>
+			<a href="../jclubcms/_modules_gallery_php.html">		gallery.php
+		</a><br>
+			<a href="../jclubcms/_modules_gbook_php.html">		gbook.php
+		</a><br>
+			<a href="../jclubcms/_config_gbook_textes_inc_php.html">		gbook_textes.inc.php
+		</a><br>
+			<a href="../jclubcms/_includes_globals_php.html">		globals.php
+		</a><br>
+			<a href="../jclubcms/_modules_image_class_php.html">		image.class.php
+		</a><br>
+			<a href="../jclubcms/_modules_image_php.html">		image.php
+		</a><br>
+			<a href="../jclubcms/_index_php.html">		index.php
+		</a><br>
+			<a href="../jclubcms/_modules_mail_class_php.html">		mail.class.php
+		</a><br>
+			<a href="../jclubcms/_modules_mysql_class_php.html">		mysql.class.php
+		</a><br>
+			<a href="../jclubcms/_modules_pagesnav_class_php.html">		pagesnav.class.php
+		</a><br>
+			<a href="../jclubcms/_modules_timeparser_class_php.html">		timeparser.class.php
+		</a><br>
+			<a href="../jclubcms/_admin_php_tiny_php.html">		tiny.php
+		</a><br>
+	  </div><br />
+      
+            <b>Classes:</b><br />
+        <div class="package">
+		    		<a href="../jclubcms/image.html">image</a><br />
+	    		<a href="../jclubcms/mail.html">mail</a><br />
+	    		<a href="../jclubcms/mysql.html">mysql</a><br />
+	    		<a href="../jclubcms/pagesnav.html">pagesnav</a><br />
+	    		<a href="../jclubcms/timeparser.html">timeparser</a><br />
+	  </div>
+                </td>
+    <td>
+      <table cellpadding="10" cellspacing="0" width="100%" border="0"><tr><td valign="top">
+
+<h1>Class: mysql</h1>
+Source Location: /modules/mysql.class.php<br /><br />
+
+
+<table width="100%" border="0">
+<tr><td valign="top">
+
+<h3><a href="#class_details">Class Overview</a></h3>
+<pre></pre><br />
+<div class="description"></div><br /><br />
+
+
+
+
+
+</td>
+
+<td valign="top">
+<h3><a href="#class_vars">Variables</a></h3>
+<ul>
+    <li><a href="../jclubcms/mysql.html#var$mysql_db">$mysql_db</a></li>
+    <li><a href="../jclubcms/mysql.html#var$mysql_pw">$mysql_pw</a></li>
+    <li><a href="../jclubcms/mysql.html#var$mysql_server">$mysql_server</a></li>
+    <li><a href="../jclubcms/mysql.html#var$mysql_user">$mysql_user</a></li>
+    <li><a href="../jclubcms/mysql.html#var$new_c">$new_c</a></li>
+    <li><a href="../jclubcms/mysql.html#var$result">$result</a></li>
+    <li><a href="../jclubcms/mysql.html#var$server_link">$server_link</a></li>
+  </ul>
+</td>
+
+
+<td valign="top">
+<h3><a href="#class_methods">Methods</a></h3>
+<ul>
+    <li><a href="../jclubcms/mysql.html#method__construct">__construct</a></li>
+    <li><a href="../jclubcms/mysql.html#method__destruct">__destruct</a></li>
+    <li><a href="../jclubcms/mysql.html#methodaffected_rows">affected_rows</a></li>
+    <li><a href="../jclubcms/mysql.html#methodconnect">connect</a></li>
+    <li><a href="../jclubcms/mysql.html#methoddisconnect">disconnect</a></li>
+    <li><a href="../jclubcms/mysql.html#methoderror">error</a></li>
+    <li><a href="../jclubcms/mysql.html#methodfetcharray">fetcharray</a></li>
+    <li><a href="../jclubcms/mysql.html#methodnum_rows">num_rows</a></li>
+    <li><a href="../jclubcms/mysql.html#methodquery">query</a></li>
+  </ul>
+</td>
+
+</tr></table>
+<hr />
+
+<table width="100%" border="0"><tr>
+
+
+
+
+
+
+</tr></table>
+<hr />
+
+<a name="class_details"></a>
+<h3>Class Details</h3>
+<div class="tags">
+[line <a href="..//__filesource/fsource_jclubcms__modulesmysql.class.php.html#a40">40</a>]<br />
+</div><br /><br />
+<div class="top">[ <a href="#top">Top</a> ]</div><br />
+
+<hr />
+<a name="class_vars"></a>
+<h3>Class Variables</h3>
+<div class="tags">
+	<a name="var$mysql_db"></a>
+	<p></p>
+	<h4>$mysql_db = <span class="value"></span></h4>
+	<p>[line <a href="..//__filesource/fsource_jclubcms__modulesmysql.class.php.html#a43">43</a>]</p>
+  <br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>private</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>mixed</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$mysql_pw"></a>
+	<p></p>
+	<h4>$mysql_pw = <span class="value"></span></h4>
+	<p>[line <a href="..//__filesource/fsource_jclubcms__modulesmysql.class.php.html#a45">45</a>]</p>
+  <br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>private</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>mixed</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$mysql_server"></a>
+	<p></p>
+	<h4>$mysql_server = <span class="value"></span></h4>
+	<p>[line <a href="..//__filesource/fsource_jclubcms__modulesmysql.class.php.html#a42">42</a>]</p>
+  <br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>private</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>mixed</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$mysql_user"></a>
+	<p></p>
+	<h4>$mysql_user = <span class="value"></span></h4>
+	<p>[line <a href="..//__filesource/fsource_jclubcms__modulesmysql.class.php.html#a44">44</a>]</p>
+  <br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>private</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>mixed</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$new_c"></a>
+	<p></p>
+	<h4>$new_c = <span class="value"></span></h4>
+	<p>[line <a href="..//__filesource/fsource_jclubcms__modulesmysql.class.php.html#a46">46</a>]</p>
+  <br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>private</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>mixed</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$result"></a>
+	<p></p>
+	<h4>$result = <span class="value"></span></h4>
+	<p>[line <a href="..//__filesource/fsource_jclubcms__modulesmysql.class.php.html#a49">49</a>]</p>
+  <br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>private</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>mixed</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+	<a name="var$server_link"></a>
+	<p></p>
+	<h4>$server_link = <span class="value"></span></h4>
+	<p>[line <a href="..//__filesource/fsource_jclubcms__modulesmysql.class.php.html#a48">48</a>]</p>
+  <br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>private</td>
+  </tr>
+</table>
+</div>
+
+  <br />
+	<div class="tags">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><b>Type:</b>&nbsp;&nbsp;</td>
+      <td>mixed</td>
+    </tr>
+      </table>
+	</div><br /><br />
+	<div class="top">[ <a href="#top">Top</a> ]</div><br />
+</div><br />
+
+<hr />
+<a name="class_methods"></a>
+<h3>Class Methods</h3>
+<div class="tags">
+  <hr />
+	<a name="method__construct"></a>
+	<h3>constructor __construct <span class="smalllinenumber">[line <a href="..//__filesource/fsource_jclubcms__modulesmysql.class.php.html#a61">61</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>mysql __construct(
+string
+$server, string
+$name, string
+$user, string
+$pw, [string
+$newcon = 1])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Das Konstrukt dieser Klasse<br /><br /><p>Das Konstrukt dieser Klasse</p><br /><br /><br />
+
+
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$server</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$name</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$user</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$pw</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$newcon</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="method__destruct"></a>
+	<h3>destructor __destruct <span class="smalllinenumber">[line <a href="..//__filesource/fsource_jclubcms__modulesmysql.class.php.html#a168">168</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void __destruct(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Der Destruktor dieser Klasse<br /><br /><p>Der Destruktor dieser Klasse (@link $this-&gt;disconnect)</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodaffected_rows"></a>
+	<h3>method affected_rows <span class="smalllinenumber">[line <a href="..//__filesource/fsource_jclubcms__modulesmysql.class.php.html#a133">133</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>int affected_rows(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Liefert die Anzahl betroffener Datensätze einer vorhergehenden MySQL Operation<br /><br /><p>Liefert die Anzahl betroffener Datensätze einer vorhergehenden MySQL Operation</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodconnect"></a>
+	<h3>method connect <span class="smalllinenumber">[line <a href="..//__filesource/fsource_jclubcms__modulesmysql.class.php.html#a77">77</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void connect(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Öffnet die Verbindung zum Server (wird beim Erstellen des Objekts<br /><br /><p>Öffnet die Verbindung zum Server (wird beim Erstellen des Objekts aufgerufen</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>private</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methoddisconnect"></a>
+	<h3>method disconnect <span class="smalllinenumber">[line <a href="..//__filesource/fsource_jclubcms__modulesmysql.class.php.html#a159">159</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void disconnect(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Trennt die Verbindung zur Datenbank<br /><br /><p>Trennt die Verbindung zur Datenbank (@link mysql_close)</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>private</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methoderror"></a>
+	<h3>method error <span class="smalllinenumber">[line <a href="..//__filesource/fsource_jclubcms__modulesmysql.class.php.html#a144">144</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void error(
+string
+$errorcode, string
+$errortext)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Gibt die Fehler aus<br /><br /><p>Gibt die Fehler aus</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>private</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$errorcode</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$errortext</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodfetcharray"></a>
+	<h3>method fetcharray <span class="smalllinenumber">[line <a href="..//__filesource/fsource_jclubcms__modulesmysql.class.php.html#a99">99</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>array|boolean fetcharray(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Liefert einen Datensatz als Array<br /><br /><p>Liefert einen Datensatz als Array</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodnum_rows"></a>
+	<h3>method num_rows <span class="smalllinenumber">[line <a href="..//__filesource/fsource_jclubcms__modulesmysql.class.php.html#a122">122</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>int num_rows(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Liefert die Anzahl der Datensätze im Ergebnis<br /><br /><p>Liefert die Anzahl der Datensätze im Ergebnis</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodquery"></a>
+	<h3>method query <span class="smalllinenumber">[line <a href="..//__filesource/fsource_jclubcms__modulesmysql.class.php.html#a89">89</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void query(
+string
+$query)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Sendet eine Anfrage an MySQL<br /><br /><p>Sendet eine Anfrage an MySQL</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$query</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+</div><br />
+
+
+        <div class="credit">
+		    <hr />
+		    Documentation generated on Mon, 16 Oct 2006 22:52:05 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.3.0RC3</a>
+	      </div>
+      </td></tr></table>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>
