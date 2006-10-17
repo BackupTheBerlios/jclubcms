@@ -9,7 +9,8 @@
 	*
 	*/
 	require_once("./config/gbook_textes.inc.php");
-	require_once("./modules/mail.class.php");	
+	require_once("./modules/mail.class.php");
+	require_once("./modules/pagesnav.class.php");	
 	
 	//$smarty->debugging = true;
 	
@@ -19,7 +20,11 @@
 	 * 2. Comment: Einen Kommentar zu einem bestehenden Eintrag
 	 * 3. default: Ansehen des Gästebuches.
 	 */
-	$action = $_GET["action"];
+	$action = "";
+	if (isset($_GET["action"]) && $_GET["action"] != "") {
+		$action = $_GET["action"];	
+	}
+
 	switch ($action) {
 		/**
 		 * Einen neuen Eintrag erstellen in das Gästebuch.
@@ -273,7 +278,11 @@
 			$mysql->query("SELECT gbook_ID FROM gbook WHERE gbook_ref_ID = 0");
 			$number = $mysql->num_rows();
 			$pages_count = ceil($number/$gbook_entries_per_page);
-			$gbook_page = $_GET["gbpage"];
+			$gbook_page = 0;
+			if (isset($_GET["page"])) {
+				$gbook_page = $_GET["page"];
+			}
+			
 			if ($gbook_page <= 0) {
 				$gbook_page = 0;
 			}
@@ -314,8 +323,23 @@
 				/**
 				* Destrukt der angelegten Objekten
 				*/ 				
-				$com_mysql->__destruct;	  
+				$com_mysql->__destruct();  
 			}
+			
+			$pages_nav = new pagesnav($number, $gbook_entries_per_page);
+			$pages_array = $pages_nav->build_array();
+			$pages_nav->__destruct();
+			
+			/**
+			 * Array der Seiten, wobei der Text immer eines höher ist als der Link.
+			 * Page 0 = Seite 1; Page 1 = Seite 2;
+			 */
+			/*$pages_array = array();
+			for ($i = 0; $i <$pages_count; $i++) {
+				$pages_array[$i] = array('link'=>$i, 'link_text'=>$i+1);
+			}
+			*/
+			
 			$timeparser->__destruct();
 			$microtime = microtime()-$microtime;
 			$microtime=round($microtime, 3);
@@ -323,9 +347,9 @@
 			/**
 			 * Smarty-Arbeit
 			 */
-			
 			$smarty->assign("generated_time", $microtime);			
 			$smarty->assign("gbook", $gbook_array);
+			$smarty->assign("pages", $pages_array);
 			$mod_tpl = "gbook.tpl";
 	}
 ?>

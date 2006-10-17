@@ -1,5 +1,5 @@
 <?php
-/** -----------------------------------------------------------------
+/** 
 * File: mail.class.php
 * Classes: mailcheck
 * Requieres: PHP5
@@ -15,8 +15,8 @@
 ** MailVersand für Mailforumlare z.B. an Gästebuchuser's und an Members von JClub
 *
 *
--------------------------------------------------------------------*/
-
+* 
+*/
 class mail {
 
 	private $mail = null;
@@ -41,19 +41,18 @@ class mail {
 	private function mailexplode() {
 		$mailarray = explode('@', $this->mail);
 		$this->name = $mailarray[0];
+		for ($i = strpos($mailarray[1], ".")+1; $i <= strlen($mailarray[1]); $i++) {
+			$this->country .= $mailarray[1][$i];
+		}
 		$domainarray = explode('.', $mailarray[1]);
 		$this->domain = $domainarray[0];
-		$this->country = $domainarray[1];
-		echo "Mail=".$this->mail."<br />";
-		echo "Name=".$this->name."<br />";
-		echo "Domain=".$this->domain."<br />";
-		echo "Country=".$this->country."<br />";
 	}
 	/**
+	 * 
 	 * Der Domain-Name-Checker
 	 *
 	 * Prüft einfach ob die Domain ihre Minimalwerte hat.
-	 */	
+	 */
 	private function is_domain () {
 		$failer_error = 0;
 		switch ($this->domain) {
@@ -65,14 +64,12 @@ class mail {
 				break;
 		}
 		$this->failer_error+=$failer_error;
-		echo "failer_domain=".$failer_error."<br />";
 	}
-
 	/**
 	 * Der Domain-Name-Checker
-	 *
+	 * 
 	 * Prüft einfach ob die Domain ihre Minimalwerte hat.
-	 */	
+	 */
 	private function is_name () {
 		$failer_error = 0;
 		switch ($this->name) {
@@ -83,7 +80,6 @@ class mail {
 				$failer_error = 1;
 				break;
 		}
-		echo "failer_name=".$failer_error."<br />";
 		$this->failer_error+=$failer_error;
 	}
 	/**
@@ -109,14 +105,16 @@ class mail {
 		while ($failer_error == 1 && $i >= 0) {
 			if ($country_array[$i] == trim($this->country)) {
 				$failer_error = 0;
-				echo "Country war ok?!?<br />";
 			}
 			$i--;
 		}
-		echo "failer_country=".$failer_error."<br />";
 		$this->failer_error+=$failer_error;
 	}
-
+	/**
+	 * Wird aufgerufen, startet alle anderen Funktionen und gibt den Fehlercode zurück.
+	 *
+	 * @return failer_error
+	 */
 	public function mailcheck () {
 		$this->mailexplode();
 		$this->is_name();
@@ -138,7 +136,5 @@ class mail {
 		$this->country = null;
 		$this->failer_error = null;
 	}
-
 }
-
 ?>

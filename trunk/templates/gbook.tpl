@@ -6,6 +6,12 @@
 		<td><a href="?nav_id={$local_link}&action=new">Neuer Eintrag</a></td><td align="right">{if $entrys lte 1}{$entrys} Eintrag{else}{$entrys} Eintr&auml;ge{/if}</td>
 		</tr>
 		</table>
+		<table class="pagesnav"><tr>
+		{foreach item=page from=$pages}
+		<td><a href="{$page.link}">[{$page.page}]</a></td>
+		{/foreach}
+		</tr>
+		</table>
 		{foreach item=book  from=$gbook}
 		<table cellpadding="0" cellspacing="0" align="center" class="content_tab">
 			<tr>
@@ -43,6 +49,12 @@
 			<td colspan="2" class="content_tab_content1" align="center"><a href="?nav_id={$local_link}&action=comment&ref_ID={$book.ID}">Neuer Kommentar</a></td></tr>
 		</table>
 		{/foreach}
+		<table class="pagesnav"><tr>
+		{foreach item=page from=$pages}
+		<td><a href="{$page.link}">[{$page.page}]</a></td>
+		{/foreach}
+		</tr>
+		</table>
 		Erstellt in {$generated_time}s
 	</div>
 </div>
