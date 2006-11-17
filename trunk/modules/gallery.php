@@ -1,6 +1,5 @@
 <?php
 
-
 /*
 * Dieses Modul ist für die Gallery zuständig, die Anzeige von Bildern
 *in den verschiedenen Alben und richtigen Reihenfolge
@@ -10,7 +9,7 @@
 */
 
 
-//Nummern zuweisen oder false oder 1
+//Nummern zuweisen oder false (1)
 $gallery = isset($_GET['gallery']) ? ((int) $_GET['gallery']) : false;
 $pic = isset($_GET['pic']) ? ((int) $_GET['pic']) : false;
 $page = isset($_GET['page']) ? ((int) $_GET['page']) : 1;
@@ -22,31 +21,33 @@ $gallery_array = array();
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 if($gallery) {
 	
-	
+	//Ein paar Daten berechnen
 	$bildproseite = $gallery_pics_x * $gallery_pics_y;
 	$start = ($page-1)*$bildproseite;
 	$ende = $page*$bildproseite - 1;
+	//Korrekt
 	
-	
-	$mysql->query("SELECT gallery_alben . name , "/*gallery_alben . fid_parent, */."
-         gallery_eintraege . fid_bild , gallery_eintraege . comment ,
+	//Einträge abrufen (VERBESSERUNGSWÜRDIG!)
+	$mysql->query("SELECT gallery_alben.name , gallery_alben.fid_parent, 
+         gallery_eintraege.fid_bild , gallery_eintraege.comment ,
          gallery_alben.ID
-         FROM `gallery_eintraege` , `gallery_alben` 
-         where gallery_alben . ID = $gallery AND gallery_eintraege . fid_album = gallery_alben . ID 
-         ORDER BY gallery_eintraege . sequence LIMIT $start, $ende ");
+         FROM `gallery_eintraege`, `gallery_alben` 
+         where gallery_alben.ID = $gallery AND gallery_eintraege.fid_album = $gallery 
+         ORDER BY gallery_eintraege.sequence LIMIT $start, $ende ");
 
+	//Verbessern, eigene Variablen für album_name und parent_album
 	$i = 0;
 	while($gallery_data = $mysql->fetcharray()) {
 		
-		$gallery_array[$i] = array("album_name" => $gallery_data['name'], "bilder_ID" => $gallery_data['fid_bild'],
-									"comment" => $gallery_data['comment']); 
+		$gallery_array[$i] = array("album_name" => $gallery_data['name'], "parent_album" => $gallery_data['fid_parent'],
+									"bilder_ID" => $gallery_data['fid_bild'], "comment" => $gallery_data['comment']); 
 									
 		/*
 		Image.php läuft so
-		Per GET-Parameter werden die bilder mit der Ip geschickt. Die Datei managt das Ganze.
+		Per GET-Parameter werden die bilder mit der ID geschickt. Die Datei managt das Ganze.
 		
 		!Image.php wird !!!NICHT!!! von gallery.php aufgerufen. Sondern über die Templates.
-		etwa so: <img src="image.php?bild=1&thumb oder image.php?thumb=1 und image.php?bild=1
+		etwa so: <img src="{image.php?thumb=1 oder image.php?bild=1}" />
 		
 		mit dem Modul-System KANN (muss nicht)!! das dann wie folgt aussehen
 		
@@ -84,6 +85,8 @@ if($gallery) {
 	$microtime = microtime()-$microtime;
 	$microtime=round($microtime, 3);
 	$smarty->assign("generated_time", $microtime);
+	
+	//Korrekt
 }
 
 ?>

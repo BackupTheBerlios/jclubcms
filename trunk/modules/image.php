@@ -1,98 +1,97 @@
 <?php
 
+/*-----------------------------------------------------------------
+* File: image.php
+* Classes: -
+* Requieres: PHP5
+* 
+* Diese Datei wird aufgerufen, um ein Bild darzustellen. 
+* Sie fragt die Datenbank nach der übermittelten ID ab und erhält so die Bilddatei
+* Mithilfe der Klasse "image" wird das Bild verändert und/oder ausgegeben
+* 
+* Diese Klasse wird auch für Thumbs gebraucht
+* Ist ein Thumb nicht vorhanden, wird es automatisch aus den zugehörigen Bild
+* erstellt.
+*
+-------------------------------------------------------------------*/
+
+
 require_once('image.class.php');
+require_once('../config/config.inc.php');
+
 
 
 (isset($_GET['bild']) && $_GET['image'] != "") ? $bild = (int)$_GET['bild'] : $bild = false;
 
-(isset($_GET['thumb']) && $_GET['thumb'] != "") ? $bild = (int)$_GET['thumb'] : $bild = false;
+(isset($_GET['thumb']) && $_GET['thumb'] != "") ? $thumb = (int)$_GET['thumb'] : $thumb = false;
 
 
-if($bild) {
-	$mysql->query("SELECT bilder_ID, filename, thumb, erstellt FROM bilder WHERE bilder_ID = $bild");
-	$bild = $mysql->fetcharray();
 
+//*******IF-ABFRAGEN*******//
+if(isset($bild))
+{
 	
-	if(!is_file($bild['filename'])) {
+	//Eintrag zur ID vorhanden?
+	$mysql->query("SELECT filename , height , width FROM `bilder` where bilder_ID = $bild LIMIT 1");
+	
+	$bild_mysql = $mysql->fetcharray();
+	
+	//Überprüfung, ob ein Eintrag vorhanden ist
+	if(!empty($array_bild))
+	{
+		$img = new image("$dir_orgImage.{$bild_mysql['filename']}");
+	}
+	else
+	{
 		
-		//eigenes Fehler-Bild erstellen
-		$im = imagecreate($image_maxwidth-100, $image_maxheight-100);
-		$background_color = imagecolorallocate ($im, 255, 255, 255); //weiss
-		$text_color = imagecolorallocate($im, 0, 250, 154); //MediumSpringGreen
-		imagestring($im, 1, 5, 5, "Bild konnte nicht gefunden werden", $text_color);
-		
-		//Bild senden
-		header("Content-Type: image/jpeg");
-		imagejpeg($im);
-		imagedestroy($im);
-		exit();
+		$img = new image(); //Fehlerbild ausgeben, weil kein Eintrag vorhanden ist
+		exit();				//Skript abbrechen, weil nichts anderes gemacht werden muss
 	}
 	
 	
-	$image = new image($bild['filename']);
 	
-	$img_array = $image->send_imageinfos();
-	$im = $img_array['im']; 
-	$format = $img_array['format']; 
+	//Information zur Höhe und Breite erhalten
+	$bild_data = $img->send_imageinfos();
 	
-	//Bild senden
-	header("Content-Type: image/$format");
-	eval("image$format(\$im);");
-	imagedestroy($im);
+	/*Umrechnen, falls
+	  1. Höhe oder Breite einen Wert überschreiten
+	  2. Kein Bild mit gleichem Namen im Ordner gallery gespeichert ist
+	*/
 	
-
-	
-	/*___-----------------------
-	----------------------____*/
-} elseif ($thumb) {
-	$mysql->query("SELECT bilder_ID, filename, thumb, erstellt FROM bilder WHERE bilder_ID = $thumb");
-	$bild = $mysql->fetcharray();
-	
-	if(!is_file($bild['filename'])) {
+	if(($bild_data['height'] > $image_maxheight || $bild_data['width'] > $image_maxwidth) && !(is_file("$dir_gallery.{$bild_mysql['filename']}")))
+	{
+		//Höhe-Breite-Verhältnis zum Weiterrechnen bestimmen
+		$verhaeltnis = $bild_data['height'] / $bild_data['width'];
 		
-		//eigenes Fehler-Bild erstellen
-		$im = imagecreate($thumb_maxwidth-100, $thumb_maxheight-100);
-		$background_color = imagecolorallocate ($im, 255, 255, 255); //weiss
-		$text_color = imagecolorallocate($im, 0, 250, 154); //MediumSpringGreen
-		imagestring($im, 1, 5, 5, "Bild konnte nicht gefunden werden", $text_color);
+		//Neue Breite zuweisen (meist ist die zu gross) und neue Höhe berechnen
+		$bild_newwidth = $image_maxwidth;
+		$bild_newheight = $verhaeltnis * $bild_newwidth;
 		
-		//Bild senden
-		header("Content-Type: image/jpeg");
-		imagejpeg($im);
-		imagedestroy($im);
-		exit();
+		//Wenn die Höhe noch zu gross ist, wird die max. Höhe bestimmt und neue Breite berechnet
+		if($bild_newheight > $image_maxheight)
+		{
+			$bild_newheight = $image_maxheight;
+			$bild_newwidth = (1/$verhaeltnis) * $bild_newheight;
+		}
+		
+		$img->copy($bild_newwidth, $bild_newheight, "$dir_image.{$bild_mysql['filename']}");
 	}
 	
-	$image = new image($bild['filename']);
-	
-	//Beim Thumb-Erstellen Seitenverhältniss beachten
-	//Noch klären, was klasse macht
-	//Muss File angegeben werden. Vielleicht eine offenere Klasse machen!!!!
+	$img->send_image();
 	
 	
-	if($cache_thumb) {
-		;
-	}
-
+} 
+elseif(isset($thumb)) 
+{
+	//Eintrag zur ID vorhanden?
+	
+	//Thumb vorhanden (-> Bild vorhanden)
+	
+	//Ausgabe
+	
+	
+	
 }
-
-/*
-
-$img = new image("../bilder/gallery/ende_phase_1_01.jpg");
-
-
-$bild_data = $img->thumb_create(141, 110, "jpeg");
-
-$im = $bild_data['im'];
-
-header("Content-type: image/jpeg");
-$zahl = imagejpeg($im);
-imagedestroy($im);
-
-echo "Testeaeraasdfasfadsfasdfasdf: Zahl \n\n\n\n\n\n\n$zahl";
-
-$img->trigger_error("THallo");
-*/
 
 
 ?>

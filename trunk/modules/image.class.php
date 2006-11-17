@@ -5,12 +5,19 @@
 * Classes: image
 * Requieres: PHP5
 *
-* Die Klasse image ist zuständig für Grafikfunktionen insbesonders
-* für das Erstellen von Thumbs
+* Die Klasse image ist zuständig für Grafikfunktionen 
+* Sie speichert die Informationen über ein Bild ab, kann diese Informationen senden
+* und das Bild selber ausgeben
+* Wenn keine Bilddatei vorhanden ist, dann wird automatisch ein Fehlerbild erstellt
+* Um Thumbs zu erstellen, kann die Funktion "copy" verwendet werden.
+* "copy" kann auch verwendet werden, um das Bild selber zu verändern. 
+* Dazu kann man einfach die Grössen belassen
+* !Achtung: Vorhandene Dateien werden ohne Abfrage überschrieben!!!
 *
-* Funktionsbeschrieb:
-
-
+* Diese Klasse ist nicht für die Administration der Bilder zuständig
+* Die Klasse wird für jedes Bild gebraucht, um es darzustellen und nötige
+* Informationen zum jeweiligen Bild zu erhalten
+*
 -------------------------------------------------------------------*/
 
 
@@ -18,17 +25,9 @@ class image {
 
 	private $file = null;
 	private $im = null;
-	private $graphicformat = null;
+	private $graphicformat = "jpeg";
 	private $height = null;
 	private $width = null;
-
-	private $thumb_im = null;
-	private $thumb_graphicformat = null;
-	private $thumb_height = null;
-	private $thumb_width = null;
-	private $thumb_file = null;
-
-
 
 
 	/*------------------
@@ -36,166 +35,99 @@ class image {
 	------------------*/
 
 
-
-
-
 	/**
 	 * Der Klassenkonstruktor
-	 *
-	 * @param string $file Bilddatei
+	 * Wird eine Datei angegeben, wird das Bild abgespeichert
+	 * Ist das Argument leer, wird ein Fehlerbild erstellt
+	 * Ist eine Datei angegeben, existiert aber nicht, wird ein anders Fehlerbild erstellt
+	 * 
+	 * @param string $file[optional] Bilddatei
 	 */
-	public function __construct($file) {
 
-		//Existiert das Bild überhaupt?
-		if(is_file($file)) {
+	public function __construct($file="") {
+
+		if($file != "" && is_file($file))
+		{
 			$this->file = $file;
-		} else {
-			$this->error("Bild-Datei existiert nicht");
+
+			$this->get_infos();
+
+		}
+		elseif($file=="")
+		{
+			$this->file = "";
+			$this->create_image(285, 26, "Der ID ist kein Bild zugeordnet", "000000255");
+		}
+		else
+		{
+			$this->file = "";
+			$this->create_image(180, 26, "Bild nicht gefunden");
 		}
 
-		//Grafikressource und Graphikformat bestimmten
-		$this->image_infos();
-	}
-	
-	
-
-	/**
-	 *Erstellt ein Thumb im Format, das angegeben wird
-	 *
-	 * @param int $thumb_x Breite
-	 * @param int $thumb_y Höhe
-	 * @param string $thumb_format Bildformat des Thumbs
-	 * @return array Bildressource|Bildformat  
-	 */
-	public function thumb_create($thumb_x, $thumb_y, $thumb_format = "") {
-
-
-		//Thumb-Grafik überprüfen. Ünterstützes Format wird abgespeichert
-		if($thumb_format == "gif" || $thumb_format == "jpeg" || $thumb_format == "png") {
-
-			$this->thumb_graphicformat = $thumb_format;
-
-			//Fehlerausgabe
-		} elseif ($thumb_format == "") {
-			$this->trigger_error("Thumb-Grafikformat ist nicht angegeben");
-		} else {
-			$this->trigger_error("Thumb-Grafikformat wird nicht unterstützt");
-		}
-
-		//**** Thumb erstellen
-		$thumbim_temp = imagecreate($thumb_x, $thumb_y);
-
-		eval("\$im_temp    = imagecreatefrom{$this->thumb_graphicformat}(\$this->file);");
-		imagecopyresized($thumbim_temp, $im_temp, 0, 0, 0, 0, $thumb_x, $thumb_y, $this->width, $this->height);
-		//***
-
-		//Abspeichern und zurückgeben
-		$this->thumb_im = $thumbim_temp;
-
-		$return_array = array("im" => $this->thumb_im, "format" => $this->thumb_graphicformat);
-		return $return_array;
 
 	}
 
-	
-	
-	/**
-	 * Erstellt ein Thumb und speichert es am angegeben Ort ab
-	 *
-	 * @param int $thumb_x
-	 * @param int $thumb_y
-	 * @param string $thumb_file
-	 * @return array  Bildressource|Bildformat 
-	 */
-	public function thumb_create_tfile($thumb_x, $thumb_y, $thumb_file) {
-
-		if( is_file($thumb_file)) {
-			$this->thumb_file = $thumb_file;
-
-		} elseif ($thumb_file == "") {
-			$this->trigger_error("Thumb-Speicherort ist nicht angegeben");
-
-		} else {
-			$this->trigger_error("Thumb-Datei ist keine regulaere Datei");
-
-		}
-
-		/*Grafikformat bestimmen */
-
-		//4 letzten Zeichen nehmen -> Grafikformat
-		$r_string = substr($thumb_file, -4);
-
-		switch($r_string) {
-			case ".png":
-			$format_temp = "png";
-			break;
-			case ".gif":
-			$format_temp = "gif";
-			break;
-			case "jpeg":
-
-			case ".jpg":
-			$format_temp = "jpeg";
-			break;
-			default:
-			$this->trigger_error("");
-
-		}
-
-		$thumb_data = $this->thumb_create($thumb_x, $thumb_y, $format_temp);
-
-		//Liefert bei Erfolg true und sonst false
-		(eval("image{$this->thumb_graphicformat}(\$thumb_data['im'], \$this->thumb_file);"));
-		
-		return $thumb_data;
-		
-	}
-	
 
 
 	/**
-	 * Verändert die Grösse des Bildes
+	 * Kopiert das Originalbild uns speichert es in ein neues Bild mit anderen Höhen/Breiten ab
 	 *
-	 * @param int $new_x
-	 * @param int $new_y
+	 * @param int $new_x Neue Breite
+	 * @param int $new_y Neue Höhe
+	 * @param string $file Speicherort
+	 * @param string $new_format[optional] Neues Bildformat
 	 */
 
-	public function resize($new_x, $new_y) {
-		//Zur Sicherheit immer kopieren
-		copy($this->file, $this->file.".back") or $this->error("Abbruch. Das Bild konnte nicht kopiert werden");;
+	public function copy($new_width, $new_height, $file, $new_format="jpeg") {
 
-		$format = $this->graphicformat;
+		$new_im = imagecreatetruecolor($new_width, $new_height);
 
-		$new_im = imagecreate($new_x, $new_y);
-
-		eval("\$im    = imagecreatefrom$format(\$this->file);");
-		imagecopyresized($new_im, $im, 0, 0, 0, 0, $new_x, $new_y, $this->width, $this->height);
-		eval("image$format(\$new_im, \$filename);");
+		imagecopyresized($new_im, $this->im, 0, 0, 0, 0, $new_width, $new_height, $this->width, $this->height);
+		eval("image$new_format(\$new_im, \$file);");
 		imagedestroy($new_im);
 
-		$this->image_imgra();
 	}
-	
-	
-	
+
+
+
 	/**
-	 * Gibt die Grafik-Resource, Grafik-Format, die Breite und die Höhe zurück
+	 * Senden das Bild per HTTP an den User
 	 *
-	 * @return array im, format, width, height
 	 */
-	
-	public function send_imageinfos() {
-		return array("im" => $this->im, "format" => $this->graphicformat,"width" => $this->width,
-					"height" => $this->height);
+
+	public function send_image() {
+
+		$format = $this->graphicformat;
+		$im = $this->im;
+
+		eval("header(\"Content-type: image/$format\");");
+		eval("image$format(\$im);");
+
 	}
-	
-	
-	
+
+
+
+
+
+	/**
+	 * Sendet Informationen über das Bild, namentlich
+	 * Grafik-Resource, Grafik-Format, die Breite und die Höhe
+	 *
+	 * @return array ("format", "width", "height") 
+	 */
+
+	public function send_infos() {
+		return array("format" => $this->graphicformat,"width" => $this->width,
+		"height" => $this->height);
+	}
+
+
+
 	/**
 	 * Der Klassendestruktor
 	 *
 	 */
-	
+
 	public function __destruct() {
 		;
 	}
@@ -206,85 +138,96 @@ class image {
 	/*------------------
 	*** Private Funktionen ***
 	------------------*/
+
+
 	/**
-	 * Liefert die Bildressource und das Bildformat des Bildes
+	 * Ein Bild wird erstellt. 
+	 * Die Farben sind vorgegeben
+	 * 
+	 * Wird vom Konstruktor aufgerufen
 	 *
+	 * @param string $text
+	 * @param string $col_background Die Hintergrundfarbe im String mit RGB-Werten
+	 * @param string $col_text Die Textfarbe im String mit RGB-Werten
 	 */
 
+	private function create_image($width, $height, $text="Bild nicht gefunden", $col_background = "000000000", $col_text="050255070") {
 
-	private function image_infos() {
-		//Sehen, ob es eine gif-,jpg oder png-Grafik ist
-		//Grafikformat und Bild-Resource abspeichern
+		//Fest vorgegeben
+		$this->graphicformat = "jpeg";
 
+		$this->width = $width;
+		$this->height = $height;
+
+		$this->im = imagecreatetruecolor($this->width, $this->height);
+
+		$background_color = imagecolorallocate ($this->im, (int)substr($col_background, 0,3) , (int)substr($col_background, 3,3) , (int)substr($col_background, 6,3));
+		$text_color = imagecolorallocate($this->im, (int)substr($col_text, 0,3), (int)substr($col_text, 3,3), (int)substr($col_text, 6,3));
+
+		imagefill($this->im, 0,0, $background_color);
+		imagestring($this->im, 5, 5, 5, $text, $text_color);
+
+	}
+
+
+
+	/**
+	 * Schaut, ob das Grafikformat unterstützt wird
+	 * Speichert das Grafikformat und die Bildressource
+	 * Speichert auch die Höhe und Breite
+	 */
+
+	private function get_infos() {
+
+		$supported = false;
 		$array_image = getimagesize($this->file);
+
 		switch ($array_image[2]) {
 			case 1:
 			$this->graphicformat = "gif";
 			$this->im = imagecreatefromgif($this->file);
+			$supported = true;
 			break;
+
 			case 2:
 			$this->graphicformat = "jpeg";
 			$this->im = imagecreatefromjpeg($this->file);
+			$supported = true;
 			break;
+
 			case 3:
 			$this->graphicformat = "png";
 			$this->im = imagecreatefrompng($this->file);
-			break;
-			default:
-			$this->error("Dieses Grafikformat für das Bild wird leider nicht unterstützt");
+			$supported = true;
 
+			break;
+
+			default:
+
+			$this->create_image(330, 26, "Dieses Format wird nicht unterstützt");
+			$this->send_image();
+			$supported = false;
 		}
 
-		$this->width = $array_image[0];
-		$this->height = $array_image[1];
-	}
-	
-	
-	
-
-	/**
-	 * Liefert die Thumb-Resource und das Thumb-Grafikformat
-	 *
-	 */
-	private function thumb_infos() {
-
-		$array_thumb = getimagesize($this->thumb_file);
-
-		switch ($array_thumb[2]) {
-			case 1:
-			$this->thumb_graphicformat = "gif";
-			$this->thumb_im = imagecreatefromgif($this->thumb_file);
-			break;
-			case 2:
-			$this->thumb_graphicformat = "jpeg";
-			$this->thumb_im = imagecreatefromjpeg($this->thumb_file);
-			break;
-			case 3:
-			$this->thumb_graphicformat = "png";
-			$this->thumb_im = imagecreatefrompng($this->thumb_file);
-			break;
-			default:
-			$this->trigger_error("Dieses Grafikformat für den Thumb wird leider nicht unterstützt");
+		if($supported) {
+			$this->width = $array_image[0];
+			$this->height = $array_image[1];
 		}
-
-		$this->thumb_width = imagesx($this->im);
-		$this->thumb_height = imagesy($this->im);
+		
 	}
-	
-	
 
 
 	/**
 	 *Gibt eine benutzedefinierte PHP-Fehlermeldung aus
 	 *
-	 * @param string $error_msg
-	 * @param konstant $error_type[optional]
+	 * @param string $error_msg	Fehlernachricht
+	 * @param konstant $error_type[optional]	Fehlertyp
 	 */
 	private function trigger_error($error_msg, $error_type = E_USER_WARNING) {
 		trigger_error($error_msg, $error_type);
 	}
-	
-	
+
+
 
 }
 ?>

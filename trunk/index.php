@@ -7,7 +7,7 @@
 */
 
 /*Zu Testzwecken ! **/
-error_reporting(E_ALL|E_STRICT);
+//error_reporting(E_ALL|E_STRICT);
 /* *** */
 
 $microtime = microtime();

@@ -1,11 +1,11 @@
 <?php
 //Config laden
-require_once('./config/config.inc.php');
+require_once('../config/config.inc.php');
 
 //notwendige Module laden
-require('./modules/mysql.class.php');
-require('./modules/timeparser.class.php');
-require('./Smarty/Smarty.class.php');
+require_once('../modules/mysql.class.php');
+require_once('../modules/timeparser.class.php');
+require_once('../Smarty/Smarty.class.php');
 
 //Smarty-Objekt
 $smarty = new Smarty();

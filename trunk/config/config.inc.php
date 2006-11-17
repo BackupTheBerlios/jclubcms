@@ -2,9 +2,9 @@
 
 /*DB-Einstellungen*/
 $db_server = "localhost";
-$db_name = "jclub-beta";
-$db_user = "root";
-$db_pw ="";
+$db_name = "jclubbeta";
+$db_user = "jclubbeta";
+$db_pw ="jclubbeta";
 
 
 /*Gallery-Einstellungen*/
@@ -14,18 +14,20 @@ $gallery_pics_y = 4;
 $gallery_menuview = 2; //Wieviele Bilder Links und Rechts des aktuellen Bildes gezeigt werden
 
 //**Bild und Thumb
-$dir_image = "bilder/gallery";  //Ohne "./" am Anfang!
+
+//!!! Bilder sind stdmässig in originals abgespeichert, aber wenn sie zu gross sind, in gallery
+$dir_orgImage = "../graphics/originals/"; //Relativ zum Ordner Modules
+$dir_galImage = "../graphics/gallery/";  //Relativ zum Ordner Modules
 $image_maxheight = 600;
 $image_maxwidth = 600;
 
-$cache_thumb = true;
-$cachedir_thumb = "bilder/gallery/thumbs/";  //Ohne "./" am Anfang!
+$dir_thumb = "../graphics/gallery/thumbs/";  //Relativ zum Ordner Modules
 $thumb_maxheight = 150;
 $thumb_maxwidth = 150;
 
 
 /*------$time_format-----------------------
-* Analog des time() von PHP, mit Ausnahmen
+* Analog des data() von PHP, mit Ausnahmen
 * ------NICHT GEPLANTE UNTERSTÜZUNG--------
 * B	Swatch-Internet-Zeit
 * D	Tag der Woche gekürzt auf drei Buchstaben
@@ -42,7 +44,7 @@ $thumb_maxwidth = 150;
 * Z	 Offset der Zeitzone in Sekunden.
 */
 $time_format = "\I\m \J\a\h\r\e Y \d\e\s \H\err\n";
-//$time_format = "\I\m \J\a\hr\e \d\e\s \H\err\\n Y\, \d\e\m d. \d\e\s \M\o\\n\at\s M \i\\n \der \St\u\\n\de H \u\\n\d \M\i\\n\ut\e i";
+
 
 /*------GBook-Settings----------*/
 $gbook_entries_per_page = 5;
