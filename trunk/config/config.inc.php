@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * @package JClubCMS
+ * @author David Däster, Simon Däster
+ */
 /*DB-Einstellungen*/
 $db_server = "localhost";
 $db_name = "jclubbeta";

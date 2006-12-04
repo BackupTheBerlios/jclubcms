@@ -1,4 +1,7 @@
 <?php
+/**
+ * @package JClubCMS
+ */
 //Config laden
 require_once('../config/config.inc.php');
 

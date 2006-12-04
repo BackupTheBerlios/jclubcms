@@ -1,22 +1,20 @@
 <?php
 /** 
-* File: mail.class.php
-* Classes: mailcheck
-* Requieres: PHP5
-*
-* Die Klasse ist zuständig zur Überprüfung der EMail-Adresse auf ihre
-* tauglichkeit, und auch zum versenden von Check-Mails im Mailformularen
-*
-* Funktionsbeschrieb:
-* Soll das Mailchecking sowie das Mail-Versenden für die verschiedenen
-* Modulen zentral Verwalten. Generell sollen 2 Möglichkeiten über diese Klasse
-* erledigt werden:
-** Tauglichkeitsprüfung der EMail für ein Gästebucheintrag
-** MailVersand für Mailforumlare z.B. an Gästebuchuser's und an Members von JClub
-*
-*
-* 
-*/
+ * @author David Däster
+ * @package JClubCMS
+ * File: mail.class.php
+ * Classes: mailcheck
+ * Requieres: PHP5
+ *
+ * Die Klasse ist zuständig zur Überprüfung der EMail-Adresse auf ihre
+ * tauglichkeit, und auch zum versenden von Check-Mails im Mailformularen
+ *
+ * Funktionsbeschrieb:
+ * Soll das Mailchecking sowie das Mail-Versenden für die verschiedenen
+ * Modulen zentral Verwalten. Generell sollen 2 Möglichkeiten über diese Klasse
+ * erledigt werden:
+ * - MailVersand für Mailforumlare z.B. an Gästebuchuser's und an Members von JClub
+ */
 class mail {
 
 	private $mail = null;
@@ -48,7 +46,6 @@ class mail {
 		$this->domain = $domainarray[0];
 	}
 	/**
-	 * 
 	 * Der Domain-Name-Checker
 	 *
 	 * Prüft einfach ob die Domain ihre Minimalwerte hat.

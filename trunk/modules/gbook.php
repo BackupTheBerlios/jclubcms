@@ -1,13 +1,13 @@
 <?php
-
 	/**
-	* Dieses Modul ist für die Anzeige des Gästebuches verantwortlich,
-	* für die Naviagtion im Gästebuch, und auch noch für das Erstellen
-	* der Einträge.
-	*
-	* Sie ist _NICHT_ zuständig für die Administration des Gästebuches
-	*
-	*/
+	 * @author David Däster
+	 * @package JClubCMS
+	 * Dieses Modul ist für die Anzeige des Gästebuches verantwortlich,
+	 * für die Naviagtion im Gästebuch, und auch noch für das Erstellen
+	 * der Einträge.
+	 *
+	 * Sie ist _NICHT_ zuständig für die Administration des Gästebuches
+	 */
 	require_once("./config/gbook_textes.inc.php");
 	require_once("./modules/mail.class.php");
 	require_once("./modules/pagesnav.class.php");	
@@ -41,10 +41,10 @@
 				
 				/**
 				 * Zwingende Angaben sind immer:
-				 * * Einen Titel
-				 * * Einen Text
-				 * * Einen Namen
-				 * * eine EMail-Adresse
+				 * - Einen Titel
+				 * - Einen Text
+				 * - Einen Namen
+				 * - eine EMail-Adresse
 				 */
 				
 				if ($title == "" || $title==$gbook_entry_title) {
@@ -144,10 +144,10 @@
 				
 				/**
 				 * Zwingende Angaben sind immer:
-				 * * Einen Titel
-				 * * Einen Text
-				 * * Einen Namen
-				 * * eine EMail-Adresse
+				 * - Einen Titel
+				 * - Einen Text
+				 * - Einen Namen
+				 * - eine EMail-Adresse
 				 */
 							
 				if ($content == "" || $content == $gbook_entry_content) {
@@ -201,11 +201,12 @@
 								
 			}
 			else {
-				/* Hier befindet man sich, wenn der Kommentieren-Link vom Gästebuch aufgerufen
-				** wurde.
-				** Hier wird der Gästebucheintrag ausgelesen, nochmal ausgegeben, entweder
-				** unterhalb oder oberhalb des Formulars.
-				**/
+				/**
+				 * Hier befindet man sich, wenn der Kommentieren-Link vom Gästebuch aufgerufen
+				 * wurde.
+				 * Hier wird der Gästebucheintrag ausgelesen, nochmal ausgegeben, entweder
+				 * unterhalb oder oberhalb des Formulars.
+				 */
 				
 				/*
 				---------------------------------------------------------------------
@@ -217,12 +218,12 @@
 				$i = 0;
 				while ($main_entries = $mysql->fetcharray()) {
 					
-					/*----------------------------------------------------------------------
+					/**
 					* Für die Kommentare wird ein eigenes Array gebraucht, welches unten
 					* abgefüllt wird.
 					* Dieses Array wird nachher in das $gbook_array=>comments gelegt, und
 					* nachher an Smarty weitergereicht.
-					*---------------------------------------------------------------------*/
+				    */
 				  	$com_mysql = new mysql($db_server, $db_name, $db_user, $db_pw);
 					
 					$com_mysql->query("SELECT * FROM `gbook` WHERE gbook_ref_ID = $ref_ID ORDER BY `gbook_time`ASC");
@@ -233,12 +234,12 @@
 						$j++;   
 					}
 					
-					/*----------------------------------------------------------------------
+					/**
 					* $gbook_array beinhaltet alle Daten der Gästebucheinträge und deren
 					* Kommentare (comments=>$comment_array) der angezeigten Seite
 					* 
 					* Smarty liest nachher das Array mit Hilfe von {foreach} aus
-					*---------------------------------------------------------------------*/			  	
+					*/			  	
 					$gbook_array[$i] = array('ID'=>$main_entries["gbook_ID"], 'title'=>$main_entries["gbook_title"], 'content'=>$main_entries["gbook_content"], 'name'=>$main_entries["gbook_name"], 'email'=>$main_entries["gbook_email"], 'hp'=>$main_entries["gbook_hp"], 'time'=>$timeparser->time_output($main_entries["gbook_time"]), 'comments'=>$comment_array);
 					$gbook_IDs[$i] = $main_entries["gbook_ID"];
 					$i++;
@@ -310,12 +311,13 @@
 					$j++;   
 				}
 				
-				/*----------------------------------------------------------------------
+				/**
 				* $gbook_array beinhaltet alle Daten der Gästebucheinträge und deren
 				* Kommentare (comments=>$comment_array) der angezeigten Seite
 				* 
 				* Smarty liest nachher das Array mit Hilfe von {foreach} aus
-				*---------------------------------------------------------------------*/			  	
+				*/
+				
 				$gbook_array[$i] = array('ID'=>$main_entries["gbook_ID"], 'title'=>$main_entries["gbook_title"], 'content'=>$main_entries["gbook_content"], 'name'=>$main_entries["gbook_name"], 'email'=>$main_entries["gbook_email"], 'hp'=>$main_entries["gbook_hp"], 'time'=>$timeparser->time_output($main_entries["gbook_time"]), 'comments'=>$comment_array);
 				$gbook_IDs[$i] = $main_entries["gbook_ID"];
 				$i++;
@@ -334,11 +336,6 @@
 			 * Array der Seiten, wobei der Text immer eines höher ist als der Link.
 			 * Page 0 = Seite 1; Page 1 = Seite 2;
 			 */
-			/*$pages_array = array();
-			for ($i = 0; $i <$pages_count; $i++) {
-				$pages_array[$i] = array('link'=>$i, 'link_text'=>$i+1);
-			}
-			*/
 			
 			$timeparser->__destruct();
 			$microtime = microtime()-$microtime;

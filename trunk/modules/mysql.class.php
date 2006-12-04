@@ -1,6 +1,8 @@
 <?php
 
-/*-----------------------------------------------------------------
+/**
+ * @package JClubCMS
+ * @author David Däster, Simon Däster
 * File: mysql.class.php
 * Classes: mysql
 * Requieres: PHP5, MySQL 4.x

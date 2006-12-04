@@ -1,22 +1,24 @@
 <?php
 
-/* 	 Index.php
-*Diese Seite ist für die Anzeig der Navigation veranwortlich
-*und lädt die notwendigen Module
-*
-*/
+/**
+ * @author David und Simon Däster
+ * @package JClubCMS
+ * Index.php
+ * Diese Seite ist für die Anzeig der Navigation veranwortlich
+ * und lädt die notwendigen Module
+ */
 
-/*Zu Testzwecken ! **/
+/** Zu Testzwecken ! **/
 //error_reporting(E_ALL|E_STRICT);
-/* *** */
+/** *** */
 
 $microtime = microtime();
 
 require_once('./includes/globals.php');
 //$smarty->debugging = true;
 
-/* Aufbau der Navigation */
-/* Auslesen der Top-Navigation */
+/** Aufbau der Navigation */
+/** Auslesen der Top-Navigation */
 
 $mysql->query("SELECT menu_ID, menu_name FROM menu WHERE menu_topid=0 ORDER BY menu_position ASC");
 $nav_array = array();
@@ -28,31 +30,33 @@ while ($nav_data = $mysql->fetcharray()) {
 
 $smarty->assign("nav", $nav_array);
 
-/* Kontrolle der Get-Variable $_GET['nav_id']. Zur Vereinfachung in $nav_id gespeichert*/
+/** Kontrolle der Get-Variable $_GET['nav_id']. Zur Vereinfachung in $nav_id gespeichert*/
 $nav_id = (int) $_GET["nav_id"];
 if ($nav_id <= 0) {
 	$nav_id = $nav_array[0]['menu_ID'];
 }
 
 
-/*Hier werden alle Verweise ausgelesen: ID, höhere Navigation (topid), Position, Name,
-**Zugehörige Seite (page) und ob Modul oder Page £*/
+/**
+ * Hier werden alle Verweise ausgelesen: ID, höhere Navigation (topid), Position, Name,
+ * zugehörige Seite (page) und ob Modul oder Page £
+ */
 $mysql->query("SELECT * FROM menu WHERE menu_ID = $nav_id");
 $page_data = $mysql->fetcharray();
 
 $page_id = $page_data["menu_page"];
 
 
-/*__--------------------------------------
-
-***************M E N U ***************
-
--------------------------------------____*/
+/**
+ * ***************M E N U ***************
+ */
 
 
-/*Der gerade aktive Navigationslink und alle direkt darüberlingende Links
-*werden im Array $subnav_activ_array gespeichert.
-*Die Stufe wird in $invlevel gespeicher.*/
+/** 
+ * Der gerade aktive Navigationslink und alle direkt darüberlingende Links
+ * werden im Array $subnav_activ_array gespeichert.
+ * Die Stufe wird in $invlevel gespeicher.
+ */
 
 $child_array = array();
 $root_array = array();
@@ -93,9 +97,12 @@ while (($next_topid != 0 || $next_topid != false))	{
 	while($subnav_data = $mysql->fetcharray()) {
 		$root_array[$i] = array('menu_ID'=>$subnav_data["menu_ID"], 'menu_name'=>$subnav_data["menu_name"], 'menu_topid'=>$subnav_data["menu_topid"], 'level'=>$invlevel);
 
-		//Wenn die menu_ID die Top_id des Child-Array ist, heisst das, menu_ID liegt direkt darüber
-		//Array werden zusammengefügt und $i wird hochgezählt, damit nichts überschrieben wird
-
+		/**
+		 * //Wenn die menu_ID die Top_id des Child-Array ist, heisst das, 
+		 * menu_ID liegt direkt darüber
+		 * 
+		 * Array werden zusammengefügt und $i wird hochgezählt, damit nichts überschrieben wird
+		 */
 		if($root_array[$i]["menu_ID"] == $top_id) {
 
 			$root_array = array_merge($root_array, $child_array);
@@ -108,8 +115,9 @@ while (($next_topid != 0 || $next_topid != false))	{
 
 	$child_array = $root_array;
 	$root_array = array();
-	/*-----------------------------
-	**Naechste top_id herausfinden */
+	/**
+	 * Naechste top_id herausfinden 
+	 */
 
 	//Hier wird noch mit der alten $next_topid gerechnet. Die Topid vom höheren Menu wird gelesen
 	$mysql->query("SELECT menu_topid FROM menu WHERE menu_ID = $next_topid LIMIT 1");
@@ -121,9 +129,11 @@ while (($next_topid != 0 || $next_topid != false))	{
 }
 
 
-/**Die $invlevels müssen noch umgekehrt werden, weil das Tiefste jetzt das 1 ist.
-**Das oberste wird jetzt die kleinste Zahl und die wird immer grösser, je tiefer
-**man geht */
+/**
+ * Die $invlevels müssen noch umgekehrt werden, weil das Tiefste jetzt das 1 ist.
+ * Das oberste wird jetzt die kleinste Zahl und die wird immer grösser, je tiefer
+ * man geht 
+ */
 
 //Das höchste Level wird abgespeichtert
 $highlevel = $invlevel;
@@ -145,16 +155,19 @@ $smarty->assign("subnav", $subnav_array);
 
 
 
-/*___---------------------------------------------
-************** Menu Ende ***********
-----------------------------------------------__*/
+/**
+ * 
+ * ************** Menu Ende ***********
+ * 
+ */
 
 
 
-
-/*Da ja nicht nur reiner Text sondern auch Module weitergegeben werden können, wird hier geschaut,
-ob es ein Modul oder eine Page ist. Einfach erweiterbar durch einen weiteren enum-Eintrag in der DB
-und die Erweiterung hier*/
+/**
+ * Da ja nicht nur reiner Text sondern auch Module weitergegeben werden können, wird hier geschaut,
+ * ob es ein Modul oder eine Page ist. Einfach erweiterbar durch einen weiteren enum-Eintrag in der DB
+ * und die Erweiterung hier
+ */
 
 switch ($page_data["menu_pagetyp"]) {
 	case "pag":
@@ -168,8 +181,10 @@ switch ($page_data["menu_pagetyp"]) {
 		$content_text = "Keine Daten gefunden";
 	}
 
-	/*Das Index.tpl ist das Haupttemplate. In ihm werden die anderen Templates gespeichert.
-	Hier das main.tpl*/
+	/**
+	 * Das Index.tpl ist das Haupttemplate. In ihm werden die anderen Templates gespeichert.
+	 * Hier das main.tpl
+	 */
 
 	$smarty->assign("content_title", $content_title);
 	$smarty->assign("content_text", $content_text);
