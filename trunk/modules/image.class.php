@@ -44,7 +44,7 @@ class image {
 	 * @param string $file[optional] Bilddatei
 	 */
 
-	public function __construct($file="") {
+	public function __construct($file) {
 
 		if($file != "" && is_file($file))
 		{
@@ -53,15 +53,10 @@ class image {
 			$this->get_infos();
 
 		}
-		elseif($file=="")
-		{
-			$this->file = "";
-			$this->create_image(285, 26, "Der ID ist kein Bild zugeordnet", "000000255");
-		}
 		else
 		{
 			$this->file = "";
-			$this->create_image(180, 26, "Bild nicht gefunden");
+			$this->create_image(180, 100, "Bild nicht gefunden");
 		}
 
 
@@ -88,8 +83,6 @@ class image {
 
 	}
 
-
-
 	/**
 	 * Senden das Bild per HTTP an den User
 	 *
@@ -102,9 +95,36 @@ class image {
 
 		eval("header(\"Content-type: image/$format\");");
 		eval("image$format(\$im);");
-
 	}
+	
+	/**
+	 * Ein Bild wird erstellt. 
+	 * Die Farben sind vorgegeben
+	 * 
+	 * Wird vom Konstruktor aufgerufen
+	 *
+	 * @param string $text
+	 * @param string $col_background Die Hintergrundfarbe im String mit RGB-Werten
+	 * @param string $col_text Die Textfarbe im String mit RGB-Werten
+	 */
 
+	public function create_image($width, $height, $text="Bild nicht gefunden", $col_background = "000000000", $col_text="050255070") {
+
+		//Fest vorgegeben
+		$this->graphicformat = "jpeg";
+
+		$this->width = $width;
+		$this->height = $height;
+
+		$this->im = imagecreatetruecolor($this->width, $this->height);
+
+		//Aus den Parameter für Farbe (RGB-Werte) werden die Farben erstellt
+		$background_color = imagecolorallocate ($this->im, (int)substr($col_background, 0,3) , (int)substr($col_background, 3,3) , (int)substr($col_background, 6,3));
+		$text_color = imagecolorallocate($this->im, (int)substr($col_text, 0,3), (int)substr($col_text, 3,3), (int)substr($col_text, 6,3));
+
+		imagefill($this->im, 0,0, $background_color);
+		imagestring($this->im, 5, 5, 35, $text, $text_color);
+	}
 
 
 
@@ -140,38 +160,7 @@ class image {
 	------------------*/
 
 
-	/**
-	 * Ein Bild wird erstellt. 
-	 * Die Farben sind vorgegeben
-	 * 
-	 * Wird vom Konstruktor aufgerufen
-	 *
-	 * @param string $text
-	 * @param string $col_background Die Hintergrundfarbe im String mit RGB-Werten
-	 * @param string $col_text Die Textfarbe im String mit RGB-Werten
-	 */
-
-	private function create_image($width, $height, $text="Bild nicht gefunden", $col_background = "000000000", $col_text="050255070") {
-
-		//Fest vorgegeben
-		$this->graphicformat = "jpeg";
-
-		$this->width = $width;
-		$this->height = $height;
-
-		$this->im = imagecreatetruecolor($this->width, $this->height);
-
-		$background_color = imagecolorallocate ($this->im, (int)substr($col_background, 0,3) , (int)substr($col_background, 3,3) , (int)substr($col_background, 6,3));
-		$text_color = imagecolorallocate($this->im, (int)substr($col_text, 0,3), (int)substr($col_text, 3,3), (int)substr($col_text, 6,3));
-
-		imagefill($this->im, 0,0, $background_color);
-		imagestring($this->im, 5, 5, 5, $text, $text_color);
-
-	}
-
-
-
-	/**
+		/**
 	 * Schaut, ob das Grafikformat unterstützt wird
 	 * Speichert das Grafikformat und die Bildressource
 	 * Speichert auch die Höhe und Breite
