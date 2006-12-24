@@ -25,7 +25,7 @@
     <div id="subnavContainer">
     
       {foreach item=subnav from=$subnav}    
-      {*Wenn das Level kleiner gleich 3 ist, werden dynamisch Klassen geladen, sonst subnav3*}
+      {*Für alle Level grösser gleich 3 ist die CSS-Klasse subnav3, sonst eine andere*}
       {if $subnav.level == 1}
       <div class="subnav">
       {elseif $subnav.level <= 3}

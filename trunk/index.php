@@ -20,7 +20,7 @@ require_once('./includes/globals.php');
 /** Aufbau der Navigation */
 /** Auslesen der Top-Navigation */
 
-$mysql->query("SELECT menu_ID, menu_name FROM menu WHERE menu_topid=0 ORDER BY menu_position ASC");
+$mysql->query("SELECT menu_ID, menu_name FROM menu WHERE menu_topid=0 and `menu_display` != '0' ORDER BY menu_position ASC");
 $nav_array = array();
 $i = 0;
 while ($nav_data = $mysql->fetcharray()) {
@@ -47,25 +47,36 @@ $page_data = $mysql->fetcharray();
 $page_id = $page_data["menu_page"];
 
 
+
+
+
 /**
+ * Hier folgt das 
  * ***************M E N U ***************
+ * ES wird kompliziert
  */
 
 
 /** 
- * Der gerade aktive Navigationslink und alle direkt darüberlingende Links
- * werden im Array $subnav_activ_array gespeichert.
- * Die Stufe wird in $invlevel gespeicher.
+ * Der gerade aktive Navigationslink und alle direkt darüberliegende Links
+ * werden im Array $root_array gespeichert.
+ * 
+ * Aufbau:
+ * topid: 0     -Gallery
+ * 				-Gästebuch
+ * Und dann gehts weiter nach unten
+ * Info: Einträge mit 'menu_display' = 0 werden nicht angezeigt
+ * 
  */
 
 $child_array = array();
 $root_array = array();
-//Verkehrte Stufe. Beginnt bei 1!!!!
+//Verkehrte Stufe. Beginnt bei 1!!!!. Wird nachher umgerechnet
 $invlevel = 1;
 
 //Alle Einträge unterhalb des $nav_id Eintrags werden gelesen
 //Sie haben den $invlevel 1
-$mysql->query("SELECT menu_ID, menu_topid, menu_name FROM menu WHERE menu_topid = $nav_id ORDER BY menu_position");
+$mysql->query("SELECT menu_ID, menu_topid, menu_name FROM menu WHERE menu_topid = $nav_id and `menu_display` != '0' ORDER BY menu_position");
 $i = 0;
 while ($subnav_data = $mysql->fetcharray()) {
 	$child_array[$i] = array('menu_ID'=>$subnav_data["menu_ID"], 'menu_name'=>$subnav_data["menu_name"], 'menu_topid'=>$subnav_data["menu_topid"], 'level'=>$invlevel);
@@ -75,13 +86,15 @@ while ($subnav_data = $mysql->fetcharray()) {
 //Die nächsthöhere TopID
 $next_topid = $page_data["menu_topid"];
 
-//Solange durchlaufen lassen, bis die menu_topid 0 ist, das heisst, wenn man zur $nav kommen würde
+
+//Solange durchlaufen lassen, bis die menu_topid 0 ist, also die obersten Navitationsteile erreicht sind
 
 while (($next_topid != 0 || $next_topid != false))	{
 
 	$i = 0;
 
-	// $top_id ist die menu_topid, ausser wenn es keine einträge unter $nav_id gibt ( = leer, nur beim 1. Durchlauf möglich)
+	// $top_id kann aus dem Array $child_array herausgelesen werden
+	// ausser wenn es keine einträge unter $nav_id gibt, das $child_array leer ist (nur beim 1. Mal möglich)
 	if(empty($child_array[0]["menu_topid"])) {
 		$top_id = $nav_id;
 	} else {
@@ -89,54 +102,59 @@ while (($next_topid != 0 || $next_topid != false))	{
 	}
 
 
-	//Erhöhung des $invlevels, da eine Stufe weiter oben
+	//Erhöhung des $invlevels, da eine Stufe weiter Richtung oben
 	$invlevel++;
 
-	$mysql->query("SELECT menu_ID, menu_topid, menu_name FROM menu WHERE menu_topid = $next_topid ORDER BY menu_position ASC");
+	$mysql->query("SELECT menu_ID, menu_topid, menu_name FROM menu WHERE menu_topid = $next_topid and `menu_display` != '0' ORDER BY menu_position ASC");
 	//Die Tabelle auslesen
 	while($subnav_data = $mysql->fetcharray()) {
+		
 		$root_array[$i] = array('menu_ID'=>$subnav_data["menu_ID"], 'menu_name'=>$subnav_data["menu_name"], 'menu_topid'=>$subnav_data["menu_topid"], 'level'=>$invlevel);
-
 		/**
 		 * //Wenn die menu_ID die Top_id des Child-Array ist, heisst das, 
 		 * menu_ID liegt direkt darüber
+		 * Z.B Eintrag 2.1
+		 * 			Eintrag 2.1.1
+		 * 			Eintrag 2.1.2
 		 * 
-		 * Array werden zusammengefügt und $i wird hochgezählt, damit nichts überschrieben wird
+		 * Eintrag 2.1 und Eintrag 2.1.1 liegen gerade übereinander
+		 * 
+		 * Array werden zusammengefügt.
+		 * Anzahl der Elemente wird in $i gespeichert, damit weder überschrieben wird noch sich eine Lücke bildet
 		 */
 		if($root_array[$i]["menu_ID"] == $top_id) {
 
 			$root_array = array_merge($root_array, $child_array);
-			$i = count($root_array);
 			//Minus 1, weil es sonst einen Zwischenraum gibt. Z.B. $root_array[2], dann $root_array[4]
-			$i = $i - 1;
+			$i = count($root_array) - 1;
 		}
 		$i++;
 	}
 
 	$child_array = $root_array;
 	$root_array = array();
+	
 	/**
 	 * Naechste top_id herausfinden 
 	 */
-
 	//Hier wird noch mit der alten $next_topid gerechnet. Die Topid vom höheren Menu wird gelesen
-	$mysql->query("SELECT menu_topid FROM menu WHERE menu_ID = $next_topid LIMIT 1");
+	$mysql->query("SELECT menu_topid FROM menu WHERE menu_ID = $next_topid and `menu_display` != '0' LIMIT 1");
 	$subnav_data = $mysql->fetcharray();
 	//Neues $next_topid
 	$next_topid = $subnav_data["menu_topid"];
 
 
 }
+//ENde Whileschleife
 
 
 /**
- * Die $invlevels müssen noch umgekehrt werden, weil das Tiefste jetzt das 1 ist.
- * Das oberste wird jetzt die kleinste Zahl und die wird immer grösser, je tiefer
- * man geht 
+ * Die $invlevels müssen noch umgekehrt werden. Momentan ist der tiefste Eintrags-Lebel 1, 
+ * aber der höchste Eintragslevel soll 1 werden
  */
 
-//Das höchste Level wird abgespeichtert
-$highlevel = $invlevel;
+//Das Anzahl Level wird abgespeichtert
+$anzlevel = $invlevel;
 
 $invlevel = 0;
 $number = count($child_array);
@@ -144,7 +162,7 @@ $number = count($child_array);
 //Die Umrechnunsschleife, die Levels werden neu gesetzt: Das Höchste jetzt das Tiefste und umgekehrt
 for($i = 0; $i < $number; $i++) {
 	$invlevel = $child_array[$i]['level'];
-	$child_array[$i]['level'] = $highlevel - $invlevel + 1;
+	$child_array[$i]['level'] = $anzlevel - $invlevel + 1;
 }
 
 //Die Subnav_array mit dem vollständigen child_array füllen
@@ -156,7 +174,7 @@ $smarty->assign("subnav", $subnav_array);
 
 
 /**
- * 
+ * Das komplizierte ist jetzt vorbei
  * ************** Menu Ende ***********
  * 
  */

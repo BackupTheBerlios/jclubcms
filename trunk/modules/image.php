@@ -1,6 +1,8 @@
 <?php
 
 /*-----------------------------------------------------------------
+* @author Simon Däster
+* @package JClubCMS
 * File: image.php
 * Classes: -
 * Requieres: PHP5
@@ -8,6 +10,7 @@
 * GRUNDSATZ:
 * "Befindet sich ein Bild im Ordner Gallery oder im Thumb, dann ist es dort richtig. D.h.
 *  es hat die richtige Grösse und sieht korrekt aus!!"
+* --> Kann zu Konflikt führen, wenn config.inc.php geändert wird
 *
 * Diese Datei (image.php= wird aufgerufen, um ein Bild darzustellen.
 * Sie fragt die Datenbank nach der übermittelten ID ab und erhält so die Bilddatei
@@ -21,9 +24,9 @@
 -------------------------------------------------------------------*/
 
 
-require_once('image.class.php');
-require_once('../config/config.inc.php');
-require_once('../includes/globals.php');
+require_once('./modules/image.class.php');
+require_once('./config/config.inc.php');
+require_once('./includes/globals.php');
 
 
 

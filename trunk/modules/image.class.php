@@ -1,6 +1,8 @@
 <?php
 
 /*-----------------------------------------------------------------
+* @author Simon Däster
+* @package JClubCMS
 * File: image.class.php
 * Classes: image
 * Requieres: PHP5

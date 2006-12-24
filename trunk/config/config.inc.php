@@ -19,12 +19,12 @@ $gallery_menuview = 2; //Wieviele Bilder Links und Rechts des aktuellen Bildes g
 //**Bild und Thumb
 
 //!!! Bilder sind stdmässig in originals abgespeichert, aber wenn sie zu gross sind, in gallery
-$dir_orgImage = "../graphics/originals/"; //Relativ zum Ordner Modules
-$dir_galImage = "../graphics/gallery/";  //Relativ zum Ordner Modules
+$dir_orgImage = "./graphics/originals/"; //Relativ zur Index-Datei
+$dir_galImage = "./graphics/gallery/";  //Relativ zur Index-Datei
 $image_maxheight = 600;
 $image_maxwidth = 600;
 
-$dir_thumb = "../graphics/gallery/thumbs/";  //Relativ zum Ordner Modules
+$dir_thumb = "./graphics/gallery/thumbs/";  //Relativ zur Index-Datei
 $thumb_maxheight = 150;
 $thumb_maxwidth = 150;
 

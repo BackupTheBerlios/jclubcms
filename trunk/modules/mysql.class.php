@@ -94,14 +94,29 @@ class mysql {
 	
 	/**
 	 * Liefert einen Datensatz als Array
-	 *
-	 * @return array|boolean
+	 * 
+	 * @param string[optional] $resulttype = "both"|"num"|"assoc"
+	 * @return array|boolean $data|false
 	 */
 	
-	public function fetcharray() {
+	public function fetcharray($resulttype = "both") {
+		
+		switch ($resulttype)
+		{
+			case "num":
+			$type = MYSQL_NUM;
+			break;
+			
+			case "assoc":
+			$type = MYSQL_ASSOC;
+			break;
+			
+			default:
+			$type = MYSQL_BOTH;				
+		}
 		
 		if(is_resource($this->result)) {
-			$data = mysql_fetch_array($this->result);
+			$data = mysql_fetch_array($this->result, $type);
 		} else {
 			return false;
 		}
