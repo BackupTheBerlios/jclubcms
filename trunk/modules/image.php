@@ -25,10 +25,6 @@
 
 
 require_once('./modules/image.class.php');
-require_once('./config/config.inc.php');
-require_once('./includes/globals.php');
-
-
 
 (isset($_GET['bild']) && $_GET['bild'] != "") ? $bild = (int)$_GET['bild'] : $bild = false;
 
@@ -48,13 +44,10 @@ if($bild)
 	//Überprüfung, ob ein Eintrag vorhanden ist
 	if(!empty($bild_mysql))
 	{
-
 		$img = new image($dir_orgImage.$bild_mysql['filename']);
-
 	}
 	else
 	{
-
 		$img = new image(""); //Fehlerbild ausgeben, weil kein Eintrag vorhanden ist
 		$img->create_image(240, 80, "Keine Id zu diesem Bild", "000000255", "200150080");
 		$img->send_image();
@@ -75,7 +68,7 @@ if($bild)
 			//Höhe-Breite-Verhältnis zum Weiterrechnen bestimmen
 			$verhaeltnis = $bild_data['height'] / $bild_data['width'];
 
-			//Neue Breite zuweisen (meist ist die zu gross) und neue Höhe berechnen
+			//Neue Breite zuweisen und neue Höhe berechnen
 			$bild_newwidth = $image_maxwidth;
 			$bild_newheight = floor($verhaeltnis * $bild_newwidth);		//Abrunden
 
@@ -86,13 +79,19 @@ if($bild)
 				$bild_newwidth = floor((1/$verhaeltnis) * $bild_newheight);	//Abrunden
 			}
 
+			//verkleinertes Bild in den Ordner speichern
 			$img->copy($bild_newwidth, $bild_newheight, $dir_galImage.$bild_mysql['filename']);
 		}
-
 		
+		
+		//Alte Instanz löschen
+		$img->__destruct();
+		
+		//Neue Instanz mit kleinem Bild
 		$img = new image($dir_galImage.$bild_mysql['filename']);
 	}
 
+	//Bild ausgeben
 	$img->send_image();
 	
 	

@@ -24,8 +24,8 @@ class pagesnav {
 	/**
 	 * Klassenkonstruktor
 	 *
-	 * @param int $number_entries
-	 * @param int $max_entries_pp
+	 * @param int $number_entries Anzahl der Einträge
+	 * @param int $max_entries_pp Einträge pro Seite
 	 */
 	public function __construct($number_entries, $max_entries_pp) {
 		$this->main_url = $_SERVER['_URI'];

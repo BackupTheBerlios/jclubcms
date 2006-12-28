@@ -85,7 +85,7 @@ class mysql {
 	/**
 	 * Sendet eine Anfrage an MySQL
 	 *
-	 * @param string $query
+	 * @param string $query Die Mysql-Eingabe
 	 */
 	
 	public function query($query) {

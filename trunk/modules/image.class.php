@@ -7,12 +7,12 @@
 * Classes: image
 * Requieres: PHP5
 *
-* Die Klasse image ist zuständig für Grafikfunktionen 
+* Die Klasse image ist zuständig für Grafikfunktionen
 * Sie speichert die Informationen über ein Bild ab, kann diese Informationen senden
 * und das Bild selber ausgeben
 * Wenn keine Bilddatei vorhanden ist, dann wird automatisch ein Fehlerbild erstellt
 * Um Thumbs zu erstellen, kann die Funktion "copy" verwendet werden.
-* "copy" kann auch verwendet werden, um das Bild selber zu verändern. 
+* "copy" kann auch verwendet werden, um das Bild selber zu verändern.
 * Dazu kann man einfach die Grössen belassen
 * !Achtung: Vorhandene Dateien werden ohne Abfrage überschrieben!!!
 *
@@ -98,7 +98,7 @@ class image {
 		eval("header(\"Content-type: image/$format\");");
 		eval("image$format(\$im);");
 	}
-	
+
 	/**
 	 * Ein Bild wird erstellt. 
 	 * Die Farben sind vorgegeben
@@ -151,7 +151,11 @@ class image {
 	 */
 
 	public function __destruct() {
-		;
+		$file = null;
+		$im = null;
+		$graphicformat = null;
+		$height = null;
+		$width = null;
 	}
 
 
@@ -162,7 +166,7 @@ class image {
 	------------------*/
 
 
-		/**
+	/**
 	 * Schaut, ob das Grafikformat unterstützt wird
 	 * Speichert das Grafikformat und die Bildressource
 	 * Speichert auch die Höhe und Breite
@@ -175,36 +179,36 @@ class image {
 
 		switch ($array_image[2]) {
 			case 1:
-			$this->graphicformat = "gif";
-			$this->im = imagecreatefromgif($this->file);
-			$supported = true;
-			break;
+				$this->graphicformat = "gif";
+				$this->im = imagecreatefromgif($this->file);
+				$supported = true;
+				break;
 
 			case 2:
-			$this->graphicformat = "jpeg";
-			$this->im = imagecreatefromjpeg($this->file);
-			$supported = true;
-			break;
+				$this->graphicformat = "jpeg";
+				$this->im = imagecreatefromjpeg($this->file);
+				$supported = true;
+				break;
 
 			case 3:
-			$this->graphicformat = "png";
-			$this->im = imagecreatefrompng($this->file);
-			$supported = true;
+				$this->graphicformat = "png";
+				$this->im = imagecreatefrompng($this->file);
+				$supported = true;
 
-			break;
+				break;
 
 			default:
 
-			$this->create_image(330, 26, "Dieses Format wird nicht unterstützt");
-			$this->send_image();
-			$supported = false;
+				$this->create_image(330, 26, "Dieses Format wird nicht unterstützt");
+				$this->send_image();
+				$supported = false;
 		}
 
 		if($supported) {
 			$this->width = $array_image[0];
 			$this->height = $array_image[1];
 		}
-		
+
 	}
 
 

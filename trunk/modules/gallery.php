@@ -15,7 +15,7 @@
  */
 
 
-//Nummern zuweisen oder false (1)
+//Nummern zuweisen oder false/1
 $gallery = isset($_GET['gallery']) ? ((int) $_GET['gallery']) : false;
 $pic = isset($_GET['pic']) ? ((int) $_GET['pic']) : false;
 $page = isset($_GET['page']) ? ((int) $_GET['page']) : 1;
@@ -31,7 +31,7 @@ if($gallery) {
 	//Ein paar Daten berechnen
 	$bildproseite = $gallery_pics_x * $gallery_pics_y;
 	$start = ($page-1)*$bildproseite;
-	//Korrekt
+
 	
 	//Einträge abrufen
 	$mysql->query("SELECT gallery_alben.name , gallery_alben.fid_parent, 
@@ -144,8 +144,7 @@ if($gallery) {
 	$microtime = microtime()-$microtime;
 	$microtime=round($microtime, 3);
 	$smarty->assign("generated_time", $microtime);
-	
-	//Korrekt
+
 }
 
 ?>

@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @author David und Simon Däster
+ * @author David Däster und Simon Däster
  * @package JClubCMS
  * Index.php
+ * 
  * Diese Seite ist für die Anzeig der Navigation veranwortlich
  * und lädt die notwendigen Module
  */
