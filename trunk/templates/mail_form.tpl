@@ -4,7 +4,7 @@
 		<table width = 100% class="content_tab">
 		</table>
 		Mail an {$reciver_name}:
-		<form method="post" action="?nav_id={$nav_id}&action=mail">
+		<form method="post" action="?nav_id={$nav_id}&action=mail&entry_id={$entry_id}">
 		<table cellpadding="0" cellspacing="0" align="center" class="content_tab">
 			<tr>
 			<td class="formailer_header" colspan="2"><input class="formailer_header_input" name="title" type="text" onclick="select()" value="{$entry_title}" />
