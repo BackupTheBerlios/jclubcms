@@ -58,22 +58,19 @@ class mailsend {
 	 */
 	public function mail_send_link($mysql_link) {
 		$hash = $this->mail_hash();
-		$control = $this->mail2db($mysql_link, $hash);
-		if ($control == true) {
-			$header = 'From: Jclub.ch <mail_query@jclub.ch>'."\r\n"
-					.'X-Mailer: PHP/' . phpversion();
-			$msg = "Um die Mail zu senden benutzen Sie bitte folgenden Link:\r\n"
-		           ."http://www.jclub.ch/index.php?mail=".$hash;
-			//$empfaenger = utf8_encode($this->mail_sender_name." <".$this->mail_sender.">");
-			//$betreff = utf8_encode("Bestätigung des Mail-Sendens");
-			$empfaenger = $this->mail_sender;
-			$betreff = 'Bestätigung des Mail-Sendens';
-			$failer = $this->mail_send($empfaenger,$betreff,$msg,$header);
-			return $failer;
-		}
-		else {
-			return false;
-		}
+		$this->mail2db($mysql_link, $hash);
+		
+                $header = 'From: Jclub.ch <mail_query@jclub.ch>'."\r\n"
+                          .'X-Mailer: PHP/' . phpversion();
+                $msg = "Um die Mail zu senden benutzen Sie bitte folgenden Link:\r\n"
+                   ."http://www.jclub.ch/index.php?mail=".$hash;
+                //$empfaenger = utf8_encode($this->mail_sender_name." <".$this->mail_sender.">");
+                //$betreff = utf8_encode("Bestätigung des Mail-Sendens");
+                $empfaenger = $this->mail_sender;
+                $betreff = 'Bestätigung des Mail-Sendens';
+                $failer = $this->mail_send($empfaenger,$betreff,$msg,$header);
+                return $failer;
+		
 	}
 	/**
 	 * Zust�ndig f�r das Versenden von Mails
