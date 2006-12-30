@@ -221,6 +221,13 @@ switch ($page_data["menu_pagetyp"]) {
 	$smarty->display("index.tpl");
 
 	break;
+	/**
+	 * Für den Mailversand auszulösen wird hierrüber gearbeitet.
+	 * Von hier werden die wichtigen Classen geöffnet, die Mail verschickt (sofern vorhanden)
+	 * und der DB-Eintrag gelöscht.
+	 */
+	case "mail":
+		
 }
 
 ?>

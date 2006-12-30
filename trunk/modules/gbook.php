@@ -1,24 +1,25 @@
 <?php
 	/**
-	 * @author David Däster
+	 * @author David Dï¿½ster
 	 * @package JClubCMS
-	 * Dieses Modul ist für die Anzeige des Gästebuches verantwortlich,
-	 * für die Naviagtion im Gästebuch, und auch noch für das Erstellen
-	 * der Einträge.
+	 * Dieses Modul ist fÃ¼r die Anzeige des Gï¿½stebuches verantwortlich,
+	 * fï¿½r die Naviagtion im Gï¿½stebuch, und auch noch fï¿½r das Erstellen
+	 * der Eintrï¿½ge.
 	 *
-	 * Sie ist _NICHT_ zuständig für die Administration des Gästebuches
+	 * Sie ist _NICHT_ zustï¿½ndig fï¿½r die Administration des Gï¿½stebuches
 	 */
 	require_once("./config/gbook_textes.inc.php");
-	require_once("./modules/mail.class.php");
-	require_once("./modules/pagesnav.class.php");	
+	require_once("./modules/mailverify.class.php");
+	require_once("./modules/pagesnav.class.php");
+	require_once("./modules/formular_check.class.php");	
 	
 	//$smarty->debugging = true;
 	
 	/**
-	 * Es gibt 3 Actionen, die getrennt ausgeführt werden.
-	 * 1. New: Ein neuer Eintrag in das Gästebuch
+	 * Es gibt 3 Actionen, die getrennt ausgefï¿½hrt werden.
+	 * 1. New: Ein neuer Eintrag in das Gï¿½stebuch
 	 * 2. Comment: Einen Kommentar zu einem bestehenden Eintrag
-	 * 3. default: Ansehen des Gästebuches.
+	 * 3. default: Ansehen des GÃ¤stebuches.
 	 */
 	$action = "";
 	if (isset($_GET["action"]) && $_GET["action"] != "") {
@@ -27,7 +28,7 @@
 
 	switch ($action) {
 		/**
-		 * Einen neuen Eintrag erstellen in das Gästebuch.
+		 * Einen neuen Eintrag erstellen in das Gï¿½stebuch.
 		 */
 		case "new":
 			$button_click = $_REQUEST["btn_send"];
@@ -46,41 +47,44 @@
 				 * - Einen Namen
 				 * - eine EMail-Adresse
 				 */
+				$formular_check = new formular_check();
+				$failer_return = 0;
+				$feedback_content = "";
 				
-				if ($title == "" || $title==$gbook_entry_title) {
+				if ($formular_check->field_check($title, $gbook_entry_title) == false) {
+					$feedback_content .= $gbook_title_onerror_de."<br />";
+					$failer_return++;
+				} 
+				
+				if ($formular_check->field_check($content, $gbook_entry_content) == false) {
+					$feedback_content .= $gbook_content_onerror_de."<br />";
+					$failer_return++;
+				}
+				
+				if ($formular_check->field_check($name, $gbook_entry_name) == false) {
+					$feedback_content .= $gbook_name_onerror_de."<br />";
+					$failer_return++;
+				}
+				
+				if ($formular_check->field_check($email, $gbook_entry_email) == false) {
+					$feedback_content .= $gbook_email_onerror_de."<br />";
+					$failer_return++;
+				}
+				
+				if ($failer_return > 0) {
 					$feedback_title= $gbook_onerror_title_de;
-					$feedback_content= $gbook_title_onerror_de;
 					$feedback_link = "JavaScript:history.back()";
 					$feedback_linktext = "Zur&uuml;ck";
 				}
-				elseif ($content == "" || $content == $gbook_entry_content) {
-					$feedback_title= $gbook_onerror_title_de;
-					$feedback_content= $gbook_content_onerror_de;
-					$feedback_link = "JavaScript:history.back()";
-					$feedback_linktext = "Zur&uuml;ck";
-				}
-				elseif ($name == "" || $name == $gbook_entry_name) {
-					$feedback_title= $gbook_onerror_title_de;
-					$feedback_content= $gbook_name_onerror_de;
-					$feedback_link = "JavaScript:history.back()";
-					$feedback_linktext = "Zur&uuml;ck";
-				}
-				elseif ($email == "" || $email == $gbook_entry_email) {
-					$feedback_title= $gbook_onerror_title_de;
-					$feedback_content= $gbook_email_onerror_de;
-					$feedback_link = "JavaScript:history.back()";
-					$feedback_linktext = "Zur&uuml;ck";
-				}
-						else {
+				else {
 					/**
-					 * Wenn die angegebene HP nicht verändert wurde, soll der Eintrag leer sein.
+					 * Wenn die angegebene HP nicht verï¿½ndert wurde, soll der Eintrag leer sein.
 					 */
 					if ($hp == $gbook_entry_hp) {
 					$hp = "";
 					}
-					$mailcheck = new mail($email);
+					$mailcheck = new mailverify($email);
 					$mailerrorcode = $mailcheck->mailcheck();
-					echo "<b>".$mailerrorcode."</b>";
 					if ($mailerrorcode > 0) {
 						$feedback_title= $gbook_onerror_title_de;
 						$feedback_content= $gbook_email_checkfaild_de;
@@ -91,7 +95,7 @@
 						
 					$mysql->query("INSERT INTO gbook (gbook_time, gbook_name, gbook_email, gbook_hp, gbook_title, gbook_content) VALUES (NOW(), '$name', '$email', '$hp', '$title', '$content')");
 					$feedback_title= $gbook_allright_title;
-					$feedback_content= "Dein Eintrag wurde gespeichert, und steht sofort im GB zur Verfügung";
+					$feedback_content= "Dein Eintrag wurde gespeichert, und steht sofort im GB zur Verf&uuml;gung";
 					$feedback_link = "?nav_id=$nav_id";
 					$feedback_linktext = $gbook_allright_link;
 					}
@@ -125,9 +129,9 @@
 			break;
 		/**
 		 * Erstellt einen Kommentar zu einem bestehenden Eintrag.
-		 * Als Referenz wird immer der Haupteintrag genommen, um so effizient zusammenhängende Beiträge zu suchen.
+		 * Als Referenz wird immer der Haupteintrag genommen, um so effizient zusammenhï¿½ngende Beitrï¿½ge zu suchen.
 		 * 
-		 * Weiter wird auch der zu kommentierende Beitrag mit allen Kommentären nochmal angezeigt,
+		 * Weiter wird auch der zu kommentierende Beitrag mit allen Kommentï¿½ren nochmal angezeigt,
 		 * um sich den Text besser zurecht zu legen.
 		 */
 		case "comment":
@@ -149,22 +153,28 @@
 				 * - Einen Namen
 				 * - eine EMail-Adresse
 				 */
-							
-				if ($content == "" || $content == $gbook_entry_content) {
-					$feedback_title= $gbook_onerror_title_de;
-					$feedback_content= $gbook_content_onerror_de;
-					$feedback_link = "JavaScript:history.back()";
-					$feedback_linktext = "Zur&uuml;ck";
+											
+				$formular_check = new formular_check();
+				$failer_return = 0;
+				$feedback_content = "";
+				
+				if ($formular_check->field_check($content, $gbook_entry_content) == false) {
+					$feedback_content .= $gbook_content_onerror_de."<br />";
+					$failer_return++;
 				}
-				elseif ($name == "" || $name == $gbook_entry_name) {
-					$feedback_title= $gbook_onerror_title_de;
-					$feedback_content= $gbook_name_onerror_de;
-					$feedback_link = "JavaScript:history.back()";
-					$feedback_linktext = "Zur&uuml;ck";
+				
+				if ($formular_check->field_check($name, $gbook_entry_name) == false) {
+					$feedback_content .= $gbook_name_onerror_de."<br />";
+					$failer_return++;
 				}
-				elseif ($email == "" || $email == $gbook_entry_email) {
+				
+				if ($formular_check->field_check($email, $gbook_entry_email) == false) {
+					$feedback_content .= $gbook_email_onerror_de."<br />";
+					$failer_return++;
+				}
+				
+				if ($failer_return > 0) {
 					$feedback_title= $gbook_onerror_title_de;
-					$feedback_content= $gbook_email_onerror_de;
 					$feedback_link = "JavaScript:history.back()";
 					$feedback_linktext = "Zur&uuml;ck";
 				}
@@ -173,12 +183,12 @@
 					//HP-Check
 					//Sichern
 					/**
-					 * Wenn die angegebene HP nicht verändert wurde, soll der Eintrag leer sein.
+					 * Wenn die angegebene HP nicht verï¿½ndert wurde, soll der Eintrag leer sein.
 					 */
 					if ($hp == $gbook_entry_hp) {
 					$hp = "";
 					}
-					$mailcheck = new mail($email);
+					$mailcheck = new mailverify($email);
 					$mailerrorcode = $mailcheck->mailcheck();
 					if ($mailerrorcode > 0) {
 						$feedback_title= $gbook_onerror_title_de;
@@ -189,7 +199,7 @@
 					else {
 						$mysql->query("INSERT INTO gbook (gbook_ref_ID, gbook_time, gbook_name, gbook_email, gbook_hp, gbook_title, gbook_content) VALUES ('$ref_ID', NOW(), '$name', '$email', '$hp', '$title', '$content')");
 						$feedback_title= $gbook_allright_title;
-						$feedback_content= "Dein Eintrag wurde gespeichert, und steht sofort im GB zur Verfügung";
+						$feedback_content= "Dein Eintrag wurde gespeichert, und steht sofort im GB zur Verf&uuml;gung";
 						$feedback_link = "?nav_id=$nav_id";
 						$feedback_linktext = $gbook_allright_link;
 					}
@@ -202,9 +212,9 @@
 			}
 			else {
 				/**
-				 * Hier befindet man sich, wenn der Kommentieren-Link vom Gästebuch aufgerufen
+				 * Hier befindet man sich, wenn der Kommentieren-Link vom Gï¿½stebuch aufgerufen
 				 * wurde.
-				 * Hier wird der Gästebucheintrag ausgelesen, nochmal ausgegeben, entweder
+				 * Hier wird der Gï¿½stebucheintrag ausgelesen, nochmal ausgegeben, entweder
 				 * unterhalb oder oberhalb des Formulars.
 				 */
 				
@@ -219,8 +229,8 @@
 				while ($main_entries = $mysql->fetcharray()) {
 					
 					/**
-					* Für die Kommentare wird ein eigenes Array gebraucht, welches unten
-					* abgefüllt wird.
+					* Fï¿½r die Kommentare wird ein eigenes Array gebraucht, welches unten
+					* abgefï¿½llt wird.
 					* Dieses Array wird nachher in das $gbook_array=>comments gelegt, und
 					* nachher an Smarty weitergereicht.
 				    */
@@ -235,7 +245,7 @@
 					}
 					
 					/**
-					* $gbook_array beinhaltet alle Daten der Gästebucheinträge und deren
+					* $gbook_array beinhaltet alle Daten der Gï¿½stebucheintrï¿½ge und deren
 					* Kommentare (comments=>$comment_array) der angezeigten Seite
 					* 
 					* Smarty liest nachher das Array mit Hilfe von {foreach} aus
@@ -264,13 +274,82 @@
 				$mod_tpl = "gbook_new_comment.tpl";
 			}
 			break;
-			
 		/**
-		 * Liest alle Beiträge aus dem Gästebuch aus.
-		 * Zuerst werden nur die Haupteinträge ausgelesen, und nachher Rekursiv die
-		 * dazugehörigen Kommentare.
+		 * Ist die Mail-Funktion speziell fï¿½r das Gï¿½stebuch.
+		 * @uses mail_send.class.php
+		 */
+		case "mail":
+			$button_click = $_REQUEST["btn_send"];
+			$content = $_REQUEST["content"];
+			$name = $_REQUEST["name"];
+			$email = $_REQUEST["email"];
+			$gbook_id = $_REQUEST["entry_id"];
+			
+			$com_mysql = new mysql($db_server, $db_name, $db_user, $db_pw);
+			
+			if($button_click == "Senden") {
+				$formular_check = new formular_check();
+				$failer_return = 0;
+				$feedback_content = "";
+				
+				if ($formular_check->field_check($title, $mail_entry_title) == false) {
+					$feedback_content .= $gbook_title_onerror_de."<br />";
+					$failer_return++;
+				} 
+				
+				if ($formular_check->field_check($content, $mail_entry_content) == false) {
+					$feedback_content .= $gbook_content_onerror_de."<br />";
+					$failer_return++;
+				}
+				
+				if ($formular_check->field_check($name, $mail_entry_name) == false) {
+					$feedback_content .= $gbook_name_onerror_de."<br />";
+					$failer_return++;
+				}
+				
+				if ($formular_check->field_check($email, $mail_entry_email) == false) {
+					$feedback_content .= $gbook_email_onerror_de."<br />";
+					$failer_return++;
+				}
+				
+				if ($failer_return > 0) {
+					$feedback_title= $gbook_onerror_title_de;
+					$feedback_link = "JavaScript:history.back()";
+					$feedback_linktext = "Zur&uuml;ck";
+				}
+				else {
+					$com_mysql->query("SELECT gbook_name, gbook_mail FROM gbook WHERE gbook_ID = $gbook_id");
+					$mail_reciver = $com_mysql->fetcharray();
+					$mail = new mailsend($mail_reciver, $mail_sender_name, $mail_sender, $mail_titel, $mail_content);
+					
+					$mail_hash = $mail->mail_hash();
+					$mail->mail_send_link($mail_hash);
+					$com_mysql->query("INSERT INTO mailto ($mail_reciver, $mail_reciver_name, $mail_sender, $mail_sender_name, $mail_titel, $mail_content, $mail_hash)");
+				}
+				$smarty->assign("feedback_content", $feedback_content);
+				$smarty->assign("link", $feedback_link);
+				$smarty->assign("link_text", $feedback_linktext);
+				$mod_tpl = "feedback.tpl";
+			}
+			else {
+				$com_mysql->query("SELECT gbook_name FROM gbook WHERE gbook_ID = $nav_id");
+				$gbook_name = $com_mysql->fetcharray();
+				$smarty->assign("reciver_name", $gbook_name);
+				$smarty->assign("entry_title", $gbook_entry_title);
+				$smarty->assign("entry_content", $gbook_entry_content);
+				$smarty->assign("entry_name", $gbook_entry_name);
+				$smarty->assign("entry_email", $gbook_entry_email);
+				$mod_tpl = "mail_form.tpl";
+			}
+			
+			$com_mysql->__destruct();
+		break;
+		/**
+		 * Liest alle Beitrï¿½ge aus dem Gï¿½stebuch aus.
+		 * Zuerst werden nur die Haupteintrï¿½ge ausgelesen, und nachher Rekursiv die
+		 * dazugehï¿½rigen Kommentare.
 		 * 
-		 * Abgefüllt werden die Daten alle in ein Array, welches an Smarty weitergegeben
+		 * Abgefï¿½llt werden die Daten alle in ein Array, welches an Smarty weitergegeben
 		 * wird, und die Daten nachher ausgibt.
 		 */
 		default:
@@ -307,18 +386,18 @@
 			  	$comment_array = array();
 			  	$j = 0;
 			  	while ($comment_entries = $com_mysql->fetcharray()) {
-					$comment_array[$j] = array('comment_title'=>$comment_entries["comment_gbook_title"], 'comment_content'=>$comment_entries["gbook_content"], 'comment_name'=>$comment_entries["gbook_name"], 'comment_email'=>$comment_entries["gbook_email"], 'comment_hp'=>$comment_entries["gbook_hp"], 'comment_time'=>$timeparser->time_output($comment_entries["gbook_time"]));
+					$comment_array[$j] = array('comment_title'=>$comment_entries["comment_gbook_title"], 'comment_content'=>$comment_entries["gbook_content"], 'comment_name'=>$comment_entries["gbook_name"], 'comment_email'=>$comment_entries["gbook_ID"], 'comment_hp'=>$comment_entries["gbook_hp"], 'comment_time'=>$timeparser->time_output($comment_entries["gbook_time"]));
 					$j++;   
 				}
 				
 				/**
-				* $gbook_array beinhaltet alle Daten der Gästebucheinträge und deren
+				* $gbook_array beinhaltet alle Daten der Gï¿½stebucheintrï¿½ge und deren
 				* Kommentare (comments=>$comment_array) der angezeigten Seite
 				* 
 				* Smarty liest nachher das Array mit Hilfe von {foreach} aus
 				*/
 				
-				$gbook_array[$i] = array('ID'=>$main_entries["gbook_ID"], 'title'=>$main_entries["gbook_title"], 'content'=>$main_entries["gbook_content"], 'name'=>$main_entries["gbook_name"], 'email'=>$main_entries["gbook_email"], 'hp'=>$main_entries["gbook_hp"], 'time'=>$timeparser->time_output($main_entries["gbook_time"]), 'comments'=>$comment_array);
+				$gbook_array[$i] = array('ID'=>$main_entries["gbook_ID"], 'title'=>$main_entries["gbook_title"], 'content'=>$main_entries["gbook_content"], 'name'=>$main_entries["gbook_name"], 'email'=>$main_entries["gbook_ID"], 'hp'=>$main_entries["gbook_hp"], 'time'=>$timeparser->time_output($main_entries["gbook_time"]), 'comments'=>$comment_array);
 				$gbook_IDs[$i] = $main_entries["gbook_ID"];
 				$i++;
 				
@@ -333,7 +412,7 @@
 			$pages_nav->__destruct();
 			
 			/**
-			 * Array der Seiten, wobei der Text immer eines höher ist als der Link.
+			 * Array der Seiten, wobei der Text immer eines hï¿½her ist als der Link.
 			 * Page 0 = Seite 1; Page 1 = Seite 2;
 			 */
 			

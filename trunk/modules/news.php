@@ -9,7 +9,7 @@
 	* Sie ist _NICHT_ zuständig für das erstellen und verändern der News,
 	* und auch nicht für Administration des Gästebuches
 	*/
-	require_once("./modules/mail.class.php");
+	require_once("./modules/mailsend.class.php");
 	require_once("./modules/pagesnav.class.php");	
 	
 	//$smarty->debugging = true;

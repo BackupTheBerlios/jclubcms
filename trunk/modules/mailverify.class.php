@@ -2,20 +2,18 @@
 /** 
  * @author David Däster
  * @package JClubCMS
- * File: mail.class.php
- * Classes: mailcheck
+ * File: mailverify.class.php
+ * Classes: mailverify
  * Requieres: PHP5
  *
  * Die Klasse ist zuständig zur Überprüfung der EMail-Adresse auf ihre
- * tauglichkeit, und auch zum versenden von Check-Mails im Mailformularen
+ * tauglichkeit.
  *
  * Funktionsbeschrieb:
- * Soll das Mailchecking sowie das Mail-Versenden für die verschiedenen
- * Modulen zentral Verwalten. Generell sollen 2 Möglichkeiten über diese Klasse
- * erledigt werden:
- * - MailVersand für Mailforumlare z.B. an Gästebuchuser's und an Members von JClub
+ * Soll das Mailchecking für die verschiedenen Modulen zentral Verwalten.
+ * - Gültigkeitscheck der EMail-Adressen.
  */
-class mail {
+class mailverify {
 
 	private $mail = null;
 	private $domain = null;
