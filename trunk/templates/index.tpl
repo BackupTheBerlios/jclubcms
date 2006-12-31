@@ -42,7 +42,7 @@
     {include file="$file"|default:"main.tpl"}
     <div id="footerContainer">
         <div id="footer">
-          &copy; by Schalk
+          Lizenz: GPL
         </div>
     </div>
   </body>

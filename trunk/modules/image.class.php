@@ -97,6 +97,8 @@ class image {
 
 		eval("header(\"Content-type: image/$format\");");
 		eval("image$format(\$im);");
+		exit;
+		
 	}
 
 	/**
