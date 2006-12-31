@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost
--- Erstellungszeit: 31. Dezember 2006 um 15:15
+-- Erstellungszeit: 31. Dezember 2006 um 17:30
 -- Server Version: 5.0.27
 -- PHP-Version: 5.2.0
 -- 
@@ -18,12 +18,12 @@
 
 CREATE TABLE `bilder` (
   `bilder_ID` tinyint(4) NOT NULL auto_increment,
-  `filename` varchar(200) collate latin1_general_ci NOT NULL default '',
+  `filename` varchar(200) collate utf8_unicode_ci NOT NULL,
   `height` int(11) NOT NULL default '0',
   `width` int(11) NOT NULL default '0',
   `erstellt` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`bilder_ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=29 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=29 ;
 
 -- 
 -- Daten für Tabelle `bilder`
@@ -88,10 +88,10 @@ INSERT INTO `content` (`content_ID`, `content_title`, `content_text`) VALUES
 
 CREATE TABLE `gallery_alben` (
   `ID` tinyint(4) NOT NULL auto_increment,
-  `name` varchar(50) collate latin1_general_ci NOT NULL default '',
+  `name` varchar(50) collate utf8_unicode_ci NOT NULL,
   `fid_parent` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=8 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8 ;
 
 -- 
 -- Daten für Tabelle `gallery_alben`
@@ -116,9 +116,9 @@ CREATE TABLE `gallery_eintraege` (
   `fid_bild` tinyint(4) NOT NULL default '0',
   `fid_album` tinyint(4) NOT NULL default '0',
   `sequence` tinyint(11) NOT NULL default '0',
-  `comment` text character set latin1 collate latin1_german1_ci NOT NULL,
+  `comment` text collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
 
 -- 
 -- Daten für Tabelle `gallery_eintraege`
@@ -142,14 +142,14 @@ CREATE TABLE `gbook` (
   `gbook_ID` int(11) NOT NULL auto_increment,
   `gbook_ref_ID` int(11) NOT NULL default '0',
   `gbook_time` datetime NOT NULL default '0000-00-00 00:00:00',
-  `gbook_name` varchar(50) collate latin1_general_ci NOT NULL default '',
-  `gbook_email` varchar(50) collate latin1_general_ci NOT NULL default '',
-  `gbook_hp` varchar(50) collate latin1_general_ci NOT NULL default '',
-  `gbook_content` text collate latin1_general_ci NOT NULL,
-  `gbook_title` varchar(50) collate latin1_general_ci NOT NULL default '',
+  `gbook_name` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `gbook_email` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `gbook_hp` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `gbook_content` text collate utf8_unicode_ci NOT NULL,
+  `gbook_title` varchar(50) collate utf8_unicode_ci NOT NULL,
   `gbook_smile_ID` int(11) NOT NULL default '0',
   PRIMARY KEY  (`gbook_ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=13 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=13 ;
 
 -- 
 -- Daten für Tabelle `gbook`
@@ -177,17 +177,17 @@ INSERT INTO `gbook` (`gbook_ID`, `gbook_ref_ID`, `gbook_time`, `gbook_name`, `gb
 
 CREATE TABLE `mailto` (
   `mailto_ID` int(11) NOT NULL auto_increment,
-  `mailto_reciver_name` varchar(50) collate latin1_german1_ci NOT NULL default '',
-  `mailto_reciver_email` varchar(50) collate latin1_german1_ci NOT NULL default '',
-  `mailto_sender_name` varchar(50) collate latin1_german1_ci NOT NULL default '',
-  `mailto_sender_email` varchar(50) collate latin1_german1_ci NOT NULL default '',
-  `mailto_subject` varchar(50) collate latin1_german1_ci NOT NULL default '',
-  `mailto_content` varchar(255) collate latin1_german1_ci NOT NULL default '',
-  `mailto_hash` varchar(32) collate latin1_german1_ci NOT NULL default '',
+  `mailto_reciver_name` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `mailto_reciver_email` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `mailto_sender_name` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `mailto_sender_email` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `mailto_subject` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `mailto_content` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `mailto_hash` varchar(32) collate utf8_unicode_ci NOT NULL,
   `mailto_time` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`mailto_ID`),
   FULLTEXT KEY `mailto_content` (`mailto_content`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci AUTO_INCREMENT=9 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
 
 -- 
 -- Daten für Tabelle `mailto`
@@ -211,18 +211,18 @@ INSERT INTO `mailto` (`mailto_ID`, `mailto_reciver_name`, `mailto_reciver_email`
 
 CREATE TABLE `members` (
   `members_ID` int(11) NOT NULL auto_increment COMMENT 'De weisi wär du bisch',
-  `members_name` varchar(50) collate latin1_general_ci NOT NULL default '' COMMENT 'Längwilig, für Bürokrate',
-  `members_spitzname` varchar(50) collate latin1_general_ci NOT NULL default '' COMMENT 'Toll, zum Fertigmache',
+  `members_name` varchar(50) collate utf8_unicode_ci NOT NULL COMMENT 'Längwilig, für Bürokrate',
+  `members_spitzname` varchar(50) collate utf8_unicode_ci NOT NULL COMMENT 'Toll, zum Fertigmache',
   `members_birthday` date NOT NULL default '0000-00-00' COMMENT 'Alter schützt vor Torheit nicht',
-  `members_song` varchar(100) collate latin1_general_ci NOT NULL default '' COMMENT 'Ke Musiggschmack?',
-  `members_hobby` varchar(100) collate latin1_general_ci NOT NULL default '' COMMENT 'Längwilig',
-  `members_food` varchar(100) collate latin1_general_ci NOT NULL default '' COMMENT 'Grusig',
-  `members_job` varchar(100) collate latin1_general_ci NOT NULL default '' COMMENT 'Verdiensch so weni Cholä?',
-  `members_motto` varchar(200) collate latin1_general_ci NOT NULL default '' COMMENT 'Haut di mou dra!',
-  `members_mail` varchar(100) collate latin1_general_ci NOT NULL default '' COMMENT 'so läng?',
-  `members_FIDimage` varchar(200) collate latin1_general_ci NOT NULL COMMENT 'hesch ou scho besser usgseh',
+  `members_song` varchar(100) collate utf8_unicode_ci NOT NULL COMMENT 'Ke Musiggschmack?',
+  `members_hobby` varchar(100) collate utf8_unicode_ci NOT NULL COMMENT 'Längwilig',
+  `members_food` varchar(100) collate utf8_unicode_ci NOT NULL COMMENT 'Grusig',
+  `members_job` varchar(100) collate utf8_unicode_ci NOT NULL COMMENT 'Verdiensch so weni Cholä?',
+  `members_motto` varchar(200) collate utf8_unicode_ci NOT NULL COMMENT 'Haut di mou dra!',
+  `members_mail` varchar(100) collate utf8_unicode_ci NOT NULL COMMENT 'so läng?',
+  `members_FIDimage` varchar(200) collate utf8_unicode_ci NOT NULL COMMENT 'hesch ou scho besser usgseh',
   PRIMARY KEY  (`members_ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci COMMENT='Die Mitgliedertabelle' AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Die Mitgliedertabelle' AUTO_INCREMENT=5 ;
 
 -- 
 -- Daten für Tabelle `members`
@@ -252,31 +252,31 @@ CREATE TABLE `menu` (
   PRIMARY KEY  (`menu_ID`),
   KEY `menu_topid` (`menu_topid`),
   KEY `menu_page` (`menu_page`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=43 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=44 ;
 
 -- 
 -- Daten für Tabelle `menu`
 -- 
 
 INSERT INTO `menu` (`menu_ID`, `menu_topid`, `menu_position`, `menu_name`, `menu_page`, `menu_pagetyp`, `menu_modvar`, `menu_display`) VALUES 
-(25, 0, 1, 'Test1', 1, 'pag', '', '1'),
+(25, 0, 1, 'Home', 1, 'pag', '', '1'),
 (26, 0, 2, 'Test2', 3, 'pag', '', '1'),
-(27, 25, 1, 'SubTest1.1', 2, 'pag', '', '1'),
-(28, 25, 2, 'SubTest1.2', 12, 'pag', '', '1'),
-(29, 25, 3, 'SubTest1.3', 13, 'pag', '', '1'),
-(30, 25, 4, 'SubTest1.4', 14, 'pag', '', '1'),
+(28, 26, 2, '', 12, 'pag', '', '1'),
+(29, 26, 3, 'SubTest1.3', 13, 'pag', '', '1'),
+(30, 26, 4, 'SubTest1.4', 14, 'pag', '', '1'),
 (31, 26, 1, 'SubTest2.1', 21, 'pag', '', '1'),
 (32, 26, 2, 'SubTest2.2', 22, 'pag', '', '1'),
 (33, 0, 3, 'G&auml;stebuch', 1, 'mod', '', '1'),
 (34, 28, 1, 'SubTest1.2.1', 26, 'pag', '', '1'),
 (35, 31, 1, 'Subtest2.1.1', 27, 'pag', '', '1'),
 (36, 0, 4, 'G&auml;stebuch2', 2, 'mod', '', '1'),
-(37, 34, 0, 'SubTest1.2.1.1', 1, 'pag', '', '1'),
+(37, 34, 5, 'SubTest1.2.1.1', 1, 'pag', '', '1'),
 (38, 28, 2, 'SubTest1.2.2', 1, 'pag', '', '1'),
 (39, 35, 1, 'Subtest2.1.1.1', 27, 'pag', '', '1'),
 (40, 0, 2, 'Gallery', 3, 'mod', '', '1'),
 (41, 0, 1, 'image', 4, 'mod', '', '0'),
-(42, 0, 0, 'Mitglieder', 5, 'mod', '', '1');
+(42, 0, 6, 'Mitglieder', 5, 'mod', '', '1'),
+(43, 0, 7, 'News', 6, 'mod', '', '1');
 
 -- --------------------------------------------------------
 
@@ -286,10 +286,10 @@ INSERT INTO `menu` (`menu_ID`, `menu_topid`, `menu_position`, `menu_name`, `menu
 
 CREATE TABLE `modules` (
   `modules_ID` int(11) NOT NULL auto_increment,
-  `modules_name` varchar(45) collate latin1_general_ci NOT NULL default '',
+  `modules_name` varchar(45) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`modules_ID`),
   UNIQUE KEY `modules` (`modules_name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
 
 -- 
 -- Daten für Tabelle `modules`
@@ -300,7 +300,34 @@ INSERT INTO `modules` (`modules_ID`, `modules_name`) VALUES
 (2, 'gbook2.php'),
 (3, 'gallery.php'),
 (4, 'image.php'),
-(5, 'members.php');
+(5, 'members.php'),
+(6, 'news.php');
+
+-- --------------------------------------------------------
+
+-- 
+-- Tabellenstruktur für Tabelle `news`
+-- 
+
+CREATE TABLE `news` (
+  `news_ID` int(11) NOT NULL auto_increment,
+  `news_ref_ID` int(11) NOT NULL default '0',
+  `news_time` datetime NOT NULL,
+  `news_name` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `news_email` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `news_hp` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `news_content` text collate utf8_unicode_ci NOT NULL,
+  `news_title` varchar(50) collate utf8_unicode_ci NOT NULL,
+  `news_smile_ID` int(11) NOT NULL,
+  PRIMARY KEY  (`news_ID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+-- 
+-- Daten für Tabelle `news`
+-- 
+
+INSERT INTO `news` (`news_ID`, `news_ref_ID`, `news_time`, `news_name`, `news_email`, `news_hp`, `news_content`, `news_title`, `news_smile_ID`) VALUES 
+(1, 0, '2006-10-18 22:53:52', 'Name', 'mail@jclub.ch', 'http://www.jclub.ch', '1. News.\r\nSchön, oder?', '1. Newseintrag', 0);
 
 -- --------------------------------------------------------
 
@@ -310,9 +337,9 @@ INSERT INTO `modules` (`modules_ID`, `modules_name`) VALUES
 
 CREATE TABLE `smilies` (
   `smilies_ID` int(11) NOT NULL auto_increment,
-  `smilies_file` varchar(50) collate latin1_general_ci NOT NULL default '',
+  `smilies_file` varchar(50) collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`smilies_ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 -- 
 -- Daten für Tabelle `smilies`
