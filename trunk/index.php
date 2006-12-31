@@ -58,7 +58,7 @@ $page_id = $page_data["menu_page"];
  */
 
 
-/** 
+/**
  * Der gerade aktive Navigationslink und alle direkt darüberliegende Links
  * werden im Array $root_array gespeichert.
  * 
@@ -109,7 +109,7 @@ while (($next_topid != 0 || $next_topid != false))	{
 	$mysql->query("SELECT menu_ID, menu_topid, menu_name FROM menu WHERE menu_topid = $next_topid and `menu_display` != '0' ORDER BY menu_position ASC");
 	//Die Tabelle auslesen
 	while($subnav_data = $mysql->fetcharray()) {
-		
+
 		$root_array[$i] = array('menu_ID'=>$subnav_data["menu_ID"], 'menu_name'=>$subnav_data["menu_name"], 'menu_topid'=>$subnav_data["menu_topid"], 'level'=>$invlevel);
 		/**
 		 * //Wenn die menu_ID die Top_id des Child-Array ist, heisst das, 
@@ -134,7 +134,7 @@ while (($next_topid != 0 || $next_topid != false))	{
 
 	$child_array = $root_array;
 	$root_array = array();
-	
+
 	/**
 	 * Naechste top_id herausfinden 
 	 */
@@ -146,7 +146,7 @@ while (($next_topid != 0 || $next_topid != false))	{
 
 
 }
-//ENde Whileschleife
+//Ende Whileschleife
 
 
 /**
@@ -187,47 +187,49 @@ $smarty->assign("subnav", $subnav_array);
  * ob es ein Modul oder eine Page ist. Einfach erweiterbar durch einen weiteren enum-Eintrag in der DB
  * und die Erweiterung hier
  */
+if(isset($_GET['mail'])) {
+	/**
+   * Für den Mailversand auszulösen wird hierrüber gearbeitet.
+   * Von hier werden die wichtigen Classen geöffnet, die Mail verschickt (sofern vorhanden)
+   * und der DB-Eintrag gelöscht.
+   */
+	;
+} else {
+	switch ($page_data["menu_pagetyp"]) {
+		case "pag":
+			$mysql->query("SELECT * FROM content WHERE content_ID = $page_id");
+			$data = $mysql->fetcharray();
+			$content_title = $data["content_title"];
+			$content_text = $data["content_text"];
 
-switch ($page_data["menu_pagetyp"]) {
-	case "pag":
-	$mysql->query("SELECT * FROM content WHERE content_ID = $page_id");
-	$data = $mysql->fetcharray();
-	$content_title = $data["content_title"];
-	$content_text = $data["content_text"];
+			if ($content_title == "" && $content_text == "") {
+				$content_title = "JClub-Noch kein Inhalt";
+				$content_text = "Keine Daten gefunden";
+			}
 
-	if ($content_title == "" && $content_text == "") {
-		$content_title = "JClub-Noch kein Inhalt";
-		$content_text = "Keine Daten gefunden";
+			/**
+           * Das Index.tpl ist das Haupttemplate. In ihm werden die anderen Templates gespeichert.
+           * Hier das main.tpl
+           */
+
+			$smarty->assign("content_title", $content_title);
+			$smarty->assign("content_text", $content_text);
+			$smarty->assign("file", "main.tpl");
+			$smarty->display("index.tpl");
+			break;
+
+		case "mod":
+			$mysql->query("SELECT * FROM modules WHERE modules_ID = $page_id");
+			$module = $mysql->fetcharray();
+			include ("./modules/".$module["modules_name"]);
+
+			/* $mod_tpl aus der include-Datei */
+			$smarty->assign("file", $mod_tpl);
+			$smarty->display("index.tpl");
+
+			break;
+
+
 	}
-
-	/**
-	 * Das Index.tpl ist das Haupttemplate. In ihm werden die anderen Templates gespeichert.
-	 * Hier das main.tpl
-	 */
-
-	$smarty->assign("content_title", $content_title);
-	$smarty->assign("content_text", $content_text);
-	$smarty->assign("file", "main.tpl");
-	$smarty->display("index.tpl");
-	break;
-
-	case "mod":
-	$mysql->query("SELECT * FROM modules WHERE modules_ID = $page_id");
-	$module = $mysql->fetcharray();
-	include ("./modules/".$module["modules_name"]);
-
-	/* $mod_tpl aus der include-Datei */
-	$smarty->assign("file", $mod_tpl);
-	$smarty->display("index.tpl");
-
-	break;
-	/**
-	 * Für den Mailversand auszulösen wird hierrüber gearbeitet.
-	 * Von hier werden die wichtigen Classen geöffnet, die Mail verschickt (sofern vorhanden)
-	 * und der DB-Eintrag gelöscht.
-	 */
-	case "mail":
-		
 }
-
 ?>
