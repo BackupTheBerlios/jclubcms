@@ -146,7 +146,7 @@ if($gallery) {
 
 	//Smarty-Variablen
 	$smarty->assign("img_link", $img_ID);
-	$smarty->assign("album", $album);
+	$smarty->assign("album", $album_ID);
 	$smarty->assign("local_link", $nav_id);
 	$smarty->assign("ID_bild", $bild);
 	$smarty->assign("prev_bild", $items_array[0]['fid_bild']);
