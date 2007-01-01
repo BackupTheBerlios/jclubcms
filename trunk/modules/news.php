@@ -22,7 +22,6 @@
 	
 		case "mail":
 			require_once("./modules/mailsend.class.php");  //Für das versenden vom senden des Mails
-			require_once("./modules/mailverify.class.php"); //Überprüfen der möglichen Mail-Adresse
 			require_once("./modules/formular_check.class.php"); //Überprüfen der Formularfelder
 			require_once("./config/mail_textes.inc.php"); //Standard-Texte für Mailformular und -fehler
 			

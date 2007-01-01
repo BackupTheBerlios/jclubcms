@@ -121,11 +121,7 @@
 				$smarty->assign("entry_email", $gbook_entry_email);
 				$smarty->assign("entry_hp", $gbook_entry_hp);
 				$mod_tpl = "gbook_new_entry.tpl";
-			}
-			/**
-			 * Destrukt der angelegten MySQL-Objekten
-			 */
-			$com_mysql->disconnect();	 
+			} 
 			break;
 		/**
 		 * Erstellt einen Kommentar zu einem bestehenden Eintrag.
