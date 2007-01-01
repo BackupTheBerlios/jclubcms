@@ -41,17 +41,18 @@
 
 class mysql {
 
-	private $mysql_server;
-	private $mysql_db;
-	private $mysql_user;
-	private $mysql_pw;
-	private $new_c;
+	private $mysql_server = null;
+	private $mysql_db = null;
+	private $mysql_user = null;
+	private $mysql_pw = null;
+	private $new_c = null;
 
-	private $server_link;
-	private $result;
+	private $server_link = null;
+	private $result = null;
 
-	private $error_text;
-	private $error_no;
+	private $error = false;
+	private $error_text = "";
+	private $error_no = "";
 
 	/**
 	 * Das Konstrukt dieser Klasse
@@ -75,52 +76,58 @@ class mysql {
 
 	/**
 	 * Öffnet die Verbindung zum Server (wird beim Erstellen des Objekts
-	 * aufgerufen
+	 * aufgerufen)
+	 * Gibt bei Erfolg true zurück, sonst false
 	 *
+	 * @return boolean
 	 */
 
 	private function connect() {
 
 		$this->server_link = mysql_connect($this->mysql_server, $this->mysql_user, $this->mysql_pw, $this->new_c);
 		if(!is_resource($this->server_link)) {
+			$this->error = true;
 			$this->error_text = mysql_error();
 			$this->error_no = mysql_errno();
 			return false;
 		}
 
 		if(!mysql_select_db($this->mysql_db, $this->server_link)) {
-			$this->error_text = mysql_error();
-			$this->error_no = mysql_errno();
-			return false;
-		} else {
-			return true;
-		}
-
-	}
-
-	/**
-	 * Sendet eine Anfrage an MySQL
-	 *
-	 * @param string $query Die Mysql-Eingabe
-	 */
-
-	public function query($query) {
-		$this->result = @mysql_query($query, $this->server_link);
-
-		if(!is_resource($this->result)) {
+			$this->error = true;
 			$this->error_text = mysql_error($this->server_link);
 			$this->error_no = mysql_errno($this->server_link);
 			return false;
 		} else {
 			return true;
 		}
+
 	}
 
 	/**
-	 * Liefert einen Datensatz als Array
+	 * Sendet eine Anfrage an MySQL. Bei Erfolg liefert sie true, sonst false
+	 *
+	 * @param string $query Die Mysql-Eingabe
+	 * @return true|false
+	 */
+
+	public function query($query) {
+		$this->result = @mysql_query($query, $this->server_link);
+
+		if(!is_resource($this->result)) {
+			$this->error = true;
+			$this->error_text = "query-result is not a resource in fucntion query";
+			$this->error_no = "no error-number";
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	/**
+	 * Liefert bei Erfolg einen Datensatz als Array, sonst false
 	 * 
 	 * @param string[optional] $resulttype = "both"|"num"|"assoc"
-	 * @return array|boolean $data|false
+	 * @return array|false 
 	 */
 
 	public function fetcharray($resulttype = "both") {
@@ -145,8 +152,9 @@ class mysql {
 		if(is_array($data)) {
 			return $data;
 		} else {
-			$this->error_text = mysql_error($this->server_link);
-			$this->error_no = mysql_errno($this->server_link);
+			$this->error = true;
+			$this->error_text = "return value is not a array in function fetcharray";
+			$this->error_no = "no error-number";
 			return false;
 		}
 
@@ -155,14 +163,15 @@ class mysql {
 	/**
 	 * Liefert die Anzahl der Datensätze im Ergebnis
 	 *
-	 * @return int
+	 * @return int|false
 	 */
 
 	public function num_rows() {
 		$number = @mysql_num_rows($this->result, $type);
 		if($number == false) {
-			$this->error_text = mysql_error($this->server_link);
-			$this->error_no = mysql_errno($this->server_link);
+			$this->error = true;
+			$this->error_text = "return value is not a number in function num_rows";
+			$this->error_no = "no error-number";
 			return false;
 		}
 		return $number;
@@ -172,21 +181,33 @@ class mysql {
 	/**
 	 * Liefert die Anzahl betroffener Datensätze einer vorhergehenden MySQL Operation
 	 *
-	 * @return int
+	 * @return int|false
 	 */
 
 	public function affected_rows() {
 		$number = mysql_affected_rows($this->result);
 		if($number == false) {
-			$this->error_text = mysql_error($this->server_link);
-			$this->error_no = mysql_errno($this->server_link);
+			$this->error = true;
+			$this->error_text = "return value is not a number in function affected_rows";
+			$this->error_no = "no error-number";
 			return false;
 		}
 		return $number;
 	}
 	
+	/**
+	 * Wenn es einen Fehler gegeben hat, liefert die Funktion den Fehlertext und Fehlernummer
+	 * Hat es keinen Fehler gegeben, liefert sie false
+	 *
+	 * @return array|false
+	 */
+	
 	public function get_error() {
-		return array($this->error_no, $this->error_text);
+		if($this->error) {
+			return array($this->error_no, $this->error_text);
+		} else {
+			return false;
+		}
 	}
 
 
@@ -197,10 +218,11 @@ class mysql {
 	 */
 
 	public function disconnect() {
-		if(mysql_close($this->server_link))
+		if(!mysql_close($this->server_link))
 		{
-			$this->error_text = mysql_error($this->server_link);
-			$this->error_no = mysql_errno($this->server_link);
+			$this->error = true;
+			$this->error_text = "conncect-reult is not a ressource in function disconnect";
+			$this->error_no = "no error-number";
 			return false;
 		}
 

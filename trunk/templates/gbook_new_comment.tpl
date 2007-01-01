@@ -1,4 +1,3 @@
-<div id="background_content">&nbsp;</div>
 <div id="contentContainer">
 	<div id="content">
 		<table width = 100% class="content_tab">
@@ -16,10 +15,10 @@
 			{$book.content}
 			</td>
 			<td class="content_tab_content2">
-			<img src="templates/style/icons/date.png" /> {$book.time}<br />
-			<img src="templates/style/icons/user.png" /> {$book.name}<br />
-			<a href="mailto:{$book.email}"><img src="templates/style/icons/email.png" /> E-mail</a><br />
-			<a href="{$book.hp}"><img src="templates/style/icons/link.png" /> Website</a>
+			<img src="templates/style/icons/date.gif" /> {$book.time}<br />
+			<img src="templates/style/icons/user.gif" /> {$book.name}<br />
+			<a href="mailto:{$book.email}"><img src="templates/style/icons/email.gif" /> E-mail</a><br />
+			<a href="{$book.hp}"><img src="templates/style/icons/link.gif" /> Website</a>
 			</td>
 			</tr>
 			{* Innere Schlaufe für das Auslesen der Kommentare *}
@@ -30,10 +29,10 @@
 			{$comment.comment_content}
 			</td>
 			<td class="content_tab_content2">
-			<img src="templates/style/icons/date.png" /> {$comment.comment_time}<br />
-			<img src="templates/style/icons/user.png" /> {$comment.comment_name}<br />
-			<a href="mailto:{$comment.comment_email}"><img src="templates/style/icons/email.png" /> E-mail</a><br />
-			<a href="{$comment.comment_hp}"><img src="templates/style/icons/link.png" /> Website</a>
+			<img src="templates/style/icons/date.gif" /> {$comment.comment_time}<br />
+			<img src="templates/style/icons/user.gif" /> {$comment.comment_name}<br />
+			<a href="mailto:{$comment.comment_email}"><img src="templates/style/icons/email.gif" /> E-mail</a><br />
+			<a href="{$comment.comment_hp}"><img src="templates/style/icons/house.gif" /> Website</a>
 			</td>
 			</tr>
 			{/foreach}
@@ -52,9 +51,9 @@
 			<td class="formailer_txt">
 			<textarea class="formailer_txt_textarea" name="content" onclick="select()" cols="38" rows="5">{$entry_content}</textarea></td>
 			<td class="formailer_adress">
-			<img src="templates/style/icons/user.png" /> <input class="formailer_adress_input" onclick="select()" name="name" type="text" value="{$entry_name}" /><br />
-			<img src="templates/style/icons/email.png" /> <input class="formailer_adress_input" onclick="select()" name="email" type="text" value="{$entry_email}" /><br />
-			<img src="templates/style/icons/link.png" /> <input class="formailer_adress_input" onclick="select()" name="hp" type="text" value="{$entry_hp}" /></a>
+			<img src="templates/style/icons/user.gif" /> <input class="formailer_adress_input" onclick="select()" name="name" type="text" value="{$entry_name}" /><br />
+			<img src="templates/style/icons/email.gif" /> <input class="formailer_adress_input" onclick="select()" name="email" type="text" value="{$entry_email}" /><br />
+			<img src="templates/style/icons/house.gif" /> <input class="formailer_adress_input" onclick="select()" name="hp" type="text" value="{$entry_hp}" /></a>
 			</td>
 			</tr>
 			<tr>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost
--- Erstellungszeit: 31. Dezember 2006 um 17:30
+-- Erstellungszeit: 01. Januar 2007 um 17:35
 -- Server Version: 5.0.27
 -- PHP-Version: 5.2.0
 -- 
@@ -19,44 +19,64 @@
 CREATE TABLE `bilder` (
   `bilder_ID` tinyint(4) NOT NULL auto_increment,
   `filename` varchar(200) collate utf8_unicode_ci NOT NULL,
-  `height` int(11) NOT NULL default '0',
-  `width` int(11) NOT NULL default '0',
   `erstellt` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`bilder_ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=29 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=72 ;
 
 -- 
 -- Daten für Tabelle `bilder`
 -- 
 
-INSERT INTO `bilder` (`bilder_ID`, `filename`, `height`, `width`, `erstellt`) VALUES 
-(2, 'ende_phase_1_01.jpg', 0, 0, '2006-07-23 01:01:45'),
-(3, 'ende_phase_1_02.jpg', 0, 0, '2006-07-23 01:06:45'),
-(4, 'ende_phase_1_03.jpg', 0, 0, '2006-07-23 01:07:37'),
-(5, 'ende_phase_1_04.jpg', 0, 0, '2006-07-23 01:07:37'),
-(6, 'ende_phase_1_05.jpg', 0, 0, '2006-07-23 01:07:37'),
-(7, 'vor_umbau_01.jpg', 0, 0, '2006-07-23 01:10:06'),
-(8, 'vor_umbau_02.jpg', 0, 0, '2006-07-23 01:10:06'),
-(9, 'vor_umbau_03.jpg', 0, 0, '2006-07-23 01:10:06'),
-(10, 'vor_umbau_04.jpg', 0, 0, '2006-07-23 01:10:06'),
-(11, 'vor_umbau_05.jpg', 0, 0, '2006-07-23 01:10:06'),
-(12, 'vor_umbau_06.jpg', 0, 0, '2006-07-23 01:10:06'),
-(13, 'wand_1_01.jpg', 0, 0, '2006-07-23 01:10:45'),
-(14, 'wand_1_02.jpg', 0, 0, '2006-07-23 01:10:45'),
-(15, 'wand_1_03.jpg', 0, 0, '2006-07-23 01:10:45'),
-(16, 'wand_1_04.jpg', 0, 0, '2006-07-23 01:10:45'),
-(17, 'wand_1_05.jpg', 0, 0, '2006-07-23 01:10:45'),
-(18, 'wand_1_06.jpg', 0, 0, '2006-07-23 01:10:45'),
-(19, 'wand_1_07.jpg', 0, 0, '2006-07-23 01:10:45'),
-(20, 'wand_1_08.jpg', 0, 0, '2006-07-23 01:10:45'),
-(21, 'wand_2_01.jpg', 0, 0, '2006-07-23 01:11:17'),
-(22, 'wand_2_02.jpg', 0, 0, '2006-07-23 01:11:17'),
-(23, 'wand_2_03.jpg', 0, 0, '2006-07-23 01:11:17'),
-(24, 'wand_2_04.jpg', 0, 0, '2006-07-23 01:11:17'),
-(25, 'wand_2_05.jpg', 0, 0, '2006-07-23 01:11:17'),
-(26, 'wand_2_06.jpg', 0, 0, '2006-07-23 01:11:17'),
-(27, 'wand_2_07.jpg', 0, 0, '2006-07-23 01:11:17'),
-(28, 'testbild.JPG', 0, 0, '2006-11-15 22:10:39');
+INSERT INTO `bilder` (`bilder_ID`, `filename`, `erstellt`) VALUES 
+(2, 'ende_phase_1_01.jpg', '2006-07-23 01:01:45'),
+(3, 'ende_phase_1_02.jpg', '2006-07-23 01:06:45'),
+(4, 'ende_phase_1_03.jpg', '2006-07-23 01:07:37'),
+(5, 'ende_phase_1_04.jpg', '2006-07-23 01:07:37'),
+(6, 'ende_phase_1_05.jpg', '2006-07-23 01:07:37'),
+(7, 'vor_umbau_01.jpg', '2006-07-23 01:10:06'),
+(8, 'vor_umbau_02.jpg', '2006-07-23 01:10:06'),
+(9, 'vor_umbau_03.jpg', '2006-07-23 01:10:06'),
+(10, 'vor_umbau_04.jpg', '2006-07-23 01:10:06'),
+(11, 'vor_umbau_05.jpg', '2006-07-23 01:10:06'),
+(12, 'vor_umbau_06.jpg', '2006-07-23 01:10:06'),
+(13, 'wand_1_01.jpg', '2006-07-23 01:10:45'),
+(14, 'wand_1_02.jpg', '2006-07-23 01:10:45'),
+(15, 'wand_1_03.jpg', '2006-07-23 01:10:45'),
+(16, 'wand_1_04.jpg', '2006-07-23 01:10:45'),
+(17, 'wand_1_05.jpg', '2006-07-23 01:10:45'),
+(18, 'wand_1_06.jpg', '2006-07-23 01:10:45'),
+(19, 'wand_1_07.jpg', '2006-07-23 01:10:45'),
+(20, 'wand_1_08.jpg', '2006-07-23 01:10:45'),
+(21, 'wand_2_01.jpg', '2006-07-23 01:11:17'),
+(22, 'wand_2_02.jpg', '2006-07-23 01:11:17'),
+(23, 'wand_2_03.jpg', '2006-07-23 01:11:17'),
+(24, 'wand_2_04.jpg', '2006-07-23 01:11:17'),
+(25, 'wand_2_05.jpg', '2006-07-23 01:11:17'),
+(26, 'wand_2_06.jpg', '2006-07-23 01:11:17'),
+(27, 'wand_2_07.jpg', '2006-07-23 01:11:17'),
+(28, 'testbild.JPG', '2006-11-15 22:10:39'),
+(29, 'jg_programm06_04_lq.jpg', '2006-12-31 18:03:02'),
+(30, 'wand_1_010.jpg', '2007-01-01 04:28:10'),
+(31, 'wand_1_015.jpg', '2007-01-01 04:28:10'),
+(71, 'photo074.jpg', '2007-01-01 04:36:19'),
+(70, 'photo073.jpg', '2007-01-01 04:36:19'),
+(69, 'photo072.jpg', '2007-01-01 04:36:19'),
+(68, 'photo071.jpg', '2007-01-01 04:36:19'),
+(67, 'photo070.jpg', '2007-01-01 04:36:19'),
+(66, 'photo069.jpg', '2007-01-01 04:36:19'),
+(65, 'photo068.jpg', '2007-01-01 04:36:19'),
+(64, 'photo067.jpg', '2007-01-01 04:36:19'),
+(63, 'photo066.jpg', '2007-01-01 04:36:19'),
+(62, 'photo065.jpg', '2007-01-01 04:36:19'),
+(61, 'photo064.jpg', '2007-01-01 04:36:19'),
+(60, 'photo063.jpg', '2007-01-01 04:36:19'),
+(59, 'photo062.jpg', '2007-01-01 04:36:19'),
+(58, 'photo061.jpg', '2007-01-01 04:36:19'),
+(57, 'photo060.jpg', '2007-01-01 04:36:19'),
+(56, 'photo059.jpg', '2007-01-01 04:36:19'),
+(55, 'photo058.jpg', '2007-01-01 04:36:19'),
+(54, 'photo057.jpg', '2007-01-01 04:36:19'),
+(53, 'photo056.jpg', '2007-01-01 04:36:19');
 
 -- --------------------------------------------------------
 
@@ -76,9 +96,9 @@ CREATE TABLE `content` (
 -- 
 
 INSERT INTO `content` (`content_ID`, `content_title`, `content_text`) VALUES 
-(1, 'Small-Test', 'Dies ist nur ein bischen Text... wirklich nur wenig :-D'),
-(2, 'Mehr Text', 'Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.'),
-(3, 'Max-Text', 'Sehr viel Text<br /><br />Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online. Dies ist ein langer Text und noch Sinnloser als der untere. Die Seite ist aber auch noch nicht online.');
+(1, 'Willkommen', '<p>Wir begr&uuml;ssen euch herzlich auf der Seite des J-Club''s aus Balsthal-Thal.<br />\r\n    <center>\r\n       <a href="./index.php?nav_id=44"><img src="index.php?nav_id=41&thumb=29"></a>\r\n	<br />\r\n        <br />\r\n        <script src=''http://www.nikodemus.net/free.php?cart-write'' type=''text/javascript''></script>\r\n     </center>'),
+(2, 'Über uns', '<b>Wer seit ihr?</b><br />\r\nWir sind eine Gruppe junger Menschen aus verschiedenen Berufsschichten mit einem brennenden Herzen für Jesus.<br />\r\n<b>Und was macht ihr?</b><br />\r\nUnsere Absicht ist es, den Teenies das Evangelium auf moderne Art und Weise zu verkünden.<br />\r\n<b>Und was macht ihr an euren Abenden?</b><br />\r\nUm den Teenies zeitgemässe Worship-Musik bieten zu können, haben wir eine eigene JugendBand auf die Beine gestellt, welche schon an diversen Gemeindeveranstaltungen gespielt hat.\r\nDank der Gründung dieser Band haben wir die Möglichkeit die JG-Abende mit Worship zu starten<br />\r\n<b>Danke für das kurze Interview</b><br />\r\nBitte'),
+(3, 'Programm', '<div style="margin-left:5px"><br>\r\n                  <a target="_blank" href="./index.php?nav_id=41&bild=29"><img src="./index.php?nav_id=41&bild=29" alt="JG-Programm"></a><br>\r\n  Was uns noch fehlt bist..... <b>DU</b><br></div>');
 
 -- --------------------------------------------------------
 
@@ -118,7 +138,7 @@ CREATE TABLE `gallery_eintraege` (
   `sequence` tinyint(11) NOT NULL default '0',
   `comment` text collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=51 ;
 
 -- 
 -- Daten für Tabelle `gallery_eintraege`
@@ -130,7 +150,29 @@ INSERT INTO `gallery_eintraege` (`ID`, `fid_bild`, `fid_album`, `sequence`, `com
 (3, 9, 1, 3, ''),
 (4, 10, 1, 4, ''),
 (5, 11, 1, 5, ''),
-(6, 12, 1, 6, '');
+(6, 12, 1, 6, ''),
+(50, 74, 6, 22, ''),
+(49, 73, 6, 21, ''),
+(48, 72, 6, 20, ''),
+(47, 71, 6, 19, ''),
+(46, 70, 6, 18, ''),
+(45, 69, 6, 17, ''),
+(44, 68, 6, 16, ''),
+(43, 67, 6, 15, ''),
+(42, 66, 6, 14, ''),
+(41, 65, 6, 13, ''),
+(40, 64, 6, 12, ''),
+(39, 63, 6, 11, ''),
+(38, 62, 6, 10, ''),
+(37, 61, 6, 9, ''),
+(36, 60, 6, 8, ''),
+(35, 59, 6, 7, ''),
+(34, 58, 6, 6, ''),
+(33, 57, 6, 5, ''),
+(32, 56, 6, 4, ''),
+(31, 55, 6, 3, ''),
+(30, 54, 6, 2, ''),
+(29, 53, 6, 1, '');
 
 -- --------------------------------------------------------
 
@@ -149,7 +191,7 @@ CREATE TABLE `gbook` (
   `gbook_title` varchar(50) collate utf8_unicode_ci NOT NULL,
   `gbook_smile_ID` int(11) NOT NULL default '0',
   PRIMARY KEY  (`gbook_ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=13 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=14 ;
 
 -- 
 -- Daten für Tabelle `gbook`
@@ -167,7 +209,8 @@ INSERT INTO `gbook` (`gbook_ID`, `gbook_ref_ID`, `gbook_time`, `gbook_name`, `gb
 (9, 8, '2006-09-19 20:23:52', 'Simon Holunder', 'tja', '', 'Kommentar scheint toll zu klappen', '', 0),
 (10, 0, '2006-12-28 15:49:43', 'Test-Fritz', 'test@google.com', '', 'Ein Testeintrag direkt aufm Server', 'NÃ¤chster Eintrag aufm Server', 0),
 (11, 10, '2006-12-28 15:53:53', 'Test-Fritz', 'test@google.com', '', 'Test-Comment', '', 0),
-(12, 0, '2006-12-30 17:42:41', 'Dave', 'dfd1985@gmail.com', '', 'Dein Text zum testen', 'Zum Testen', 0);
+(12, 0, '2006-12-30 17:42:41', 'Dave', 'dfd1985@gmail.com', '', 'Dein Text zum testen', 'Zum Testen', 0),
+(13, 0, '2007-01-01 04:38:05', 'für Simon', 'fuer@simon.de', '', 'Für Simon', 'Für Simon', 0);
 
 -- --------------------------------------------------------
 
@@ -222,7 +265,7 @@ CREATE TABLE `members` (
   `members_mail` varchar(100) collate utf8_unicode_ci NOT NULL COMMENT 'so läng?',
   `members_FIDimage` varchar(200) collate utf8_unicode_ci NOT NULL COMMENT 'hesch ou scho besser usgseh',
   PRIMARY KEY  (`members_ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Die Mitgliedertabelle' AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Die Mitgliedertabelle' AUTO_INCREMENT=13 ;
 
 -- 
 -- Daten für Tabelle `members`
@@ -230,9 +273,16 @@ CREATE TABLE `members` (
 
 INSERT INTO `members` (`members_ID`, `members_name`, `members_spitzname`, `members_birthday`, `members_song`, `members_hobby`, `members_food`, `members_job`, `members_motto`, `members_mail`, `members_FIDimage`) VALUES 
 (1, 'Benjamin Schläpfer', 'Bebu', '1982-03-06', 'Open the eyes of my heart', 'JG, Musizieren, Sport', 'Lassagne', 'Student an der STH Basel', 'What Would Jesus Do??', '', '8'),
-(2, 'Raphael Schläpfer', 'Wäili', '1984-01-17', 'Blessed be the name of the LORD', 'Sport, PC', 'Chinesisch', 'Drogist', '-', '', '9'),
+(5, 'Soraya Brügger', 'surli', '1987-11-04', 'Chünig vo mym Härz', 'Klavierspielen, Reiten, JG, lesen', 'Salat', 'Köchin (in Ausbildung)', '', '', ''),
 (3, 'David Däster', 'Dave', '1985-04-22', 'Watching Over You', 'JG, PC, Sport, Musik', 'Broccoli', 'Informatiker', 'Pray Until Something Happens!', '', '10'),
-(4, 'Lukas Schläpfer', 'Lüdi', '1987-09-19', 'Lord I lift your name on high', 'Gamen, JG, PC, Sport', 'Lassagne', 'kaufmännischer Angestellter (in Ausbildung)', '-', '', '11');
+(4, 'Lukas Schläpfer', 'Lüdi', '1987-09-19', 'Lord I lift your name on high', 'Gamen, JG, PC, Sport', 'Lassagne', 'kaufmännischer Angestellter (in Ausbildung)', '-', '', '11'),
+(6, 'Simon Däster', 'Simon', '1989-01-25', 'The days of Elijah', 'JS, JG, PC, Freundin, Musik', '', 'Schüler', '', '', ''),
+(7, 'Daniel Schenk', 'Dani', '1989-09-26', '-', 'Klettern, Jungschar', '-', 'Polymechaniker (in Ausbildung)', '-', '', ''),
+(8, 'Marco Flück', 'Marco', '1989-12-14', '-', 'Jungschar, Ping-Pong, JG, Skifahren', '-', 'Schüler', '-', '', ''),
+(9, 'Jonas Däster', 'Schalk', '1990-05-24', 'Chönig vo mim Härz', 'Jungschar, Klettern', 'Raclette', 'kaufmännischer Angestellter (in Ausbildung)', 'Jesus lebt! Wer''s glaubt wird selig!', '', ''),
+(10, 'Anna Gasser', 'Anna', '1991-03-21', 'Chönig vo mim Härz', 'lesen, in der Natur sein, Musik hören', 'Lasagne', '', '-', '', ''),
+(11, 'Samuel Bader', 'Sämi', '1991-10-09', 'sick and tired', 'Fussball, Hockey, PC, JG', 'Schnipo', 'Schüler', '-', '', ''),
+(12, 'Raphael Däster', '? (Alpha)', '1991-12-24', 'Awesome God', 'Sport, JG, Jungschi', 'Lasagne', 'Schüler', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -252,7 +302,7 @@ CREATE TABLE `menu` (
   PRIMARY KEY  (`menu_ID`),
   KEY `menu_topid` (`menu_topid`),
   KEY `menu_page` (`menu_page`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=44 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=45 ;
 
 -- 
 -- Daten für Tabelle `menu`
@@ -260,23 +310,13 @@ CREATE TABLE `menu` (
 
 INSERT INTO `menu` (`menu_ID`, `menu_topid`, `menu_position`, `menu_name`, `menu_page`, `menu_pagetyp`, `menu_modvar`, `menu_display`) VALUES 
 (25, 0, 1, 'Home', 1, 'pag', '', '1'),
-(26, 0, 2, 'Test2', 3, 'pag', '', '1'),
-(28, 26, 2, '', 12, 'pag', '', '1'),
-(29, 26, 3, 'SubTest1.3', 13, 'pag', '', '1'),
-(30, 26, 4, 'SubTest1.4', 14, 'pag', '', '1'),
-(31, 26, 1, 'SubTest2.1', 21, 'pag', '', '1'),
-(32, 26, 2, 'SubTest2.2', 22, 'pag', '', '1'),
-(33, 0, 3, 'G&auml;stebuch', 1, 'mod', '', '1'),
-(34, 28, 1, 'SubTest1.2.1', 26, 'pag', '', '1'),
-(35, 31, 1, 'Subtest2.1.1', 27, 'pag', '', '1'),
-(36, 0, 4, 'G&auml;stebuch2', 2, 'mod', '', '1'),
-(37, 34, 5, 'SubTest1.2.1.1', 1, 'pag', '', '1'),
-(38, 28, 2, 'SubTest1.2.2', 1, 'pag', '', '1'),
-(39, 35, 1, 'Subtest2.1.1.1', 27, 'pag', '', '1'),
-(40, 0, 2, 'Gallery', 3, 'mod', '', '1'),
-(41, 0, 1, 'image', 4, 'mod', '', '0'),
-(42, 0, 6, 'Mitglieder', 5, 'mod', '', '1'),
-(43, 0, 7, 'News', 6, 'mod', '', '1');
+(26, 0, 2, 'Über uns', 2, 'pag', '', '1'),
+(33, 0, 7, 'G&auml;stebuch', 1, 'mod', '', '1'),
+(44, 0, 5, 'Programm', 3, 'pag', '', '1'),
+(40, 0, 8, 'Gallery', 3, 'mod', '', '1'),
+(41, 0, 100, 'image', 4, 'mod', '', '0'),
+(42, 0, 4, 'Mitglieder', 5, 'mod', '', '1'),
+(43, 0, 3, 'News', 6, 'mod', '', '1');
 
 -- --------------------------------------------------------
 

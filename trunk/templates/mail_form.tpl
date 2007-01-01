@@ -1,4 +1,3 @@
-<div id="background_content">&nbsp;</div>
 <div id="contentContainer">
 	<div id="content">
 		<table width = 100% class="content_tab">

@@ -1,12 +1,17 @@
-body {
-	background-color: #FEDA8D;
+body{
+	background-color: #FFD775;
+	margin-left: 0%;
+	margin-right: 0%;
 	margin-top: 0px;
+	margin: bottom: 0px;
 }
+
+
 a:link, a:visited {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	text-decoration: underline; 
-	color: #FF9900
+	color: #FF6600;
 }
 a:hover {
 	text-decoration: none;
@@ -16,77 +21,82 @@ img {
 	border: 0px;
 	vertical-align: middle;
 }
+
+
+#page {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	margin: auto;
+}
+
 #header {
-   position:absolute;
-   top:0px;
-	left: 4%;
-   width: 92%;
-   padding:0px;
-	height: 100px;
-   margin:0px;
-   background-image: url(images/banner1.png);
-	background-color: #505050;
+	position: absolute;
+	height: 120px;
+	width: 100%;
+	background-image: url(./images/banner1.png);
 	border-left: 1px solid #505050;
 	border-right: 1px solid #505050;
-	z-index: 2;
+	z-index: 8;
 }
+
 #navigationContainer {
-   position: absolute;
-   top:100px;
-	left: 4%;
-   width: 92%;
-   padding:2.5px 0px 0px 0px;
+	position: absolute;
+	top: 120px;
 	height: 25px;
-   margin:0px;
-   background-color: #FCAB03;
+	width: 100%;
+	background-color: #FCAB03;
 	border-bottom: 1px solid #BF8202;
 	border-left: 1px solid #BF8202;
 	border-right: 1px solid #BF8202;
-	z-index: 2;
+	z-index: 10;
 }
+
 #navigation a:link, #navigation a:visited {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	font-weight: bolder;
 	text-decoration: none;
 	color: #A67D2A;
-	padding: 5px 10px 5px 18px;
+	padding: 0px 12px 2px 18px;
+	line-height: 20px;
 	background-image: url(images/nav1.png);
 	background-repeat: no-repeat;
 	background-position: left;
 }
+
 #navigation a:hover {
 	color: #505050;
 	background-image: url(images/nav2.png);
 	background-repeat: no-repeat;
 	background-position: left;
 }
+
 #subnavContainer {
-   position:absolute;
-   top:125px;
-   left: 4%;
-   width: 15%;
+	position: absolute;
+	top: 145px;
+	width: 200px;
 	padding: 10px 0px 10px 0px;
-   margin:0px;
-   background-color: #FCAB03;
+	background-color: #FCAB03;
 	border-right: 1px solid #BF8202;
 	border-left: 1px solid #BF8202;
 	border-bottom: 1px solid #BF8202;
-	z-index: 1;
+	z-index: 9;
 }
 
 .subnav a:link, .subnav a:visited {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	text-decoration: none;
-	line-height: 15px; 
+	line-height: 18px; 
 	color: #A67D2A;
-	padding: 1px 15px 1px 15px;
+	padding: 0px 5px 0px 15px;
 	display: block;
 	background-image: url(images/subnav.png);
 	background-repeat: no-repeat;
 	background-position: left;
 }
+
 .subnav a:hover {
 	color: #505050;
 	background-image: url(images/subnav1-2.png);
@@ -97,11 +107,12 @@ img {
 .subnav2 a:link, .subnav2 a:visited {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 10px;
-	font-weight: normal;
+	text-decoration: none;
+	line-height: 17px; 
 	color: #A67D2A;
-	padding: 2px 15px 2px 32px;
+	padding: 0px 5px 0px 30px;
 	display: block;
-	background-image: url(images/subnav2.png);
+	background-image: url(images/subnav.png);
 	background-repeat: no-repeat;
 	background-position: left;
 }
@@ -115,11 +126,12 @@ img {
 .subnav3 a:link, .subnav3 a:visited {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 9px;
-	font-weight: normal;
+	text-decoration: none;
+	line-height: 16px; 
 	color: #A67D2A;
-	padding: 0px 15px 0px 50px;
+	padding: 0px 5px 0px 50px;
 	display: block;
-	background-image: url(images/subnav3.png);
+	background-image: url(images/subnav.png);
 	background-repeat: no-repeat;
 	background-position: left;
 }
@@ -133,23 +145,28 @@ img {
 
 #contentContainer {
 	position: absolute;
-	background-color: #FFFFFF;
-   top:125px;
-   left: 18.8%;
-   width: 77%;
-	padding:0px;
-   margin:0px;
-	z-index: 0;
+	top: 145px;
+	width: 100%;
+	min-height: 250px;
+	z-index: 1;
 }
+
 #content {
+	margin-left: 220px;
+	margin-top: 20px;
+	margin-right: 20px;
+	margin-bottom: 20px;
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	text-decoration: none; 
 	text-align: justify;
 	line-height: 20px;
 	color: #505050;
-	padding: 20px 20px 20px 21px;
 }
+
+
+
+
 
 .content_tab {
 	margin-top:10px;
@@ -182,9 +199,9 @@ img {
 	border-right: 1px solid #BF8202;
 	border-bottom: 1px solid #BF8202;
 	line-height: 20px;
+	vertical-align: top;
 	font-weight: bolder;
 	padding: 5px 10px 5px 10px;
-	vertical-align: top;
 }
 .content_tab_content2 a:link, .content_tab_content2 a:visited, .content_tab_content2 a:hover {
 	color: #FF9900;
@@ -198,20 +215,73 @@ img {
 	font-size: 12px;
 }
 
-#footerContainer {
-   position: absolute;
-	top: 10px;
-	left: 1%;
-   width: 1px;
-   padding: 0px 0px 0px 0px;
-	bottom: 0px;
-	z-index: 3;
+
+
+.formailer_header {
+	background-color: #FCAB03;
+	border: 1px solid #BF8202;
+	width: 600px;
+	height: 25px;
+	padding: 0px 10px 0px 10px;
 }
+.formailer_header_input {
+	background-color: #FCAB03;
+	border: 0px;
+	font-weight: bolder;
+}
+.formailer_txt {
+	background-color: #FEDA8D;
+	width: 425px;
+	border-right: 1px solid #BF8202;
+	border-bottom: 1px solid #BF8202;
+	border-left: 1px solid #BF8202;
+	line-height: 20px;
+	padding: 5px 5px 5px 5px;
+}
+.formailer_txt_textarea {
+	background-color: #FFFFFF;
+	border: 1px solid #BF8202;
+	padding: 2px 2px 2px 2px;
+	width: 100%;
+}
+.formailer_adress {
+	width: 175px;
+	background-color: #FEDA8D;
+	border-right: 1px solid #BF8202;
+	border-bottom: 1px solid #BF8202;
+	line-height: 25px;
+	vertical-align: top;
+	font-weight: bolder;
+	padding: 5px 10px 5px 10px;
+}
+.formailer_adress_input, .formailer_adress_input {
+	background-color: #FFFFFF;
+	border: 1px solid #BF8202;
+	padding: 2px 2px 2px 2px;
+}
+
+.formailer_options {
+	padding: 3px 3px 3px 3px;
+	background-color: #FEDA8D;
+	border-left: 1px solid #BF8202;
+	border-right: 1px solid #BF8202;
+	border-bottom: 1px solid #BF8202;
+	text-align: center;
+}
+
+
+
+
+
+#footerContainer {
+	position: relative;
+	bottom: 20px;
+	left: 10px;
+	z-index: 10;
+}
+
 #footer {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	font-weight: bolder;
-	text-decoration: none; 
-	color: #505050;
-	margin: 0px;
+	font-size: 10px;
+	text-decoration: none;	
 }

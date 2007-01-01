@@ -2,6 +2,7 @@ body {
 	background-color: #FEDA8D;
 	margin-top: 0px;
 	margin-left: 5%;
+	margin-right: 5%;
 }
 a:link, a:visited {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
@@ -16,15 +17,22 @@ a:hover {
 img {
 	border: 0px;
 	vertical-align: middle;
+	text-decoration: none;
 }
+
+#page {
+	position: absolute;
+	width: 90%;
+	height: 100%;
+	margin: auto;
+	background-color: #FFFFFF;
+}
+
 #header {
    position:fixed;
    top:0px;
-	left: 4%;
-   width: 92%;
-   padding:0px;
-	height: 100px;
-   margin:0px;
+	height: 120px;
+	width: 90%;
    background-image: url(images/banner1.png);
 	background-color: #505050;
 	z-index:5;
@@ -33,9 +41,8 @@ img {
 }
 #navigationContainer {
    position: fixed;
-   top:100px;
-	left: 4%;
-   width: 92%;
+   top:120px;
+   width: 90%;
    padding: 3px 0px 0px 0px;
 	height: 23px;
    margin:0px;
@@ -64,10 +71,10 @@ img {
 }
 #subnavContainer {
    position:fixed;
-   top:125px;
+   top:145px;
 	bottom:0px;
-   left: 4%;
-   width: 15%;
+   left: 5%;
+   width: 200px;
 	padding: 10px 0px 10px 0px;
    margin:0px;
    background-color: #FCAB03;
@@ -133,32 +140,26 @@ img {
 	background-position: left;
 }
 
-#background_content {
-	position: fixed;
+#contentContainer {
+	position: absolute;
 	top: 0px;
-   height:100%;
-   left: 4%;
-	width: 92%;
+   height: 100%;
+	width: 100%;
 	background-color: #FFFFFF;
 	z-index: 1;
 }
-#contentContainer {
-	position: absolute;
-   top:125px;
-   left: 18%;
-   width: 78%;
-	padding:0px;
-   margin:0px;
-	z-index:2;
-}
+
 #content {
+	position: absolute;
+	top: 155px;
+	padding-left: 202px;
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	text-decoration: none;
 	text-align: justify;
 	line-height: 20px;
 	color: #505050;
-	padding: 20px 20px 50px 35px;
+	background-color: #FFFFFF;
 }
 
 .content_tab {
@@ -220,7 +221,6 @@ img {
 .formailer_header_input {
 	background-color: #FCAB03;
 	border: 0px;
-	width: 100%;
 	font-weight: bolder;
 }
 .formailer_txt {
@@ -280,3 +280,4 @@ img {
 	color: #505050;
 	margin: 0px;
 }
+

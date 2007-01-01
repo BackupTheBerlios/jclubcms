@@ -3,14 +3,15 @@
 <html>
   <head>
     <title>{$content_title|capitalize}</title>
-    <link rel="stylesheet" href="./templates/style/style.css" type="text/css"/>
-    
-    <!--[if IE]>
-    <link rel="stylesheet" href="./templates/style/ie_style.css" type="text/css"/
-    <![endif]-->
+
+    <style type="text/css">@import url(./templates/style/style.css) all;</style>
+	<!--[if IE]>
+	<style type="text/css">@import url(./templates/style/ie_style.css);</style>
+	<![endif]-->
     
   </head>
   <body>
+	<div id="page">
     <div id="header">&nbsp;</div>
     <div id="navigationContainer">
       <div id="navigation">
@@ -40,10 +41,6 @@
     </div>
     <!--Header Ende -->
     {include file="$file"|default:"main.tpl"}
-    <div id="footerContainer">
-        <div id="footer">
-          Lizenz: GPL
-        </div>
     </div>
   </body>
 </html>
