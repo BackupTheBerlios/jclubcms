@@ -12,132 +12,160 @@
  *in den verschiedenen Alben und richtigen Reihenfolge
  *
  * Sie ist _NICHT_ zuständig für die Administration des Gallery
+ * 
+ * INFO:
+ * GALLERY IN GALLERY WIRD NOCH NICHT UNTERSTÜTZT
  */
 
+require_once("pagesnav.class.php");
 
 //Nummern zuweisen oder false/1
 $gallery = isset($_GET['gallery']) ? ((int) $_GET['gallery']) : false;
-$pic = isset($_GET['pic']) ? ((int) $_GET['pic']) : false;
-$page = isset($_GET['page']) ? ((int) $_GET['page']) : 1;
+$bild = isset($_GET['bild']) ? ((int) $_GET['bild']) : false;
+$page = isset($_GET['page']) ? ((int) $_GET['page']) : 0;
 
-
-$items_array = array();	//Wird als allgemeines Array gebraucht in allen Bedingungen
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 //******************* If-Abragen ******************* /
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 if($gallery) {
-	
+
 	//Ein paar Daten berechnen
-	$bildproseite = $gallery_pics_x * $gallery_pics_y;
-	$start = ($page-1)*$bildproseite;
+	$bildproseite = (int)($gallery_pics_x * $gallery_pics_y);
+	$start = (int)($page*$bildproseite);
 
-	
+	//Anzahl Einträge
+	$mysql->query("SELECT * FROM gallery_eintraege WHERE fid_album = '$gallery'");
+	$number = $mysql->num_rows();
+
+	//Albenname
+	$mysql->query("Select gallery_alben.name From `gallery_alben` WHERE gallery_alben.ID = '$gallery'
+					Limit 1");
+	$items_array = $mysql->fetcharray("num");
+	$gallery_name = $items_array[0];
+
+
 	//Einträge abrufen
-	$mysql->query("SELECT gallery_alben.name , gallery_alben.fid_parent, 
-         gallery_eintraege.fid_bild , gallery_eintraege.comment ,
-         gallery_alben.ID
-         FROM `gallery_eintraege`, `gallery_alben` 
-         where gallery_alben.ID = $gallery AND gallery_eintraege.fid_album = $gallery 
-         ORDER BY gallery_eintraege.sequence LIMIT $start, $bildproseite ");
+	$mysql->query("SELECT gallery_eintraege.fid_bild FROM `gallery_eintraege`,`gallery_alben`
+					WHERE gallery_alben.ID = '$gallery' AND gallery_eintraege.fid_album = '$gallery'
+					ORDER BY gallery_eintraege.sequence
+					LIMIT $start,$bildproseite");
 
-	//Verbessern, eigene Variablen für album_name und parent_album
 	$i = 0;
 	while($gallery_data = $mysql->fetcharray()) {
-		
-		$items_array[$i] = array("album_name" => $gallery_data['name'], "parent_album" => $gallery_data['fid_parent'],
-									"bilder_ID" => $gallery_data['fid_bild'], "comment" => $gallery_data['comment']); 
 
-		
+		$bild_ID[$i] = $gallery_data['fid_bild'];
 		$i++;
 	}
 
-	
+	$pages_nav = new pagesnav($number, $bildproseite);
+	$pages_array = $pages_nav->build_array();
+	$pages_nav->__destruct();
 
-	
-	//Die Menu_ID finden für image.php
-	$mysql->query("Select modules_ID from modules Where modules_name = 'image.php'");
-	$imgMod_ID =  implode("",$mysql->fetcharray("num"));
-	$mysql->query("SELECT menu_ID FROM `menu` where menu_pagetyp = 'mod' And menu_page = $imgMod_ID");
-	$img_ID =  implode("",$mysql->fetcharray("num"));
-	$smarty->assign("img_link", $img_ID);
-	
-	
-	//Das gallery_array in Smarty schicken
 
-	$smarty->assign("breakline", $gallery_pics_x);
-	$smarty->assign("alben", $items_array);
-	$smarty->assign("local_link", $nav_id);
-	$mod_tpl = "gallery_album.tpl";
-	
+	//Gab es einen Mysql-Fehler??
+	if($error = $mysql->get_error())
+	{
+		$smarty->assign("feedback_title", "<b>Mysql-Fehler</b>");
+		$smarty->assign("feedback_content", "Fehlernummer: {$error[0]}<br />\nFehlertext: {$error[1]}");
+		$mod_tpl = "feedback.tpl";
+
+	} else {
+
+		//Die Menu_ID finden für image.php
+		$mysql->query("Select modules_ID from modules Where modules_name = 'image.php'");
+		$imgMod_ID =  implode("",$mysql->fetcharray("num"));
+		$mysql->query("SELECT menu_ID FROM `menu` where menu_pagetyp = 'mod' And menu_page = $imgMod_ID");
+		$img_ID =  implode("",$mysql->fetcharray("num"));
+		$smarty->assign("img_link", $img_ID);
+
+
+		//Smarty-Variablen belegen
+		$smarty->assign("page", $page+1);
+		$smarty->assign("pages", $pages_array);
+		$smarty->assign("number", $number);
+		$smarty->assign("gal_ID", $gallery);
+		$smarty->assign("gallery_name", $gallery_name);
+		$smarty->assign("breakline", $gallery_pics_x);
+		$smarty->assign("bild_ID", $bild_ID);
+		$smarty->assign("local_link", $nav_id);
+		$mod_tpl = "gallery_album.tpl";
+	}
+
 
 	/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 	/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
-} else if($pic) {
-	
+} else if($bild) {
+
+	$items_array = array();
 	//Die Album_ID und Reihennummer des Bildes in ein nummerisches Array speichern
-	$mysql->query("Select fid_bild, fid_album, sequence from gallery_eintraege where fid_bild = $pic");
-	$items_array[1] = $mysql->fetcharray("assoc");
-	
+	$mysql->query("Select fid_bild, fid_album, sequence from gallery_eintraege where fid_bild = $bild");
+	$shown_bild = $mysql->fetcharray("assoc");
+
 	//Zur Vereinfachung
-	$album = $items_array[1]['fid_album'];
-	$pic_sequence = $items_array[1]['sequence'];
-	
+	$album_ID = $shown_bild['fid_album'];
+	$bild_sequence = $shown_bild['sequence'];
+
 	//Falls der Limitstart negativ ausfallen sollte, wird er auf null gesetzt
-	$start = ($pic_sequence-2) > 0 ? $pic_sequence -2: 0;
-	
-	//Ist das Bild gerade das erste, braucht es nur 2 Einträge, nicht 3
-	$anz = ($pic_sequence == 1) ? 2 : 3;
-	
+	$start = ($bild_sequence-2) > 0 ? (int)($bild_sequence -2): 0;
+
+	$anz = ($bild_sequence == 1)? 2 : 3;
+
 	//Das vordere Bild und das hintere Bild abspeichern
-	$mysql->query("Select fid_bild, fid_album, sequence from gallery_eintraege 
-					where fid_album = $album Order By sequence 
+	$mysql->query("Select fid_bild, fid_album, sequence from gallery_eintraege
+					where fid_album = $album_ID Order By sequence 
 					Limit $start,$anz");
+
+	/**
+	 * verbesserungswürdig
+	 * das problem ist:
+	 * es wird davon ausgegangen, die sequenz beginnt mit 1, was nicht sein muss!!!
+	 * ES WIRD DAVON AUSGEGANGEN, DIE SEQUENZEN SIND AUFEINANDERFOLGEND, WAS NICHT SEIN MUSS!!!!
+	 */
 	
 
-	
 	//Die Bild_ID der anderen Bildern abspeichern
 	$items_array[0] = $mysql->fetcharray("assoc");
 	if($anz == 2)
 	{
-			$items_array[2] = $mysql->fetcharray("assoc");
+		$items_array[2] = $mysql->fetcharray("assoc");
 	} else {
-			//Erst den 3. Eintrag nehmen, den 2. kann man vergessen
-			$items_array[1] = $mysql->fetcharray("assoc");
-			$items_array[2] = $mysql->fetcharray("assoc");
+		$items_array[1] = $mysql->fetcharray("assoc");
+		$items_array[2] = $mysql->fetcharray("assoc");
 	}
 
 
-	
-	
+
+
 	//Die Menu_ID finden für image.php
 	$mysql->query("Select modules_ID from modules Where modules_name = 'image.php'");
 	$imgMod_ID =  implode("",$mysql->fetcharray("num"));
 	$mysql->query("SELECT menu_ID FROM `menu` where menu_pagetyp = 'mod' And menu_page = $imgMod_ID");
 	$img_ID =  implode("",$mysql->fetcharray("num"));
 
-	
+
 	//Smarty-Variablen
 	$smarty->assign("img_link", $img_ID);
 	$smarty->assign("album", $album);
 	$smarty->assign("local_link", $nav_id);
-	$smarty->assign("ID_bild", $pic);
+	$smarty->assign("ID_bild", $bild);
 	$smarty->assign("prev_bild", $items_array[0]['fid_bild']);
 	$smarty->assign("next_bild", $items_array[2]['fid_bild']);
-	
+
 	$mod_tpl = "gallery_pic.tpl";
-	
+
 	/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 	/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 } else {
+	$gallery_array = array();
 	$i = 0;
 	$mysql->query("SELECT * FROM gallery_alben");
 	while($gallery_data = $mysql->fetcharray()) {
-		$items_array[$i] = $gallery_data;
+		$gallery_array[$i] = $gallery_data;
 		$i++;
 	}
 
-	$smarty->assign("gallery", $items_array);
+	$smarty->assign("gallery", $gallery_array);
 	$mod_tpl = "gallery.tpl";
 
 	$microtime = microtime()-$microtime;
