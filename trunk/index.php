@@ -193,7 +193,30 @@ if(isset($_GET['mail'])) {
    * Von hier werden die wichtigen Classen geöffnet, die Mail verschickt (sofern vorhanden)
    * und der DB-Eintrag gelöscht.
    */
-	;
+	require_once("./modules/mailsend.class.php");
+	
+	$mail_hash = $_GET['mail'];
+	$mail_send = new mailsend();
+	$controll = $mail_send->mail_send_hash($mysql, $mail_hash);
+	if ($controll == false)
+	{
+		$feedback_title = $mail_failer_title;
+		$feedback_content = $mail_failer_content;
+		$feedback_link = "";
+		$feedback_linktext = $mail_send_link;	
+	} else {
+		$feedback_title = $mail_send_title;
+		$feedback_content = $mail_send_title;
+		$feedback_link = "";
+		$feedback_linktext = $mail_send_link;	
+	}
+	$smarty->assign("feedback_title", $feedback_title);
+	$smarty->assign("feedback_content", $feedback_content);
+	$smarty->assign("link", $feedback_link);
+	$smarty->assign("link_text", $feedback_linktext);	
+	$smarty->assign("file", "feedback.tpl");
+	$smarty->display("index.tpl");
+	
 } else {
 	switch ($page_data["menu_pagetyp"]) {
 		case "pag":
@@ -232,4 +255,5 @@ if(isset($_GET['mail'])) {
 
 	}
 }
+$mysql->disconnect();
 ?>

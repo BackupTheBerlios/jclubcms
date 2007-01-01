@@ -26,7 +26,7 @@
 			<td class="content_tab_content2">
 			<img src="templates/style/icons/date.png" /> {$book.time}<br />
 			<img src="templates/style/icons/user.png" /> {$book.name}<br />
-			<a href="?nav_id={$local_link}&action=mail&entry_id={$book.ID}"><img src="templates/style/icons/email.png" /> E-mail</a><br />
+			<a href="?nav_id={$local_link}&action=mail&entry_id={$book.email}"><img src="templates/style/icons/email.png" /> E-mail</a><br />
 			<a href="{$book.hp}"><img src="templates/style/icons/link.png" /> Website</a>
 			</td>
 			</tr>
@@ -40,7 +40,7 @@
 			<td class="content_tab_content2">
 			<img src="templates/style/icons/date.png" /> {$comment.comment_time}<br />
 			<img src="templates/style/icons/user.png" /> {$comment.comment_name}<br />
-			<a href="?nav_id={$local_link}&action=mail&entry_id={$comment.comment_ID}"><img src="templates/style/icons/email.png" /> E-mail</a><br />
+			<a href="?nav_id={$local_link}&action=mail&entry_id={$comment.comment_email}"><img src="templates/style/icons/email.png" /> E-mail</a><br />
 			<a href="{$comment.comment_hp}"><img src="templates/style/icons/link.png" /> Website</a>
 			</td>
 			</tr>
