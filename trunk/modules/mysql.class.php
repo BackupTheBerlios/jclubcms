@@ -115,9 +115,9 @@ class mysql {
 
 		if(!is_resource($this->result)) {
 			$this->error = true;
-			$this->error_text = "query-result is not a resource in fucntion query";
-			$this->error_no = "no error-number";
-			return false;
+			$this->error_text = mysql_error();
+			$this->error_no = mysql_errno();
+			return false;			
 		} else {
 			return true;
 		}
@@ -151,10 +151,7 @@ class mysql {
 
 		if(is_array($data)) {
 			return $data;
-		} else {
-			$this->error = true;
-			$this->error_text = "return value is not a array in function fetcharray";
-			$this->error_no = "no error-number";
+		} else {			
 			return false;
 		}
 
@@ -167,7 +164,7 @@ class mysql {
 	 */
 
 	public function num_rows() {
-		$number = @mysql_num_rows($this->result, $type);
+		$number = @mysql_num_rows($this->result);
 		if($number == false) {
 			$this->error = true;
 			$this->error_text = "return value is not a number in function num_rows";
