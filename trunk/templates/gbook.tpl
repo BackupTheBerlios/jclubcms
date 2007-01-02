@@ -26,7 +26,7 @@
 			<img src="templates/style/icons/date.gif" /> {$book.time}<br />
 			<img src="templates/style/icons/user.gif" /> {$book.name}<br />
 			<a href="?nav_id={$local_link}&action=mail&entry_id={$book.email}"><img src="templates/style/icons/email.gif" /> E-mail</a><br />
-			<a href="{$book.hp}"><img src="templates/style/icons/link.gif" /> Website</a>
+			<a href="{$book.hp}"><img src="templates/style/icons/house.gif" /> Website</a>
 			</td>
 			</tr>
 			{* Innere Schlaufe f�r das Auslesen der Kommentare *}
@@ -40,7 +40,7 @@
 			<img src="templates/style/icons/date.gif" /> {$comment.comment_time}<br />
 			<img src="templates/style/icons/user.gif" /> {$comment.comment_name}<br />
 			<a href="?nav_id={$local_link}&action=mail&entry_id={$comment.comment_email}"><img src="templates/style/icons/email.gif" /> E-mail</a><br />
-			<a href="{$comment.comment_hp}"><img src="templates/style/icons/link.gif" /> Website</a>
+			<a href="{$comment.comment_hp}"><img src="templates/style/icons/house.gif" /> Website</a>
 			</td>
 			</tr>
 			{/foreach}

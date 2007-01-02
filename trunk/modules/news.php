@@ -30,7 +30,7 @@
 			$content = $_REQUEST["content"];
 			$name = $_REQUEST["name"];
 			$email = $_REQUEST["email"];
-			$news_id = $_REQUEST["entry_id"];
+			$entry_id = $_REQUEST["entry_id"];
 			$navigation_id = $_REQUEST["nav_id"];
 			
 			$com_mysql = new mysql($db_server, $db_name, $db_user, $db_pw);
@@ -80,7 +80,7 @@
 					require_once("./config/mail_textes.inc.php");	
 					
 					
-					$com_mysql->query("SELECT news_name, news_email FROM gbook WHERE news_ID = $news_id");
+					$com_mysql->query("SELECT news_name, news_email FROM news WHERE news_ID = $entry_id");
 					$mail_reciver = $com_mysql->fetcharray();
 					$mail_reciver_name = $mail_reciver['news_name'];
 					$mail_reciver_email = $mail_reciver['news_email'];					
@@ -107,7 +107,7 @@
 				$mod_tpl = "feedback.tpl";
 			}
 			else {
-				$com_mysql->query("SELECT news_name FROM news WHERE news_ID = $news_id");
+				$com_mysql->query("SELECT news_name FROM news WHERE news_ID = $entry_id");
 				$news_array = $com_mysql->fetcharray();
 				$news_name = $news_array["news_name"];
 				$smarty->assign("nav_id", $navigation_id);

@@ -20,6 +20,9 @@
                   Motto: {$motto.$index}
                 </td>
               </tr>
+              <tr>
+              	<td colspan="2" class="content_tab_content1"><a href="?nav_id={$local_link}&action=mail&entry_id={$ID.$index}">Mail an {$spitzname.$index}</a></td>
+              </tr>
             </table>
             {/foreach}
 	</div>

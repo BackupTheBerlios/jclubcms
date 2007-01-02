@@ -13,8 +13,8 @@
 			<td class="formailer_txt">
 			<textarea class="formailer_txt_textarea" name="content" onclick="select()" cols="38" rows="5">{$entry_content}</textarea></td>
 			<td class="formailer_adress">
-			<img src="templates/style/icons/user.png" /> <input class="formailer_adress_input" onclick="select()" name="name" type="text" value="{$entry_name}" /><br />
-			<img src="templates/style/icons/email.png" /> <input class="formailer_adress_input" onclick="select()" name="email" type="text" value="{$entry_email}" /><br />
+			<img src="templates/style/icons/user.gif" /> <input class="formailer_adress_input" onclick="select()" name="name" type="text" value="{$entry_name}" /><br />
+			<img src="templates/style/icons/email.gif" /> <input class="formailer_adress_input" onclick="select()" name="email" type="text" value="{$entry_email}" /><br />
 			</td>
 			</tr>
 			<tr>

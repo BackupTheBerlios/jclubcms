@@ -18,7 +18,7 @@
 			<img src="templates/style/icons/date.gif" /> {$book.time}<br />
 			<img src="templates/style/icons/user.gif" /> {$book.name}<br />
 			<a href="mailto:{$book.email}"><img src="templates/style/icons/email.gif" /> E-mail</a><br />
-			<a href="{$book.hp}"><img src="templates/style/icons/link.gif" /> Website</a>
+			<a href="{$book.hp}"><img src="templates/style/icons/house.gif" /> Website</a>
 			</td>
 			</tr>
 			{* Innere Schlaufe für das Auslesen der Kommentare *}
@@ -36,8 +36,6 @@
 			</td>
 			</tr>
 			{/foreach}
-			<tr>
-			<td colspan="2" class="content_tab_content1" align="center"><a href="?nav_id={$local_link}&action=comment&id={$book.ID}">Neuer Kommentar</a></td></tr>
 		</table>
 		{/foreach}
 		

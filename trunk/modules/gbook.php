@@ -282,7 +282,7 @@
 			$content = $_REQUEST["content"];
 			$name = $_REQUEST["name"];
 			$email = $_REQUEST["email"];
-			$gbook_id = $_REQUEST["entry_id"];
+			$entry_id = $_REQUEST["entry_id"];
 			$navigation_id = $_REQUEST["nav_id"];
 			
 			$com_mysql = new mysql($db_server, $db_name, $db_user, $db_pw);
@@ -330,7 +330,7 @@
 					require_once("./modules/mailsend.class.php");	
 					
 					
-					$com_mysql->query("SELECT gbook_name, gbook_email FROM gbook WHERE gbook_ID = $gbook_id");
+					$com_mysql->query("SELECT gbook_name, gbook_email FROM gbook WHERE gbook_ID = $entry_id");
 					$mail_reciver = $com_mysql->fetcharray();
 					$mail_reciver_name = $mail_reciver['gbook_name'];
 					$mail_reciver_email = $mail_reciver['gbook_email'];					
@@ -357,7 +357,7 @@
 				$mod_tpl = "feedback.tpl";
 			}
 			else {
-				$com_mysql->query("SELECT gbook_name FROM gbook WHERE gbook_ID = $gbook_id");
+				$com_mysql->query("SELECT gbook_name FROM gbook WHERE gbook_ID = $entry_id");
 				$gbook_array = $com_mysql->fetcharray();
 				$gbook_name = $gbook_array["gbook_name"];
 				$smarty->assign("nav_id", $navigation_id);
@@ -381,7 +381,9 @@
 		 * wird, und die Daten nachher ausgibt.
 		 */
 		default:
-			$smarty->assign("local_link", $nav_id);
+			$local_link = $_REQUEST["nav_id"];
+			
+			$smarty->assign("local_link", $local_link);
 			$timeparser = new timeparser($time_format);
 			$mysql->query("SELECT gbook_ID FROM gbook WHERE gbook_ref_ID = 0");
 			$number = $mysql->num_rows();
