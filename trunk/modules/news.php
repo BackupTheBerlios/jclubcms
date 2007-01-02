@@ -60,8 +60,7 @@
 					$failer_return++;
 				}
 				else {
-					$mailcheck = new mailverify($email);
-					$mailerrorcode = $mailcheck->mailcheck();
+					$mailerrorcode = $formular_check->mailcheck($email);
 					if ($mailerrorcode > 0) {
 						$feedback_title= $gbook_onerror_title_de;
 						$feedback_content.= $gbook_email_checkfaild_de."<br />";	
@@ -111,7 +110,7 @@
 				$news_array = $com_mysql->fetcharray();
 				$news_name = $news_array["news_name"];
 				$smarty->assign("nav_id", $navigation_id);
-				$smarty->assign("entry_id", $news_id);
+				$smarty->assign("entry_id", $entry_id);
 				$smarty->assign("reciver_name", $news_name);
 				$smarty->assign("entry_title", $mail_entry_title);
 				$smarty->assign("entry_content", $mail_entry_content);
@@ -154,7 +153,7 @@
 				 */
 				$main_ID = $main_entries["news_ID"];
 		  		$main_title = htmlentities($main_entries["news_title"]);
-		  		$main_content = htmlentities(nl2br($main_entries["news_content"]));
+		  		$main_content = nl2br(htmlentities($main_entries["news_content"]));
 		  		$main_name = htmlentities($main_entries["news_name"]);
 		  		$main_hp = htmlentities($main_entries["news_hp"]);
 		  		$main_time = $timeparser->time_output($comment_entries["news_time"]);
@@ -167,7 +166,7 @@
 			  	while ($comment_entries = $com_mysql->fetcharray()) {
 			  		
 			  		$comment_ID = $comment_entries["news_ID"];
-			  		$comment_content = htmlentities(nl2br($comment_entries["news_content"]));
+			  		$comment_content = nl2br(htmlentities($comment_entries["news_content"]));
 			  		$comment_name = htmlentities($comment_entries["news_name"]);
 			  		$comment_hp = htmlentities($comment_entries["news_hp"]);
 			  		$comment_time = $timeparser->time_output($comment_entries["news_time"]);

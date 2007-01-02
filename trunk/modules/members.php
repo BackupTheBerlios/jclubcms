@@ -61,8 +61,7 @@
 					$failer_return++;
 				}
 				else {
-					$mailcheck = new mailverify($email);
-					$mailerrorcode = $mailcheck->mailcheck();
+					$mailerrorcode = $formular_check->mailcheck($email);
 					if ($mailerrorcode > 0) {
 						$feedback_title= $gbook_onerror_title_de;
 						$feedback_content.= $gbook_email_checkfaild_de."<br />";	
@@ -112,7 +111,7 @@
 				$news_array = $com_mysql->fetcharray();
 				$news_name = $news_array["members_name"];
 				$smarty->assign("nav_id", $navigation_id);
-				$smarty->assign("entry_id", $news_id);
+				$smarty->assign("entry_id", $entry_id);
 				$smarty->assign("reciver_name", $news_name);
 				$smarty->assign("entry_title", $mail_entry_title);
 				$smarty->assign("entry_content", $mail_entry_content);

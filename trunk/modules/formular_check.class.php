@@ -18,6 +18,14 @@ class formular_check {
 	public function __construct () {
 		return 0;
 	}
+	/**
+	 * Überprüft ob der angegebene String den nicht erlaubten default-Einträgen 
+	 * von den Forumlaren entspricht
+	 *
+	 * @param string $field
+	 * @param string $not_allowed
+	 * @return boolean
+	 */
 	public function field_check ($field, $not_allowed = NULL) {
 		if ($field == "" || $field==$not_allowed) {
 			return false;
@@ -26,7 +34,17 @@ class formular_check {
 			return true;
 		}
 	}
-	
+	/**
+	 * Ersetzt http:// und ftp:// mit einem Leerzeichen, da die Templates diesen Aufruf machen
+	 *
+	 * @param string $hp
+	 * @return string
+	 */
+	public function hpcheck ($hp) {
+		$hp = str_replace("http://", "", $hp);
+		$hp = str_replace("ftp://", "", $hp);
+		return $hp;
+	}
 	/**
 	 * Der Mail-Exploder
 	 *
@@ -118,6 +136,10 @@ class formular_check {
 		return $this->failer_error;
 	}	
 	
+	/**
+	 * Klassendestruktor
+	 *
+	 */
 	public function __destruct() {
 		$this->mail = null;
 		$this->name = null;

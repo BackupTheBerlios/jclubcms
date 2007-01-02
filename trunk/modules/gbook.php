@@ -91,7 +91,9 @@
 					 * Wenn die angegebene HP nicht verändert wurde, soll der Eintrag leer sein.
 					 */
 					if ($hp == $gbook_entry_hp) {
-					$hp = "";
+						$hp = "";
+					} else {
+						$hp = $formular_check->hpcheck($hp);
 					}
 						
 					$mysql->query("INSERT INTO gbook (gbook_time, gbook_name, gbook_email, gbook_hp, gbook_title, gbook_content) VALUES (NOW(), '$name', '$email', '$hp', '$title', '$content')");
@@ -280,8 +282,8 @@
 			$button_click = $_REQUEST["btn_send"];
 			$title = $_REQUEST["title"];
 			$content = $_REQUEST["content"];
-			$name = $_REQUEST["name"];
-			$email = $_REQUEST["email"];
+			$sender_name = $_REQUEST["name"];
+			$sender_email = $_REQUEST["email"];
 			$entry_id = $_REQUEST["entry_id"];
 			$navigation_id = $_REQUEST["nav_id"];
 			
@@ -302,17 +304,17 @@
 					$failer_return++;
 				}
 				
-				if ($formular_check->field_check($name, $mail_entry_name) == false) {
+				if ($formular_check->field_check($sender_name, $mail_entry_name) == false) {
 					$feedback_content .= $gbook_name_onerror_de."<br />";
 					$failer_return++;
 				}
 				
-				if ($formular_check->field_check($email, $mail_entry_email) == false) {
+				if ($formular_check->field_check($sender_email, $mail_entry_email) == false) {
 					$feedback_content .= $gbook_email_onerror_de."<br />";
 					$failer_return++;
 				}
 				else {
-					$mailerrorcode = $formular_check->mailcheck($email);
+					$mailerrorcode = $formular_check->mailcheck($sender_email);
 					if ($mailerrorcode > 0) {
 						$feedback_title= $gbook_onerror_title_de;
 						$feedback_content.= $gbook_email_checkfaild_de."<br />";	
@@ -332,10 +334,10 @@
 					
 					$com_mysql->query("SELECT gbook_name, gbook_email FROM gbook WHERE gbook_ID = $entry_id");
 					$mail_reciver = $com_mysql->fetcharray();
-					$mail_reciver_name = $mail_reciver['gbook_name'];
-					$mail_reciver_email = $mail_reciver['gbook_email'];					
+					$mail_reciver_name = $mail_reciver["gbook_name"];
+					$mail_reciver_email = $mail_reciver["gbook_email"];					
 					$mail = new mailsend();
-					$mailsend_controll = $mail->mail_send_link($com_mysql, $mail_reciver_name, $mail_reciver_email, $name, $email, $title, $content);
+					$mailsend_controll = $mail->mail_send_link($com_mysql, $mail_reciver_name, $mail_reciver_email, $sender_name, $sender_email, $title, $content);
 					if ($mailsend_controll == true) {
 						$feedback_title = $mail_saved_title;
 						$feedback_content = $mail_saved_content;
@@ -361,7 +363,7 @@
 				$gbook_array = $com_mysql->fetcharray();
 				$gbook_name = $gbook_array["gbook_name"];
 				$smarty->assign("nav_id", $navigation_id);
-				$smarty->assign("entry_id", $gbook_id);
+				$smarty->assign("entry_id", $entry_id);
 				$smarty->assign("reciver_name", $gbook_name);
 				$smarty->assign("entry_title", $gbook_entry_title);
 				$smarty->assign("entry_content", $gbook_entry_content);

@@ -119,7 +119,7 @@ class mailsend {
                           .'X-Mailer: PHP/'.phpversion();
 		$msg = $this->mail_content;
 		$betreff = $this->mail_titel;
-		$empfaenger = $this->mail_sender_name.'<'.$this->mail_sender.'>';
+		$empfaenger = $this->mail_reciver_name.'<'.$this->mail_reciver.'>';
 		$mail = $this->mail_send($empfaenger, $betreff, $msg, $header);
 		if ($mail == true) {
 			$this->db2mail($mysql_link, $hash, true);
@@ -146,7 +146,7 @@ class mailsend {
 			$this->mail_content = $mailto_data["mailto_content"];	
 		}
 		else {
-			$delete_query = "DELETE FROM mailto WHERE mailto_hash = $hash";
+			$delete_query = "DELETE FROM mailto WHERE mailto_hash = '$hash'";
 			$mysql_link->query($delete_query);
 		}
 	}
