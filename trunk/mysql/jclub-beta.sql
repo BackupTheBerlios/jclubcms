@@ -259,7 +259,7 @@ CREATE TABLE `members` (
   `members_food` varchar(100) collate utf8_unicode_ci NOT NULL COMMENT 'Grusig',
   `members_job` varchar(100) collate utf8_unicode_ci NOT NULL COMMENT 'Verdiensch so weni Cholä?',
   `members_motto` varchar(200) collate utf8_unicode_ci NOT NULL COMMENT 'Haut di mou dra!',
-  `members_mail` varchar(100) collate utf8_unicode_ci NOT NULL COMMENT 'so läng?',
+  `members_email` varchar(100) collate utf8_unicode_ci NOT NULL COMMENT 'so läng?',
   `members_FIDimage` varchar(200) collate utf8_unicode_ci NOT NULL COMMENT 'hesch ou scho besser usgseh',
   PRIMARY KEY  (`members_ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Die Mitgliedertabelle' AUTO_INCREMENT=13 ;
@@ -268,7 +268,7 @@ CREATE TABLE `members` (
 -- Daten für Tabelle `members`
 -- 
 
-INSERT INTO `members` (`members_ID`, `members_name`, `members_spitzname`, `members_birthday`, `members_song`, `members_hobby`, `members_food`, `members_job`, `members_motto`, `members_mail`, `members_FIDimage`) VALUES 
+INSERT INTO `members` (`members_ID`, `members_name`, `members_spitzname`, `members_birthday`, `members_song`, `members_hobby`, `members_food`, `members_job`, `members_motto`, `members_email`, `members_FIDimage`) VALUES 
 (1, 'Benjamin Schläpfer', 'Bebu', '1982-03-06', 'Open the eyes of my heart', 'JG, Musizieren, Sport', 'Lassagne', 'Student an der STH Basel', 'What Would Jesus Do??', '', '8'),
 (5, 'Soraya Brügger', 'surli', '1987-11-04', 'Chünig vo mym Härz', 'Klavierspielen, Reiten, JG, lesen', 'Salat', 'Köchin (in Ausbildung)', '', '', ''),
 (3, 'David Däster', 'Dave', '1985-04-22', 'Watching Over You', 'JG, PC, Sport, Musik', 'Broccoli', 'Informatiker', 'Pray Until Something Happens!', '', '10'),
