@@ -10,8 +10,11 @@ $db_user = "jclubbeta";
 $db_pw ="jclubbeta";
 
 
-/*Gallery-Einstellungen*/
+/*News-Einstellungen*/
 $news_entries_per_page = 5;
+
+
+/*Gallery-Einstellungen*/
 $gallery_pics_x = 4;
 $gallery_pics_y = 4;
 $gallery_menuview = 2; //Wieviele Bilder Links und Rechts des aktuellen Bildes gezeigt werden
@@ -46,7 +49,7 @@ $thumb_maxwidth = 150;
 * z	Der Tag eines Jahres
 * Z	 Offset der Zeitzone in Sekunden.
 */
-$time_format = "\I\m \J\a\h\r\e Y \d\e\s \H\err\n";
+$time_format = "j.m.Y H:i";
 
 
 /*------GBook-Settings----------*/

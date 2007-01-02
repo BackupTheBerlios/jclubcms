@@ -6,7 +6,7 @@
       </tr>
       <tr>
 	<td>
-        {if $prev_bild neq $ID_bild}<a href="./index.php?nav_id={$local_link}&bild={$prev_bild}" ><img src="templates/style/icons/back.gif" /></a>
+        {if $prev_bild}<a href="./index.php?nav_id={$local_link}&bild={$prev_bild}" ><img src="templates/style/icons/back.gif" /></a>
         {else}{/if}
         </td>
 	<td><img src="index.php?nav_id={$img_link}&bild={$ID_bild}" /></td>

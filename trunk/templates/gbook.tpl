@@ -1,4 +1,4 @@
-<div id="contentContainer">
+﻿<div id="contentContainer">
 	<div id="content">
 		<table width="640" align="center" class="content_tab">
 		<tr>
@@ -29,7 +29,7 @@
 			{if $book.hp neq ""}<br /><a href="http://{$book.hp}" target="_blank"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
 			</td>
 			</tr>
-			{* Innere Schlaufe f�r das Auslesen der Kommentare *}
+			{* Innere Schlaufe für das Auslesen der Kommentare *}
 			{foreach key=schluessel item=comment from=$book.comments}
 			</tr>
 			<tr>

@@ -25,6 +25,7 @@ $bild = isset($_GET['bild']) ? ((int) $_GET['bild']) : false;
 $page = isset($_GET['page']) ? ((int) $_GET['page']) : 0;
 
 
+
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 //******************* If-Abragen ******************* /
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
@@ -81,7 +82,7 @@ if($gallery) {
 
 
 		//Smarty-Variablen belegen
-		$smarty->assign("page", $page+1);
+		$smarty->assign("thispage", $page+1);
 		$smarty->assign("pages", $pages_array);
 		$smarty->assign("number", $number);
 		$smarty->assign("gal_ID", $gallery);
@@ -93,7 +94,9 @@ if($gallery) {
 	}
 
 
+	
 	/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+	/*-*-*-*-*-*-*-*-*-*-*-*-*-*Bild-Ansicht-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 	/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 } else if($bild) {
 
@@ -104,57 +107,42 @@ if($gallery) {
 
 	//Zur Vereinfachung
 	$album_ID = $shown_bild['fid_album'];
-	$bild_sequence = $shown_bild['sequence'];
+	$bild_sequence = (int)$shown_bild['sequence'];
 
-	//Falls der Limitstart negativ ausfallen sollte, wird er auf null gesetzt
-	$start = ($bild_sequence-2) > 0 ? (int)($bild_sequence -2): 0;
-
-	$anz = ($bild_sequence == 1)? 2 : 3;
-
-	//Das vordere Bild und das hintere Bild abspeichern
-	$mysql->query("Select fid_bild, fid_album, sequence from gallery_eintraege
-					where fid_album = $album_ID Order By sequence 
-					Limit $start,$anz");
-
-	/**
-	 * verbesserungswürdig
-	 * das problem ist:
-	 * es wird davon ausgegangen, die sequenz beginnt mit 1, was nicht sein muss!!!
-	 * ES WIRD DAVON AUSGEGANGEN, DIE SEQUENZEN SIND AUFEINANDERFOLGEND, WAS NICHT SEIN MUSS!!!!
-	 */
 	
+	//Das vordere Bild 
+	$mysql->query("SELECT fid_bild FROM `gallery_eintraege` WHERE sequence < $bild_sequence and fid_album = '$album_ID' 
+	ORDER BY sequence DESC Limit 1");
+	$prev_bild = $mysql->fetcharray("assoc");
+	
+	//Das hintere Bild 
+	$mysql->query("SELECT fid_bild FROM `gallery_eintraege` WHERE sequence > $bild_sequence and fid_album = '$album_ID' 
+	ORDER BY sequence ASC Limit 1");
+	$next_bild = $mysql->fetcharray("assoc");
 
-	//Die Bild_ID der anderen Bildern abspeichern
-	$items_array[0] = $mysql->fetcharray("assoc");
-	if($anz == 2)
-	{
-		$items_array[2] = $mysql->fetcharray("assoc");
-	} else {
-		$items_array[1] = $mysql->fetcharray("assoc");
-		$items_array[2] = $mysql->fetcharray("assoc");
-	}
-
-
-
-
-	//Die Menu_ID finden für image.php
+	
+	//Die Menu_ID finden für image.php und an Smarty weitergeben
 	$mysql->query("Select modules_ID from modules Where modules_name = 'image.php'");
 	$imgMod_ID =  implode("",$mysql->fetcharray("num"));
 	$mysql->query("SELECT menu_ID FROM `menu` where menu_pagetyp = 'mod' And menu_page = $imgMod_ID");
 	$img_ID =  implode("",$mysql->fetcharray("num"));
-
-
-	//Smarty-Variablen
 	$smarty->assign("img_link", $img_ID);
+
+
+	//weitere Smarty-Variablen
 	$smarty->assign("album", $album_ID);
 	$smarty->assign("local_link", $nav_id);
 	$smarty->assign("ID_bild", $bild);
-	$smarty->assign("prev_bild", $items_array[0]['fid_bild']);
-	$smarty->assign("next_bild", $items_array[2]['fid_bild']);
+	$smarty->assign("prev_bild", $prev_bild['fid_bild']);
+	$smarty->assign("next_bild", $next_bild['fid_bild']);
 
 	$mod_tpl = "gallery_pic.tpl";
+	
+	
+	
 
 	/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+	/*-*-*-*-*-*-*-*-*-*-*-*-*-*-Alben-Ansich*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 	/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 } else {
 	$gallery_array = array();

@@ -72,7 +72,7 @@ $page_id = $page_data["menu_page"];
 
 $child_array = array();
 $root_array = array();
-//Verkehrte Stufe. Beginnt bei 1!!!!. Wird nachher umgerechnet
+//Die Stufe beginnt von unten zu zählen, statt von oben. Wird am Schluss umgerechnet
 $invlevel = 1;
 
 //Alle Einträge unterhalb des $nav_id Eintrags werden gelesen
@@ -88,14 +88,14 @@ while ($subnav_data = $mysql->fetcharray()) {
 $next_topid = $page_data["menu_topid"];
 
 
-//Solange durchlaufen lassen, bis die menu_topid 0 ist, also die obersten Navitationsteile erreicht sind
+//Solange durchlaufen lassen bis obersten Navitationsteile erreicht sind (top_id == 0)
 
 while (($next_topid != 0 || $next_topid != false))	{
 
 	$i = 0;
 
 	// $top_id kann aus dem Array $child_array herausgelesen werden
-	// ausser wenn es keine einträge unter $nav_id gibt, das $child_array leer ist (nur beim 1. Mal möglich)
+	// beim 1. Durchgang kann das Child-Array leer sein, man kann dafür die $nav_id nehmen
 	if(empty($child_array[0]["menu_topid"])) {
 		$top_id = $nav_id;
 	} else {
