@@ -2,6 +2,11 @@
 <div id="contentContainer">
   <div id="content">
     <table width="640" align="center" class="content_tab">
+      <colgroup>
+        <col width="1*">
+        <col width="1*">
+        <col width="1*">
+      </colgroup>
       <tr>
 	<td><b>{$gallery_name}</b></td>
         <td><a href="./index.php?nav_id={$local_link}" ><img src="templates/style/icons/gallery.gif" />zur Gallery-&Uuml;bersicht</a></td>
@@ -29,6 +34,11 @@
     </table>
     <!--Ende der Bilder-->
     <table width="640" align="center" class="content_tab">
+      <colgroup>
+        <col width="1*">
+        <col width="1*">
+        <col width="1*">
+      </colgroup>
       <tr>
 	<td><b>{$gallery_name}</b></td>
         <td><a href="./index.php?nav_id={$local_link}" ><img src="templates/style/icons/gallery.gif" />zur Gallery-&Uuml;bersicht</a></td>

@@ -127,8 +127,7 @@
 			$members_array = array();
 			$local_link = $_REQUEST["nav_id"];
 						
-			$mysql->query('Select members_ID, members_name,members_spitzname,DATE_FORMAT(`members_birthday`, \'%W, %e.%m.%Y\') as members_birthday,members_song,members_hobby,"
-						 ." members_job,members_motto,members_FIDimage from members ORDER BY `members`.`members_birthday` ASC Limit 0,30');
+			$mysql->query('Select members_ID, members_name, members_spitzname, DATE_FORMAT(`members_birthday`, \'%W, %e.%m.%Y\') as members_birthday, members_song, members_hobby, members_job, members_motto, members_FIDimage from members ORDER BY `members`.`members_birthday` ASC Limit 0,30');
 			
 			$i = 0;
 			while($members_data = $mysql->fetcharray("assoc"))

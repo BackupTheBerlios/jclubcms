@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost
--- Erstellungszeit: 01. Januar 2007 um 17:35
+-- Erstellungszeit: 05. Januar 2007 um 21:39
 -- Server Version: 5.0.27
 -- PHP-Version: 5.2.0
 -- 
@@ -21,7 +21,7 @@ CREATE TABLE `bilder` (
   `filename` varchar(200) collate utf8_unicode_ci NOT NULL,
   `erstellt` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`bilder_ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=72 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=126 ;
 
 -- 
 -- Daten für Tabelle `bilder`
@@ -54,10 +54,8 @@ INSERT INTO `bilder` (`bilder_ID`, `filename`, `erstellt`) VALUES
 (25, 'wand_2_05.jpg', '2006-07-23 01:11:17'),
 (26, 'wand_2_06.jpg', '2006-07-23 01:11:17'),
 (27, 'wand_2_07.jpg', '2006-07-23 01:11:17'),
-(28, 'testbild.JPG', '2006-11-15 22:10:39'),
+(72, 'wand_1_017.jpg', '2007-01-04 01:53:15'),
 (29, 'jg_programm06_04_lq.jpg', '2006-12-31 18:03:02'),
-(30, 'wand_1_010.jpg', '2007-01-01 04:28:10'),
-(31, 'wand_1_015.jpg', '2007-01-01 04:28:10'),
 (71, 'photo074.jpg', '2007-01-01 04:36:19'),
 (70, 'photo073.jpg', '2007-01-01 04:36:19'),
 (69, 'photo072.jpg', '2007-01-01 04:36:19'),
@@ -76,7 +74,34 @@ INSERT INTO `bilder` (`bilder_ID`, `filename`, `erstellt`) VALUES
 (56, 'photo059.jpg', '2007-01-01 04:36:19'),
 (55, 'photo058.jpg', '2007-01-01 04:36:19'),
 (54, 'photo057.jpg', '2007-01-01 04:36:19'),
-(53, 'photo056.jpg', '2007-01-01 04:36:19');
+(53, 'photo056.jpg', '2007-01-01 04:36:19'),
+(112, 'photo043.jpg', '2007-01-05 21:20:42'),
+(74, 'vor_umbau_001.jpg', '2007-01-05 20:45:51'),
+(75, 'vor_umbau_003.jpg', '2007-01-05 20:45:51'),
+(76, 'vor_umbau_005.jpg', '2007-01-05 20:46:01'),
+(111, 'photo042.jpg', '2007-01-05 21:20:42'),
+(110, 'photo041.jpg', '2007-01-05 21:20:42'),
+(109, 'photo040.jpg', '2007-01-05 21:20:42'),
+(108, 'photo039.jpg', '2007-01-05 21:20:42'),
+(107, 'photo038.jpg', '2007-01-05 21:20:42'),
+(106, 'photo037.jpg', '2007-01-05 21:20:42'),
+(105, 'photo036.jpg', '2007-01-05 21:20:42'),
+(104, 'photo035.jpg', '2007-01-05 21:20:42'),
+(103, 'photo034.jpg', '2007-01-05 21:20:42'),
+(102, 'photo033.jpg', '2007-01-05 21:20:42'),
+(101, 'photo032.jpg', '2007-01-05 21:20:42'),
+(113, 'photo044.jpg', '2007-01-05 21:20:42'),
+(114, 'photo045.jpg', '2007-01-05 21:20:42'),
+(115, 'photo046.jpg', '2007-01-05 21:20:42'),
+(116, 'photo047.jpg', '2007-01-05 21:20:42'),
+(125, 'vor_umbau_004.jpg', '2007-01-05 21:35:18'),
+(118, 'photo049.jpg', '2007-01-05 21:20:42'),
+(119, 'photo050.jpg', '2007-01-05 21:20:42'),
+(120, 'photo051.jpg', '2007-01-05 21:20:42'),
+(121, 'photo052.jpg', '2007-01-05 21:20:42'),
+(122, 'photo053.jpg', '2007-01-05 21:20:42'),
+(123, 'photo054.jpg', '2007-01-05 21:20:42'),
+(124, 'photo055.jpg', '2007-01-05 21:20:42');
 
 -- --------------------------------------------------------
 
@@ -138,7 +163,7 @@ CREATE TABLE `gallery_eintraege` (
   `sequence` tinyint(11) NOT NULL default '0',
   `comment` text collate utf8_unicode_ci NOT NULL,
   PRIMARY KEY  (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=51 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=105 ;
 
 -- 
 -- Daten für Tabelle `gallery_eintraege`
@@ -146,11 +171,11 @@ CREATE TABLE `gallery_eintraege` (
 
 INSERT INTO `gallery_eintraege` (`ID`, `fid_bild`, `fid_album`, `sequence`, `comment`) VALUES 
 (1, 7, 1, 1, ''),
-(2, 8, 1, 2, ''),
+(2, 8, 1, 8, ''),
 (3, 9, 1, 3, ''),
-(4, 10, 1, 4, ''),
-(5, 11, 1, 5, ''),
-(6, 12, 1, 6, ''),
+(4, 10, 1, 7, ''),
+(5, 11, 1, 9, ''),
+(6, 12, 1, 10, ''),
 (47, 71, 6, 19, ''),
 (46, 70, 6, 18, ''),
 (45, 69, 6, 17, ''),
@@ -169,7 +194,55 @@ INSERT INTO `gallery_eintraege` (`ID`, `fid_bild`, `fid_album`, `sequence`, `com
 (32, 56, 6, 4, ''),
 (31, 55, 6, 3, ''),
 (30, 54, 6, 2, ''),
-(29, 53, 6, 1, '');
+(29, 53, 6, 1, ''),
+(51, 13, 2, 9, ''),
+(52, 14, 2, 8, ''),
+(53, 15, 2, 6, ''),
+(54, 16, 2, 7, ''),
+(55, 17, 2, 5, ''),
+(56, 18, 2, 3, ''),
+(57, 19, 2, 1, ''),
+(58, 20, 2, 2, ''),
+(69, 22, 3, 3, ''),
+(68, 21, 3, 2, ''),
+(66, 72, 2, 4, ''),
+(63, 74, 1, 2, ''),
+(64, 75, 1, 4, ''),
+(65, 76, 1, 6, ''),
+(70, 23, 3, 4, ''),
+(71, 24, 3, 5, ''),
+(72, 25, 3, 6, ''),
+(73, 26, 3, 7, ''),
+(74, 27, 3, 8, ''),
+(75, 2, 4, 1, ''),
+(76, 3, 4, 2, ''),
+(77, 4, 4, 3, ''),
+(78, 5, 4, 4, ''),
+(79, 6, 4, 5, ''),
+(80, 101, 5, 1, ''),
+(81, 102, 5, 2, ''),
+(82, 103, 5, 3, ''),
+(83, 104, 5, 4, ''),
+(84, 105, 5, 5, ''),
+(85, 106, 5, 6, ''),
+(86, 107, 5, 7, ''),
+(87, 108, 5, 8, ''),
+(88, 109, 5, 9, ''),
+(89, 110, 5, 10, ''),
+(90, 111, 5, 11, ''),
+(91, 112, 5, 12, ''),
+(92, 113, 5, 13, ''),
+(93, 114, 5, 14, ''),
+(94, 115, 5, 15, ''),
+(95, 116, 5, 16, ''),
+(104, 125, 1, 5, ''),
+(97, 118, 5, 18, ''),
+(98, 119, 5, 19, ''),
+(99, 120, 5, 20, ''),
+(100, 121, 5, 21, ''),
+(101, 122, 5, 22, ''),
+(102, 123, 5, 23, ''),
+(103, 124, 5, 24, '');
 
 -- --------------------------------------------------------
 
@@ -273,7 +346,7 @@ INSERT INTO `members` (`members_ID`, `members_name`, `members_spitzname`, `membe
 (5, 'Soraya Brügger', 'surli', '1987-11-04', 'Chünig vo mym Härz', 'Klavierspielen, Reiten, JG, lesen', 'Salat', 'Köchin (in Ausbildung)', '', '', ''),
 (3, 'David Däster', 'Dave', '1985-04-22', 'Watching Over You', 'JG, PC, Sport, Musik', 'Broccoli', 'Informatiker', 'Pray Until Something Happens!', '', '10'),
 (4, 'Lukas Schläpfer', 'Lüdi', '1987-09-19', 'Lord I lift your name on high', 'Gamen, JG, PC, Sport', 'Lassagne', 'kaufmännischer Angestellter (in Ausbildung)', '-', '', '11'),
-(6, 'Simon Däster', 'Simon', '1989-01-25', 'The days of Elijah', 'JS, JG, PC, Freundin, Musik', '', 'Schüler', '', '', ''),
+(6, 'Simon Däster', 'Simon', '1989-01-25', 'The days of Elijah', 'JS, JG, PC, Freundin, Musik', '', 'Schüler', '', 'simon_@gmx.net', ''),
 (7, 'Daniel Schenk', 'Dani', '1989-09-26', '-', 'Klettern, Jungschar', '-', 'Polymechaniker (in Ausbildung)', '-', '', ''),
 (8, 'Marco Flück', 'Marco', '1989-12-14', '-', 'Jungschar, Ping-Pong, JG, Skifahren', '-', 'Schüler', '-', '', ''),
 (9, 'Jonas Däster', 'Schalk', '1990-05-24', 'Chönig vo mim Härz', 'Jungschar, Klettern', 'Raclette', 'kaufmännischer Angestellter (in Ausbildung)', 'Jesus lebt! Wer''s glaubt wird selig!', '', ''),
