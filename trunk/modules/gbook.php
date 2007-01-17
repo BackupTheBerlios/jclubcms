@@ -22,6 +22,8 @@
 	 * 4. default: Ansehen des Gästebuches.
 	 */
 	$action = "";
+	$content_title = "G&auml;stebuch";
+	
 	if (isset($_GET["action"]) && $_GET["action"] != "") {
 		$action = $_GET["action"];	
 	}
@@ -31,6 +33,9 @@
 		 * Einen neuen Eintrag erstellen in das Gästebuch.
 		 */
 		case "new":
+			
+			$content_title .= " - Neuer Eintrag";
+			
 			$button_click = $_REQUEST["btn_send"];
 			$title = $_REQUEST["title"];
 			$content = $_REQUEST["content"];
@@ -133,6 +138,9 @@
 		 * um sich den Text besser zurecht zu legen.
 		 */
 		case "comment":
+		
+			$content_title .= " - Neuer Kommentar";
+		
 			$timeparser = new timeparser($time_format);
 			$local_link = $_REQUEST["nav_id"];
 			
@@ -296,6 +304,9 @@
 		 * @uses mail_send.class.php
 		 */
 		case "mail":
+			
+			$content_title .= "- Mail";
+			
 			$button_click = $_REQUEST["btn_send"];
 			$title = $_REQUEST["title"];
 			$content = $_REQUEST["content"];
@@ -492,4 +503,5 @@
 			$smarty->assign("pages", $pages_array);
 			$mod_tpl = "gbook.tpl";
 	}
+	$smarty->assign("content_title", $content_title);
 ?>

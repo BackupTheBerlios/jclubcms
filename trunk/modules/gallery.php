@@ -24,7 +24,8 @@ $gallery = isset($_GET['gallery']) ? ((int) $_GET['gallery']) : false;
 $bild = isset($_GET['bild']) ? ((int) $_GET['bild']) : false;
 $page = isset($_GET['page']) ? ((int) $_GET['page']) : 0;
 
-
+		//Smarty - Header-Titel
+		$content_title .= "Gallery";
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 //******************* If-Abragen ******************* /
@@ -91,6 +92,9 @@ if($gallery) {
 		$smarty->assign("bild_ID", $bild_ID);
 		$smarty->assign("local_link", $nav_id);
 		$mod_tpl = "gallery_album.tpl";
+		
+		//Smarty - Header-Titel
+		$content_title .= " - $gallery_name";
 	}
 
 
@@ -138,6 +142,8 @@ if($gallery) {
 
 	$mod_tpl = "gallery_pic.tpl";
 	
+	$content_title = " - Bild $bild";
+	
 	
 	
 
@@ -161,6 +167,6 @@ if($gallery) {
 	$smarty->assign("generated_time", $microtime);
 
 }
-
+$smarty->assign("content_title", $content_title);
 ?>
 	

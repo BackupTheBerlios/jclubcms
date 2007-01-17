@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC XHTML "-//W3C//DTD XHTML 1.1//DE">
 <html>
   <head>
-    <title>{$content_title|capitalize}</title>
+    <title>{$content_title}</title>
 
     <style type="text/css">@import url(./templates/style/style.css) all;</style>
 	<!--[if IE]>

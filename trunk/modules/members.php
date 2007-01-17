@@ -17,11 +17,14 @@
 	if (isset($_GET["action"]) && $_GET["action"] != "") {
 		$action = $_GET["action"];	
 	}
-
+	$content_title = "Members";
 	switch ($action) {
 		
 	
 		case "mail":
+		
+			$content_title .= "- Mail";
+		
 			require_once("./modules/mailsend.class.php");  //Für das versenden vom senden des Mails
 			require_once("./modules/formular_check.class.php"); //Überprüfen der Formularfelder
 			require_once("./config/mail_textes.inc.php"); //Standard-Texte für Mailformular und -fehler
@@ -157,4 +160,5 @@
 			$mod_tpl = "members.tpl";
 		break;
 	}
+	$smarty->assign("content_title", $content_title);
 ?>
