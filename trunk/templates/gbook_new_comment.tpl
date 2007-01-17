@@ -17,8 +17,8 @@
 			<td class="content_tab_content2">
 			<img src="templates/style/icons/date.gif" /> {$book.time}<br />
 			<img src="templates/style/icons/user.gif" /> {$book.name}<br />
-			<a href="mailto:{$book.email}"><img src="templates/style/icons/email.gif" /> E-mail</a><br />
-			<a href="{$book.hp}"><img src="templates/style/icons/house.gif" /> Website</a>
+			<a href="?nav_id={$local_link}&action=mail&entry_id={$book.email}"><img src="templates/style/icons/email.gif" /> E-mail</a><br />
+			{if $book.hp neq ""}<a href="?nav_id={$local_link}&action=mail&entry_id={$book.email}"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
 			</td>
 			</tr>
 			{* Innere Schlaufe für das Auslesen der Kommentare *}
@@ -31,8 +31,8 @@
 			<td class="content_tab_content2">
 			<img src="templates/style/icons/date.gif" /> {$comment.comment_time}<br />
 			<img src="templates/style/icons/user.gif" /> {$comment.comment_name}<br />
-			<a href="mailto:{$comment.comment_email}"><img src="templates/style/icons/email.gif" /> E-mail</a><br />
-			<a href="{$comment.comment_hp}"><img src="templates/style/icons/house.gif" /> Website</a>
+			<a href="?nav_id={$local_link}&action=mail&entry_id={$comment.comment_email}"><img src="templates/style/icons/email.gif" /> E-mail</a><br />
+			{if $comment.comment_hp neq ""}<a href="http://{$comment.comment_hp}"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
 			</td>
 			</tr>
 			{/foreach}

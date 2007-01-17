@@ -134,6 +134,9 @@
 		 */
 		case "comment":
 			$timeparser = new timeparser($time_format);
+			$local_link = $_REQUEST["nav_id"];
+			
+			$smarty->assign("local_link", $local_link);
 			
 			$button_click = $_REQUEST["btn_send"];
 			$content = $_REQUEST["content"];
@@ -240,8 +243,15 @@
 				  	$comment_array = array();
 				  	$j = 0;
 				  	while ($comment_entries = $com_mysql->fetcharray()) {
-						$comment_array[$j] = array('comment_title'=>$comment_entries["comment_gbook_title"], 'comment_content'=>$comment_entries["gbook_content"], 'comment_name'=>$comment_entries["gbook_name"], 'comment_email'=>$comment_entries["gbook_email"], 'comment_hp'=>$comment_entries["gbook_hp"], 'comment_time'=>$timeparser->time_output($comment_entries["gbook_time"]));
-						$j++;   
+						$comment_ID = $comment_entries["gbook_ID"];
+						$comment_title = htmlentities($comment_entries["gbook_title"]);
+						$comment_content = nl2br(htmlentities($comment_entries["gbook_content"]));
+						$comment_name = htmlentities($comment_entries["gbook_name"]);
+						$comment_hp = htmlentities($comment_entries["gbook_hp"]);
+						$comment_time = $timeparser->time_output($comment_entries["gbook_time"]);
+						
+						$comment_array[$j] = array('comment_ID'=>$comment_ID, 'comment_title'=>$comment_title, 'comment_content'=>$comment_content, 'comment_name'=>$comment_name, 'comment_email'=>$comment_ID, 'comment_hp'=>$comment_hp, 'comment_time'=>$comment_time);
+					$j++;   
 					}
 					
 					/**
@@ -250,9 +260,16 @@
 					* 
 					* Smarty liest nachher das Array mit Hilfe von {foreach} aus
 					*/			  	
-					$gbook_array[$i] = array('ID'=>$main_entries["gbook_ID"], 'title'=>$main_entries["gbook_title"], 'content'=>$main_entries["gbook_content"], 'name'=>$main_entries["gbook_name"], 'email'=>$main_entries["gbook_email"], 'hp'=>$main_entries["gbook_hp"], 'time'=>$timeparser->time_output($main_entries["gbook_time"]), 'comments'=>$comment_array);
-					$gbook_IDs[$i] = $main_entries["gbook_ID"];
-					$i++;
+				$main_ID = $main_entries["gbook_ID"];
+				$main_title = htmlentities($main_entries["gbook_title"]);
+				$main_content = nl2br(htmlentities($main_entries["gbook_content"]));
+				$main_name = htmlentities($main_entries["gbook_name"]);
+				$main_hp = htmlentities($main_entries["gbook_hp"]);
+				$main_time = $timeparser->time_output($main_entries["gbook_time"]);
+				
+				$gbook_array[$i] = array('ID'=>$main_ID, 'title'=>$main_title, 'content'=>$main_content, 'name'=>$main_name, 'email'=>$main_ID, 'hp'=>$main_hp, 'time'=>$main_time, 'comments'=>$comment_array);
+				$gbook_IDs[$i] = $main_ID;
+				$i++;
 				
 					/**
 					 * Destrukt der angelegten Objekten
