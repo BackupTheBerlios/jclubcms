@@ -2,14 +2,14 @@
 
 /**
  * @package JClubCMS
- * @author David Däster, Simon Däster
+ * @author David Dï¿½ster, Simon Dï¿½ster
 * File: mysql.class.php
 * Classes: mysql
 * Requieres: PHP5, MySQL 4.x
 * 
-* Die Klasse mysql ist zuständig für das ganze Datenbankhändling
+* Die Klasse mysql ist zustï¿½ndig fï¿½r das ganze Datenbankhï¿½ndling
 * von mysql.
-* Über sie gehen alle Verbindungen, Queries und MySQL-Spezifische
+* ï¿½ber sie gehen alle Verbindungen, Queries und MySQL-Spezifische
 * Funktionen (z.B. mysql_fetch_array)
 * Die Daten werden in der Klasse gespeichert und nur die Enddaten
 * ausgegeben.
@@ -20,7 +20,7 @@
 ** 
 *
 ** connect()
-** Öffnet die Verbindung zum Server (wird beim Erstellen des Objekts
+** ï¿½ffnet die Verbindung zum Server (wird beim Erstellen des Objekts
 ** aufgerufen
 *
 ** fetcharray()
@@ -75,9 +75,9 @@ class mysql {
 	}
 
 	/**
-	 * Öffnet die Verbindung zum Server (wird beim Erstellen des Objekts
+	 * ï¿½ffnet die Verbindung zum Server (wird beim Erstellen des Objekts
 	 * aufgerufen)
-	 * Gibt bei Erfolg true zurück, sonst false
+	 * Gibt bei Erfolg true zurï¿½ck, sonst false
 	 *
 	 * @return boolean
 	 */
@@ -113,7 +113,7 @@ class mysql {
 	public function query($query) {
 		$this->result = @mysql_query($query, $this->server_link);
 
-		if(!is_resource($this->result)) {
+		if($this->result === false) {
 			$this->error = true;
 			$this->error_text = mysql_error();
 			$this->error_no = mysql_errno();
@@ -158,7 +158,7 @@ class mysql {
 	}
 
 	/**
-	 * Liefert die Anzahl der Datensätze im Ergebnis
+	 * Liefert die Anzahl der Datensï¿½tze im Ergebnis
 	 *
 	 * @return int|false
 	 */
@@ -176,7 +176,7 @@ class mysql {
 	}
 
 	/**
-	 * Liefert die Anzahl betroffener Datensätze einer vorhergehenden MySQL Operation
+	 * Liefert die Anzahl betroffener Datensï¿½tze einer vorhergehenden MySQL Operation
 	 *
 	 * @return int|false
 	 */
