@@ -1,7 +1,7 @@
-<?php
+ï»¿<?php
 
 /*-----------------------------------------------------------------
-* @author Simon Däster
+* @author Simon DÃ¤ster
 * @package JClubCMS
 * File: image.php
 * Classes: -
@@ -9,16 +9,16 @@
 *
 * GRUNDSATZ:
 * "Befindet sich ein Bild im Ordner Gallery oder im Thumb, dann ist es dort richtig. D.h.
-*  es hat die richtige Grösse und sieht korrekt aus!!"
-* --> Kann zu Konflikt führen, wenn config.inc.php geändert wird
+*  es hat die richtige GrÃ¶sse und sieht korrekt aus!!"
+* --> Kann zu Konflikt fÃ¼hren, wenn config.inc.php geÃ¤ndert wird
 *
 * Diese Datei (image.php= wird aufgerufen, um ein Bild darzustellen.
-* Sie fragt die Datenbank nach der übermittelten ID ab und erhält so die Bilddatei
+* Sie fragt die Datenbank nach der Ã¼bermittelten ID ab und erhÃ¤lt so die Bilddatei
 * Ist ein Bild zu gross, wird es verkleinert im Ordner 'gallery' abgespeichert
-* Mithilfe der Klasse "image" wird das Bild (verändert) ausgegeben
+* Mithilfe der Klasse "image" wird das Bild (vergrÃ¶ssert) ausgegeben
 *
-* Die image-Klasse wird auch für Thumbs gebraucht
-* Ist ein Thumb nicht vorhanden, wird es automatisch aus dem zugehörigen Bild
+* Die image-Klasse wird auch fÃ¼r Thumbs gebraucht
+* Ist ein Thumb nicht vorhanden, wird es automatisch aus dem zugehÃ¶rigen Bild
 * erstellt und im Ordner 'thumb' abgespeichert.
 *
 -------------------------------------------------------------------*/
@@ -41,7 +41,7 @@ if($bild)
 
 	$bild_mysql = $mysql->fetcharray();
 
-	//Überprüfung, ob ein Eintrag vorhanden ist
+	//ÃœberprÃœfung, ob ein Eintrag vorhanden ist
 	if(!empty($bild_mysql))
 	{
 		$img = new image($dir_orgImage.$bild_mysql['filename']);
@@ -65,14 +65,14 @@ if($bild)
 			;
 		} else {
 
-			//Höhe-Breite-Verhältnis zum Weiterrechnen bestimmen
+			//HÃ¶he-Breite-VerhÃ¤ltnis zum Weiterrechnen bestimmen
 			$verhaeltnis = $bild_data['height'] / $bild_data['width'];
 
-			//Neue Breite zuweisen und neue Höhe berechnen
+			//Neue Breite zuweisen und neue HÃ¶he berechnen
 			$bild_newwidth = $image_maxwidth;
 			$bild_newheight = floor($verhaeltnis * $bild_newwidth);		//Abrunden
 
-			//Wenn die Höhe noch zu gross ist, wird die max. Höhe bestimmt und neue Breite berechnet
+			//Wenn die HÃ¶he noch zu gross ist, wird die max. HÃ¶he bestimmt und neue Breite berechnet
 			if($bild_newheight > $image_maxheight)
 			{
 				$bild_newheight = $image_maxheight;
@@ -84,7 +84,7 @@ if($bild)
 		}
 		
 		
-		//Alte Instanz löschen
+		//Alte Instanz lÃ¶schen
 		$img->__destruct();
 		
 		//Neue Instanz mit kleinem Bild
@@ -104,7 +104,7 @@ elseif($thumb)
 
 	$bild_mysql = $mysql->fetcharray();
 
-	//Überprüfung, ob ein Eintrag vorhanden ist
+	//ÃœberprÃ¼fung, ob ein Eintrag vorhanden ist
 	if(empty($bild_mysql))
 	{
 		$img = new image(""); //Fehlerbild ausgeben, weil kein Eintrag vorhanden ist
@@ -127,7 +127,7 @@ elseif($thumb)
 			$bild_newwidth = $thumb_maxwidth;
 			$bild_newheight = floor($verhaeltnis * $bild_newwidth);		//Abrunden
 
-			//Wenn die Höhe noch zu gross ist, wird die max. Höhe bestimmt und neue Breite berechnet
+			//Wenn die HÃ¶he noch zu gross ist, wird die max. HÃ¶he bestimmt und neue Breite berechnet
 			if($bild_newheight > $thumb_maxheight)
 			{
 				$bild_newheight = $thumb_maxheight;

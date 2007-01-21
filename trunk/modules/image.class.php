@@ -1,4 +1,4 @@
-<?php
+ï»¿<?php
 
 /*-----------------------------------------------------------------
 * @author Simon Däster
@@ -7,17 +7,17 @@
 * Classes: image
 * Requieres: PHP5
 *
-* Die Klasse image ist zuständig für Grafikfunktionen
-* Sie speichert die Informationen über ein Bild ab, kann diese Informationen senden
+* Die Klasse image ist zustÃ¤ndig fÃ¼r Grafikfunktionen
+* Sie speichert die Informationen Ã¼ber ein Bild ab, kann diese Informationen senden
 * und das Bild selber ausgeben
 * Wenn keine Bilddatei vorhanden ist, dann wird automatisch ein Fehlerbild erstellt
 * Um Thumbs zu erstellen, kann die Funktion "copy" verwendet werden.
-* "copy" kann auch verwendet werden, um das Bild selber zu verändern.
-* Dazu kann man einfach die Grössen belassen
-* !Achtung: Vorhandene Dateien werden ohne Abfrage überschrieben!!!
+* "copy" kann auch verwendet werden, um das Bild selber zu verÃ¤ndern.
+* Dazu kann man einfach die GrÃ¶ssen und den Dateinamen belassen
+* !Achtung: Vorhandene Dateien werden ohne Abfrage Ã¼berschrieben!!!
 *
-* Diese Klasse ist nicht für die Administration der Bilder zuständig
-* Die Klasse wird für jedes Bild gebraucht, um es darzustellen und nötige
+* Diese Klasse ist nicht fÃ¼r die Administration der Bilder zuständig
+* Die Klasse wird fÃ¼r jedes Bild gebraucht, um es darzustellen und nÃ¶tige
 * Informationen zum jeweiligen Bild zu erhalten
 *
 -------------------------------------------------------------------*/
@@ -70,7 +70,7 @@ class image {
 	 * Kopiert das Originalbild uns speichert es in ein neues Bild mit anderen Höhen/Breiten ab
 	 *
 	 * @param int $new_x Neue Breite
-	 * @param int $new_y Neue Höhe
+	 * @param int $new_y Neue HÃ¶he
 	 * @param string $file Speicherort
 	 * @param string $new_format[optional] Neues Bildformat
 	 */
@@ -134,8 +134,8 @@ class image {
 
 
 	/**
-	 * Sendet Informationen über das Bild, namentlich
-	 * Grafik-Resource, Grafik-Format, die Breite und die Höhe
+	 * Sendet Informationen Ã¼ber das Bild, namentlich
+	 * Grafik-Resource, Grafik-Format, die Breite und die HÃ¶he
 	 *
 	 * @return array ("format", "width", "height") 
 	 */
@@ -169,9 +169,9 @@ class image {
 
 
 	/**
-	 * Schaut, ob das Grafikformat unterstützt wird
+	 * Schaut, ob das Grafikformat unterstÃ¼tzt wird
 	 * Speichert das Grafikformat und die Bildressource
-	 * Speichert auch die Höhe und Breite
+	 * Speichert auch die HÃ¶he und Breite
 	 */
 
 	private function get_infos() {

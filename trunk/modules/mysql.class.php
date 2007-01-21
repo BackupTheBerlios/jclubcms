@@ -1,15 +1,15 @@
-<?php
+﻿<?php
 
 /**
  * @package JClubCMS
- * @author David D�ster, Simon D�ster
+ * @author David Däster, Simon Däster
 * File: mysql.class.php
 * Classes: mysql
 * Requieres: PHP5, MySQL 4.x
 * 
-* Die Klasse mysql ist zust�ndig f�r das ganze Datenbankh�ndling
+* Die Klasse mysql ist zuständig für das ganze Datenbankhandling
 * von mysql.
-* �ber sie gehen alle Verbindungen, Queries und MySQL-Spezifische
+* Über sie gehen alle Verbindungen, Queries und MySQL-Spezifische
 * Funktionen (z.B. mysql_fetch_array)
 * Die Daten werden in der Klasse gespeichert und nur die Enddaten
 * ausgegeben.
@@ -20,7 +20,7 @@
 ** 
 *
 ** connect()
-** �ffnet die Verbindung zum Server (wird beim Erstellen des Objekts
+** Öffnet die Verbindung zum Server (wird beim Erstellen des Objekts
 ** aufgerufen
 *
 ** fetcharray()
@@ -75,9 +75,9 @@ class mysql {
 	}
 
 	/**
-	 * �ffnet die Verbindung zum Server (wird beim Erstellen des Objekts
+	 * Öffnet die Verbindung zum Server (wird beim Erstellen des Objekts
 	 * aufgerufen)
-	 * Gibt bei Erfolg true zur�ck, sonst false
+	 * Gibt bei Erfolg true zurück, sonst false
 	 *
 	 * @return boolean
 	 */
@@ -113,13 +113,13 @@ class mysql {
 	public function query($query) {
 		$this->result = @mysql_query($query, $this->server_link);
 
-		if($this->result === false) {
-			$this->error = true;
+		if(is_resource($this->result)) {
+			return true;			
+		} else {			
+                        $this->error = true;
 			$this->error_text = mysql_error();
 			$this->error_no = mysql_errno();
-			return false;			
-		} else {
-			return true;
+			return false;
 		}
 	}
 
@@ -158,7 +158,7 @@ class mysql {
 	}
 
 	/**
-	 * Liefert die Anzahl der Datens�tze im Ergebnis
+	 * Liefert die Anzahl der Datensätze im Ergebnis
 	 *
 	 * @return int|false
 	 */
@@ -176,7 +176,7 @@ class mysql {
 	}
 
 	/**
-	 * Liefert die Anzahl betroffener Datens�tze einer vorhergehenden MySQL Operation
+	 * Liefert die Anzahl betroffener Datensätze einer vorhergehenden MySQL Operation
 	 *
 	 * @return int|false
 	 */
