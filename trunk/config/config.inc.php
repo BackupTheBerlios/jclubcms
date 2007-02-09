@@ -1,7 +1,7 @@
-ï»¿<?php
+<?php
 /**
  * @package JClubCMS
- * @author David DÃ¤ster, Simon DÃ¤ster
+ * @author David Däster, Simon Däster
  */
 /*DB-Einstellungen*/
 $db_server = "localhost";
@@ -21,7 +21,7 @@ $gallery_menuview = 2; //Wieviele Bilder Links und Rechts des aktuellen Bildes g
 
 //**Bild und Thumb
 
-//!!! Bilder sind stdmÃ¤ssig in originals abgespeichert, aber wenn sie zu gross sind, in gallery
+//!!! Bilder sind stdmässig in originals abgespeichert, aber wenn sie zu gross sind, in gallery
 $dir_orgImage = "./graphics/originals/"; //Relativ zur Index-Datei
 $dir_galImage = "./graphics/gallery/";  //Relativ zur Index-Datei
 $image_maxheight = 600;
@@ -34,13 +34,13 @@ $thumb_maxwidth = 150;
 
 /*------$time_format-----------------------
 * Analog des data() von PHP, mit Ausnahmen
-* ------NICHT GEPLANTE UNTERSTÃœTZUNG--------
+* ------NICHT GEPLANTE UNTERSTÜZUNG--------
 * B	Swatch-Internet-Zeit
-* D	Tag der Woche gekÃ¼rzt auf drei Buchstaben
-* I FÃ¤llt ein Datum in die Sommerzeit
+* D	Tag der Woche gekürzt auf drei Buchstaben
+* I Fällt ein Datum in die Sommerzeit
 * l Ausgeschriebener Tag der Woche
 * L	Schaltjahr oder nicht
-* S	Anhang der englischen AufzÃ¤hlung fÃ¼r einen Monatstag, zwei Zeichen
+* S	Anhang der englischen Aufzählung für einen Monatstag, zwei Zeichen
 * t	Anzahl der Tage des angegebenen Monats
 * T	Zeitzoneneinstellung des Rechners
 * U	Sekunden seit Beginn der UNIX-Epoche

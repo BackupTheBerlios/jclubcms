@@ -1,6 +1,6 @@
-ï»¿<?php
+<?php
 /** 
- * @author David DÃ¤ster
+ * @author David Däster
  * @package JClubCMS
  * File: mailsend.class.php
  * Classes: mailsend
@@ -10,7 +10,7 @@
  */
 
 /**
- * Klasse verantwortlich fÃ¼r den den ganzen Mail-Ablauf
+ * Klasse fïür den den ganzen Mail-Ablauf
  * 1. Phase
  * - Hash-Berechnung 
  * - Ablage in Datenbank
@@ -34,11 +34,11 @@ class mailsend {
 		return 0;
 	}
 	/**
-	 * Versendet den Link um die Mail auszulÃ¶sen
+	 * Versendet den Link um die Mail auszulösen
 	 *
 	 * @param object $mysql_link MysqlObjekt
-	 * @param string $mail_reciver_name MailempfÃ¤ngername (aus Datenbank)
-	 * @param string $mail_reciver MailempfÃ¤nger (aus Datenbank)
+	 * @param string $mail_reciver_name Mailempängername (aus Datenbank)
+	 * @param string $mail_reciver Mailempfänger (aus Datenbank)
 	 * @param string $mail_sender_name Mailsendername (aus Formular)
 	 * @param string $mail_sender Mailsenderadresse (aus Formular)
 	 * @param string $mail_titel Subjekt des Mails (aus Formular)
@@ -69,7 +69,7 @@ class mailsend {
 	}
 
 	/**
-	 * Liefert dem Hash der Mail zurÃ¼ck um in die DB abzulegen
+	 * Liefert dem Hash der Mail zurück um in die DB abzulegen
 	 *
 	 * @return string
 	 */
@@ -86,7 +86,7 @@ class mailsend {
 	}
 	
 	/**
-	 * FÃ¼llt die Daten in die Tabelle ab, um spÃ¤ter zu versenden.
+	 * Füllt die Daten in die Tabelle ab, um später zu versenden.
 	 *
 	 * @param reference $mysql_link MySQL-Objekt
 	 * @param string $mail_hash Hash des Mails
@@ -106,7 +106,7 @@ class mailsend {
 	}
 	
 	/**
-	 * Startet das senden des Links an den EmpfÃ¤nger bei gÃ¼ltigem Hash
+	 * Startet das senden des Links an den Empfänger bei gültigem Hash
 	 *
 	 * @param reference $mysql_link
 	 * @param string $hash
@@ -151,9 +151,9 @@ class mailsend {
 		}
 	}
 		/**
-	 * ZustÃ¤ndig fÃ¼r das Versenden von Mails
+	 * Zuständig für das Versenden von Mails
 	 *
-	 * @param string $reciver EmpfÃ¤nger
+	 * @param string $reciver Empfänger
 	 * @param string $subject Betreff
 	 * @param string $message Nachricht
 	 * @param string $header Headerdaten (Sender, Name, Mailer)

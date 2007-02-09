@@ -1,20 +1,20 @@
-ï»¿<?php
+<?php
 
 /**
  * @package JClubCMS
- * @author Simon DÃ¤ster
+ * @author Simon Däster
  * File: gallery.php
  * Classes: none
  * Requieres: PHP5
  *
  *
- * Dieses Modul ist fÃ¼r die Gallery zustÃ¤ndig, die Anzeige von Bildern
+ * Dieses Modul ist für die Gallery zuständig, die Anzeige von Bildern
  *in den verschiedenen Alben und richtigen Reihenfolge
  *
- * Sie ist _NICHT_ zustÃ¤ndig fÃ¼r die Administration des Gallery
+ * Sie ist _NICHT_ zuständig für die Administration des Gallery
  * 
  * INFO:
- * GALLERY IN GALLERY WIRD NOCH NICHT UNTERSTÃ¼TZT
+ * GALLERY IN GALLERY WIRD NOCH NICHT UNTERSTÜTZT
  */
 
 require_once("pagesnav.class.php");
@@ -36,7 +36,7 @@ if($gallery) {
 	$bildproseite = (int)($gallery_pics_x * $gallery_pics_y);
 	$start = (int)($page*$bildproseite);
 
-	//Anzahl EintrÃ¤ge
+	//Anzahl Einträge
 	$mysql->query("SELECT * FROM gallery_eintraege WHERE fid_album = '$gallery'");
 	$number = $mysql->num_rows();
 
@@ -47,7 +47,7 @@ if($gallery) {
 	$gallery_name = $items_array[0];
 
 
-	//EintrÃ¤ge abrufen
+	//Einträge abrufen
 	$mysql->query("SELECT gallery_eintraege.fid_bild FROM `gallery_eintraege`,`gallery_alben`
 					WHERE gallery_alben.ID = '$gallery' AND gallery_eintraege.fid_album = '$gallery'
 					ORDER BY gallery_eintraege.sequence
@@ -74,7 +74,7 @@ if($gallery) {
 
 	} else {
 
-		//Die Menu_ID finden fÃ¼r image.php
+		//Die Menu_ID finden für image.php
 		$mysql->query("Select modules_ID from modules Where modules_name = 'image.php'");
 		$imgMod_ID =  implode("",$mysql->fetcharray("num"));
 		$mysql->query("SELECT menu_ID FROM `menu` where menu_pagetyp = 'mod' And menu_page = $imgMod_ID");
@@ -125,7 +125,7 @@ if($gallery) {
 	$next_bild = $mysql->fetcharray("assoc");
 
 	
-	//Die Menu_ID finden fÃ¼r image.php und an Smarty weitergeben
+	//Die Menu_ID finden für image.php und an Smarty weitergeben
 	$mysql->query("Select modules_ID from modules Where modules_name = 'image.php'");
 	$imgMod_ID =  implode("",$mysql->fetcharray("num"));
 	$mysql->query("SELECT menu_ID FROM `menu` where menu_pagetyp = 'mod' And menu_page = $imgMod_ID");

@@ -12,9 +12,10 @@ $gbook_name_onerror_de = "Fehler im Name.<br />Darf nicht leer sein, oder den St
 $gbook_email_onerror_de = "Fehler in der Email-Adresse.<br />Darf nicht leer sein, oder den Standard-Wert haben";
 $gbook_email_checkfaild_de = "Geben Sie eine g&uuml;ltige EMail-Adresse an.<br />Ihre Adresse entspricht nicht der Norm";
 $gbook_hp_onerror_de = "Fehler im Link zu deiner Homepage.<br />Darf nicht den Standard-Wert haben";
+$gbook_captcha_onerror_de = "Der angegebene Text ist nicht im Bild<br />Bitte schreiben Sie den Text ab, der im Bild steht";
 $gbook_link_onerror_de = "Zur&uuml;ck";
 
 $gbook_allright_title = "Eintrag erstellt";
-$gbook_allright_content = "Dein Eintrag wurde gespeichert, und steht sofort im GB zur Verfügung";
+$gbook_allright_content = "Dein Eintrag wurde gespeichert, und steht sofort im GB zur Verf&uuml;gung";
 $gbook_allright_link = "Zur&uuml;ck zum G&auml;stebuch";
 ?>

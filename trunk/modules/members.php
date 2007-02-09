@@ -1,7 +1,7 @@
-ï»¿<?php
+<?php
 /**
  * @package JClubCMS
- * @author Simon DÃ¤ster, David DÃ¤ster
+ * @author Simon Däster
  * File: members.php
  * Classes: none
  * Requieres: PHP5
@@ -9,7 +9,7 @@
  *
  * Dieses Modul gibt die Mitglieder aus, welche im Mysql gespeichert sind.
  *
- * Sie ist _NICHT_ zustÃ¤ndig fÃ¼r die Administration der MitgliedereintrÃ¤ge
+ * Sie ist _NICHT_ zuständig für die Administration der Mitgliedereinträge
  */
 
 	require_once("./modules/pagesnav.class.php");
@@ -25,9 +25,9 @@
 		
 			$content_title .= "- Mail";
 		
-			require_once("./modules/mailsend.class.php");  //FÃ¼r das versenden vom senden des Mails
-			require_once("./modules/formular_check.class.php"); //ÃœberprÃ¼fen der Formularfelder
-			require_once("./config/mail_textes.inc.php"); //Standard-Texte fÃ¼r Mailformular und -fehler
+			require_once("./modules/mailsend.class.php");  //Für das versenden vom senden des Mails
+			require_once("./modules/formular_check.class.php"); //Überprüfen der Formularfelder
+			require_once("./config/mail_textes.inc.php"); //Standard-Texte für Mailformular und -fehler
 			
 			$button_click = $_REQUEST["btn_send"];
 			$title = $_REQUEST["title"];
