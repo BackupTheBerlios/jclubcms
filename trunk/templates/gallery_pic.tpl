@@ -15,6 +15,7 @@
         </td>
       </tr>
     </table>
-    {*Erstellt in {$generated_time}s*}
+    <!--Erstellt in {$generated_time}s-->
+    
   </div>
 </div>

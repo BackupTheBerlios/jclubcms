@@ -18,8 +18,8 @@
 	header("Cache-Control: no-store, no-cache, max-age=0, must-revalidate");
 	header("Content-Type: image/jpeg", true);
 		
-	if (!empty( $HTTP_GET_VARS['img'] ) )
-		$img = $HTTP_GET_VARS['img'];
+	if (!empty( $_GET['img'] ) )
+		$img = $_GET['img'];
 	else
 	{
 		echo 'no image file specified via &img=...';

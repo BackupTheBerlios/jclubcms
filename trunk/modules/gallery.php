@@ -81,8 +81,11 @@ if($gallery) {
 		$img_ID =  implode("",$mysql->fetcharray("num"));
 		$smarty->assign("img_link", $img_ID);
 
-
+		$microtime = microtime()-$microtime;
+		$microtime=round($microtime, 3);
 		//Smarty-Variablen belegen
+		
+		$smarty->assign("generated_time", $microtime);
 		$smarty->assign("thispage", $page+1);
 		$smarty->assign("pages", $pages_array);
 		$smarty->assign("number", $number);
@@ -133,7 +136,11 @@ if($gallery) {
 	$smarty->assign("img_link", $img_ID);
 
 
+	$microtime = microtime()-$microtime;
+	$microtime=round($microtime, 3);
 	//weitere Smarty-Variablen
+
+	$smarty->assign("generated_time", $microtime);
 	$smarty->assign("album", $album_ID);
 	$smarty->assign("local_link", $nav_id);
 	$smarty->assign("ID_bild", $bild);

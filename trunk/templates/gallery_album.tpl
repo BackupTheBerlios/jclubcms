@@ -53,5 +53,6 @@
       </tr>
     </table>
     <br />
+    <!--Erstellt in {$generated_time}s-->
   </div>
 </div>
