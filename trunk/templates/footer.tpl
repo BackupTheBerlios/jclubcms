@@ -1,5 +1,5 @@
-<div id="footerContainer">
-	<div id="footer">
+      <div id="content">
+		<div id="content_txt">
 		&copy; by JG J-Club Balsthal
 	</div>
 </div>

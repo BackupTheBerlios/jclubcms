@@ -1,6 +1,5 @@
-
-<div id="contentContainer">
-	<div id="content">
+      <div id="content">
+		<div id="content_txt">
             {foreach key=index item=name from=$name}
             <table cellpadding="0" cellspacing="0" align="center" class="content_tab">
               <tr>

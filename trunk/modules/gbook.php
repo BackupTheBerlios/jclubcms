@@ -582,8 +582,9 @@ switch ($action) {
 			$main_name = htmlentities($main_entries["gbook_name"]);
 			$main_hp = htmlentities($main_entries["gbook_hp"]);
 			$main_time = $timeparser->time_output($main_entries["gbook_time"]);
-
-			$gbook_array[$i] = array('ID'=>$main_ID, 'title'=>$main_title, 'content'=>$main_content, 'name'=>$main_name, 'email'=>$main_ID, 'hp'=>$main_hp, 'time'=>$main_time, 'comments'=>$comment_array);
+			$comments_count = $j;
+			
+			$gbook_array[$i] = array('ID'=>$main_ID, 'title'=>$main_title, 'content'=>$main_content, 'name'=>$main_name, 'email'=>$main_ID, 'hp'=>$main_hp, 'time'=>$main_time, 'number_of_comments'=>$comments_count, 'comments'=>$comment_array);
 			$gbook_IDs[$i] = $main_ID;
 			$i++;
 

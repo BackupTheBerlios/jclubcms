@@ -1,5 +1,5 @@
-<div id="contentContainer">
-	<div id="content">
+      <div id="content">
+		<div id="content_txt">
 		<table class="pagesnav"><tr>
 		{foreach item=page from=$pages}
 		<td><a href="{$page.link}">[{$page.page}]</a></td>

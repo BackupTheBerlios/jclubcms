@@ -1,5 +1,5 @@
-<div id="contentContainer">
-  <div id="content">
+      <div id="content">
+		<div id="content_txt">
     <table width = 100% class="content_tab">
     </table>
     <form method="post" action="?nav_id={$nav_id}&action=new">

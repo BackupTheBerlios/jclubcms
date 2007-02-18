@@ -10,11 +10,15 @@
 	<![endif]-->
     
   </head>
-  <body>
-	<div id="page">
-    <div id="header">&nbsp;</div>
-    <div id="navigationContainer">
-      <div id="navigation">
+<body>
+	<div id="main">
+		&nbsp;
+	</div>
+	<div id="header">
+		&nbsp;
+	</div>
+	<div id="navigation">
+		<div class="navigation_links">
       
         {*Hier kommt die Navigation, ausgelesen aus der DB*}
         {section name=topnav loop=$nav}
@@ -23,16 +27,33 @@
         
       </div>
     </div>
-    <div id="subnavContainer">
+    <div id="subnavigation">
+
+		<div class="subnavigation_links">
+		      <a href="index.html">Aktuell</a>
+		      <a href="index.html">&Uuml;ber uns</a>
+		      <a href="index.html">Das Leiterteam</a>
+		      <a href="index.html">Die Gruppen</a>
+		      <a href="index.html">BESJ</a>
+		      <a href="index.html">Fotos &amp; Videos</a>
+		      <a href="index.html">Downloads</a>
+		</div>
+	</div>
+	<div id="footer">
+		<div class="footer_txt">
+			&copy; 2007 by JG J-Club Balsthal
+		</div>
+	</div>
+     <div id="subnavigation">
     
       {foreach item=subnav from=$subnav}    
       {*Für alle Level grösser gleich 3 ist die CSS-Klasse subnav3, sonst eine andere*}
       {if $subnav.level == 1}
-      <div class="subnav">
+      <div class="subnavigation_links">
       {elseif $subnav.level <= 3}
-      <div class="subnav{$subnav.level}">
+      <div class="subnavigation_links{$subnav.level}">
       {else}
-      <div class="subnav3">
+      <div class="subnavigation_links3">
       {/if}        
         <a href="./index.php?nav_id={$subnav.menu_ID}">{$subnav.menu_name}</a>  
       </div>

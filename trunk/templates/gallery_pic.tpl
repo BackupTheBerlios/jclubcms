@@ -1,5 +1,5 @@
-<div id="contentContainer">
-  <div id="content">
+      <div id="content">
+		<div id="content_txt">
     <table align="center">
       <tr>
 	<td colspan="3" align="center"><a href="./index.php?nav_id={$local_link}&gallery={$album}" ><img src="templates/style/icons/gallery.gif" />zur Bilder-&Uuml;bersicht</a></td>

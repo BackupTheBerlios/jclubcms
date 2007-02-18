@@ -1,6 +1,5 @@
-﻿<div id="contentContainer">
-<div id="contentContainer">
-  <div id="content">
+﻿      <div id="content">
+		<div id="content_txt">
     <table width="640" align="center" class="content_tab">
       <colgroup>
         <col width="1*">

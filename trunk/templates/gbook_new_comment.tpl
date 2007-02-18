@@ -1,5 +1,5 @@
-<div id="contentContainer">
-  <div id="content">
+      <div id="content">
+		<div id="content_txt">
     <table width = 100% class="content_tab">
     </table>
     <table cellpadding="0" cellspacing="0" align="center" class="content_tab">
