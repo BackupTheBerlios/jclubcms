@@ -41,31 +41,30 @@ if($bild)
 
 	$bild_mysql = $mysql->fetcharray();
 
-	//Überprüfung, ob ein Eintrag vorhanden ist
+	/*//Überprüfung, ob ein Eintrag vorhanden ist
 	if(!empty($bild_mysql))
 	{
 		$img = new image($dir_orgImage.$bild_mysql['filename']);
-	}
-	else
-	{
+	}*/
+	
+	
+	if(empty($bild_mysql)) {
 		$img = new image(""); //Fehlerbild ausgeben, weil kein Eintrag vorhanden ist
 		$img->create_image(240, 80, "Keine Id zu diesem Bild", "000000255", "200150080");
 		$img->send_image();
 		die();			//Skript abbrechen, weil nichts anderes gemacht werden muss
 	}
 
-	$bild_data = $img->send_infos();
-
-	//Ist das Bild zu gross?
-	if($bild_data['height'] > $image_maxheight || $bild_data['width'] > $image_maxwidth)
-	{
-		if(is_file($dir_galImage.$bild_mysql['filename']))
-		{
-			//Ist das Bild schon im gallery-Ordner, wird nichts verändert
-			;
-		} else {
-
-			//Höhe-Breite-Verhältnis zum Weiterrechnen bestimmen
+	//Entweder liegt das Bild im Gallery-Ordner oder es ist zu gross oder richtig;
+	if(is_file($dir_galImage.$bild_mysql['filename'])) {
+		$img = new image($dir_galImage.$bild_mysql['filename']);
+		
+	} else {
+		
+		$img = new image($dir_orgImage.$bild_mysql['filename']);
+		$bild_data = $img->send_infos();
+		
+		if($bild_data['height'] > $image_maxheight || $bild_data['width'] > $image_maxwidth) {
 			$verhaeltnis = $bild_data['height'] / $bild_data['width'];
 
 			//Neue Breite zuweisen und neue Höhe berechnen
@@ -81,14 +80,13 @@ if($bild)
 
 			//verkleinertes Bild in den Ordner speichern
 			$img->copy($bild_newwidth, $bild_newheight, $dir_galImage.$bild_mysql['filename']);
-		}
-		
-		
-		//Alte Instanz löschen
-		$img->__destruct();
-		
-		//Neue Instanz mit kleinem Bild
-		$img = new image($dir_galImage.$bild_mysql['filename']);
+			
+			//Alte Instanz löschen
+			$img->__destruct();
+			
+			//Neue Instanz mit kleinem Bild
+			$img = new image($dir_galImage.$bild_mysql['filename']);
+		}	
 	}
 
 	//Bild ausgeben
