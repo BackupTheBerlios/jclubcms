@@ -41,12 +41,6 @@ if($bild)
 
 	$bild_mysql = $mysql->fetcharray();
 
-	/*//Überprüfung, ob ein Eintrag vorhanden ist
-	if(!empty($bild_mysql))
-	{
-		$img = new image($dir_orgImage.$bild_mysql['filename']);
-	}*/
-	
 	
 	if(empty($bild_mysql)) {
 		$img = new image(""); //Fehlerbild ausgeben, weil kein Eintrag vorhanden ist

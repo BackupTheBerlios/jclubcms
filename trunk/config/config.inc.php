@@ -31,6 +31,9 @@ $dir_thumb = "./graphics/gallery/thumbs/";  //Relativ zur Index-Datei
 $thumb_maxheight = 150;
 $thumb_maxwidth = 150;
 
+//**Smilies
+$dir_smilies = "./graphics/smilies/";
+
 
 /*------$time_format-----------------------
 * Analog des data() von PHP, mit Ausnahmen
