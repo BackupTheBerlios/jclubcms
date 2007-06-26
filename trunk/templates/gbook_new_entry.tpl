@@ -38,5 +38,25 @@
         </tr>
       </table>
     </form>
+    <table cellpadding="0" cellspacing="0" align="center" class="content_tab">
+     <tr>
+      <td class="formailer_header" colspan="2"><b>Smilie-Liste</b></td> 
+     </tr>
+     <tr>
+      <td class="formailer_txt">
+       <table class="content_tab">
+        <tr>
+         {foreach key=schluessel item=smily from=$smilies_list}
+          <td>{$smily.sign}&nbsp;{$smily.file}&nbsp;&nbsp;</td>
+	{if ($schluessel+1)%5 == 0}
+		</tr>
+		<tr>
+	  {/if}
+         {/foreach}
+        </tr>
+       </table>
+      </td>
+     </tr>
+    </table>
   </div>
 </div>

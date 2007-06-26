@@ -162,6 +162,18 @@ switch ($action) {
 			$mysql->query("SELECT menu_ID FROM `menu`, modules WHERE modules.modules_ID = menu.menu_page
                         and modules.modules_name = 'captcha_image.php' and menu.menu_pagetyp = 'mod'");
 			$captcha_id = $mysql->fetcharray("num");
+			
+			//Smilies herauslesen
+			$mysql->query("SELECT smilies_sign, smilies_file FROM `smilies` LIMIT 30");
+			
+			$i = 0;
+			while($smilies_entry = $mysql->fetcharray("assoc"))
+			{
+				$smilies_list[$i]['sign'] = $smilies_entry['smilies_sign'];
+				$smilies_list[$i]['file'] = "<img src=\"$dir_smilies".$smilies_entry['smilies_file']."\" />";
+				$i++;
+				
+			}
 
 			/**
                          * Smarty-Arbeit
@@ -173,6 +185,7 @@ switch ($action) {
 			$smarty->assign("entry_name", $name);
 			$smarty->assign("entry_email", $email);
 			$smarty->assign("entry_hp", $hp);
+			$smarty->assign("smilies_list", $smilies_list);
 			$smarty->assign("captcha_img", $captcha->get_pic(4));
 			$smarty->assign("sessionscode", $sessionscode);
 			$mod_tpl = "gbook_new_entry.tpl";
@@ -363,6 +376,18 @@ switch ($action) {
                                  */
 				$com_mysql->disconnect();
 			}
+			
+			//Smilies herauslesen
+			$mysql->query("SELECT smilies_sign, smilies_file FROM `smilies` LIMIT 30");
+			
+			$i = 0;
+			while($smilies_entry = $mysql->fetcharray("assoc"))
+			{
+				$smilies_list[$i]['sign'] = $smilies_entry['smilies_sign'];
+				$smilies_list[$i]['file'] = "<img src=\"$dir_smilies".$smilies_entry['smilies_file']."\" />";
+				$i++;
+				
+			}
 
 			/**
                          * Smarty-Arbeit
@@ -376,6 +401,7 @@ switch ($action) {
 			$smarty->assign("entry_name", $name);
 			$smarty->assign("entry_email", $email);
 			$smarty->assign("entry_hp", $hp);
+			$smarty->assign("smilies_list", $smilies_list);
 			$smarty->assign("sessionscode", $sessionscode);
 			$smarty->assign("captcha_img", $captcha->get_pic(4));
 			$mod_tpl = "gbook_new_comment.tpl";
@@ -523,6 +549,8 @@ switch ($action) {
          */
 	default:
 		$local_link = $_REQUEST["nav_id"];
+		
+		$smil_mysql = new mysql($db_server, $db_name, $db_user, $db_pw); //Mysql-Verbindung für Smilie-Replace
 
 		$smarty->assign("local_link", $local_link);
 		$timeparser = new timeparser($time_format);
@@ -557,10 +585,10 @@ switch ($action) {
 			$comment_array = array();
 			$j = 0;
 			while ($comment_entries = $com_mysql->fetcharray()) {
-
+							
 				$comment_ID = $comment_entries["gbook_ID"];
 				$comment_title = htmlentities($comment_entries["gbook_title"]);
-				$comment_content = nl2br(htmlentities($comment_entries["gbook_content"]));
+				$comment_content = replace_smilies(nl2br(htmlentities($comment_entries["gbook_content"])), $smil_mysql);
 				$comment_name = htmlentities($comment_entries["gbook_name"]);
 				$comment_hp = htmlentities($comment_entries["gbook_hp"]);
 				$comment_time = $timeparser->time_output($comment_entries["gbook_time"]);
@@ -578,7 +606,7 @@ switch ($action) {
 
 			$main_ID = $main_entries["gbook_ID"];
 			$main_title = htmlentities($main_entries["gbook_title"]);
-			$main_content = nl2br(htmlentities($main_entries["gbook_content"]));
+			$main_content = replace_smilies(nl2br(htmlentities($main_entries["gbook_content"])), $smil_mysql);
 			$main_name = htmlentities($main_entries["gbook_name"]);
 			$main_hp = htmlentities($main_entries["gbook_hp"]);
 			$main_time = $timeparser->time_output($main_entries["gbook_time"]);
