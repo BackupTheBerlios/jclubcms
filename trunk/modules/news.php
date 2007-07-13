@@ -14,6 +14,7 @@
 require_once("./modules/pagesnav.class.php");
 require_once("./modules/captcha.class.php");
 require_once("./config/gbook_textes.inc.php");
+require_once("./modules/smilies.class.php");
 
 //$smarty->debugging = true;
 $action = "";
@@ -174,6 +175,7 @@ switch ($action) {
 
 		$smarty->assign("local_link", $nav_id);
 		$timeparser = new timeparser($time_format);
+		$smilies = new smilies($dir_smilies);
 		$mysql->query("SELECT news_ID FROM news WHERE news_ref_ID = 0");
 		$number = $mysql->num_rows();
 		$pages_count = ceil($number/$news_entries_per_page);
@@ -201,7 +203,7 @@ switch ($action) {
                          */
 			$main_ID = $main_entries["news_ID"];
 			$main_title = htmlentities($main_entries["news_title"]);
-			$main_content = nl2br(htmlentities($main_entries["news_content"]));
+			$main_content = $smilies->show_smilie(nl2br(htmlentities($main_entries["news_content"])), $mysql);
 			$main_name = htmlentities($main_entries["news_name"]);
 			$main_hp = htmlentities($main_entries["news_hp"]);
 			$main_time = $timeparser->time_output($comment_entries["news_time"]);
@@ -214,7 +216,7 @@ switch ($action) {
 			while ($comment_entries = $com_mysql->fetcharray()) {
 
 				$comment_ID = $comment_entries["news_ID"];
-				$comment_content = nl2br(htmlentities($comment_entries["news_content"]));
+				$comment_content = $smilies->show_smilie(nl2br(htmlentities($comment_entries["news_content"])), $com_mysql);
 				$comment_name = htmlentities($comment_entries["news_name"]);
 				$comment_hp = htmlentities($comment_entries["news_hp"]);
 				$comment_time = $timeparser->time_output($comment_entries["news_time"]);

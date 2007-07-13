@@ -24,8 +24,9 @@ CREATE TABLE `smilies` (
   `smilies_ID` int(11) NOT NULL auto_increment,
   `smilies_sign` varchar(20) collate utf8_unicode_ci NOT NULL,
   `smilies_file` varchar(50) collate utf8_unicode_ci NOT NULL default '',
-  PRIMARY KEY  (`smilies_ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=22 ;
+  PRIMARY KEY  (`smilies_ID`),
+  UNIQUE KEY `smilies_sign` (`smilies_sign`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=31 ;
 
 -- 
 -- Daten für Tabelle `smilies`
@@ -33,7 +34,7 @@ CREATE TABLE `smilies` (
 
 INSERT INTO `smilies` VALUES (2, ':-)', 'smile.gif');
 INSERT INTO `smilies` VALUES (3, ':-D', 'bigsmile.gif');
-INSERT INTO `smilies` VALUES (4, '|:)', 'angel.gif');
+INSERT INTO `smilies` VALUES (4, '*angel*', 'angel.gif');
 INSERT INTO `smilies` VALUES (5, '*confused*', 'confused.gif');
 INSERT INTO `smilies` VALUES (6, '*dance*', 'dance.gif');
 INSERT INTO `smilies` VALUES (7, '*disco*', 'disco.gif');
@@ -51,3 +52,12 @@ INSERT INTO `smilies` VALUES (18, '*thumbsup*', 'thumbsup.gif');
 INSERT INTO `smilies` VALUES (19, '*thumb*', 'thumbup.gif');
 INSERT INTO `smilies` VALUES (20, ':-p', 'tongue.gif');
 INSERT INTO `smilies` VALUES (21, ':-Q', 'smoke.gif');
+INSERT INTO `smilies` VALUES (22, ':)', 'smile.gif');
+INSERT INTO `smilies` VALUES (23, ':D', 'bigsmile.gif');
+INSERT INTO `smilies` VALUES (24, ':p', 'tongue.gif');
+INSERT INTO `smilies` VALUES (25, ':Q', 'smoke.gif');
+INSERT INTO `smilies` VALUES (26, ':O', 'mouthopen.gif');
+INSERT INTO `smilies` VALUES (27, ';-)', 'wink.gif');
+INSERT INTO `smilies` VALUES (28, ';)', 'wink.gif');
+INSERT INTO `smilies` VALUES (29, ':-(', 'sad.gif');
+INSERT INTO `smilies` VALUES (30, ':(', 'sad.gif');

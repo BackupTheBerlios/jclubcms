@@ -10,8 +10,6 @@ require_once('./modules/mysql.class.php');
 require_once('./modules/timeparser.class.php');
 require_once('./Smarty/Smarty.class.php');
 
-require_once('./includes/functions.php');
-
 //Smarty-Objekt
 $smarty = new Smarty();
 $smarty->compile_check = true;

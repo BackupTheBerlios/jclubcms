@@ -18,7 +18,7 @@
           </td>
         </tr>
         <tr>
-          <td colspan="2" style="padding: 10px;" class="formailer_adress">
+          <td colspan="2" style="padding: 10px;" class="formailer_txt">
             <table border="0">
               <tr>
                 <td rowspan="2"><img src="index.php?nav_id={$captcha_id}&img={$captcha_img}" /></td>
@@ -47,7 +47,7 @@
        <table class="content_tab">
         <tr>
          {foreach key=schluessel item=smily from=$smilies_list}
-          <td>{$smily.sign}&nbsp;{$smily.file}&nbsp;&nbsp;</td>
+          <td>{$smily.sign}&nbsp;<img src="{$smily.file}"></img>&nbsp;&nbsp;</td>
 	{if ($schluessel+1)%5 == 0}
 		</tr>
 		<tr>

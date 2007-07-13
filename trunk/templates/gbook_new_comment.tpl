@@ -81,7 +81,7 @@
        <table class="content_tab">
         <tr>
          {foreach key=schluessel item=smily from=$smilies_list}
-          <td>{$smily.sign}&nbsp;{$smily.file}&nbsp;&nbsp;</td>
+          <td>{$smily.sign}&nbsp;<img src="{$smily.file}"></img>&nbsp;&nbsp;</td>
 	{if ($schluessel+1)%5 == 0}
 		</tr>
 		<tr>

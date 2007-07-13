@@ -14,14 +14,13 @@
  * Bei Fehlern gelangt man nicht mithilfe von JavaScript:history.back() zurück zum Eintragen, 
  * sondern über einen anderen Link.
  * Eingegebene Felder werden übernommen.
- * 
  */
 require_once("./config/gbook_textes.inc.php");
 require_once("./config/mail_textes.inc.php");
 require_once("./modules/pagesnav.class.php");
 require_once("./modules/formular_check.class.php");
 require_once("./modules/captcha.class.php");
-
+require_once("./modules/smilies.class.php");
 /**
  * Es gibt 4 Actionen, die getrennt ausgeführt werden.
  * 1. New: Ein neuer Eintrag in das Gästebuch
@@ -44,6 +43,7 @@ if(isset($_REQUEST['sessionscode'])) {
 }
 
 $captcha = new captcha($sessionscode, "./data/temp");
+$smilies = new smilies($dir_smilies);
 
 switch ($action) {
 	/**
@@ -163,17 +163,8 @@ switch ($action) {
                         and modules.modules_name = 'captcha_image.php' and menu.menu_pagetyp = 'mod'");
 			$captcha_id = $mysql->fetcharray("num");
 			
-			//Smilies herauslesen
-			$mysql->query("SELECT smilies_sign, smilies_file FROM `smilies` LIMIT 30");
-			
-			$i = 0;
-			while($smilies_entry = $mysql->fetcharray("assoc"))
-			{
-				$smilies_list[$i]['sign'] = $smilies_entry['smilies_sign'];
-				$smilies_list[$i]['file'] = "<img src=\"$dir_smilies".$smilies_entry['smilies_file']."\" />";
-				$i++;
-				
-			}
+			//Smilies-Liste generieren
+			$smilies_list = $smilies->create_smiliesarray($mysql);
 
 			/**
                          * Smarty-Arbeit
@@ -345,7 +336,7 @@ switch ($action) {
 				while ($comment_entries = $com_mysql->fetcharray()) {
 					$comment_ID = $comment_entries["gbook_ID"];
 					$comment_title = htmlentities($comment_entries["gbook_title"]);
-					$comment_content = nl2br(htmlentities($comment_entries["gbook_content"]));
+					$comment_content = $smilies->show_smilie(nl2br(htmlentities($comment_entries["gbook_content"])), $com_mysql);
 					$comment_name = htmlentities($comment_entries["gbook_name"]);
 					$comment_hp = htmlentities($comment_entries["gbook_hp"]);
 					$comment_time = $timeparser->time_output($comment_entries["gbook_time"]);
@@ -362,7 +353,7 @@ switch ($action) {
                                 */			  	
 				$main_ID = $main_entries["gbook_ID"];
 				$main_title = htmlentities($main_entries["gbook_title"]);
-				$main_content = nl2br(htmlentities($main_entries["gbook_content"]));
+				$main_content = $smilies->show_smilie(nl2br(htmlentities($main_entries["gbook_content"])), $com_mysql);
 				$main_name = htmlentities($main_entries["gbook_name"]);
 				$main_hp = htmlentities($main_entries["gbook_hp"]);
 				$main_time = $timeparser->time_output($main_entries["gbook_time"]);
@@ -377,17 +368,8 @@ switch ($action) {
 				$com_mysql->disconnect();
 			}
 			
-			//Smilies herauslesen
-			$mysql->query("SELECT smilies_sign, smilies_file FROM `smilies` LIMIT 30");
-			
-			$i = 0;
-			while($smilies_entry = $mysql->fetcharray("assoc"))
-			{
-				$smilies_list[$i]['sign'] = $smilies_entry['smilies_sign'];
-				$smilies_list[$i]['file'] = "<img src=\"$dir_smilies".$smilies_entry['smilies_file']."\" />";
-				$i++;
-				
-			}
+			//Smilies-Liste generieren
+			$smilies_list = $smilies->create_smiliesarray($mysql);
 
 			/**
                          * Smarty-Arbeit
@@ -588,7 +570,7 @@ switch ($action) {
 							
 				$comment_ID = $comment_entries["gbook_ID"];
 				$comment_title = htmlentities($comment_entries["gbook_title"]);
-				$comment_content = replace_smilies(nl2br(htmlentities($comment_entries["gbook_content"])), $smil_mysql);
+				$comment_content = $smilies->show_smilie(nl2br(htmlentities($comment_entries["gbook_content"])), $com_mysql);
 				$comment_name = htmlentities($comment_entries["gbook_name"]);
 				$comment_hp = htmlentities($comment_entries["gbook_hp"]);
 				$comment_time = $timeparser->time_output($comment_entries["gbook_time"]);
@@ -606,7 +588,7 @@ switch ($action) {
 
 			$main_ID = $main_entries["gbook_ID"];
 			$main_title = htmlentities($main_entries["gbook_title"]);
-			$main_content = replace_smilies(nl2br(htmlentities($main_entries["gbook_content"])), $smil_mysql);
+			$main_content = $smilies->show_smilie(nl2br(htmlentities($main_entries["gbook_content"])), $com_mysql);
 			$main_name = htmlentities($main_entries["gbook_name"]);
 			$main_hp = htmlentities($main_entries["gbook_hp"]);
 			$main_time = $timeparser->time_output($main_entries["gbook_time"]);
@@ -626,10 +608,10 @@ switch ($action) {
 		$pages_array = $pages_nav->build_array();
 		$pages_nav->__destruct();
 
-		/**
+				/**
                  * Array der Seiten, wobei der Text immer eines höher ist als der Link.
                  * Page 0 = Seite 1; Page 1 = Seite 2;
-                 */
+        		 */
 
 		$timeparser->__destruct();
 		$microtime = microtime()-$microtime;
