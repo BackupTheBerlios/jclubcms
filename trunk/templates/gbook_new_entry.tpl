@@ -24,7 +24,7 @@
                 <td rowspan="2"><img src="index.php?nav_id={$captcha_id}&img={$captcha_img}" /></td>
                 <td><div style="font-size: 10px">Bitte den Text eingeben,<br /> der im Bild steht</div></td>
                 
-                <td><div style="font-size: 10px">Sollte der Text nicht erkennbar sein, neues Bild wählen</div></td>
+                <td><div style="font-size: 10px">Sollte der Text nicht erkennbar sein, neues Bild w&auml;hlen</div></td>
               </tr>
               <tr>
                 <td><input type="text" size="15" name="captcha_word" value="{$content}" /></td>
