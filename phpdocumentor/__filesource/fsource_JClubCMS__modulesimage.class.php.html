@@ -1,0 +1,280 @@
+<html>
+<head>
+<title>File Source for image.class.php</title>
+<link rel="stylesheet" type="text/css" href="../media/style.css">
+</head>
+<body>
+
+<table border="0" cellspacing="0" cellpadding="0" height="48" width="100%">
+  <tr>
+    <td class="header_top">JClubCMS</td>
+  </tr>
+  <tr><td class="header_line"><img src="../media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
+  <tr>
+    <td class="header_menu">
+  		  [ <a href="../classtrees_JClubCMS.html" class="menu">class tree: JClubCMS</a> ]
+		  [ <a href="../elementindex_JClubCMS.html" class="menu">index: JClubCMS</a> ]
+		  [ <a href="../elementindex.html" class="menu">all elements</a> ]
+    </td>
+  </tr>
+  <tr><td class="header_line"><img src="../media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
+</table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="200" class="menu">
+      <b>Packages:</b><br />
+              <a href="../li_JclubCMS.html">JclubCMS</a><br />
+              <a href="../li_JClubCMS.html">JClubCMS</a><br />
+            <br /><br />
+                  
+                </td>
+    <td>
+      <table cellpadding="10" cellspacing="0" width="100%" border="0"><tr><td valign="top">
+
+<h1 align="center">Source for file image.class.php</h1>
+<p>Documentation is available at <a href="../JClubCMS/_modules_image_class_php.html">image.class.php</a></p>
+<div class="php">
+<div class="listing"><pre><ol><li><a name="a1"></a><span class="src-php">&lt;?php</span></li>
+<li><a name="a2"></a>&nbsp;</li>
+<li><a name="a3"></a><span class="src-doc">/**</span></li>
+<li><a name="a4"></a><span class="src-doc"> * </span><span class="src-doc-coretag">@author</span><span class="src-doc"> Simon Däster</span></li>
+<li><a name="a5"></a><span class="src-doc"> * </span><span class="src-doc-coretag">@package</span><span class="src-doc"> JClubCMS</span></li>
+<li><a name="a6"></a><span class="src-doc"> *  File: image.class.php</span></li>
+<li><a name="a7"></a><span class="src-doc"> *  Classes: image</span></li>
+<li><a name="a8"></a><span class="src-doc"> *  Requieres: PHP5</span></li>
+<li><a name="a9"></a><span class="src-doc"> *</span></li>
+<li><a name="a10"></a><span class="src-doc"> *  Die Klasse image ist zuständig für Grafikfunktionen</span></li>
+<li><a name="a11"></a><span class="src-doc"> *  Sie speichert die Informationen über ein Bild ab, kann diese Informationen senden</span></li>
+<li><a name="a12"></a><span class="src-doc"> *  und das Bild selber ausgeben</span></li>
+<li><a name="a13"></a><span class="src-doc"> *  Wenn keine Bilddatei vorhanden ist, dann wird automatisch ein Fehlerbild erstellt</span></li>
+<li><a name="a14"></a><span class="src-doc"> *  Um Thumbs zu erstellen, kann die Funktion &quot;copy&quot; verwendet werden.</span></li>
+<li><a name="a15"></a><span class="src-doc"> *  &quot;copy&quot; kann auch verwendet werden, um das Bild selber zu verändern.</span></li>
+<li><a name="a16"></a><span class="src-doc"> *  Dazu kann man einfach die Grössen belassen</span></li>
+<li><a name="a17"></a><span class="src-doc"> *  !Achtung: Vorhandene Dateien werden ohne Abfrage überschrieben!!!</span></li>
+<li><a name="a18"></a><span class="src-doc"> *</span></li>
+<li><a name="a19"></a><span class="src-doc"> *  Diese Klasse ist nicht für die Administration der Bilder zuständig</span></li>
+<li><a name="a20"></a><span class="src-doc"> *  Die Klasse wird für jedes Bild gebraucht, um es darzustellen und nötige</span></li>
+<li><a name="a21"></a><span class="src-doc"> *  Informationen zum jeweiligen Bild zu erhalten</span></li>
+<li><a name="a22"></a><span class="src-doc"> *</span></li>
+<li><a name="a23"></a><span class="src-doc"> */</span></li>
+<li><a name="a24"></a>&nbsp;</li>
+<li><a name="a25"></a>&nbsp;</li>
+<li><a name="a26"></a><span class="src-key">class </span><a href="../JClubCMS/image.html">image</a> <span class="src-sym">{</span></li>
+<li><a name="a27"></a>&nbsp;</li>
+<li><a name="a28"></a>    <span class="src-key">private </span><a href="../JClubCMS/image.html#var$file">$file</a> = <span class="src-id">null</span><span class="src-sym">;</span></li>
+<li><a name="a29"></a>    <span class="src-key">private </span><a href="../JClubCMS/image.html#var$im">$im</a> = <span class="src-id">null</span><span class="src-sym">;</span></li>
+<li><a name="a30"></a>    <span class="src-key">private </span><a href="../JClubCMS/image.html#var$graphicformat">$graphicformat</a> = <span class="src-str">&quot;jpeg&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a31"></a>    <span class="src-key">private </span><a href="../JClubCMS/image.html#var$height">$height</a> = <span class="src-id">null</span><span class="src-sym">;</span></li>
+<li><a name="a32"></a>    <span class="src-key">private </span><a href="../JClubCMS/image.html#var$width">$width</a> = <span class="src-id">null</span><span class="src-sym">;</span></li>
+<li><a name="a33"></a>&nbsp;</li>
+<li><a name="a34"></a>&nbsp;</li>
+<li><a name="a35"></a>    <span class="src-comm">/*------------------</span></li>
+<li><a name="a36"></a><span class="src-comm">    *** Öffentliche Funktionen ***</span></li>
+<li><a name="a37"></a><span class="src-comm">    ------------------*/</span></li>
+<li><a name="a38"></a>&nbsp;</li>
+<li><a name="a39"></a>&nbsp;</li>
+<li><a name="a40"></a>    <span class="src-doc">/**</span></li>
+<li><a name="a41"></a><span class="src-doc">     * Der Klassenkonstruktor</span></li>
+<li><a name="a42"></a><span class="src-doc">     * Wird eine Datei angegeben, wird das Bild abgespeichert</span></li>
+<li><a name="a43"></a><span class="src-doc">     * Ist das Argument leer, wird ein Fehlerbild erstellt</span></li>
+<li><a name="a44"></a><span class="src-doc">     * Ist eine Datei angegeben, existiert aber nicht, wird ein anders Fehlerbild erstellt</span></li>
+<li><a name="a45"></a><span class="src-doc">     * </span></li>
+<li><a name="a46"></a><span class="src-doc">     * </span><span class="src-doc-coretag">@param </span><span class="src-doc-type">string </span><span class="src-doc-var">$file[optional] </span><span class="src-doc">Bilddatei</span></li>
+<li><a name="a47"></a><span class="src-doc">     */</span></li>
+<li><a name="a48"></a>&nbsp;</li>
+<li><a name="a49"></a>    <span class="src-key">public </span><span class="src-key">function </span><a href="../JClubCMS/image.html#method__construct">__construct</a><span class="src-sym">(</span><span class="src-var">$file</span><span class="src-sym">) </span><span class="src-sym">{</span></li>
+<li><a name="a50"></a>&nbsp;</li>
+<li><a name="a51"></a>        <span class="src-key">if</span><span class="src-sym">(</span><span class="src-var">$file </span>!= <span class="src-str">&quot;&quot; </span>&amp;&amp; <a href="http://www.php.net/is_file">is_file</a><span class="src-sym">(</span><span class="src-var">$file</span><span class="src-sym">))</span></li>
+<li><a name="a52"></a>        <span class="src-sym">{</span></li>
+<li><a name="a53"></a>            <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$file">file</a> = <span class="src-var">$file</span><span class="src-sym">;</span></li>
+<li><a name="a54"></a>&nbsp;</li>
+<li><a name="a55"></a>            <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#methodget_infos">get_infos</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a56"></a>&nbsp;</li>
+<li><a name="a57"></a>        <span class="src-sym">}</span></li>
+<li><a name="a58"></a>        <span class="src-key">else</span></li>
+<li><a name="a59"></a>        <span class="src-sym">{</span></li>
+<li><a name="a60"></a>            <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$file">file</a> = <span class="src-str">&quot;&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a61"></a>            <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#methodcreate_image">create_image</a><span class="src-sym">(</span><span class="src-num">180</span><span class="src-sym">, </span><span class="src-num">100</span><span class="src-sym">, </span><span class="src-str">&quot;Bild nicht gefunden&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a62"></a>        <span class="src-sym">}</span></li>
+<li><a name="a63"></a>&nbsp;</li>
+<li><a name="a64"></a>&nbsp;</li>
+<li><a name="a65"></a>    <span class="src-sym">}</span></li>
+<li><a name="a66"></a>&nbsp;</li>
+<li><a name="a67"></a>&nbsp;</li>
+<li><a name="a68"></a>&nbsp;</li>
+<li><a name="a69"></a>    <span class="src-doc">/**</span></li>
+<li><a name="a70"></a><span class="src-doc">     * Kopiert das Originalbild uns speichert es in ein neues Bild mit anderen Höhen/Breiten ab</span></li>
+<li><a name="a71"></a><span class="src-doc">     *</span></li>
+<li><a name="a72"></a><span class="src-doc">     * </span><span class="src-doc-coretag">@param </span><span class="src-doc-type">int </span><span class="src-doc-var">$new_x </span><span class="src-doc">Neue Breite</span></li>
+<li><a name="a73"></a><span class="src-doc">     * </span><span class="src-doc-coretag">@param </span><span class="src-doc-type">int </span><span class="src-doc-var">$new_y </span><span class="src-doc">Neue Höhe</span></li>
+<li><a name="a74"></a><span class="src-doc">     * </span><span class="src-doc-coretag">@param </span><span class="src-doc-type">string </span><span class="src-doc-var">$file </span><span class="src-doc">Speicherort</span></li>
+<li><a name="a75"></a><span class="src-doc">     * </span><span class="src-doc-coretag">@param </span><span class="src-doc-type">string </span><span class="src-doc-var">$new_format[optional] </span><span class="src-doc">Neues Bildformat</span></li>
+<li><a name="a76"></a><span class="src-doc">     */</span></li>
+<li><a name="a77"></a>&nbsp;</li>
+<li><a name="a78"></a>    <span class="src-key">public </span><span class="src-key">function </span><a href="../JClubCMS/image.html#methodcopy">copy</a><span class="src-sym">(</span><span class="src-var">$new_width</span><span class="src-sym">, </span><span class="src-var">$new_height</span><span class="src-sym">, </span><span class="src-var">$file</span><span class="src-sym">, </span><span class="src-var">$new_format</span>=<span class="src-str">&quot;jpeg&quot;</span><span class="src-sym">) </span><span class="src-sym">{</span></li>
+<li><a name="a79"></a>&nbsp;</li>
+<li><a name="a80"></a>        <span class="src-var">$new_im </span>= <span class="src-id">imagecreatetruecolor</span><span class="src-sym">(</span><span class="src-var">$new_width</span><span class="src-sym">, </span><span class="src-var">$new_height</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a81"></a>&nbsp;</li>
+<li><a name="a82"></a>        <span class="src-id">imagecopyresized</span><span class="src-sym">(</span><span class="src-var">$new_im</span><span class="src-sym">, </span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$im">im</a><span class="src-sym">, </span><span class="src-num">0</span><span class="src-sym">, </span><span class="src-num">0</span><span class="src-sym">, </span><span class="src-num">0</span><span class="src-sym">, </span><span class="src-num">0</span><span class="src-sym">, </span><span class="src-var">$new_width</span><span class="src-sym">, </span><span class="src-var">$new_height</span><span class="src-sym">, </span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$width">width</a><span class="src-sym">, </span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$height">height</a><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a83"></a>        eval<span class="src-sym">(</span><span class="src-str">&quot;</span><span class="src-str"><span class="src-id">image</span><span class="src-var">$new_format</span>(\$<span class="src-id">new_im</span>, \$<span class="src-id">file</span>);</span><span class="src-str">&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a84"></a>        <span class="src-id">imagedestroy</span><span class="src-sym">(</span><span class="src-var">$new_im</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a85"></a>&nbsp;</li>
+<li><a name="a86"></a>    <span class="src-sym">}</span></li>
+<li><a name="a87"></a>&nbsp;</li>
+<li><a name="a88"></a>    <span class="src-doc">/**</span></li>
+<li><a name="a89"></a><span class="src-doc">     * Senden das Bild per HTTP an den User</span></li>
+<li><a name="a90"></a><span class="src-doc">     *</span></li>
+<li><a name="a91"></a><span class="src-doc">     */</span></li>
+<li><a name="a92"></a>&nbsp;</li>
+<li><a name="a93"></a>    <span class="src-key">public </span><span class="src-key">function </span><a href="../JClubCMS/image.html#methodsend_image">send_image</a><span class="src-sym">(</span><span class="src-sym">) </span><span class="src-sym">{</span></li>
+<li><a name="a94"></a>&nbsp;</li>
+<li><a name="a95"></a>        <span class="src-var">$format </span>= <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$graphicformat">graphicformat</a><span class="src-sym">;</span></li>
+<li><a name="a96"></a>        <span class="src-var">$im </span>= <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$im">im</a><span class="src-sym">;</span></li>
+<li><a name="a97"></a>&nbsp;</li>
+<li><a name="a98"></a>        eval<span class="src-sym">(</span><span class="src-str">&quot;</span><span class="src-str"><span class="src-id">header</span>(\&quot;<span class="src-id">Content</span>-<span class="src-id">type</span>: <span class="src-id">image</span>/<span class="src-var">$format</span>\&quot;);</span><span class="src-str">&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a99"></a>        eval<span class="src-sym">(</span><span class="src-str">&quot;</span><span class="src-str"><span class="src-id">image</span><span class="src-var">$format</span>(\$<span class="src-id">im</span>);</span><span class="src-str">&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a100"></a>        <span class="src-key">exit</span><span class="src-sym">;</span></li>
+<li><a name="a101"></a>        </li>
+<li><a name="a102"></a>    <span class="src-sym">}</span></li>
+<li><a name="a103"></a>&nbsp;</li>
+<li><a name="a104"></a>    <span class="src-doc">/**</span></li>
+<li><a name="a105"></a><span class="src-doc">     * Ein Bild wird erstellt.</span></li>
+<li><a name="a106"></a><span class="src-doc">     * Die Farben sind vorgegeben</span></li>
+<li><a name="a107"></a><span class="src-doc">     * </span></li>
+<li><a name="a108"></a><span class="src-doc">     * Wird vom Konstruktor aufgerufen</span></li>
+<li><a name="a109"></a><span class="src-doc">     *</span></li>
+<li><a name="a110"></a><span class="src-doc">     * </span><span class="src-doc-coretag">@param </span><span class="src-doc-type">string </span><span class="src-doc-var">$text </span></li>
+<li><a name="a111"></a><span class="src-doc">     * </span><span class="src-doc-coretag">@param </span><span class="src-doc-type">string </span><span class="src-doc-var">$col_background </span><span class="src-doc">Die Hintergrundfarbe im String mit RGB-Werten</span></li>
+<li><a name="a112"></a><span class="src-doc">     * </span><span class="src-doc-coretag">@param </span><span class="src-doc-type">string </span><span class="src-doc-var">$col_text </span><span class="src-doc">Die Textfarbe im String mit RGB-Werten</span></li>
+<li><a name="a113"></a><span class="src-doc">     */</span></li>
+<li><a name="a114"></a>&nbsp;</li>
+<li><a name="a115"></a>    <span class="src-key">public </span><span class="src-key">function </span><a href="../JClubCMS/image.html#methodcreate_image">create_image</a><span class="src-sym">(</span><span class="src-var">$width</span><span class="src-sym">, </span><span class="src-var">$height</span><span class="src-sym">, </span><span class="src-var">$text</span>=<span class="src-str">&quot;Bild nicht gefunden&quot;</span><span class="src-sym">, </span><span class="src-var">$col_background </span>= <span class="src-str">&quot;000000000&quot;</span><span class="src-sym">, </span><span class="src-var">$col_text</span>=<span class="src-str">&quot;050255070&quot;</span><span class="src-sym">) </span><span class="src-sym">{</span></li>
+<li><a name="a116"></a>&nbsp;</li>
+<li><a name="a117"></a>        <span class="src-comm">//Fest vorgegeben</span></li>
+<li><a name="a118"></a>        <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$graphicformat">graphicformat</a> = <span class="src-str">&quot;jpeg&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a119"></a>&nbsp;</li>
+<li><a name="a120"></a>        <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$width">width</a> = <span class="src-var">$width</span><span class="src-sym">;</span></li>
+<li><a name="a121"></a>        <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$height">height</a> = <span class="src-var">$height</span><span class="src-sym">;</span></li>
+<li><a name="a122"></a>&nbsp;</li>
+<li><a name="a123"></a>        <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$im">im</a> = <span class="src-id">imagecreatetruecolor</span><span class="src-sym">(</span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$width">width</a><span class="src-sym">, </span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$height">height</a><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a124"></a>&nbsp;</li>
+<li><a name="a125"></a>        <span class="src-comm">//Aus den Parameter für Farbe (RGB-Werte) werden die Farben erstellt</span></li>
+<li><a name="a126"></a>        <span class="src-var">$background_color </span>= <span class="src-id">imagecolorallocate </span><span class="src-sym">(</span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$im">im</a><span class="src-sym">, </span>(int)<a href="http://www.php.net/substr">substr</a><span class="src-sym">(</span><span class="src-var">$col_background</span><span class="src-sym">, </span><span class="src-num">0</span><span class="src-sym">,</span><span class="src-num">3</span><span class="src-sym">) </span><span class="src-sym">, </span>(int)<a href="http://www.php.net/substr">substr</a><span class="src-sym">(</span><span class="src-var">$col_background</span><span class="src-sym">, </span><span class="src-num">3</span><span class="src-sym">,</span><span class="src-num">3</span><span class="src-sym">) </span><span class="src-sym">, </span>(int)<a href="http://www.php.net/substr">substr</a><span class="src-sym">(</span><span class="src-var">$col_background</span><span class="src-sym">, </span><span class="src-num">6</span><span class="src-sym">,</span><span class="src-num">3</span><span class="src-sym">))</span><span class="src-sym">;</span></li>
+<li><a name="a127"></a>        <span class="src-var">$text_color </span>= <span class="src-id">imagecolorallocate</span><span class="src-sym">(</span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$im">im</a><span class="src-sym">, </span>(int)<a href="http://www.php.net/substr">substr</a><span class="src-sym">(</span><span class="src-var">$col_text</span><span class="src-sym">, </span><span class="src-num">0</span><span class="src-sym">,</span><span class="src-num">3</span><span class="src-sym">)</span><span class="src-sym">, </span>(int)<a href="http://www.php.net/substr">substr</a><span class="src-sym">(</span><span class="src-var">$col_text</span><span class="src-sym">, </span><span class="src-num">3</span><span class="src-sym">,</span><span class="src-num">3</span><span class="src-sym">)</span><span class="src-sym">, </span>(int)<a href="http://www.php.net/substr">substr</a><span class="src-sym">(</span><span class="src-var">$col_text</span><span class="src-sym">, </span><span class="src-num">6</span><span class="src-sym">,</span><span class="src-num">3</span><span class="src-sym">))</span><span class="src-sym">;</span></li>
+<li><a name="a128"></a>&nbsp;</li>
+<li><a name="a129"></a>        <span class="src-id">imagefill</span><span class="src-sym">(</span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$im">im</a><span class="src-sym">, </span><span class="src-num">0</span><span class="src-sym">,</span><span class="src-num">0</span><span class="src-sym">, </span><span class="src-var">$background_color</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a130"></a>        <span class="src-id">imagestring</span><span class="src-sym">(</span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$im">im</a><span class="src-sym">, </span><span class="src-num">5</span><span class="src-sym">, </span><span class="src-num">5</span><span class="src-sym">, </span><span class="src-num">35</span><span class="src-sym">, </span><span class="src-var">$text</span><span class="src-sym">, </span><span class="src-var">$text_color</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a131"></a>    <span class="src-sym">}</span></li>
+<li><a name="a132"></a>&nbsp;</li>
+<li><a name="a133"></a>&nbsp;</li>
+<li><a name="a134"></a>&nbsp;</li>
+<li><a name="a135"></a>&nbsp;</li>
+<li><a name="a136"></a>    <span class="src-doc">/**</span></li>
+<li><a name="a137"></a><span class="src-doc">     * Sendet Informationen über das Bild, namentlich</span></li>
+<li><a name="a138"></a><span class="src-doc">     * Grafik-Resource, Grafik-Format, die Breite und die Höhe</span></li>
+<li><a name="a139"></a><span class="src-doc">     *</span></li>
+<li><a name="a140"></a><span class="src-doc">     * </span><span class="src-doc-coretag">@return </span><span class="src-doc-type">array </span><span class="src-doc">(&quot;format&quot;, &quot;width&quot;, &quot;height&quot;)</span></li>
+<li><a name="a141"></a><span class="src-doc">     */</span></li>
+<li><a name="a142"></a>&nbsp;</li>
+<li><a name="a143"></a>    <span class="src-key">public </span><span class="src-key">function </span><a href="../JClubCMS/image.html#methodsend_infos">send_infos</a><span class="src-sym">(</span><span class="src-sym">) </span><span class="src-sym">{</span></li>
+<li><a name="a144"></a>        <span class="src-key">return </span><span class="src-key">array</span><span class="src-sym">(</span><span class="src-str">&quot;format&quot; </span>=&gt; <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$graphicformat">graphicformat</a><span class="src-sym">,</span><span class="src-str">&quot;width&quot; </span>=&gt; <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$width">width</a><span class="src-sym">,</span></li>
+<li><a name="a145"></a>        <span class="src-str">&quot;height&quot; </span>=&gt; <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$height">height</a><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a146"></a>    <span class="src-sym">}</span></li>
+<li><a name="a147"></a>&nbsp;</li>
+<li><a name="a148"></a>&nbsp;</li>
+<li><a name="a149"></a>&nbsp;</li>
+<li><a name="a150"></a>    <span class="src-doc">/**</span></li>
+<li><a name="a151"></a><span class="src-doc">     * Der Klassendestruktor</span></li>
+<li><a name="a152"></a><span class="src-doc">     *</span></li>
+<li><a name="a153"></a><span class="src-doc">     */</span></li>
+<li><a name="a154"></a>&nbsp;</li>
+<li><a name="a155"></a>    <span class="src-key">public </span><span class="src-key">function </span><a href="../JClubCMS/image.html#method__destruct">__destruct</a><span class="src-sym">(</span><span class="src-sym">) </span><span class="src-sym">{</span></li>
+<li><a name="a156"></a>        <span class="src-var">$file </span>= <span class="src-id">null</span><span class="src-sym">;</span></li>
+<li><a name="a157"></a>        <span class="src-var">$im </span>= <span class="src-id">null</span><span class="src-sym">;</span></li>
+<li><a name="a158"></a>        <span class="src-var">$graphicformat </span>= <span class="src-id">null</span><span class="src-sym">;</span></li>
+<li><a name="a159"></a>        <span class="src-var">$height </span>= <span class="src-id">null</span><span class="src-sym">;</span></li>
+<li><a name="a160"></a>        <span class="src-var">$width </span>= <span class="src-id">null</span><span class="src-sym">;</span></li>
+<li><a name="a161"></a>    <span class="src-sym">}</span></li>
+<li><a name="a162"></a>&nbsp;</li>
+<li><a name="a163"></a>&nbsp;</li>
+<li><a name="a164"></a>&nbsp;</li>
+<li><a name="a165"></a>&nbsp;</li>
+<li><a name="a166"></a>    <span class="src-comm">/*------------------</span></li>
+<li><a name="a167"></a><span class="src-comm">    *** Private Funktionen ***</span></li>
+<li><a name="a168"></a><span class="src-comm">    ------------------*/</span></li>
+<li><a name="a169"></a>&nbsp;</li>
+<li><a name="a170"></a>&nbsp;</li>
+<li><a name="a171"></a>    <span class="src-doc">/**</span></li>
+<li><a name="a172"></a><span class="src-doc">     * Schaut, ob das Grafikformat unterstützt wird</span></li>
+<li><a name="a173"></a><span class="src-doc">     * Speichert das Grafikformat und die Bildressource</span></li>
+<li><a name="a174"></a><span class="src-doc">     * Speichert auch die Höhe und Breite</span></li>
+<li><a name="a175"></a><span class="src-doc">     */</span></li>
+<li><a name="a176"></a>&nbsp;</li>
+<li><a name="a177"></a>    <span class="src-key">private </span><span class="src-key">function </span><a href="../JClubCMS/image.html#methodget_infos">get_infos</a><span class="src-sym">(</span><span class="src-sym">) </span><span class="src-sym">{</span></li>
+<li><a name="a178"></a>&nbsp;</li>
+<li><a name="a179"></a>        <span class="src-var">$supported </span>= <span class="src-id">false</span><span class="src-sym">;</span></li>
+<li><a name="a180"></a>        <span class="src-var">$array_image </span>= <a href="http://www.php.net/getimagesize">getimagesize</a><span class="src-sym">(</span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$file">file</a><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a181"></a>&nbsp;</li>
+<li><a name="a182"></a>        <span class="src-key">switch </span><span class="src-sym">(</span><span class="src-var">$array_image</span><span class="src-sym">[</span><span class="src-num">2</span><span class="src-sym">]</span><span class="src-sym">) </span><span class="src-sym">{</span></li>
+<li><a name="a183"></a>            <span class="src-key">case </span><span class="src-num">1</span>:</li>
+<li><a name="a184"></a>                <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$graphicformat">graphicformat</a> = <span class="src-str">&quot;gif&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a185"></a>                <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$im">im</a> = <span class="src-id">imagecreatefromgif</span><span class="src-sym">(</span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$file">file</a><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a186"></a>                <span class="src-var">$supported </span>= <span class="src-id">true</span><span class="src-sym">;</span></li>
+<li><a name="a187"></a>                <span class="src-key">break</span><span class="src-sym">;</span></li>
+<li><a name="a188"></a>&nbsp;</li>
+<li><a name="a189"></a>            <span class="src-key">case </span><span class="src-num">2</span>:</li>
+<li><a name="a190"></a>                <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$graphicformat">graphicformat</a> = <span class="src-str">&quot;jpeg&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a191"></a>                <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$im">im</a> = <span class="src-id">imagecreatefromjpeg</span><span class="src-sym">(</span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$file">file</a><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a192"></a>                <span class="src-var">$supported </span>= <span class="src-id">true</span><span class="src-sym">;</span></li>
+<li><a name="a193"></a>                <span class="src-key">break</span><span class="src-sym">;</span></li>
+<li><a name="a194"></a>&nbsp;</li>
+<li><a name="a195"></a>            <span class="src-key">case </span><span class="src-num">3</span>:</li>
+<li><a name="a196"></a>                <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$graphicformat">graphicformat</a> = <span class="src-str">&quot;png&quot;</span><span class="src-sym">;</span></li>
+<li><a name="a197"></a>                <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$im">im</a> = <span class="src-id">imagecreatefrompng</span><span class="src-sym">(</span><span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$file">file</a><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a198"></a>                <span class="src-var">$supported </span>= <span class="src-id">true</span><span class="src-sym">;</span></li>
+<li><a name="a199"></a>&nbsp;</li>
+<li><a name="a200"></a>                <span class="src-key">break</span><span class="src-sym">;</span></li>
+<li><a name="a201"></a>&nbsp;</li>
+<li><a name="a202"></a>            <span class="src-key">default</span>:</li>
+<li><a name="a203"></a>&nbsp;</li>
+<li><a name="a204"></a>                <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#methodcreate_image">create_image</a><span class="src-sym">(</span><span class="src-num">330</span><span class="src-sym">, </span><span class="src-num">26</span><span class="src-sym">, </span><span class="src-str">&quot;Dieses Format wird nicht unterstützt&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a205"></a>                <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#methodsend_image">send_image</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a206"></a>                <span class="src-var">$supported </span>= <span class="src-id">false</span><span class="src-sym">;</span></li>
+<li><a name="a207"></a>        <span class="src-sym">}</span></li>
+<li><a name="a208"></a>&nbsp;</li>
+<li><a name="a209"></a>        <span class="src-key">if</span><span class="src-sym">(</span><span class="src-var">$supported</span><span class="src-sym">) </span><span class="src-sym">{</span></li>
+<li><a name="a210"></a>            <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$width">width</a> = <span class="src-var">$array_image</span><span class="src-sym">[</span><span class="src-num">0</span><span class="src-sym">]</span><span class="src-sym">;</span></li>
+<li><a name="a211"></a>            <span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../JClubCMS/image.html#var$height">height</a> = <span class="src-var">$array_image</span><span class="src-sym">[</span><span class="src-num">1</span><span class="src-sym">]</span><span class="src-sym">;</span></li>
+<li><a name="a212"></a>        <span class="src-sym">}</span></li>
+<li><a name="a213"></a>&nbsp;</li>
+<li><a name="a214"></a>    <span class="src-sym">}</span></li>
+<li><a name="a215"></a>&nbsp;</li>
+<li><a name="a216"></a>&nbsp;</li>
+<li><a name="a217"></a>    <span class="src-doc">/**</span></li>
+<li><a name="a218"></a><span class="src-doc">     *Gibt eine benutzedefinierte PHP-Fehlermeldung aus</span></li>
+<li><a name="a219"></a><span class="src-doc">     *</span></li>
+<li><a name="a220"></a><span class="src-doc">     * </span><span class="src-doc-coretag">@param </span><span class="src-doc-type">string </span><span class="src-doc-var">$error_msg </span><span class="src-doc">   Fehlernachricht</span></li>
+<li><a name="a221"></a><span class="src-doc">     * </span><span class="src-doc-coretag">@param </span><span class="src-doc-type">konstant </span><span class="src-doc-var">$error_type[optional] </span><span class="src-doc">   Fehlertyp</span></li>
+<li><a name="a222"></a><span class="src-doc">     */</span></li>
+<li><a name="a223"></a>    <span class="src-key">private </span><span class="src-key">function </span><a href="../JClubCMS/image.html#methodtrigger_error">trigger_error</a><span class="src-sym">(</span><span class="src-var">$error_msg</span><span class="src-sym">, </span><span class="src-var">$error_type </span>= <span class="src-id">E_USER_WARNING</span><span class="src-sym">) </span><span class="src-sym">{</span></li>
+<li><a name="a224"></a>        <a href="../JClubCMS/image.html#methodtrigger_error">trigger_error</a><span class="src-sym">(</span><span class="src-var">$error_msg</span><span class="src-sym">, </span><span class="src-var">$error_type</span><span class="src-sym">)</span><span class="src-sym">;</span></li>
+<li><a name="a225"></a>    <span class="src-sym">}</span></li>
+<li><a name="a226"></a>&nbsp;</li>
+<li><a name="a227"></a>&nbsp;</li>
+<li><a name="a228"></a>&nbsp;</li>
+<li><a name="a229"></a><span class="src-sym">}</span></li>
+<li><a name="a230"></a><span class="src-php">?&gt;</span></li>
+</ol></pre></div>
+</div>
+        <div class="credit">
+		    <hr />
+		    Documentation generated on Sat, 14 Jul 2007 15:27:03 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.3.0RC3</a>
+	      </div>
+      </td></tr></table>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>
