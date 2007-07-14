@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @package JClubCMS
+ */
 echo '
 	<script language="javascript" type="text/javascript" src="./java/tiny_mce/tiny_mce.js"></script>
 	<script language="javascript" type="text/javascript">

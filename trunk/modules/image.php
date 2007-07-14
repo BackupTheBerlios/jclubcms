@@ -1,27 +1,27 @@
 <?php
 
-/*-----------------------------------------------------------------
-* @author Simon Däster
-* @package JClubCMS
-* File: image.php
-* Classes: -
-* Requieres: PHP5
-*
-* GRUNDSATZ:
-* "Befindet sich ein Bild im Ordner Gallery oder im Thumb, dann ist es dort richtig. D.h.
-*  es hat die richtige Grösse und sieht korrekt aus!!"
-* --> Kann zu Konflikt führen, wenn config.inc.php geändert wird
-*
-* Diese Datei (image.php= wird aufgerufen, um ein Bild darzustellen.
-* Sie fragt die Datenbank nach der übermittelten ID ab und erhält so die Bilddatei
-* Ist ein Bild zu gross, wird es verkleinert im Ordner 'gallery' abgespeichert
-* Mithilfe der Klasse "image" wird das Bild (verändert) ausgegeben
-*
-* Die image-Klasse wird auch für Thumbs gebraucht
-* Ist ein Thumb nicht vorhanden, wird es automatisch aus dem zugehörigen Bild
-* erstellt und im Ordner 'thumb' abgespeichert.
-*
--------------------------------------------------------------------*/
+/**
+ * @author Simon Däster
+ * @package JClubCMS
+ * File: image.php
+ * Classes: -
+ * Requieres: PHP5
+ *
+ * GRUNDSATZ:
+ * "Befindet sich ein Bild im Ordner Gallery oder im Thumb, dann ist es dort richtig. D.h.
+ *  es hat die richtige Grösse und sieht korrekt aus!!"
+ * --> Kann zu Konflikt führen, wenn config.inc.php geändert wird
+ *
+ * Diese Datei (image.php= wird aufgerufen, um ein Bild darzustellen.
+ * Sie fragt die Datenbank nach der übermittelten ID ab und erhält so die Bilddatei
+ * Ist ein Bild zu gross, wird es verkleinert im Ordner 'gallery' abgespeichert
+ * Mithilfe der Klasse "image" wird das Bild (verändert) ausgegeben
+ * 
+ * Die image-Klasse wird auch für Thumbs gebraucht
+ * Ist ein Thumb nicht vorhanden, wird es automatisch aus dem zugehörigen Bild
+ * erstellt und im Ordner 'thumb' abgespeichert.
+ *
+ */
 
 
 require_once('./modules/image.class.php');

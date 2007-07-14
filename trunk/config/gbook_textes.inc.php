@@ -1,4 +1,7 @@
 <?php
+/**
+ * @package JClubCMS
+ */
 $gbook_entry_title = "Dein Titel";
 $gbook_entry_content  = "Dein Text";
 $gbook_entry_name  = "Hans Holunder";

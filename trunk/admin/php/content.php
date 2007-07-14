@@ -1,4 +1,7 @@
 <?php
+/**
+ * @package JClubCMS
+ */
 	function showContent($doParam) {
 		if ((isset($_POST['del'])) && (isset($_POST['contentID']))) {
 			delContentItem($_POST['contentID']);

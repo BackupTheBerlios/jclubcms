@@ -1,4 +1,7 @@
 <?php
+/**
+ * @package JClubCMS
+ */
 	$mail_entry_title = htmlentities("Mail-Betreff");
 	$mail_entry_content  = htmlentities("Dein Text");
 	$mail_entry_name  = htmlentities("Hans Holunder");

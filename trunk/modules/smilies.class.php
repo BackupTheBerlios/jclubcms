@@ -1,7 +1,7 @@
 <?php
 /**
  * @author David Däster
- * @package JclubCMS
+ * @package JClubCMS
  * File: smilies.class.php
  * Classes: smilies
  * Reuqires: PHP5
