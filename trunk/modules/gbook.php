@@ -21,6 +21,7 @@ require_once("./modules/pagesnav.class.php");
 require_once("./modules/formular_check.class.php");
 require_once("./modules/captcha.class.php");
 require_once("./modules/smilies.class.php");
+require_once("./modules/bbcodes.class.php");
 /**
  * Es gibt 4 Actionen, die getrennt ausgeführt werden.
  * 1. New: Ein neuer Eintrag in das Gästebuch
@@ -44,6 +45,7 @@ if(isset($_REQUEST['sessionscode'])) {
 
 $captcha = new captcha($sessionscode, "./data/temp");
 $smilies = new smilies($dir_smilies);
+$bbcodes = new bbcodes(new mysql($db_server, $db_name, $db_user, $db_pw), "GB");
 
 switch ($action) {
 	/**

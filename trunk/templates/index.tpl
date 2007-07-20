@@ -8,9 +8,9 @@
 	<!--[if IE]>
 	<style type="text/css">@import url(./templates/style/ie_style.css);</style>
 	<![endif]-->
-    
   </head>
 <body>
+{* Dieses div ist NUR für Overlib, damit alles so funktioniert wie es soll. *}
 	<div id="main">
 		&nbsp;
 	</div>

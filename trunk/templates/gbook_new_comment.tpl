@@ -34,8 +34,12 @@
       </tr>
       {/foreach}
     </table>
-
-    <form method="post" action="?nav_id={$nav_id}&action=comment&ref_ID={$ref_ID}">
+    {************************************************************}
+    {************************************************************}
+<script type="text/javascript" src="./javascript/smilies.js"></script>
+    {************************************************************}
+    {************************************************************}
+    <form name="newentry" method="post" action="?nav_id={$nav_id}&action=comment&ref_ID={$ref_ID}">
       <input type="hidden" name="sessionscode" value="{$sessionscode}" />
       <table cellpadding="0" cellspacing="0" align="center" class="content_tab">
         <tr>
@@ -81,7 +85,7 @@
        <table class="content_tab">
         <tr>
          {foreach key=schluessel item=smily from=$smilies_list}
-          <td>{$smily.sign}&nbsp;<img src="{$smily.file}"></img>&nbsp;&nbsp;</td>
+          <td align="right">{$smily.sign}</td><td><img src="{$smily.file}" onclick="smilies('{$smily.sign}')" style="cursor:pointer;"></img></td>
 	{if ($schluessel+1)%5 == 0}
 		</tr>
 		<tr>

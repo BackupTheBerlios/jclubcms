@@ -18,11 +18,20 @@
 class smilies {
 	/**
 	 * Das Konstrukt dieser Klasse
+	 * 
+	 * @param string dir_smilies Pfad zu den Smilies
 	 */
 	private $dir_smilies;
 	public function __construct ($dir_smilies) {
 		$this->dir_smilies = $dir_smilies;
-		return 0;
+	}
+	
+	/**
+	 * Destruktor der Klasse.
+	 *
+	 */
+	public function __destruct() {
+		$this->dir_smilies = null;
 	}
 	
 	/**
@@ -35,7 +44,8 @@ class smilies {
 	 * 
 	 * Aufbau des Arrays: Code, Filepath
 	 * 
-	 * @param var $mysql_link Verbindung zur DB
+	 * @param resource $mysql_link Verbindung zur DB
+	 * @return array Array der Smilies.
 	 */
 	public function create_smiliesarray ($mysql_link) {
 		$query = "SELECT * FROM smilies GROUP BY smilies_file ORDER BY smilies_sign";
@@ -60,6 +70,8 @@ class smilies {
 	 * 4. Rückgabe des Textes. 
 	 *
 	 * @param var $text Der zu parsende Text
+	 * @param object $mysql_link Verbindung zur DB
+	 * @return string
 	 */
 	public function show_smilie ($text, $mysql_link) {
 		$query = "SELECT * FROM smilies ORDER BY smilies_sign";
