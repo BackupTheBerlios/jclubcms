@@ -8,9 +8,9 @@
 	<!--[if IE]>
 	<style type="text/css">@import url(./templates/style/ie_style.css);</style>
 	<![endif]-->
+    
   </head>
 <body>
-{* Dieses div ist NUR für Overlib, damit alles so funktioniert wie es soll. *}
 	<div id="main">
 		&nbsp;
 	</div>
@@ -27,18 +27,6 @@
         
       </div>
     </div>
-    <div id="subnavigation">
-
-		<div class="subnavigation_links">
-		      <a href="index.html">Aktuell</a>
-		      <a href="index.html">&Uuml;ber uns</a>
-		      <a href="index.html">Das Leiterteam</a>
-		      <a href="index.html">Die Gruppen</a>
-		      <a href="index.html">BESJ</a>
-		      <a href="index.html">Fotos &amp; Videos</a>
-		      <a href="index.html">Downloads</a>
-		</div>
-	</div>
 	<div id="footer">
 		<div class="footer_txt">
 			&copy; 2007 by JG J-Club Balsthal

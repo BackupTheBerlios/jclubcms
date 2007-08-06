@@ -1,11 +1,8 @@
-body{
-	background-color: #FFD775;
-	margin-left: 0%;
-	margin-right: 0%;
-	margin-top: 0px;
-	margin: bottom: 0px;
-}
 
+body {
+	background-color: #FFD775;
+	margin: 0px;
+}
 
 a:link, a:visited {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
@@ -23,88 +20,113 @@ img {
 }
 
 
-#page {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	margin: auto;
-}
-
 #header {
-	position: absolute;
+	width: 90%;
 	height: 120px;
-	width: 100%;
+	top: 0px;
+	left: 5%;
 	background-image: url(./images/banner1.png);
-	border-left: 1px solid #505050;
+	background-repeat: no-repeat;
+	background-position: bottom left;
+	z-index: 3;
+	position: absolute;
 	border-right: 1px solid #505050;
-	z-index: 8;
+	border-bottom: 1px solid #505050;
+	border-left: 1px solid #505050;
+	
 }
 
-#navigationContainer {
+#content {
+	top: 145px;
+	left: 22%;
+	width: 73%;
+	padding: 20px 10px 50px 10px;
+	z-index: 2;
 	position: absolute;
+	background-color: #FAFAFA;
+}
+#content_txt {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 20px;
+	text-align: justify;
+}
+
+#navigation {
 	top: 120px;
+	left: 5%;
 	height: 25px;
-	width: 100%;
-	background-color: #FCAB03;
+	width: 90%;
+	z-index: 4;
+	position: absolute;
+	border-top: 1px solid #BF8202;
 	border-bottom: 1px solid #BF8202;
 	border-left: 1px solid #BF8202;
 	border-right: 1px solid #BF8202;
-	z-index: 10;
+	background-color: #FCAB03;
+	text-align: left;
 }
 
-#navigation a:link, #navigation a:visited {
+.navigation_links a:link, .navigation_links a:visited {
+	padding: 6px 10px 6px 20px;
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	font-weight: bolder;
 	text-decoration: none;
+	line-height: 25px;
 	color: #A67D2A;
-	padding: 0px 12px 2px 18px;
-	line-height: 20px;
+	text-decoration: none;
 	background-image: url(images/nav1.png);
 	background-repeat: no-repeat;
 	background-position: left;
 }
 
-#navigation a:hover {
-	color: #505050;
+.navigation_links a:hover {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bolder;
+	text-decoration: none;
+	line-height: 25px;
+	color: #A67D2A;
 	background-image: url(images/nav2.png);
 	background-repeat: no-repeat;
 	background-position: left;
 }
 
-#subnavContainer {
-	position: absolute;
-	top: 145px;
-	width: 200px;
+#subnavigation {
+	top: 147px;
+	left: 5%;
+	width: 17%;
 	padding: 10px 0px 10px 0px;
-	background-color: #FCAB03;
+	z-index: 4;
+	position: absolute;
 	border-right: 1px solid #BF8202;
 	border-left: 1px solid #BF8202;
 	border-bottom: 1px solid #BF8202;
-	z-index: 9;
+	background-color: #FCAB03;
 }
 
-.subnav a:link, .subnav a:visited {
+
+.subnavigation_links a:link, .subnavigation_links a:visited {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	text-decoration: none;
-	line-height: 18px; 
+	line-height: 20px; 
 	color: #A67D2A;
-	padding: 0px 5px 0px 15px;
+	padding-left: 15px;
 	display: block;
 	background-image: url(images/subnav.png);
 	background-repeat: no-repeat;
 	background-position: left;
 }
 
-.subnav a:hover {
+.subnavigation_links a:hover {
 	color: #505050;
 	background-image: url(images/subnav1-2.png);
-	background-repeat: no-repeat;
-	background-position: left;
 }
 
-.subnav2 a:link, .subnav2 a:visited {
+
+.subnavigation_links2 a:link, .subnavigation_links2 a:visited {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 10px;
 	text-decoration: none;
@@ -112,18 +134,20 @@ img {
 	color: #A67D2A;
 	padding: 0px 5px 0px 30px;
 	display: block;
-	background-image: url(images/subnav.png);
+	background-image: url(images/subnav2.png);
 	background-repeat: no-repeat;
 	background-position: left;
 }
 
-.subnav2 a:hover {
+.subnavigation_links2 a:hover {
 	color: #505050;
 	background-image: url(images/subnav2-2.png);
 	background-repeat: no-repeat;
 	background-position: left;
 }
-.subnav3 a:link, .subnav3 a:visited {
+
+
+.subnavigation_links3 a:link, .subnavigation_links3 a:visited {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 9px;
 	text-decoration: none;
@@ -131,38 +155,37 @@ img {
 	color: #A67D2A;
 	padding: 0px 5px 0px 50px;
 	display: block;
-	background-image: url(images/subnav.png);
+	background-image: url(images/subnav3.png);
 	background-repeat: no-repeat;
 	background-position: left;
 }
 
-.subnav3 a:hover {
+.subnavigation_links3 a:hover {
 	color: #505050;
 	background-image: url(images/subnav3-2.png);
 	background-repeat: no-repeat;
 	background-position: left;
 }
 
-#contentContainer {
+
+#footer {
+	right: 5%;
+	top: 5px;
 	position: absolute;
-	top: 145px;
-	width: 100%;
-	min-height: 250px;
-	z-index: 1;
+	z-index: 5;
 }
 
-#content {
-	margin-left: 220px;
-	margin-top: 20px;
-	margin-right: 20px;
-	margin-bottom: 20px;
+.footer_txt {
+	padding: 0px 10px 0px 11px;
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	text-decoration: none; 
-	text-align: justify;
-	line-height: 20px;
-	color: #505050;
+	font-size: 9px;
+	line-height: 15px;
+	color: #A67D2A;
+	margin-bottom: 5px;
 }
+
+
+
 
 
 
@@ -178,10 +201,8 @@ img {
 .content_tab_header {
 	background-color: #FCAB03;
 	border: 1px solid #BF8202;
-	width: 600px;
-	height: 25px;
 	font-weight: bolder;
-	padding: 0px 10px 0px 10px;
+	padding: 5px 10px 5px 10px;
 }
 
 .content_tab_content1 {
@@ -267,21 +288,4 @@ img {
 	border-right: 1px solid #BF8202;
 	border-bottom: 1px solid #BF8202;
 	text-align: center;
-}
-
-
-
-
-
-#footerContainer {
-	position: relative;
-	bottom: 20px;
-	left: 10px;
-	z-index: 10;
-}
-
-#footer {
-	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size: 10px;
-	text-decoration: none;	
 }

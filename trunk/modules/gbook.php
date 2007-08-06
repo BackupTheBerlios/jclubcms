@@ -45,7 +45,10 @@ if(isset($_REQUEST['sessionscode'])) {
 
 $captcha = new captcha($sessionscode, "./data/temp");
 $smilies = new smilies($dir_smilies);
-$bbcodes = new bbcodes(new mysql($db_server, $db_name, $db_user, $db_pw), "GB");
+$bbcodes = new bbcodes("GB", new mysql($db_server, $db_name, $db_user, $db_pw));
+
+$comments_mysql = new mysql($db_server, $db_name, $db_user, $db_pw);
+$smilies_mysql = new mysql($db_server, $db_name, $db_user, $db_pw);
 
 switch ($action) {
 	/**
@@ -330,15 +333,16 @@ switch ($action) {
                                 * Dieses Array wird nachher in das $gbook_array=>comments gelegt, und
                                 * nachher an Smarty weitergereicht.
                             */
-				$com_mysql = new mysql($db_server, $db_name, $db_user, $db_pw);
+				//////$com_mysql = clone $mysql;
 
-				$com_mysql->query("SELECT * FROM `gbook` WHERE gbook_ref_ID = $ref_ID ORDER BY `gbook_time`ASC");
+				$comments_mysql->query("SELECT * FROM `gbook` WHERE gbook_ref_ID = $ref_ID ORDER BY `gbook_time`ASC");
 				$comment_array = array();
 				$j = 0;
-				while ($comment_entries = $com_mysql->fetcharray()) {
+				while ($comment_entries = $comments_mysql->fetcharray("assoc")) {
 					$comment_ID = $comment_entries["gbook_ID"];
 					$comment_title = htmlentities($comment_entries["gbook_title"]);
-					$comment_content = $smilies->show_smilie(nl2br(htmlentities($comment_entries["gbook_content"])), $com_mysql);
+					$comment_content = $smilies->show_smilie(nl2br(htmlentities($comment_entries["gbook_content"])), $smilies_mysql);
+					$comment_content = $bbcodes->replace_bbcodes($comment_content);
 					$comment_name = htmlentities($comment_entries["gbook_name"]);
 					$comment_hp = htmlentities($comment_entries["gbook_hp"]);
 					$comment_time = $timeparser->time_output($comment_entries["gbook_time"]);
@@ -355,7 +359,7 @@ switch ($action) {
                                 */			  	
 				$main_ID = $main_entries["gbook_ID"];
 				$main_title = htmlentities($main_entries["gbook_title"]);
-				$main_content = $smilies->show_smilie(nl2br(htmlentities($main_entries["gbook_content"])), $com_mysql);
+				$main_content = $smilies->show_smilie(nl2br(htmlentities($main_entries["gbook_content"])), $smilies_mysql);
 				$main_name = htmlentities($main_entries["gbook_name"]);
 				$main_hp = htmlentities($main_entries["gbook_hp"]);
 				$main_time = $timeparser->time_output($main_entries["gbook_time"]);
@@ -367,7 +371,7 @@ switch ($action) {
 				/**
                                  * Destrukt der angelegten Objekten
                                  */
-				$com_mysql->disconnect();
+				$comments_mysql->disconnect();
 			}
 			
 			//Smilies-Liste generieren
@@ -410,7 +414,7 @@ switch ($action) {
 
 
 
-		$com_mysql = new mysql($db_server, $db_name, $db_user, $db_pw);
+		//$com_mysql = clone $mysql;
 
 
 		if($button_click == "Senden") {
@@ -463,12 +467,12 @@ switch ($action) {
 				require_once("./modules/mailsend.class.php");
 
 
-				$com_mysql->query("SELECT gbook_name, gbook_email FROM gbook WHERE gbook_ID = $entry_id");
-				$mail_reciver = $com_mysql->fetcharray();
+				$comments_mysql->query("SELECT gbook_name, gbook_email FROM gbook WHERE gbook_ID = $entry_id");
+				$mail_reciver = $comments_mysql->fetcharray();
 				$mail_reciver_name = $mail_reciver["gbook_name"];
 				$mail_reciver_email = $mail_reciver["gbook_email"];
 				$mail = new mailsend();
-				$mailsend_controll = $mail->mail_send_link($com_mysql, $mail_reciver_name, $mail_reciver_email, $sender_name, $sender_email, $title, $content);
+				$mailsend_controll = $mail->mail_send_link($comments_mysql, $mail_reciver_name, $mail_reciver_email, $sender_name, $sender_email, $title, $content);
 				if ($mailsend_controll == true) {
 					$feedback_title = $mail_saved_title;
 					$feedback_content = $mail_saved_content;
@@ -504,8 +508,8 @@ switch ($action) {
                         and modules.modules_name = 'captcha_image.php' and menu.menu_pagetyp = 'mod'");
 			$captcha_id = $mysql->fetcharray("num");
 
-			$com_mysql->query("SELECT gbook_name FROM gbook WHERE gbook_ID = $entry_id");
-			$gbook_array = $com_mysql->fetcharray();
+			$comments_mysql->query("SELECT gbook_name FROM gbook WHERE gbook_ID = $entry_id");
+			$gbook_array = $comments_mysql->fetcharray();
 			$gbook_name = $gbook_array["gbook_name"];
 
 			$smarty->assign("nav_id", $navigation_id);
@@ -521,7 +525,7 @@ switch ($action) {
 			$mod_tpl = "mail_form.tpl";
 		}
 
-		$com_mysql->disconnect();
+		$comments_mysql->disconnect();
 		break;
 		/**
          * Liest alle Beiträge aus dem Gästebuch aus.
@@ -533,8 +537,6 @@ switch ($action) {
          */
 	default:
 		$local_link = $_REQUEST["nav_id"];
-		
-		$smil_mysql = new mysql($db_server, $db_name, $db_user, $db_pw); //Mysql-Verbindung für Smilie-Replace
 
 		$smarty->assign("local_link", $local_link);
 		$timeparser = new timeparser($time_format);
@@ -563,16 +565,17 @@ switch ($action) {
 			/**
                          * Hier kommt ein Kommentar
                          */
-			$com_mysql = new mysql($db_server, $db_name, $db_user, $db_pw);
+			//$com_mysql = clone $mysql;
 
-			$com_mysql->query("SELECT * FROM `gbook` WHERE gbook_ref_ID = $main_entries[gbook_ID] ORDER BY `gbook_time`ASC");
+			$comments_mysql->query("SELECT * FROM `gbook` WHERE gbook_ref_ID = $main_entries[gbook_ID] ORDER BY `gbook_time`ASC");
 			$comment_array = array();
 			$j = 0;
-			while ($comment_entries = $com_mysql->fetcharray()) {
+			while ($comment_entries = $comments_mysql->fetcharray()) {
 							
 				$comment_ID = $comment_entries["gbook_ID"];
 				$comment_title = htmlentities($comment_entries["gbook_title"]);
-				$comment_content = $smilies->show_smilie(nl2br(htmlentities($comment_entries["gbook_content"])), $com_mysql);
+				$comment_content = $bbcodes->replace_bbcodes($comment_entries["gbook_content"]);
+				$comment_content = $smilies->show_smilie(nl2br(htmlentities($comment_content)), $smilies_mysql);
 				$comment_name = htmlentities($comment_entries["gbook_name"]);
 				$comment_hp = htmlentities($comment_entries["gbook_hp"]);
 				$comment_time = $timeparser->time_output($comment_entries["gbook_time"]);
@@ -590,7 +593,10 @@ switch ($action) {
 
 			$main_ID = $main_entries["gbook_ID"];
 			$main_title = htmlentities($main_entries["gbook_title"]);
-			$main_content = $smilies->show_smilie(nl2br(htmlentities($main_entries["gbook_content"])), $com_mysql);
+			//$main_content = $smilies->show_smilie(nl2br(htmlentities($main_entries["gbook_content"])), $comments_mysql);
+			//$main_content = $bbcodes->replace_bbcodes($main_content);
+			$main_content = $bbcodes->replace_bbcodes($main_entries["gbook_content"]);
+			$main_content = $smilies->show_smilie(nl2br(htmlentities($main_content)), $comments_mysql);
 			$main_name = htmlentities($main_entries["gbook_name"]);
 			$main_hp = htmlentities($main_entries["gbook_hp"]);
 			$main_time = $timeparser->time_output($main_entries["gbook_time"]);
@@ -603,7 +609,7 @@ switch ($action) {
 			/**
                         * Destrukt der angelegten Objekten
                         */ 				
-			$com_mysql->disconnect();
+			//$comments_mysql->disconnect();
 		}
 
 		$pages_nav = new pagesnav($number, $gbook_entries_per_page);
