@@ -2,14 +2,14 @@
 
 /**
  * @package JClubCMS
- * @author David D�ster, Simon D�ster
+ * @author David Daester, Simon Daester
 * File: mysql.class.php
 * Classes: mysql
 * Requieres: PHP5, MySQL 4.x
 * 
-* Die Klasse mysql ist zust�ndig f�r das ganze Datenbankh�ndling
+* Die Klasse mysql ist zustaendig fuer das ganze Datenbankh�ndling
 * von mysql.
-* �ber sie gehen alle Verbindungen, Queries und MySQL-Spezifische
+* Ueber sie gehen alle Verbindungen, Queries und MySQL-Spezifische
 * Funktionen (z.B. mysql_fetch_array)
 * Die Daten werden in der Klasse gespeichert und nur die Enddaten
 * ausgegeben.
@@ -20,7 +20,7 @@
 ** 
 *
 ** connect()
-** �ffnet die Verbindung zum Server (wird beim Erstellen des Objekts
+** Oeffnet die Verbindung zum Server (wird beim Erstellen des Objekts
 ** aufgerufen
 *
 ** fetcharray()
@@ -75,9 +75,9 @@ class mysql {
 	}
 
 	/**
-	 * �ffnet die Verbindung zum Server (wird beim Erstellen des Objekts
+	 * Oeffnet die Verbindung zum Server (wird beim Erstellen des Objekts
 	 * aufgerufen)
-	 * Gibt bei Erfolg true zur�ck, sonst false
+	 * Gibt bei Erfolg true zurueck, sonst false
 	 *
 	 * @return boolean
 	 */
@@ -111,7 +111,7 @@ class mysql {
 	 */
 
 	public function query($query) {
-		$this->result = @mysql_query($query, $this->server_link);
+		$this->result = mysql_query($query, $this->server_link);
 
 		if($this->result === false) {
 			$this->error = true;
@@ -146,7 +146,7 @@ class mysql {
 				$type = MYSQL_BOTH;
 		}
 
-		$data = @mysql_fetch_array($this->result, $type);
+		$data = mysql_fetch_array($this->result, $type);
 
 
 		if(is_array($data)) {
@@ -158,13 +158,13 @@ class mysql {
 	}
 
 	/**
-	 * Liefert die Anzahl der Datens�tze im Ergebnis
+	 * Liefert die Anzahl der Datensaetze im Ergebnis
 	 *
 	 * @return int|false
 	 */
 
 	public function num_rows() {
-		$number = @mysql_num_rows($this->result);
+		$number = mysql_num_rows($this->result);
 		if($number == false) {
 			$this->error = true;
 			$this->error_text = "return value is not a number in function num_rows";
@@ -176,13 +176,15 @@ class mysql {
 	}
 
 	/**
-	 * Liefert die Anzahl betroffener Datens�tze einer vorhergehenden MySQL Operation
+	 * Liefert die Anzahl betroffener Datensaetze einer vorhergehenden MySQL Operation
 	 *
 	 * @return int|false
 	 */
 
 	public function affected_rows() {
+		
 		$number = mysql_affected_rows($this->result);
+		
 		if($number == false) {
 			$this->error = true;
 			$this->error_text = "return value is not a number in function affected_rows";
@@ -224,6 +226,14 @@ class mysql {
 		}
 
 		$this->__destruct();
+	}
+	
+	public function __clone()
+	{
+		$this->result = null;
+		$this->error = null;
+		$this->error_no = null;
+		$this->error_text = null;
 	}
 
 	/**

@@ -3,6 +3,8 @@
  * @author David Däster
  * @version 0.1
  * @package JClubCMS
+  * @link http://www.jclub.ch
+ * @copyright JClub
  * Die Klasse timeparser ist zuständig für das Parsen der Zeiten die
  * in den MySQL-Tabellen angelegt sind (Gästebuch, News, uä) und dessen
  * Werte die im Y-m-d H:i:s Format sind.
@@ -11,7 +13,7 @@
  *
  *
  * Funktionsbeschrieb:
- * -  __construct($time_string, $time_format)
+ * -  __construct($time_format)
  * -  Das Konstrukt dieser Klasse
  *
  * -  time2array() (wird von time_output ausgeführt)
@@ -60,11 +62,7 @@
  * - Z	 Offset der Zeitzone in Sekunden.
  */
 /**
- * The Timeparser Class- Parst eine MySQL-Zeit in ein gewünschtes Format
- * @author David Däster
- * @link http://www.jclub.ch
- * @copyright JClub
- * 
+ * The Timeparser Class- Parst eine MySQL-Zeit in ein gewünschtes Format.
  * Die Daten aus der DB wird eingelesen und anschliessend über explode in die einzelnen
  * Blöcken (Jahr, Tag, Monat, Stunde, Minute und Sekunde) aufgeteilt und in das time_array
  * gespeichert.
@@ -88,6 +86,99 @@ class timeparser {
 	public function __construct($time_format) {
 		$this->time_format = $time_format;
 	}
+	
+	/**
+	 * Parst den gewünschten Ausgabeformat-String um, und gibt dann in der Form die Zeit aus.
+	 *
+	 * @param string $time_string
+	 * @return string
+	 */
+	public function time_output ($time_string) {
+		$this->time_string = $time_string;
+		$this->time2array();
+		$time_format_len = strlen($this->time_format);
+		$time_string = "";
+		
+		for ($i=0; $i<$time_format_len; $i++) {
+			  switch ($this->time_format[$i]) {
+			    case "\\":
+			    	
+			    	$time_string .= $this->time_format[$i+1];
+			    	$i++;
+			    	break;
+			    case "\r":
+			    	$time_string .= "r";
+			    	break;
+			    case "\n":
+			    	$time_string .= "n";
+			    	break;
+			    //Jahres-Überprufung
+			    case "Y":
+			    	$time_string .= $this->year_replace("Y");
+			    	break;
+			    case "y":
+			    	$time_string .= $this->year_replace("y");
+			    	break;
+			    //Montats-Überprüfung
+			    case "m":
+			    	$time_string .= $this->month_replace("m");
+			    	break;
+			    case "M":
+			    	$time_string .= $this->month_replace("M");
+			    	break;
+			    case "F":
+			    	$time_string .= $this->month_replace("F");
+			    	break;
+			    case "n":
+			    	$time_string .= $this->month_replace("n");
+			    	break;
+			    //Tages-Überprüfung
+			    case "d":
+			    	$time_string .= $this->day_replace("d");
+			    	break;
+			    case "j":
+			    	$time_string .= $this->day_replace("j");
+			    	break;
+			    //Stunden-Überprüfung
+			    case "H":
+			    	$time_string .= $this->hour_replace("H");
+			    	break;
+			    case "h":
+			    	$time_string .= $this->hour_replace("h");
+			    	break;
+			    case "g":
+			    	$time_string .= $this->hour_replace("g");
+			    	break;
+			    case "G":
+			    	$time_string .= $this->hour_replace("G");
+			    	break;
+			    case "a":
+			    	$time_string .= $this->hour_replace("a");
+			    	break;
+			    case "A":
+			    	$time_string .= $this->hour_replace("A");
+			    	break;
+			    //Minuten-Überprüfung
+			    case "i":
+			    	$time_string .= $this->minute_replace("i");
+			    	break;
+			    //Sekunden-Überprüfung
+			    case "s":
+			    	$time_string .= $this->second_replace("s");
+			    	break;
+			    //Default			    				    	
+				default:
+					$time_string .= $this->time_format[$i];
+			}
+		  
+		}
+		return $time_string;
+	}
+	
+	/** ********************************** **/
+	/** * * * * PRIVATE FUNKTIONEN * * * * **/
+	/** ********************************** **/
+	
 	/**
 	 * Erstellt aus der Zeit in der DB ein Array, um nachher einfach weiter mit den Daten zu arbeiten
 	 *
@@ -271,93 +362,7 @@ class timeparser {
 	  			return $this->time_array['time_second'];				
 		}
 	}
-	/**
-	 * Parst den gewünschten Ausgabeformat-String um, und gibt dann in der Form die Zeit aus.
-	 *
-	 * @param string $time_string
-	 * @return string
-	 */
-	public function time_output ($time_string) {
-		$this->time_string = $time_string;
-		$this->time2array();
-		$time_format_len = strlen($this->time_format);
-		$time_string = "";
-		
-		for ($i=0; $i<$time_format_len; $i++) {
-			  switch ($this->time_format[$i]) {
-			    case "\\":
-			    	
-			    	$time_string .= $this->time_format[$i+1];
-			    	$i++;
-			    	break;
-			    case "\r":
-			    	$time_string .= "r";
-			    	break;
-			    case "\n":
-			    	$time_string .= "n";
-			    	break;
-			    //Jahres-Überprufung
-			    case "Y":
-			    	$time_string .= $this->year_replace("Y");
-			    	break;
-			    case "y":
-			    	$time_string .= $this->year_replace("y");
-			    	break;
-			    //Montats-Überprüfung
-			    case "m":
-			    	$time_string .= $this->month_replace("m");
-			    	break;
-			    case "M":
-			    	$time_string .= $this->month_replace("M");
-			    	break;
-			    case "F":
-			    	$time_string .= $this->month_replace("F");
-			    	break;
-			    case "n":
-			    	$time_string .= $this->month_replace("n");
-			    	break;
-			    //Tages-Überprüfung
-			    case "d":
-			    	$time_string .= $this->day_replace("d");
-			    	break;
-			    case "j":
-			    	$time_string .= $this->day_replace("j");
-			    	break;
-			    //Stunden-Überprüfung
-			    case "H":
-			    	$time_string .= $this->hour_replace("H");
-			    	break;
-			    case "h":
-			    	$time_string .= $this->hour_replace("h");
-			    	break;
-			    case "g":
-			    	$time_string .= $this->hour_replace("g");
-			    	break;
-			    case "G":
-			    	$time_string .= $this->hour_replace("G");
-			    	break;
-			    case "a":
-			    	$time_string .= $this->hour_replace("a");
-			    	break;
-			    case "A":
-			    	$time_string .= $this->hour_replace("A");
-			    	break;
-			    //Minuten-Überprüfung
-			    case "i":
-			    	$time_string .= $this->minute_replace("i");
-			    	break;
-			    //Sekunden-Überprüfung
-			    case "s":
-			    	$time_string .= $this->second_replace("s");
-			    	break;
-			    //Default			    				    	
-				default:
-					$time_string .= $this->time_format[$i];
-			}
-		  
-		}
-		return $time_string;
-	}
+	
 	/** 
 	 * Setzt alle Daten wieder auf die Standardwerte
 	 */

@@ -43,7 +43,7 @@ class image {
 	 * Ist das Argument leer, wird ein Fehlerbild erstellt
 	 * Ist eine Datei angegeben, existiert aber nicht, wird ein anders Fehlerbild erstellt
 	 * 
-	 * @param string $file[optional] Bilddatei
+	 * @param string $file Bilddatei
 	 */
 
 	public function __construct($file) {
@@ -97,7 +97,6 @@ class image {
 
 		eval("header(\"Content-type: image/$format\");");
 		eval("image$format(\$im);");
-		exit;
 		
 	}
 
@@ -107,7 +106,9 @@ class image {
 	 * 
 	 * Wird vom Konstruktor aufgerufen
 	 *
-	 * @param string $text
+	 * @param string $width Breite des Bildes
+	 * @param string $height Höhe des Bildes
+	 * @param string $text Text, welcher im Bild steht
 	 * @param string $col_background Die Hintergrundfarbe im String mit RGB-Werten
 	 * @param string $col_text Die Textfarbe im String mit RGB-Werten
 	 */

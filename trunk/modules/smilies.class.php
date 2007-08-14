@@ -2,6 +2,8 @@
 /**
  * @author David Däster
  * @package JClubCMS
+ * @copyright JClub
+ * @link http://www.jclub.ch
  * File: smilies.class.php
  * Classes: smilies
  * Reuqires: PHP5
