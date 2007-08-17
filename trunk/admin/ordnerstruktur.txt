@@ -1,0 +1,5 @@
+----Ordnerstruktur im Admin-Menu (wird voraussichtlich auch im root-ordner umgesetzt)-----
+
+Im include-Ordner befinden sich dateien, welche unerlässlich für den Betrieb des JClubCMS sind. Im modules-Ordner werden Dateien gelarert, welche nicht notwendig für den Einsatz des CMS sind, aber für die Website(!) gebraucht werden.
+
+Beispiel: In ./includes befindet sich die Datei session.class.php, weil diese für das Einloggen im Adminmenu erforderlich ist. Die gbook-edit.class.php (oder so ähnlich) befindet sich im ./modules-Ordner, weil diese Klasse nicht absolut notwendig ist für das CMS, aber es braucht sie für die Website, die Datei ist ein Modul!

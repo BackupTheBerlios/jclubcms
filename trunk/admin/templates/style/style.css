@@ -7,9 +7,19 @@ body
 	text-align: center;
 }
 
+.navigation
+{
+	
+	background: #FFA500;
+	font: "Courier New", "Agency FB", sans-serif;
+	border: 0;
+	z-index: 1;
+}
+
 .error
 {
 	background-color: Red;
+	font-family: Arial;
 }
 
 .login_form

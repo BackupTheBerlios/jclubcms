@@ -11,14 +11,15 @@ $microtime = microtime();
 
 //Config laden
 require_once('../config/config.inc.php');
-require_once('./config/auth_config.inc.php');
+require_once('./config/config.inc.php');
 
 //notwendige Module laden
 require_once('../modules/mysql.class.php');
 require_once('../Smarty/Smarty.class.php');
 
-require_once('./modules/auth.class.php');
-require_once('./modules/session.class.php');
+require_once('./includes/auth.class.php');
+require_once('./includes/session.class.php');
+require_once('./includes/page.class.php');
 
 $mysql = new mysql($db_server, $db_name, $db_user, $db_pw);
 
@@ -27,7 +28,10 @@ $smarty = new Smarty();
 $smarty->compile_check = true;
 $smarty->debugging = false;
 
-$auth = new auth($smarty, $mysql);
+$page = new Page($smarty, $mysql);
+$auth = new Auth($page, $mysql);
+
+
 
 echo "Index: Nach Login ausschau halten<br />\n";
 

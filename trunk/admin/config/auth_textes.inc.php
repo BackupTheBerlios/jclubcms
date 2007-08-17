@@ -8,7 +8,6 @@
  * Diese Seite speichert die Texte ab, welche immer wieder in der auth-Klasse gebraucht werden.
  */
 
-$auth_session_timeout = 1000; //Anzahl Sekunden, bis Session ungültig ist;
 
 $auth_error_sessioncorupt = "Ihre Session-ID ist nicht mehr gültig oder wurde gefälscht. Bitte loggen Sie sich neu ein. Dazu k&ouml;nnen Sie einfach die Seite neu laden";
 $auth_error_nonactiv = "Sie waren zu lange inaktiv. Bitte loggen Sie sich neu ein";

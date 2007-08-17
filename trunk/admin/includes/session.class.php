@@ -9,7 +9,7 @@
  * classes: session
  *
  */
-class session {
+class Session {
 
 	private $mysql;
 	private $ip_adress;
@@ -48,10 +48,7 @@ class session {
     		return true;
     	} else {
     		return false;
-    	}
-    	
-    	
-    	
+    	}	
     }
     
     /**
@@ -98,6 +95,7 @@ class session {
     	$diff = $mysql->fetcharray();
     	    	
     	echo "session->activ(): \$diff {$diff[0]}<br />\n";
+    	echo "session->activ(): \$maxtime $maxtime<br />\n";
     	
     	if($maxtime < $diff[0])
     	{
