@@ -9,17 +9,21 @@
 
 $microtime = microtime();
 
+/**Konstanten definieren**/
+define("ADMIN_DIR", "./");
+define("USER_DIR", "../");
+
 //Config laden
-require_once('../config/config.inc.php');
-require_once('./config/config.inc.php');
+require_once(ADMIN_DIR'config/config.inc.php');
+require_once(USER_DIR'config/config.inc.php');
 
 //notwendige Module laden
-require_once('./lib/mysql.class.php');
-require_once('./lib/Smarty/Smarty.class.php');
+require_once(ADMIN_DIR.'lib/mysql.class.php');
+require_once(ADMIN_DIR.'lib/Smarty/Smarty.class.php');
 
-require_once('./lib/auth.class.php');
-require_once('./lib/session.class.php');
-require_once('./lib/page.class.php');
+require_once(ADMIN_DIR.'lib/auth.class.php');
+require_once(ADMIN_DIR.'lib/session.class.php');
+require_once(ADMIN_DIR.'lib/page.class.php');
 
 $mysql = new mysql($db_server, $db_name, $db_user, $db_pw);
 

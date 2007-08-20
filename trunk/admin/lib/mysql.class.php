@@ -115,16 +115,17 @@ class mysql {
 		//$this->result = true;
 		if(substr_count($query, "INSERT") > 0)
 		{
-			echo "mysql->query: \$query contains INSERT<br />\n";
+			//echo "mysql->query: \$query '$query' contains INSERT<br />\n";
 			mysql_query($query, $this->server_link);
 			$this->no_result = true;
 		}
 		else
 		{
-			echo "mysql->query: \$query doesn't contain INSERT<br />\n";
+			//echo "mysql->query: \$query '$query' doesn't contain INSERT<br />\n";
 			$this->result = mysql_query($query, $this->server_link);
 		}
-		echo "mysql->query: \$this->result ".print_r($this->result, 1)."<br />\n";
+		
+		//echo "mysql->query: \$this->result ".print_r($this->result, 1)."<br />\n";
 
 		if($this->result === false) {
 			$this->error = true;

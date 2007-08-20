@@ -15,13 +15,18 @@
 
 $microtime = microtime();
 
+/**Konstanten definieren**/
+define("ADMIN_DIR", "./admin/");
+define("USER_DIR", "./");
+
+
 //Config laden
-require_once('./config/config.inc.php');
+require_once(USER_DIR.'config/config.inc.php');
 
 //notwendige Module laden
-require_once('./admin/lib/mysql.class.php');
-require_once('./admin/lib/timeparser.class.php');
-require_once('./admin/lib/Smarty/Smarty.class.php');
+require_once(ADMIN_DIR.'lib/mysql.class.php');
+require_once(ADMIN_DIR.'lib/timeparser.class.php');
+require_once(ADMIN_DIR.'lib/Smarty/Smarty.class.php');
 
 //Smarty-Objekt
 $smarty = new Smarty();

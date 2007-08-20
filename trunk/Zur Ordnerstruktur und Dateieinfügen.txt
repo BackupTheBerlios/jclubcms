@@ -9,3 +9,12 @@ Modul, welches es für die Website braucht. So können auch weiter Module in diese
 Also wichtig:
 in ./admin/lib sind unerlässliche dateien (am besten klassen)
 in ./admin/modules und ./modules sind Module.
+
+---Dateien einfügen---
+In jedem Ordner sind folgende Konstanten vorhanden, welche im index.php definiert sind
+ADMIN_DIR relativer Pfad zum Adminordner
+USER_DIR relativer Pfad zum Userordner (oder auch root-ordner genannt)
+
+ACHTUNG: BITTE ALLE DATEIEN MITHILE DIESER BEIDEN KONSTANTEN EINBINDEN, DAMIT KEINE VERWIRRUNG ENTSTEHT.
+DANKE
+
