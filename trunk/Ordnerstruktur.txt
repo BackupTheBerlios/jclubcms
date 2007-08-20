@@ -1,0 +1,11 @@
+----Ordnerstruktur-----
+
+In ./admin/lib/ befinden sich Dateien, welche unerlässlich für den Betrieb des JClubCMS sind.
+Dies wären zum Beispiel die mysql-klasse, die Smarty-Klasse, die image-Klasse usw.
+
+In ./modules und ./admin/modules werden Dateien gespeichert, welche entweder in ./ oder ./admin nötig sind, um gewisse Dinge darzustellen oder Daten zu holen. Diese Dateien sind aber nicht unerlässlich für das CMS und werden daher im jeweiligen modules-ordner gespeichert. Zum Beispiel braucht es news.php nicht zum Laufen der Website, aber es ist ein
+Modul, welches es für die Website braucht. So können auch weiter Module in diesen Ordner (./modules und ./admin/modules) gespeichert werden, um dem User oder dem Admin gewisse Dinge zu errleichtern (als Admin habe ich nicht immer gerade lust, im phpMyAdmin herumzusudeln. Da würde mir ein gbook-edit.class oder so was ähnliches besser gefallen).
+
+Also wichtig:
+in ./admin/lib sind unerlässliche dateien (am besten klassen)
+in ./admin/modules und ./modules sind Module.

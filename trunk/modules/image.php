@@ -24,7 +24,7 @@
  */
 
 
-require_once('./modules/image.class.php');
+require_once('./admin/lib/image.class.php');
 
 (isset($_GET['bild']) && $_GET['bild'] != "") ? $bild = (int)$_GET['bild'] : $bild = false;
 

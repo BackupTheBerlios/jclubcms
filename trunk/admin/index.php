@@ -14,12 +14,12 @@ require_once('../config/config.inc.php');
 require_once('./config/config.inc.php');
 
 //notwendige Module laden
-require_once('../modules/mysql.class.php');
-require_once('../Smarty/Smarty.class.php');
+require_once('./lib/mysql.class.php');
+require_once('.lib/Smarty/Smarty.class.php');
 
-require_once('./includes/auth.class.php');
-require_once('./includes/session.class.php');
-require_once('./includes/page.class.php');
+require_once('./lib/auth.class.php');
+require_once('./lib/session.class.php');
+require_once('./lib/page.class.php');
 
 $mysql = new mysql($db_server, $db_name, $db_user, $db_pw);
 

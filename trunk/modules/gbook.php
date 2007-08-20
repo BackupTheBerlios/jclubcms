@@ -17,11 +17,11 @@
  */
 require_once("./config/gbook_textes.inc.php");
 require_once("./config/mail_textes.inc.php");
-require_once("./modules/pagesnav.class.php");
-require_once("./modules/formular_check.class.php");
-require_once("./modules/captcha.class.php");
-require_once("./modules/smilies.class.php");
-require_once("./modules/bbcodes.class.php");
+require_once("./admin/lib/pagesnav.class.php");
+require_once("./admin/lib/formular_check.class.php");
+require_once("./admin/lib/captcha.class.php");
+require_once("./admin/lib/smilies.class.php");
+require_once("./admin/lib/bbcodes.class.php");
 /**
  * Es gibt 4 Actionen, die getrennt ausgeführt werden.
  * 1. New: Ein neuer Eintrag in das Gästebuch

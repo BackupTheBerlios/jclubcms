@@ -12,7 +12,7 @@
  * Sie ist _NICHT_ zuständig für die Administration der Mitgliedereinträge
  */
 
-	require_once("./modules/pagesnav.class.php");
+	require_once("./admin/lib/pagesnav.class.php");
 	$action = "";
 	if (isset($_GET["action"]) && $_GET["action"] != "") {
 		$action = $_GET["action"];	

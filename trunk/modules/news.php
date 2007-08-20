@@ -11,10 +11,10 @@
  */
 
 
-require_once("./modules/pagesnav.class.php");
-require_once("./modules/captcha.class.php");
+require_once("./admin/lib/pagesnav.class.php");
+require_once("./admin/lib/captcha.class.php");
 require_once("./config/gbook_textes.inc.php");
-require_once("./modules/smilies.class.php");
+require_once("./admin/lib/smilies.class.php");
 
 //$smarty->debugging = true;
 $action = "";

@@ -15,7 +15,21 @@
 
 $microtime = microtime();
 
-require_once('./includes/globals.php');
+//Config laden
+require_once('./config/config.inc.php');
+
+//notwendige Module laden
+require_once('./admin/lib/mysql.class.php');
+require_once('./admin/lib/timeparser.class.php');
+require_once('./admin/lib/Smarty/Smarty.class.php');
+
+//Smarty-Objekt
+$smarty = new Smarty();
+$smarty->compile_check = true;
+$smarty->debugging = false;
+
+//Mysql-Objekt
+$mysql = new mysql($db_server, $db_name, $db_user, $db_pw);
 //$smarty->debugging = true;
 
 /** Aufbau der Navigation */
