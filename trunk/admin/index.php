@@ -15,7 +15,7 @@ require_once('./config/config.inc.php');
 
 //notwendige Module laden
 require_once('./lib/mysql.class.php');
-require_once('.lib/Smarty/Smarty.class.php');
+require_once('./lib/Smarty/Smarty.class.php');
 
 require_once('./lib/auth.class.php');
 require_once('./lib/session.class.php');

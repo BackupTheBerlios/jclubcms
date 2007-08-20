@@ -9,7 +9,7 @@
  *
  */
 
-class ModulesManager
+class module_manager
 {
 	
 }
