@@ -13,15 +13,15 @@
 
 class Page
 {
-	private $smartyobj;
+	private $smarty;
 	private $mysqlhobj;
-	private $authobj;
+	private $auth;
 	
-	public function __construct($smartyobj, $mysqlobj)
+	public function __construct($smarty, $mysql)
 	{
-		$this->smartyobj = $smartyobj;
-		$this->mysqlobj = $mysqlobj;
-		$authoj = new Auth($this, $mysqlobj);
+		$this->smarty = $smarty;
+		$this->mysql = $mysql;
+		$this->auth = new Auth($this, $mysql);
 	}
 	
 	public function show_menu()
@@ -40,33 +40,33 @@ class Page
 	
 	public function smarty_assign($arrVar, $content = null)
 	{
-		$smartyobj = $this->smartyobj;
+		$smarty = $this->smarty;
 		
 		if(is_array($arrVar))
 		{
-			$smartyobj->assign($arrVar);
+			$smarty->assign($arrVar);
 		} 
 		elseif(is_string($content))
 		{
-			$smartyobj->assign($arrVar, $content);
+			$smarty->assign($arrVar, $content);
 		}
 		
 	}
 	
 	public function smarty_show($tplfile, $arrVar = null)
 	{
-		$smartyobj = $this->smartyobj;
+		$smarty = $this->smarty;
 		
 		$this->smarty_assign($arrVar);
 		
-		$smartyobj->display("$tplfile.tpl");
+		$smarty->display("$tplfile.tpl");
 	}
 	
 	public function __destruct()
 	{
-		$this->smartyobj = null;
-		$this->mysqlobj = null;
-		$this->authobj = null;
+		$this->smarty = null;
+		$this->mysql = null;
+		$this->auth = null;
 	}
 	
 	

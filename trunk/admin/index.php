@@ -31,6 +31,25 @@ $smarty->debugging = false;
 $page = new Page($smarty, $mysql);
 $auth = new Auth($page, $mysql);
 
+echo "test-mysql <br />\n";
+$sql = "INSERT INTO `jclubbeta`.`admin_session` (`ID`, `session_id`, `user_agent`, `user_ref_ID`, `ip_address`, `login_time`, `last_activity`) VALUES (NULL, '581a6e15a7cf0a24a8ac4bfef9102892', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.6) Gecko/20070725 Firefox/2.0.0.6', 1, '127.0.0.1', NOW(), NOW())";
+
+echo "\$sql $sql<br />\n";
+echo "TEST1<br />\n";
+if($mysql->query($sql) == false)
+{
+	echo "TEST2<br />\n";
+	echo "query-fehler<br />\n";
+	$arr = $mysql->get_error();
+	echo "\$arr ".print_r($arr)."<br />\n";
+	
+}
+echo "TEST3<br />\n";
+$number = $mysql->affected_rows();
+echo "\$number $number<br />\n";
+
+die("Skript abgebrochen<br />\n");
+
 
 
 echo "Index: Nach Login ausschau halten<br />\n";
@@ -49,7 +68,6 @@ if($auth->check4user() == false)
 	echo "Index: Kein User da<br />\n";
 	exit();
 }
-
 
 
 echo "Index: Ende der Datei<br />\n"

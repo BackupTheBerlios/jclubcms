@@ -111,12 +111,15 @@ class mysql {
 	 */
 
 	public function query($query) {
+		//$this->result = true;
 		$this->result = mysql_query($query, $this->server_link);
+		echo "mysql->query: \$this->result ".print_r($this->result)."<br />\n";
 
 		if($this->result === false) {
 			$this->error = true;
 			$this->error_text = mysql_error();
 			$this->error_no = mysql_errno();
+			//$this->result = null;
 			return false;			
 		} else {
 			return true;

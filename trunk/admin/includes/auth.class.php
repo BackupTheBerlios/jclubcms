@@ -15,32 +15,32 @@
 
 class Auth
 {
-	private $pageobj;
-	private $sessionobj;
-	private $mysqlobj;
+	private $page;
+	private $session;
+	private $mysql;
 	private $user_id;
 	
 	/**
 	 * Oeffnet die Autorisierungsklasse
 	 *
 	 * @param smarty $smarty
-	 * @param mysqlobj $mysqlobj
+	 * @param mysql $mysql
 	 */
 	
-	public function __construct($pageobj, $mysqlobj)
+	public function __construct($page, $mysql)
 	{
-		$this->pageobj = $pageobj;
-		$this->mysqlobj = $mysqlobj;
-		$this->sessionobj = new Session('s', $mysqlobj);
+		$this->page = $page;
+		$this->mysql = $mysql;
+		$this->session = new Session('s', $mysql);
 		
 	}
 	
 	
 	public function check4login()
 	{
-		$mysqlobj = $this->mysqlobj;
-		$pageobj = $this->pageobj;
-		$sessionobj = $this->sessionobj;
+		$mysql = $this->mysql;
+		$page = $this->page;
+		$session = $this->session;
 		
 		global $auth_error_logindata1, $auth_error_logindata1, $auth_forward_linktext, $auth_forward_successlogin;
 		
@@ -54,35 +54,39 @@ class Auth
 			{
 				echo "Auth->check4login(): Login-Daten vorhanden als Array<br />\n";
 				//Benutzername und Passwort überprüfen
-				$mysqlobj->query("SELECT `user_ID` FROM  `admin_user` WHERE `user_name` = '{$login_data['name']}' AND `user_pw` = '{$login_data['password_encrypted']}' LIMIT 1");
-				$data = $mysqlobj->fetcharray();
+				$mysql->query("SELECT `user_ID` FROM  `admin_users` WHERE `user_name` = '{$login_data['name']}' AND `user_pw` = '{$login_data['password_encrypted']}' LIMIT 1");
+				$data = $mysql->fetcharray();
 				echo "Auth->check4login(): Variable USER_ID: {$data[0]}<br />\n";
 				if(is_numeric($data[0]))
 				{
-					echo "Auth->check4login(): Der User existiert. Weiterleiten<br />\n";
+					echo "Auth->check4login(): Der User existiert. Weiterfahren<br />\n";
+					echo "Auth->check4login(): Kontrolle, ob Zugriff erlaub ist";
+					
+					//$mysql->query("SELECT ")
+					
 					$this->user_id = $data[0];
 					
 					echo "Auth->check4login(): Create-Session() wird aufgerufen<br />\n";
-					if($sessionobj->create_session($data[0]))
+					if($session->create_session($data[0]))
 					{
 						echo "Session wurde erfolreich erstellt";
 					}
 					
-					$pageobj->smarty_show('forward', array('forward_text' => $auth_forward_successlogin, 'forward_linktext' => $auth_forward_linktext, 'forward_link' => $_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']."?".$sessionobj->get_sessionstring()));
+					$page->smarty_show('forward', array('forward_text' => $auth_forward_successlogin, 'forward_linktext' => $auth_forward_linktext, 'forward_link' => $_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']."?".$session->get_sessionstring()));
 					
 					
 				} 
 				elseif ($data == false)
 				{
 					echo "Auth->check4login(): User existiert nicht<br />\n";
-					$pageobj->smarty_show('login', array('login_error' => $auth_error_logindata2));
+					$page->smarty_show('login', array('login_error' => $auth_error_logindata2));
 				}
 				
 				return true;
 			}
 			
 			echo "Auth->check4login(): Es wurden keine Daten angegeben<br />\n";
-			$pageobj->smarty_show('login', array('login_error' => $auth_error_logindata1));
+			$page->smarty_show('login', array('login_error' => $auth_error_logindata1));
 			
 			
 			
@@ -105,32 +109,32 @@ class Auth
 		global $session_timeout;
 		
 		echo "Auth->check4user(): Start der Methode<br />\n";
-		$sessionobj = $this->sessionobj;
-		$pageobj = $this->pageobj;
+		$session = $this->session;
+		$page = $this->page;
 		
 		global $auth_error_nonactiv, $auth_error_sessioncorupt;
 		
-		if($sessionobj->watch4session() == false)
+		if($session->watch4session() == false)
 		{
 			echo "Auth->check4user(): Keine Session vorhanden<br />\n";
-			$pageobj->smarty_show('login', array('file' => $_SERVER['PHP_SELF']));
+			$page->smarty_show('login', array('file' => $_SERVER['PHP_SELF']));
 			return false;
 		} 
 		
-		if($sessionobj->checksession() == false)
+		if($session->checksession() == false)
 		{
 			echo "Auth->check4user(): Session korrupt<br />\n";
-			$sessionobj->delete();
-			$pageobj->smarty_show('error', array('error_text' => $auth_error_sessioncorupt));
+			$session->delete();
+			$page->smarty_show('error', array('error_text' => $auth_error_sessioncorupt));
 			
 			return false;
 		}
 		
-		if($sessionobj->activ($session_timeout) == false)
+		if($session->activ($session_timeout) == false)
 		{
 			echo "Auth->check4user(): User schläft<br />\n";
-			$sessionobj->delete();
-			$pageobj->smarty_show('error', array('error_text' => $auth_error_nonactiv));
+			$session->delete();
+			$page->smarty_show('error', array('error_text' => $auth_error_nonactiv));
 			
 			return false;
 		}
@@ -187,6 +191,12 @@ class Auth
 			echo "Auth->getlogindata(): Name und Passwort angegeben<br />\n";
 			return array('name' => $name, 'password_encrypted' => $password_encrypted);
 		}
+	}
+	
+	private function controlrights($rightname)
+	{
+		$mysql = $this->mysql;
+		//$mysql->query();
 	}
 	
 }
