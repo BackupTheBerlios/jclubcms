@@ -212,7 +212,7 @@ if(isset($_GET['mail'])) {
    * Von hier werden die wichtigen Classen geöffnet, die Mail verschickt (sofern vorhanden)
    * und der DB-Eintrag gelöscht.
    */
-	require_once("./modules/mailsend.class.php");
+	require_once(ADMIN_DIR.'lib//mailsend.class.php');
 	
 	$mail_hash = $_GET['mail'];
 	$mail_send = new mailsend();

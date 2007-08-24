@@ -7,7 +7,7 @@
 * Classes: mysql
 * Requieres: PHP5, MySQL 4.x
 * 
-* Die Klasse mysql ist zustaendig fuer das ganze Datenbankh�ndling
+* Die Klasse mysql ist zustaendig fuer das ganze Datenbankhandling
 * von mysql.
 * Ueber sie gehen alle Verbindungen, Queries und MySQL-Spezifische
 * Funktionen (z.B. mysql_fetch_array)

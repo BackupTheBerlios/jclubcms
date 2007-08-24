@@ -11,10 +11,10 @@
  */
 
 
-require_once("./admin/lib/pagesnav.class.php");
-require_once("./admin/lib/captcha.class.php");
-require_once("./config/gbook_textes.inc.php");
-require_once("./admin/lib/smilies.class.php");
+require_once(ADMIN_DIR.'lib/pagesnav.class.php');
+require_once(ADMIN_DIR.'lib/captcha.class.php');
+require_once(USER_DIR.'config/gbook_textes.inc.php');
+require_once(ADMIN_DIR.'lib/smilies.class.php');
 
 //$smarty->debugging = true;
 $action = "";
@@ -40,9 +40,9 @@ switch ($action) {
 
 		$content_title .= "- Mail";
 
-		require_once("./modules/mailsend.class.php");  //Für das versenden vom senden des Mails
-		require_once("./modules/formular_check.class.php"); //Ãœberprüfen der Formularfelder
-		require_once("./config/mail_textes.inc.php"); //Standard-Texte für Mailformular und -fehler
+		require_once(ADMIN_DIR.'lib/mailsend.class.php');  //Für das versenden vom senden des Mails
+		require_once(ADMIN_DIR.'lib/formular_check.class.php'); //Ãœberprüfen der Formularfelder
+		require_once(USER_DIR.'config/mail_textes.inc.php'); //Standard-Texte für Mailformular und -fehler
 
 		$button_click = !empty($_REQUEST["btn_send"]) ? $_REQUEST["btn_send"] : null;
 		$title = !empty($_REQUEST["title"]) ? $_REQUEST["title"] : $mail_entry_title;
@@ -105,8 +105,8 @@ switch ($action) {
 			}
 			else {
 
-				require_once("./modules/mailsend.class.php");
-				require_once("./config/mail_textes.inc.php");
+				require_once(ADMIN_DIR.'lib/mailsend.class.php');
+				require_once(USER_DIR.'/config/mail_textes.inc.php');
 
 
 				$com_mysql->query("SELECT news_name, news_email FROM news WHERE news_ID = $entry_id");

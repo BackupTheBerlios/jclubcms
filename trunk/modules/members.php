@@ -12,7 +12,7 @@
  * Sie ist _NICHT_ zuständig für die Administration der Mitgliedereinträge
  */
 
-	require_once("./admin/lib/pagesnav.class.php");
+	require_once(ADMIN_DIR.'lib/pagesnav.class.php');
 	$action = "";
 	if (isset($_GET["action"]) && $_GET["action"] != "") {
 		$action = $_GET["action"];	
@@ -25,9 +25,9 @@
 		
 			$content_title .= "- Mail";
 		
-			require_once("./modules/mailsend.class.php");  //Für das versenden vom senden des Mails
-			require_once("./modules/formular_check.class.php"); //Überprüfen der Formularfelder
-			require_once("./config/mail_textes.inc.php"); //Standard-Texte für Mailformular und -fehler
+			require_once(ADMIN_DIR.'mailsend.class.php');  //Für das versenden vom senden des Mails
+			require_once(ADMIN_DIR.'formular_check.class.php'); //Überprüfen der Formularfelder
+			require_once(USER_DIR.'config/mail_textes.inc.php'); //Standard-Texte für Mailformular und -fehler
 			
 			$button_click = $_REQUEST["btn_send"];
 			$title = $_REQUEST["title"];
@@ -79,8 +79,8 @@
 				}
 				else {
 					
-					require_once("./modules/mailsend.class.php");	
-					require_once("./config/mail_textes.inc.php");	
+					require_once(ADMIN_DIR.'lib/mailsend.class.php');	
+					require_once(USER_DIR.'./config/mail_textes.inc.php');	
 					
 					
 					$com_mysql->query("SELECT members_name, members_email FROM members WHERE members_ID = $entry_id");

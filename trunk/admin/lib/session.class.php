@@ -52,7 +52,7 @@ class Session {
     }
     
     /**
-     * Kontroliert, ob die Session gültig ist
+     * Kontroliert, ob die Session gueltig ist
      *
      * @return boolean
      */
@@ -142,7 +142,7 @@ class Session {
     }
     
     /**
-     * Gibt den Sessionstring zurück: session_name=session_id
+     * Gibt den Sessionstring zurueck: session_name=session_id
      *
      * @return string session_string
      */
@@ -154,7 +154,7 @@ class Session {
         
     
     /**
-     * ZERSTÖRT die Session
+     * ZERSTOERT die Session
      */
      
     public function delete()
@@ -166,8 +166,8 @@ class Session {
 	
 	/**
 	 * Raeumt die Session_IDs weg, welche dieselbe user_id, ip_address und user_agent haben wie die momentane Session
-	 * Gab es etwas zu räumen, wird true zurückgegeben; andernfalls false;
-	 * 
+	 * Gab es etwas zu rueumen, wird true zurueckgegeben; andernfalls false;
+	 * @param int $userID User_ID des Benutzers
 	 * @return boolean
 	 */
 	

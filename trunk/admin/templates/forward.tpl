@@ -5,7 +5,7 @@
 	<head>
 		<title>{$forward_title}</title>
 		<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
-		<meta http-equiv="refresh" content="600; URL=http://{$forward_link}">
+		<meta http-equiv="refresh" content="10; URL=http://{$forward_link}">
 		<link rel="stylesheet" type="text/css" href="./templates/style/style.css">
 	</head>
 	<body>

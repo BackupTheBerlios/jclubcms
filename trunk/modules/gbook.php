@@ -15,13 +15,13 @@
  * sondern über einen anderen Link.
  * Eingegebene Felder werden übernommen.
  */
-require_once("./config/gbook_textes.inc.php");
-require_once("./config/mail_textes.inc.php");
-require_once("./admin/lib/pagesnav.class.php");
-require_once("./admin/lib/formular_check.class.php");
-require_once("./admin/lib/captcha.class.php");
-require_once("./admin/lib/smilies.class.php");
-require_once("./admin/lib/bbcodes.class.php");
+require_once(USER_DIR.'config/gbook_textes.inc.php');
+require_once(USER_DIR.'config/mail_textes.inc.php');
+require_once(ADMIN_DIR.'lib/pagesnav.class.php');
+require_once(ADMIN_DIR.'lib/formular_check.class.php');
+require_once(ADMIN_DIR.'lib/captcha.class.php');
+require_once(ADMIN_DIR.'lib/smilies.class.php');
+require_once(ADMIN_DIR.'lib/bbcodes.class.php');
 /**
  * Es gibt 4 Actionen, die getrennt ausgeführt werden.
  * 1. New: Ein neuer Eintrag in das Gästebuch
@@ -464,7 +464,7 @@ switch ($action) {
 			}
 			else {
 
-				require_once("./modules/mailsend.class.php");
+				require_once(ADMIN_DIR.'lib/mailsend.class.php');
 
 
 				$comments_mysql->query("SELECT gbook_name, gbook_email FROM gbook WHERE gbook_ID = $entry_id");

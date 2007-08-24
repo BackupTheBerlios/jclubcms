@@ -1,11 +1,13 @@
 <?php
 /**
- * @author Simon Däster
+ * @author Simon Daester
  * @package JClubCMS
  * Index.php
  * 
- * Diese Seite ist für das Anzeigen der Administrationsoberfläche verantwortlich und lädt alle notwendigen Module.
+ * Diese Seite ist fï¿½r das Anzeigen der Administrationsoberflï¿½che verantwortlich und lï¿½dt alle notwendigen Module.
  */
+
+error_reporting(E_ALL); //Zu Debug-Zwecken
 
 $microtime = microtime();
 
@@ -14,8 +16,8 @@ define("ADMIN_DIR", "./");
 define("USER_DIR", "../");
 
 //Config laden
-require_once(ADMIN_DIR'config/config.inc.php');
-require_once(USER_DIR'config/config.inc.php');
+require_once(ADMIN_DIR.'config/config.inc.php');
+require_once(USER_DIR.'config/config.inc.php');
 
 //notwendige Module laden
 require_once(ADMIN_DIR.'lib/mysql.class.php');
@@ -33,9 +35,9 @@ $smarty->compile_check = true;
 $smarty->debugging = false;
 
 $page = new Page($smarty, $mysql);
-$auth = new Auth($page, $mysql);
+$auth = new Auth($smarty, $mysql);
 
-echo "test-mysql <br />\n";
+/*echo "test-mysql <br />\n";
 $sql = "INSERT INTO `jclubbeta`.`admin_session` (`ID`, `session_id`, `user_agent`, `user_ref_ID`, `ip_address`, `login_time`, `last_activity`) VALUES (NULL, '581a6e15a7cf0a24a8ac4bfef9102892', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.6) Gecko/20070725 Firefox/2.0.0.6', 1, '127.0.0.1', NOW(), NOW())";
 
 echo "\$sql $sql<br />\n";
@@ -52,7 +54,7 @@ echo "TEST3<br />\n";
 $number = $mysql->affected_rows();
 echo "\$number $number<br />\n";
 
-die("Skript abgebrochen<br />\n");
+die("Skript abgebrochen<br />\n");*/
 
 
 
@@ -84,7 +86,7 @@ if($session->is_logged() == false)
 	exit;
 }
 
-//Überprüfen des rechtmässigen Zugriffs
+//Ueberpruefen des rechtmaessigen Zugriffs
 if($session->security_check() == false)
 {
 	$smarty->display("login_error.tpl");
@@ -115,8 +117,8 @@ if ($nav_id <= 0) {
 */
 
 /**
- * Hier werden alle Verweise ausgelesen: ID, höhere Navigation (topid), Position, Name,
- * zugehörige Seite (page) und ob Modul oder Page £
+ * Hier werden alle Verweise ausgelesen: ID, hoehere Navigation (topid), Position, Name,
+ * zugehoerige Seite (page) und ob Modul oder Page
  */
 /*
 $mysql->query("SELECT * FROM menu WHERE menu_ID = $nav_id");
