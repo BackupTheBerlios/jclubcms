@@ -1,14 +1,15 @@
 <?php
 
 /**
+ * Diese Klasse ist fuer die Darstellung der Seite verantworlich. Sie bietet geeignete Methoden fuer die Menudarstellung und
+ * Seitennavigation an (vormals in pagesnav.class gelagert)
+ * 
  * @author Simon Daester
  * @package JClubCMS
  * File: page.class.php
  * class: Page
  * requires: mysql.class.php, Smarty.class.php
  * 
- * Diese Klasse ist fuer die Darstellung der Seite verantworlich. Sie bietet geeignete Methoden fuer die Menudarstellung und
- * Seitennavigation an (vormals in pagesnav.class gelagert)
  *
  */
 
@@ -33,11 +34,21 @@ class Page
 		$this->mysql = $mysql;
 		$this->auth = new Auth($this, $mysql);
 	}
+	
+	/**
+	 * Gibt das Menu-Array zurueck, um das Menu darzustellen
+	 *
+	 * @param boolean $shortlinks Sind in der topnav shortlinks?
+	 * @param boolean $admin_menu Muss das Admin-Menu dargestellt werden?
+	 * @return array $menu_array Array mit den Menu-Eintraegen
+	 */
 
-	public function get_menu_array($nav_id, $shortlinks = false, $admin_menu = false)
+	public function get_menu_array($shortlinks = false, $admin_menu = false)
 	{
 		$mysql = $this->mysql;
 		$menu_array = array();
+		
+		$nav_id = (int) $_GET['nav_id'];
 
 		//Ob es das Admin- oder User-Menu ist, aendert sich der Tabellen-Name im MySQL.
 		$table_name = ($admin_menu == true)?"admin_menu":"menu";
@@ -54,7 +65,7 @@ class Page
 
 
 		//Ist $shortlinks an, so wird die shortlinks-Funktion aufgerufen, sonst topidsmenu-Funktion
-		$menu_array = ($shortlinks == true) ? $this->get_shortlinksmenu_array($nav_id, $table_name) : $this->get_topidsmenu_array($nav_id, $admin_menu);
+		$menu_array = ($shortlinks == true) ? $this->get_shortlinksmenu_array($nav_id, $table_name) : $this->get_topidsmenu_array($nav_id, $table_name);
 
 
 
@@ -65,6 +76,14 @@ class Page
 	{
 		;
 	}
+	
+	/**
+	 * Gibt das Menu-Array zurück, wo die Top-Navigation aus Eintraegen mit topID == 0 besteht
+	 *
+	 * @param int $nav_id
+	 * @param string $table_name
+	 * @return array $menu_array
+	 */
 
 	private function get_topidsmenu_array($nav_id, $table_name)
 	{
@@ -81,8 +100,8 @@ class Page
 
 		//Top-IDs herauslesen, damit die rekursive Funktion richtig arbeiten kann, um subnav-Array zu erstellen
 		do {
-			$mysql->query(" SELECT `menu_topid` FROM `$table_name` WHERE `menu_ID` = $id ORDER BY `menu_position` ASC LIMIT 1");
-			$top_id = $mysql->fetcharray();
+			$mysql->query("SELECT `menu_topid` FROM `$table_name` WHERE `menu_ID` = $id ORDER BY `menu_position` ASC LIMIT 1");
+			$top_id = $mysql->fetcharray("num");
 
 			if($top_id[0] == 0) {
 				//Die Eintraege mit der top_Id 0 befinden sich in der topnav, daher wird hier abgebrochen!
@@ -94,25 +113,54 @@ class Page
 			$i++;
 		} while (true);
 
+		//topid-Array umkehren, damit oberste Schicht der Menus zuerst ausgelesen wird
+		$temp_array = $topid_array;
+		$max = count($topid_array);
+		for($i = 0; $i < $max; $i++)
+		{
+			$topid_array[$i] = $temp_array[$max-$i-1];
+		}
+
 		//Funktion aufrufen, damit subnav-Array erstellt wird
-		build_subnav_array($table_name, $topid_array, &$menu_array['subnav']);
+		$this->build_subnav_array($table_name, $topid_array, &$menu_array['subnav']);
 
 		//topnav-Array erstellen
+		$mysql->query("SELECT `menu_ID`, `menu_name` FROM `$table_name` WHERE `menu_topid` = '0' AND `menu_display` != '0' ORDER BY `menu_position` ASC");
+		$i = 0;
+		while($data = $mysql->fetcharray('assoc'))
+		{
+			$menu_array['topnav'][$i++] = $data;
+		}
+		
+		return $menu_array;
 
 	}
+	
+	/**
+	 * Baut das Subnav-Array auf
+	 *
+	 * @param string $table_name
+	 * @param array $topid_array
+	 * @param array[reference] &$subnav_array
+	 */
 
 	private function build_subnav_array($table_name, $topid_array, &$subnav_array)
 	{
 		$mysql = $this->mysql;
-		for($i = 0; $i < count($topid_array); $i++)
+		static $i = 0, $j = 0;
+
+		$mysql->query("SELECT `menu_ID`, `menu_name` FROM `$table_name` WHERE `menu_topid` = '{$topid_array[$j]}' AND `menu_display` != '0' ORDER BY `menu_position` ASC");
+		$j++;
+		while($data = $mysql->fetcharray('assoc'))
 		{
+			$subnav_array[$i] = $data;
+			$subnav_array[$i]['level'] = $j;
+			$i++;
 			
-			$mysql->query("SELECT * FROM `$table_name` WHERE `menu_topid` = {$topid_array[$i]} ORDER BY `menu_position` ASC");
-			while($data = $mysql->fetcharray("assoc"))
+			if($data['menu_ID'] == $topid_array[$j])
 			{
-				;
+				$this->build_subnav_array($table_name, $topid_array, &$subnav_array);
 			}
-			
 		}
 
 	}

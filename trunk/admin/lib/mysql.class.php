@@ -252,6 +252,11 @@ class mysql {
 		$this->__destruct();
 	}
 	
+	/**
+	 * Ueberschreibung der magischen Methode clone. So werden beim Klonen wichtige Eigenschaften geloescht.
+	 *
+	 */
+	
 	public function __clone()
 	{
 		$this->result = null;
