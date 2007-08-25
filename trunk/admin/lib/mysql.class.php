@@ -29,9 +29,6 @@
 ** num_rows()
 ** Analog mysql_num_rows
 *
-**error($errorcode, $errortext)
-**Gibt die Fehler aus
-*
 ** disconnect()
 ** Analog mysql_close (Wird vom Destruktor aufgerufen)
 
@@ -50,10 +47,6 @@ class mysql {
 	private $server_link = null;
 	private $result = null;
 	private $no_result = false;
-
-	private $error = false;
-	private $error_text = "";
-	private $error_no = "";
 
 	/**
 	 * Das Konstrukt dieser Klasse
@@ -87,16 +80,10 @@ class mysql {
 
 		$this->server_link = mysql_connect($this->mysql_server, $this->mysql_user, $this->mysql_pw, $this->new_c);
 		if(!is_resource($this->server_link)) {
-			$this->error = true;
-			$this->error_text = mysql_error();
-			$this->error_no = mysql_errno();
 			return false;
 		}
 
 		if(!mysql_select_db($this->mysql_db, $this->server_link)) {
-			$this->error = true;
-			$this->error_text = mysql_error($this->server_link);
-			$this->error_no = mysql_errno($this->server_link);
 			return false;
 		} else {
 			return true;
@@ -128,10 +115,6 @@ class mysql {
 		//echo "mysql->query: \$this->result ".print_r($this->result, 1)."<br />\n";
 
 		if($this->result === false) {
-			$this->error = true;
-			$this->error_text = mysql_error();
-			$this->error_no = mysql_errno();
-			//$this->result = null;
 			return false;			
 		} else {
 			return true;
@@ -141,7 +124,7 @@ class mysql {
 	/**
 	 * Liefert bei Erfolg einen Datensatz als Array, sonst false
 	 * 
-	 * @param string[optional] $resulttype = "both"|"num"|"assoc"
+	 * @param string[optional] $resulttype "both"|"num"|"assoc"
 	 * @return array|false 
 	 */
 
@@ -182,12 +165,6 @@ class mysql {
 		
 		$number = mysql_num_rows($this->result);
 		
-		if($number == false) {
-			$this->error = true;
-			$this->error_text = "return value is not a number in function num_rows";
-			$this->error_no = "no error-number";
-			return false;
-		}
 		return $number;
 
 	}
@@ -209,30 +186,9 @@ class mysql {
 			$number = mysql_affected_rows($this->result);
 		}
 		
-		if($number == false) {
-			$this->error = true;
-			$this->error_text = "return value is not a number in function affected_rows";
-			$this->error_no = "no error-number";
-			return false;
-		}
 		return $number;
 	}
 	
-	/**
-	 * Wenn es einen Fehler gegeben hat, liefert die Funktion den Fehlertext und Fehlernummer
-	 * Hat es keinen Fehler gegeben, liefert sie false
-	 *
-	 * @return array|false
-	 */
-	
-	public function get_error() {
-		if($this->error) {
-			return array($this->error_no, $this->error_text);
-		} else {
-			return false;
-		}
-	}
-
 
 	/**
 	 * Trennt die Verbindung zur Datenbank
@@ -243,11 +199,10 @@ class mysql {
 	public function disconnect() {
 		if(!mysql_close($this->server_link))
 		{
-			$this->error = true;
-			$this->error_text = "conncect-reult is not a ressource in function disconnect";
-			$this->error_no = "no error-number";
 			return false;
 		}
+		
+		return true;
 
 		$this->__destruct();
 	}
@@ -260,9 +215,6 @@ class mysql {
 	public function __clone()
 	{
 		$this->result = null;
-		$this->error = null;
-		$this->error_no = null;
-		$this->error_text = null;
 	}
 
 	/**

@@ -44,7 +44,7 @@ class Auth
 		$smarty = $this->smarty;
 		$session = $this->session;
 		
-		global $auth_error_logindata1, $auth_error_logindata1, $auth_forward_linktext, $auth_forward_successlogin;
+		global $auth_error_logindata1, $auth_error_logindata2, $auth_forward_linktext, $auth_forward_successlogin, $auth_forward_title;
 		
 		//echo "Auth->check4login(): Logintaste gedr&uuml;ckt?<br />\n";
 		if(isset($_POST['login']) && $_POST['login'] != "")
@@ -75,7 +75,7 @@ class Auth
 					}
 					
 					
-					$smarty->assign(array('forward_text' => $auth_forward_successlogin, 'forward_linktext' => $auth_forward_linktext, 'forward_link' => $_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']."?".$session->get_sessionstring()));
+					$smarty->assign(array('forward_title' => $auth_forward_title, 'forward_text' => $auth_forward_successlogin, 'forward_linktext' => $auth_forward_linktext, 'forward_link' => $_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']."?".$session->get_sessionstring()));
 					$smarty->display('forward.tpl');
 										
 					
@@ -125,6 +125,7 @@ class Auth
 		{
 			//echo "Auth->check4user(): Keine Session vorhanden<br />\n";
 			
+			$smarty->assign('file', $_SERVER['PHP_SELF']);
 			$smarty->display('login.tpl');
 			return false;
 		} 

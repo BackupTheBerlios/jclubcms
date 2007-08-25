@@ -52,17 +52,16 @@ if($auth->check4user() == false)
 
 
 
-$nav_array = $page->get_menu_array(false, true);
+$nav_array = $page->get_menu_array(true, true);
 
 //echo "<pre>".print_r($nav_array, 1)."</pre>\n";
 
-$error = $mysql->get_error();
 //var_dump($error);
 
 //echo "\$error <pre>".print_r($error, 1)."</pre>\n";
 //echo "Index: Ende der Datei<br />\n";
 
-switch ($_GET['nav_id'])
+switch ($nav_array['nav_id'])
 {
 	case 1:
 	case 2:
@@ -75,7 +74,30 @@ switch ($_GET['nav_id'])
 	default:
 		$content_title = "Index";
 		$content_text = "Hallo und herzlich Willkommen im Admin-Menu<br />\nBitte dr&uuml;cken Sie nicht auf die Links im Menu, es f&uuml;hrt nur zu Fehlern :-)";
-		
+
+}
+
+$mysql->query("SELECT `menu_pagetyp`, `menu_page` FROM `admin_menu` WHERE `menu_ID`= '{$nav_array['nav_id']}'");
+$data = $mysql->fetcharray("assoc");
+
+if($data['menu_pagetyp'] == "mod")
+{
+	$mysql->query("SELECT `modules_name` FROM `admin_modules` WHERE `modules_ID`= '{$data['menu_page']}'");
+	$data = $mysql->fetcharray("assoc");
+	$path = ADMIN_DIR.'modules/'.$data['modules_name'];
+	if(file_exists($path))
+	{
+		require_once($path);
+	} else {
+		$content_text = "Datei $path konnte nicht included werden!!!<br />\n";
+	}
+} 
+elseif($data['menu_pagetyp'] == "pag")
+{
+	$mysql->query("SELECT `content_title`, `content_text` FROM `admin_content` WHERE `content_ID` = {$data['menu_page']}");
+	$data = $mysql->fetcharray("assoc");
+	$content_title = $data['content_title'];
+	$content_text = $data['content_text'];
 }
 
 $smarty_array = array('content_title' => $content_title, 'content_text' => $content_text, 'file' => 'main.tpl', 'topnav' => $nav_array['topnav'], 'subnav' => $nav_array['subnav']);

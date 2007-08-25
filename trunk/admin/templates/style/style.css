@@ -35,7 +35,7 @@ img {
 	height: 120px;
 	top: 0px;
 	left: 5%;
-	background-image: url(./images/banner1.png);
+	background-image: url(./images/banner-admin.png);
 	background-repeat: no-repeat;
 	background-position: bottom left;
 	z-index: 3;
@@ -43,6 +43,41 @@ img {
 	border-right: 1px solid #505050;
 	border-bottom: 1px solid #505050;
 	border-left: 1px solid #505050;
+	
+}
+
+#forward {
+	background-color: #FFDD90;
+	color: #D2691E;
+	width: 90%;
+	margin: 10% 5% 10% 5%;
+	padding: 20px;
+	position: fixed;
+	z-index: 2;
+	text-align: center;
+	font-size: 15px;
+	font-family: sans-serif;
+}
+
+#forward, a: {
+	font-size: 11px;
+	text-decoration: underline;
+}
+
+
+
+#error {
+	top: 145px;
+	left: 5%;
+	right: 5%;
+	padding: 10px 10px 20px 10px;
+	border: 1px;
+	font-style: normal;
+	font: 15px;
+	text-align: center;
+	background-color: #DF7B00;
+	z-index: 2;
+	position: absolute;
 	
 }
 

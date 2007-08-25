@@ -67,14 +67,54 @@ class Page
 		//Ist $shortlinks an, so wird die shortlinks-Funktion aufgerufen, sonst topidsmenu-Funktion
 		$menu_array = ($shortlinks == true) ? $this->get_shortlinksmenu_array($nav_id, $table_name) : $this->get_topidsmenu_array($nav_id, $table_name);
 
-
+		//Damit muss im index nicht nochmal die $nav_id kontroliert werden
+		$menu_array['nav_id'] = $nav_id;
 
 		return $menu_array;
 	}
 
 	private function get_shortlinksmenu_array($nav_id, $table_name)
 	{
-		;
+		$mysql = $this->mysql;
+		$menu_array = array();
+		$topid_array = array();
+		
+		$topid_array[0] = $nav_id;
+		
+		$i = 1;
+		$id = $nav_id;
+		$top_id = 0;
+		
+		//Top-IDs herauslesen, damit die rekursive Funktion richtig arbeiten kann, um subnav-Array zu erstellen
+		do {
+			$mysql->query("SELECt `menu_topdid` FROM `$table_name` WHERE `menu_ID` = $id ORDER BY `menu_position`ASC LIMIT 1");
+			$top_id = $mysql->fetcharray("num");
+			$topid_array[$i] = $top_id[0];
+			$id = $top_id[0];
+			
+			$i++;			
+		} while ($top_id[0] != 0); 
+		
+		//topid-Array umkehren, damit oberste Schicht der Menus zuerst ausgelesen wird
+		$temp_array = $topid_array;
+		$max = count($topid_array);
+		for($i = 0; $i < $max; $i++)
+		{
+			$topid_array[$i] = $temp_array[$max-$i-1];
+		}
+
+		//Funktion aufrufen, damit subnav-Array erstellt wird
+		$this->build_subnav_array($table_name, $topid_array, &$menu_array['subnav']);
+		
+		//topnav-Array erstellen
+		$mysql->query("SELECT `menu_ID`, `menu_name`, `menu_image` FROM `$table_name` WHERE `menu_topid` = '0' AND `menu_display` != '0' AND menu_shortlink = '1' ORDER BY `menu_position` ASC");
+		$i = 0;
+		while($data = $mysql->fetcharray('assoc'))
+		{
+			$menu_array['topnav'][$i++] = $data;
+		}		
+		
+		return $menu_array;	
 	}
 	
 	/**
