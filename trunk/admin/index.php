@@ -17,6 +17,7 @@ define("USER_DIR", "../");
 
 //Config laden
 require_once(ADMIN_DIR.'config/config.inc.php');
+require_once(ADMIN_DIR.'config/functions.inc.php');
 require_once(USER_DIR.'config/config.inc.php');
 
 //notwendige Module laden
@@ -77,6 +78,7 @@ if($auth->check4user() == false)
 
 
 echo "Index: Ende der Datei<br />\n"
+
 
 /*
 //Ist der Benutzer eingeloggt
