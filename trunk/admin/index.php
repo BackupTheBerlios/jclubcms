@@ -52,7 +52,7 @@ if($auth->check4user() == false)
 
 
 
-$nav_array = $page->get_menu_array(true, true);
+$nav_array = $page->get_menu_array(false, true);
 
 //echo "<pre>".print_r($nav_array, 1)."</pre>\n";
 
@@ -61,21 +61,6 @@ $nav_array = $page->get_menu_array(true, true);
 //echo "\$error <pre>".print_r($error, 1)."</pre>\n";
 //echo "Index: Ende der Datei<br />\n";
 
-switch ($nav_array['nav_id'])
-{
-	case 1:
-	case 2:
-	case 3:
-	case 4:
-		$content_title = "<b>!!!!!:::::!!!!!!FEHLER!!!!!:::::!!!!!!</b>";
-		$content_text = "asdfasgsdfgawerafjpu12347859tur8a9t7qrwet<br />\nöadjföasjdfqwpeurqiwuerpijfjasdkfjasdfpjjjpwejqrpwkjer<br />\nöajkdfjapefujqwperirqwerqwerqwerqwerqwefasdfqwurq2348ur5qqerjqeipruqpwaskjfaskjpgupiuqtpertqwe564564qwe7rwerqwr^'12^3412341129380jrgjg0r9tu9425u34513 nadfakjasdfkjqwerj weqruqw8r123ru<br />\n
-		<b>Syst&ouml;asd Absturz!477 BITTE INFORORMIEREN SIE UNVERZ&Uuml;GLICH DEN ADMINISTRATOR</b><br />\n<br />\nIch habe ja gesagt, dass es einen Fehler gibt :->";
-		break;
-	default:
-		$content_title = "Index";
-		$content_text = "Hallo und herzlich Willkommen im Admin-Menu<br />\nBitte dr&uuml;cken Sie nicht auf die Links im Menu, es f&uuml;hrt nur zu Fehlern :-)";
-
-}
 
 $mysql->query("SELECT `menu_pagetyp`, `menu_page` FROM `admin_menu` WHERE `menu_ID`= '{$nav_array['nav_id']}'");
 $data = $mysql->fetcharray("assoc");
@@ -85,9 +70,15 @@ if($data['menu_pagetyp'] == "mod")
 	$mysql->query("SELECT `modules_name` FROM `admin_modules` WHERE `modules_ID`= '{$data['menu_page']}'");
 	$data = $mysql->fetcharray("assoc");
 	$path = ADMIN_DIR.'modules/'.$data['modules_name'];
+	$split = explode(".", $data['modules_name']);
+	$class = $split[0];
+	echo "klasse: $class";
 	if(file_exists($path))
 	{
+		
 		require_once($path);
+		$module = new $split[0]();
+		
 	} else {
 		$content_text = "Datei $path konnte nicht included werden!!!<br />\n";
 	}

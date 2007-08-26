@@ -48,7 +48,7 @@ class Page
 		$mysql = $this->mysql;
 		$menu_array = array();
 		
-		$nav_id = (int) $_GET['nav_id'];
+		$nav_id = (int)$_GET['nav_id'];
 
 		//Ob es das Admin- oder User-Menu ist, aendert sich der Tabellen-Name im MySQL.
 		$table_name = ($admin_menu == true)?"admin_menu":"menu";
@@ -56,17 +56,14 @@ class Page
 		//Ist $nav_id kleiner gleich Null, wird ihr der erste Wert in der MySQL-Tabelle zugewiesen.
 		if($nav_id <= 0)
 		{
-			$mysql->query("SELECT `menu_ID` FROM `$table_name` LIMIT 1");
+			$mysql->query("SELECT `menu_ID` FROM `$table_name` ORDER BY `menu_position` ASC LIMIT 1");
 			$nav_id = $mysql->fetcharray();
 			$nav_id = $nav_id[0];
-		}
-
-
-
+		}	
 
 		//Ist $shortlinks an, so wird die shortlinks-Funktion aufgerufen, sonst topidsmenu-Funktion
 		$menu_array = ($shortlinks == true) ? $this->get_shortlinksmenu_array($nav_id, $table_name) : $this->get_topidsmenu_array($nav_id, $table_name);
-
+		
 		//Damit muss im index nicht nochmal die $nav_id kontroliert werden
 		$menu_array['nav_id'] = $nav_id;
 
@@ -197,7 +194,7 @@ class Page
 			$subnav_array[$i]['level'] = $j;
 			$i++;
 			
-			if($data['menu_ID'] == $topid_array[$j])
+			if($j < count($topid_array) && $data['menu_ID'] == $topid_array[$j])
 			{
 				$this->build_subnav_array($table_name, $topid_array, &$subnav_array);
 			}

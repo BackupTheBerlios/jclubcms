@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Simon Däster
+ * @author Simon Dï¿½ster
  * @package JClubCMS
  * File: module.interface.php
  * interace: Modules
@@ -9,12 +9,12 @@
  *
  */
 
-interface  Module
+interface Module
 {
-	//Liest aus der Variable $_GET['mode'] den Modus aus und führt die zugehörige Methode aus
-	public function readparameters($GETmode);	
+	//Liest aus der Variable $_GET['mode'] den Modus aus und fï¿½hrt die zugehï¿½rige Methode aus
+	public function readparameters($Getarray);	
 	
-	//Gibt das zur Klasse gehörende Templatefile zurück, welches dann im Haupt-Template (siehe index.php) eingebunden wird
+	//Gibt das zur Klasse gehï¿½rende Templatefile zurï¿½ck, welches dann im Haupt-Template (siehe index.php) eingebunden wird
 	public function gettplfile();
 }
 ?>
