@@ -11,6 +11,9 @@
 
 interface Module
 {
+	//Nimmt die Objekte mysql und smarty auf
+	public function __construct($mysql, $smarty);
+	
 	//Liest aus der Variable $_GET['mode'] den Modus aus und f�hrt die zugeh�rige Methode aus
 	public function readparameters($Getarray);	
 	

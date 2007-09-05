@@ -80,6 +80,29 @@ img {
 	position: absolute;
 	
 }
+#error {
+	top: 145px;
+	left: 5%;
+	right: 5%;
+	padding: 10px 10px 20px 10px;
+	border: 1px;
+	font-style: normal;
+	font: 15px;
+	text-align: center;
+	background-color: #DF7B00;
+	z-index: 2;
+	position: absolute;
+	
+}
+
+a#error {
+	top: 40px;
+	background-color: #FFD700;
+	color: Red;
+	width: 100px;
+	left: 45%;
+	z-index: 3;
+}
 
 #content {
 	top: 145px;

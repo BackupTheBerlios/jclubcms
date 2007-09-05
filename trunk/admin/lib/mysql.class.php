@@ -15,53 +15,90 @@
 * ausgegeben.
 *
 *
-* Funktionsbeschrieb:
-** __construct($server, $name, $user, $pw, [$newcon])
-** 
-*
-** connect()
-** Oeffnet die Verbindung zum Server (wird beim Erstellen des Objekts
-** aufgerufen
-*
-** fetcharray()
-** Analog mysql_fetch_array
-*
-** num_rows()
-** Analog mysql_num_rows
-*
-** disconnect()
-** Analog mysql_close (Wird vom Destruktor aufgerufen)
-
-** __destruct
-** Der Destruktor der Klasse
 *-----------------------------------------------------------------*/
 
 class mysql {
 
+	
+	/**
+	 * Servername
+	 *
+	 * @var string
+	 */
 	private $mysql_server = null;
+	
+	/**
+	 * Mysql-Datenbank, mit der gearbeitet wird
+	 *
+	 * @var string
+	 */
 	private $mysql_db = null;
+	
+	/**
+	 * Name des Mysql-Users
+	 *
+	 * @var string
+	 */
 	private $mysql_user = null;
+	
+	/**
+	 * Password des Mysql-Users
+	 *
+	 * @var string
+	 */
 	private $mysql_pw = null;
+	
+	/**
+	 * Gibt an, ob bei einer Mysql-Verbindung mit gleichem Server und User eine neue Verbindung geoeffnet wird oder nicht.
+	 *
+	 * @var boolean
+	 */
 	private $new_c = null;
 
+	
+	/**
+	 * Verbindungserkennung zum Server
+	 *
+	 * @var resource
+	 */
 	private $server_link = null;
+	
+	/**
+	 * Verbinungserkennung zur Datenbankabfrage
+	 *
+	 * @var resource
+	 */
 	private $result = null;
+	
+	/**
+	 * Angabe, ob mysql_query() eine resource zurueckgibt. Fast nur bei SELECT, SHOW, DESCRIBE, EXPLAIN.
+	 *
+	 * @var resource
+	 */
 	private $no_result = false;
+	
+	/**
+	 * Array zum speichern von Mysql-Datensaetzen
+	 *
+	 * @var array
+	 * @access private
+	 */
+	private $query_records = array();
 
 	/**
 	 * Das Konstrukt dieser Klasse
 	 *
-	 * @param string $server
-	 * @param string $name
-	 * @param string $user
-	 * @param string $pw
-	 * @param string $newcon
+	 * @param string $server Name des Servers
+	 * @param string $name Name der Datenbank
+	 * @param string $user Username
+	 * @param string $pw Password
+	 * @param boolean $newcon Neue Verbindung?
 	 */
 
-	function __construct($server, $name, $user, $pw, $newcon = 1) {
+	function __construct($server, $db, $user, $pw, $newcon = 1) {
 
 		$this->mysql_server = $server;
-		$this->mysql_db = $name;
+		$this->mysql_db = $db;
 		$this->mysql_user = $user;
 		$this->mysql_pw = $pw;
 		$this->new_c = $newcon;
@@ -99,7 +136,10 @@ class mysql {
 	 */
 
 	public function query($query) {
-		//$this->result = true;
+		
+		//Query-Record loeschen, weil ein neuer Query gestartet wurde
+		$this->query_records = array();
+		
 		if(substr_count($query, "INSERT") > 0)
 		{
 			//echo "mysql->query: \$query '$query' contains INSERT<br />\n";
@@ -153,6 +193,41 @@ class mysql {
 			return false;
 		}
 
+	}
+	
+	/**
+	 * Speichert der Datensatz/die Datensaetze der letzen Anfrage intern ab.
+	 *
+	 * @param string[optional] $resulttype "both"|"num"|"assoc"
+	 */
+	
+	public function saverecords($resulttype = "assoc")
+	{
+		$i = 0;
+		while($data = $this->fetcharray())
+		{
+			$this->query_records[$i] = $data;
+			$i++;
+		}
+	}
+	
+	/**
+	 * Gibt der abgespeicherte Datensatz als Array zurueck. Wurde kein Datensatz gespeichert, erledigt das diese Methode.
+	 *
+	 * @return array letzter gespeicherter Datensatz
+	 */
+	
+	public function get_records()
+	{
+		if(!empty($this->query_records))
+		{
+			return $this->query_records;
+		}
+		else
+		{
+			$this->saverecords();
+			return $this->query_records;
+		}
 	}
 
 	/**

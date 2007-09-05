@@ -13,15 +13,18 @@ require_once(ADMIN_DIR.'lib/module.interface.php');
 class news_edit implements Module
 {
 	private $tplfile = null;
+	private $mysql = null;
+	private $smarty = null;
 	
-	public function __construct()
+	public function __construct($mysql, $smarty)
 	{
-		;
+		$this->mysql = $mysql;
+		$this->smarty = $smarty;
 	}
 	
 	public function readparameters($Getarray)
 	{
-		;
+		echo  "news ";
 	}
 	
 	public function gettplfile()

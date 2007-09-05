@@ -160,7 +160,7 @@ class Session {
     public function delete()
 	{
 		$mysql = $this->mysql;
-		$mysql->query("DELETE FROM `admin_session` WHERE  `session_id` = $this->session_id Limit 1");
+		$mysql->query("DELETE FROM `admin_session` WHERE  `session_id` = '$this->session_id' LIMIT 1");
 	}
 	
 	
