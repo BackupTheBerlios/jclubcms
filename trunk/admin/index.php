@@ -52,9 +52,9 @@ if($auth->check4user() == false)
 }
 
 
+$admin_menu_shortlinks = true;
 
-
-$nav_array = $page->get_menu_array(true, true);
+$nav_array = $page->get_menu_array($admin_menu_shortlinks, true);
 
 //echo "<pre>".print_r($nav_array, 1)."</pre>\n";
 
@@ -108,6 +108,8 @@ elseif($data['menu_pagetyp'] == "pag")
 
 $smarty_array += array('topnav' => $nav_array['topnav'], 'subnav' => $nav_array['subnav']);
 $smarty->assign($smarty_array);
+
+$smarty->assign('shortlink', $admin_menu_shortlinks?1:0);
 $smarty->display('index.tpl');
 print_r($smarty_array);
 /*

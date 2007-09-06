@@ -206,10 +206,13 @@ class Page
 		
 		//Durchlaeuft $mysql_array und baut so die Navigation auf.
 		$j++;
+		
+		 //$level aendert sich nicht innerhalb der Funktion, $j hingegen schon, denn sie ist statisch.
+		$level = $j;
 		while($data = current($mysql_array))
 		{
 			$subnav_array[$i] = $data;
-			$subnav_array[$i]['level'] = $j;
+			$subnav_array[$i]['level'] = $level;
 			$i++;
 			
 			if($j < count($topid_array) && $data['menu_ID'] == $topid_array[$j])
