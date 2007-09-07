@@ -156,6 +156,13 @@ class Auth
 		
 	}
 	
+	public function logout()
+	{
+		$this->session->delete();
+		$this->smarty->assign('error_text', "Sie haben sich erfolgreich ausgeloggt");
+		$this->smarty->display('error.tpl');
+			
+	}
 	/**
 	 * List die Logindaten heraus oder gibt einen Fehlerwert zur�ck
 	 *

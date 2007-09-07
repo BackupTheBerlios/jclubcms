@@ -10,8 +10,8 @@
 	<body>
 		<div id="header">&nbsp;</div>
 		<div id="error" style="text-align: center">
-			{$error_text}
-			<a href="{$error_link}">{$error_linktext}</a>
+			{$error_text}<br />
+			<a href="{$error_link|default:"index.php"}">{$error_linktext|default:"Login"}</a>
 		</div>		
 	</body>
 </html>

@@ -52,6 +52,12 @@ if($auth->check4user() == false)
 }
 
 
+if($_GET['mode'] == 'logout')
+{
+	$auth->logout();
+	exit();
+}
+
 $admin_menu_shortlinks = true;
 
 $nav_array = $page->get_menu_array($admin_menu_shortlinks, true);

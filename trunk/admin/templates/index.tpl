@@ -22,7 +22,7 @@
       
         {*Hier kommt die Navigation, ausgelesen aus der DB*}
        {foreach item=topnav from=$topnav}
-          <a href="./index.php?nav_id={$topnav.menu_ID}&{$SID}">{$topnav.menu_name}</a>
+          <a href="./index.php?nav_id={$topnav.menu_ID}{if $topnav.menu_modvar != ""}&{$topnav.menu_modvar}{/if}&{$SID}">{$topnav.menu_name}</a>
         {/foreach}
         
       </div>
@@ -43,7 +43,7 @@
       {else}
       <div class="subnavigation_links3">
       {/if}        
-        <a href="./index.php?nav_id={$subnav.menu_ID}&{$SID}">{$subnav.menu_name}</a>  
+        <a href="./index.php?nav_id={$subnav.menu_ID}{if $subnav.menu_modvar != ""}&{$subnav.menu_modvar}{/if}&{$SID}">{$subnav.menu_name}</a>  
       </div>
       {/foreach}
       
