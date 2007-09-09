@@ -1,12 +1,12 @@
 <?php
 
 /**
- * @author David Däster und Simon Däster
+ * @author David Daester und Simon Daester
  * @package JClubCMS
  * Index.php
  * 
- * Diese Seite ist für die Anzeig der Navigation veranwortlich
- * und lädt die notwendigen Module
+ * Diese Seite ist fuer die Anzeig der Navigation veranwortlich
+ * und laedt die notwendigen Module
  */
 
 /** Zu Testzwecken ! **/
@@ -22,6 +22,9 @@ define("USER_DIR", "./");
 
 //Config laden
 require_once(USER_DIR.'config/config.inc.php');
+
+//Funktionen laden  !!depressed!!
+require_once(ADMIN_DIR.'config/functions.inc.php');
 
 //notwendige Module laden
 require_once(ADMIN_DIR.'lib/mysql.class.php');
@@ -58,8 +61,8 @@ if ($nav_id <= 0) {
 
 
 /**
- * Hier werden alle Verweise ausgelesen: ID, höhere Navigation (topid), Position, Name,
- * zugehörige Seite (page) und ob Modul oder Page £
+ * Hier werden alle Verweise ausgelesen: ID, hï¿½here Navigation (topid), Position, Name,
+ * zugehï¿½rige Seite (page) und ob Modul oder Page ï¿½
  */
 $mysql->query("SELECT * FROM menu WHERE menu_ID = $nav_id");
 $page_data = $mysql->fetcharray();
@@ -78,23 +81,23 @@ $page_id = $page_data["menu_page"];
 
 
 /**
- * Der gerade aktive Navigationslink und alle direkt darüberliegende Links
+ * Der gerade aktive Navigationslink und alle direkt darï¿½berliegende Links
  * werden im Array $root_array gespeichert.
  * 
  * Aufbau:
  * topid: 0     -Gallery
- * 				-Gästebuch
+ * 				-Gï¿½stebuch
  * Und dann gehts weiter nach unten
- * Info: Einträge mit 'menu_display' = 0 werden nicht angezeigt
+ * Info: Eintrï¿½ge mit 'menu_display' = 0 werden nicht angezeigt
  * 
  */
 
 $child_array = array();
 $root_array = array();
-//Die Stufe beginnt von unten zu zählen, statt von oben. Wird am Schluss umgerechnet
+//Die Stufe beginnt von unten zu zï¿½hlen, statt von oben. Wird am Schluss umgerechnet
 $invlevel = 1;
 
-//Alle Einträge unterhalb des $nav_id Eintrags werden gelesen
+//Alle Eintrï¿½ge unterhalb des $nav_id Eintrags werden gelesen
 //Sie haben den $invlevel 1
 $mysql->query("SELECT menu_ID, menu_topid, menu_name FROM menu WHERE menu_topid = $nav_id and `menu_display` != '0' ORDER BY menu_position");
 $i = 0;
@@ -103,7 +106,7 @@ while ($subnav_data = $mysql->fetcharray()) {
 	$i++;
 }
 
-//Die nächsthöhere TopID
+//Die nï¿½chsthï¿½here TopID
 $next_topid = $page_data["menu_topid"];
 
 
@@ -114,7 +117,7 @@ while (($next_topid != 0 || $next_topid != false))	{
 	$i = 0;
 
 	// $top_id kann aus dem Array $child_array herausgelesen werden
-	// beim 1. Durchgang kann das Child-Array leer sein, man kann dafür die $nav_id nehmen
+	// beim 1. Durchgang kann das Child-Array leer sein, man kann dafï¿½r die $nav_id nehmen
 	if(empty($child_array[0]["menu_topid"])) {
 		$top_id = $nav_id;
 	} else {
@@ -122,7 +125,7 @@ while (($next_topid != 0 || $next_topid != false))	{
 	}
 
 
-	//Erhöhung des $invlevels, da eine Stufe weiter Richtung oben
+	//Erhï¿½hung des $invlevels, da eine Stufe weiter Richtung oben
 	$invlevel++;
 
 	$mysql->query("SELECT menu_ID, menu_topid, menu_name FROM menu WHERE menu_topid = $next_topid and `menu_display` != '0' ORDER BY menu_position ASC");
@@ -132,15 +135,15 @@ while (($next_topid != 0 || $next_topid != false))	{
 		$root_array[$i] = array('menu_ID'=>$subnav_data["menu_ID"], 'menu_name'=>$subnav_data["menu_name"], 'menu_topid'=>$subnav_data["menu_topid"], 'level'=>$invlevel);
 		/**
 		 * //Wenn die menu_ID die Top_id des Child-Array ist, heisst das, 
-		 * menu_ID liegt direkt darüber
+		 * menu_ID liegt direkt darï¿½ber
 		 * Z.B Eintrag 2.1
 		 * 			Eintrag 2.1.1
 		 * 			Eintrag 2.1.2
 		 * 
-		 * Eintrag 2.1 und Eintrag 2.1.1 liegen gerade übereinander
+		 * Eintrag 2.1 und Eintrag 2.1.1 liegen gerade ï¿½bereinander
 		 * 
-		 * Array werden zusammengefügt.
-		 * Anzahl der Elemente wird in $i gespeichert, damit weder überschrieben wird noch sich eine Lücke bildet
+		 * Array werden zusammengefï¿½gt.
+		 * Anzahl der Elemente wird in $i gespeichert, damit weder ï¿½berschrieben wird noch sich eine Lï¿½cke bildet
 		 */
 		if($root_array[$i]["menu_ID"] == $top_id) {
 
@@ -157,7 +160,7 @@ while (($next_topid != 0 || $next_topid != false))	{
 	/**
 	 * Naechste top_id herausfinden 
 	 */
-	//Hier wird noch mit der alten $next_topid gerechnet. Die Topid vom höheren Menu wird gelesen
+	//Hier wird noch mit der alten $next_topid gerechnet. Die Topid vom hï¿½heren Menu wird gelesen
 	$mysql->query("SELECT menu_topid FROM menu WHERE menu_ID = $next_topid and `menu_display` != '0' LIMIT 1");
 	$subnav_data = $mysql->fetcharray();
 	//Neues $next_topid
@@ -169,8 +172,8 @@ while (($next_topid != 0 || $next_topid != false))	{
 
 
 /**
- * Die $invlevels müssen noch umgekehrt werden. Momentan ist der tiefste Eintrags-Lebel 1, 
- * aber der höchste Eintragslevel soll 1 werden
+ * Die $invlevels mï¿½ssen noch umgekehrt werden. Momentan ist der tiefste Eintrags-Lebel 1, 
+ * aber der hï¿½chste Eintragslevel soll 1 werden
  */
 
 //Das Anzahl Level wird abgespeichtert
@@ -179,13 +182,13 @@ $anzlevel = $invlevel;
 $invlevel = 0;
 $number = count($child_array);
 
-//Die Umrechnunsschleife, die Levels werden neu gesetzt: Das Höchste jetzt das Tiefste und umgekehrt
+//Die Umrechnunsschleife, die Levels werden neu gesetzt: Das Hï¿½chste jetzt das Tiefste und umgekehrt
 for($i = 0; $i < $number; $i++) {
 	$invlevel = $child_array[$i]['level'];
 	$child_array[$i]['level'] = $anzlevel - $invlevel + 1;
 }
 
-//Die Subnav_array mit dem vollständigen child_array füllen
+//Die Subnav_array mit dem vollstï¿½ndigen child_array fï¿½llen
 $subnav_array = $child_array;
 
 $smarty->assign("subnav", $subnav_array);
@@ -202,15 +205,15 @@ $smarty->assign("subnav", $subnav_array);
 
 
 /**
- * Da ja nicht nur reiner Text sondern auch Module weitergegeben werden können, wird hier geschaut,
+ * Da ja nicht nur reiner Text sondern auch Module weitergegeben werden kï¿½nnen, wird hier geschaut,
  * ob es ein Modul oder eine Page ist. Einfach erweiterbar durch einen weiteren enum-Eintrag in der DB
  * und die Erweiterung hier
  */
 if(isset($_GET['mail'])) {
 	/**
-   * Für den Mailversand auszulösen wird hierrüber gearbeitet.
-   * Von hier werden die wichtigen Classen geöffnet, die Mail verschickt (sofern vorhanden)
-   * und der DB-Eintrag gelöscht.
+   * Fï¿½r den Mailversand auszulï¿½sen wird hierrï¿½ber gearbeitet.
+   * Von hier werden die wichtigen Classen geï¿½ffnet, die Mail verschickt (sofern vorhanden)
+   * und der DB-Eintrag gelï¿½scht.
    */
 	require_once(ADMIN_DIR.'lib//mailsend.class.php');
 	

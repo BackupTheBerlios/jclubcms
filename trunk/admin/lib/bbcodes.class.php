@@ -1,6 +1,6 @@
 <?php
 /**
- * @author David Däster
+ * @author David Daester
  * @package JClubCMS
  * File: bbcodes.class.php
  * Classes: bbcodes
@@ -8,16 +8,16 @@
  */
 
 /**
- * Die Klasse soll die Texte aus den Inhalten der Seite, sowie aus den Gästebücher und News übersetzen.
+ * Die Klasse soll die Texte aus den Inhalten der Seite, sowie aus den Gaestebuecher und News uebersetzen.
  * Die BBCodes sind in der MySQL-Tabelle bbcodes abgelegt, sowie das HTML-Pendant.
  * 
- * Das HTML-Pendant enthält jeweils ein oder mehrere %s welche den Standort des einzufügenden Textes enthält.
+ * Das HTML-Pendant enthaelt jeweils ein oder mehrere %s welche den Standort des einzufuegenden Textes enthaelt.
  * 
- * Zudem muss noch überprüft werden:
- * -> BBCodes müssen sauber verschachtelt sein, wenn nicht sollen sie nicht übersetzt oder bei der anzeige gelöscht werden.
+ * Zudem muss noch ueberprueft werden:
+ * -> BBCodes muessen sauber verschachtelt sein, wenn nicht sollen sie nicht uebersetzt oder bei der anzeige geloescht werden.
  * 
- * Beachtet werden sollte später auch noch:
- * -> Nicht jeder BBCode sollte überall verwendet werden können (URL und IMG nicht im Gästebuch)
+ * Beachtet werden sollte spaeter auch noch:
+ * -> Nicht jeder BBCode sollte ueberall verwendet werden koennen (URL und IMG nicht im Gaestebuch)
  */
 
  class bbcodes {
@@ -48,23 +48,24 @@
  	 * @param object $mysql_link Datenverbindung zur MySQL
  	 */
  	private function check_type() {
- 		$mysql_link = $this->mysql_link;
+ 		//$mysql_link = $this->mysql_link;
  		$found = 0;
  		$query = " SHOW COLUMNS FROM bbcodes LIKE 'bbcodes_rights'";
- 		$mysql_link->query($query);
- 		$tabledata = $mysql_link->fetcharray();
+ 		$this->mysql_link->query($query);
+ 		$tabledata = $this->mysql_link->fetcharray();
  		$found = eregi($this->type, $tabledata["Type"]);
  		return $found;
  	}
  	
  	public function get_bbcodes() {
  		if ($this->check_type()== 1) {
- 		$mysql_link = $this->mysql_link;
+ 		//$mysql_link = $this->mysql_link;
+ 		debugecho(__LINE__, __FILE__, __FUNCTION__, __CLASS__);
  		$query = "SELECT * FROM bbcodes WHERE bbcodes_rights = $this->type";
- 		$mysql_link->query($query);
+ 		$this->mysql_link->query($query);
  		$bbcodes_array = array();
  		$i = 0;
- 		while ($bbcodes_data = $mysql_link->fetcharray()) {
+ 		while ($bbcodes_data = $this->mysql_link->fetcharray()) {
  			$bbcodes_array[$i] = array('bbctag'=>$bbcodes_data["bbcodes_bbctag"], 'htmltag'=>$bbcodes_data["bbcodes_htmltag"]);
  			$i++;
  		}
@@ -77,12 +78,13 @@
  	
  	public function replace_bbcodes($text) {
  		if ($this->check_type()== 1) {
- 			$mysql_link = $this->mysql_link;
+ 			//$this->mysql_link = $this->mysql_link;
+ 			debugecho(__LINE__, __FILE__, __FUNCTION__, __CLASS__);
 	 		$query = "SELECT * FROM bbcodes WHERE bbcodes_rights = $this->type";
-	 		$mysql_link->query($query);
+	 		$this->mysql_link->query($query);
 	 		$bbcodes_array = array();
 	 		$i = 0;
-	 		while ($bbcodes_data = $mysql_link->fetcharray()) {
+	 		while ($bbcodes_data = $this->mysql_link->fetcharray()) {
 	 			$text = preg_replace($bbcodes_data["bbcodes_regex"], $bbcodes_data["bbcodes_htmltag"], $text);
 	 		}
  		}

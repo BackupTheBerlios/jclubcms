@@ -107,7 +107,7 @@ class Page
 			$topid_array[$i] = $temp_array[$max-$i-1];
 		}
 
-		echo "In get_shortlinksmenu_array: <pre>".print_r($topid_array, 1)."</pre> <br />\n";
+		//echo "In get_shortlinksmenu_array: <pre>".print_r($topid_array, 1)."</pre> <br />\n";
 
 		//Funktion aufrufen, damit subnav-Array erstellt wird
 		$this->build_subnav_array($table_name, $topid_array, &$menu_array['subnav']);
@@ -229,8 +229,8 @@ class Page
 			next($mysql_array);
 		}
 
-		echo "In build_subnav_array: \$i $i, \$j $j, topid_array\n<pre>".print_r($topid_array, 1)."</pre><br />\n";
-		echo "In build_subnav_array: subnav_array\n<pre>".print_r($subnav_array, 1)."</pre> <br />\n";
+		//echo "In build_subnav_array: \$i $i, \$j $j, topid_array\n<pre>".print_r($topid_array, 1)."</pre><br />\n";
+		//echo "In build_subnav_array: subnav_array\n<pre>".print_r($subnav_array, 1)."</pre> <br />\n";
 	}
 
 

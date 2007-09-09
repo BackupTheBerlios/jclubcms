@@ -95,7 +95,7 @@ class mysql {
 	 * @param boolean $newcon Neue Verbindung?
 	 */
 
-	function __construct($server, $db, $user, $pw, $newcon = 1) {
+	function __construct($server, $db, $user, $pw, $newcon = true) {
 
 		$this->mysql_server = $server;
 		$this->mysql_db = $db;
@@ -139,20 +139,37 @@ class mysql {
 		
 		//Query-Record loeschen, weil ein neuer Query gestartet wurde
 		$this->query_records = array();
+		$give_result = false;
+				
+		//Kontrolliert, ob der query SELECT, SHOW, EXPLAIN oder DESCRIBE enthaelt. Nur dann gibt mysql_query ein result zurück
+		$query_result_by = array('SELECT', 'Select', 'select', 'SHOW', 'Show', 'show', 'EXPLAIN','Explain', 'explain', 'DESCRIBE', 'Describe', 'describe');
 		
-		if(substr_count($query, "INSERT") > 0)
+		foreach ($query_result_by as $value)
+		{
+			//Enthaelt $query ein solcher string, wird die schleife abgebrochen
+			$give_result = (strpos($query, $value) === false)?true:false;
+			
+			if($give_result)
+			{
+				break;
+			}
+		}
+		
+		if($give_result == true)
+		{
+			//echo "mysql->query: \$query '$query' doesn't contain INSERT<br />\n";
+			$this->result = mysql_query($query, $this->server_link);
+			
+		}
+		else
 		{
 			//echo "mysql->query: \$query '$query' contains INSERT<br />\n";
 			mysql_query($query, $this->server_link);
 			$this->no_result = true;
 		}
-		else
-		{
-			//echo "mysql->query: \$query '$query' doesn't contain INSERT<br />\n";
-			$this->result = mysql_query($query, $this->server_link);
-		}
 		
 		//echo "mysql->query: \$this->result ".print_r($this->result, 1)."<br />\n";
+		//debugecho(__LINE__, __FILE__, __FUNCTION__, __CLASS__);
 
 		if($this->result === false) {
 			return false;			
@@ -284,12 +301,15 @@ class mysql {
 	
 	/**
 	 * Ueberschreibung der magischen Methode clone. So werden beim Klonen wichtige Eigenschaften geloescht.
+	 * Ebenfalls wird eine neue Verbindung zum Mysql-Datenbank hergestellt. Beim Klonen wird nämlich der Konstruktor nicht nochmals aufgerufen
 	 *
 	 */
 	
 	public function __clone()
 	{
 		$this->result = null;
+		$this->new_c = true;
+		$this->connect();
 	}
 
 	/**

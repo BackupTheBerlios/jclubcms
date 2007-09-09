@@ -4,7 +4,7 @@
  * @package JClubCMS
  * Index.php
  * 
- * Diese Seite ist f�r das Anzeigen der Administrationsoberfl�che verantwortlich und l�dt alle notwendigen Module.
+ * Diese Seite ist fuer das Anzeigen der Administrationsoberflaeche verantwortlich und laedt alle notwendigen Module.
  */
 
 error_reporting(E_ALL); //Zu Debug-Zwecken
@@ -16,9 +16,10 @@ define("ADMIN_DIR", "./");
 define("USER_DIR", "../");
 
 //Config laden
+require_once(USER_DIR.'config/config.inc.php');
 require_once(ADMIN_DIR.'config/config.inc.php');
 require_once(ADMIN_DIR.'config/functions.inc.php');
-require_once(USER_DIR.'config/config.inc.php');
+
 
 //notwendige Module laden
 require_once(ADMIN_DIR.'lib/mysql.class.php');
@@ -69,6 +70,21 @@ $nav_array = $page->get_menu_array($admin_menu_shortlinks, true);
 //echo "\$error <pre>".print_r($error, 1)."</pre>\n";
 //echo "Index: Ende der Datei<br />\n";
 
+//Wenn's nicht laeuft, muessen uebermittelte Variablen geparst werden
+if(get_magic_quotes_gpc() == 1)
+{
+	foreach($_GET as $key => $value)
+	{
+		$_GET[$key] = addslashes($value);
+	}
+	
+	foreach($_POST as $key => $value)
+	{
+		$_POST[$key] = addslashes($value);
+	}
+}
+
+$paraGetPost = array("_GET" => $_GET, "_POST" => $_POST);
 
 $mysql->query("SELECT `menu_pagetyp`, `menu_page` FROM `admin_menu` WHERE `menu_ID`= '{$nav_array['nav_id']}'");
 $data = $mysql->fetcharray("assoc");
@@ -82,13 +98,12 @@ if($data['menu_pagetyp'] == "mod")
 		$path = ADMIN_DIR.'modules/'.$data['modules_name'];
 		$split = explode(".", $data['modules_name']);
 		$class = $split[0];
-		echo "klasse: $class";
 		if(file_exists($path))
 		{
 
 			require_once($path);
 			$module = new $split[0]($mysql, $smarty);
-			$module->readparameters($_GET);
+			$module->action($paraGetPost);
 			$smarty_array['file'] = $module->gettplfile();
 
 		} else {
@@ -100,7 +115,7 @@ if($data['menu_pagetyp'] == "mod")
 	{
 		$content_text = "Modul nicht vorhanden!!!<br />\n";
 		$smarty_array += array('content_title' => 'Modul nicht vorhanden', 'content_text' => $content_text, 'file' => 'main.tpl');
-		echo "HALLO";
+
 	}
 }
 elseif($data['menu_pagetyp'] == "pag")
@@ -117,8 +132,10 @@ $smarty->assign($smarty_array);
 
 $smarty->assign('shortlink', $admin_menu_shortlinks?1:0);
 $smarty->display('index.tpl');
-print_r($smarty_array);
+//print_r($smarty_array);
 /*
 
 */
+
+
 ?>
