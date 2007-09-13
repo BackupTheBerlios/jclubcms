@@ -178,6 +178,7 @@ class mysql {
 			return true;
 		}
 	}
+	
 
 	/**
 	 * Liefert bei Erfolg einen Datensatz als Array, sonst false
@@ -271,12 +272,9 @@ class mysql {
 
 	public function affected_rows() {
 		
-		if($this->no_result === true)
-		{
+		if ($this->no_result === true) {
 			$number = mysql_affected_rows();
-		}
-		else 
-		{
+		} else {
 			$number = mysql_affected_rows($this->result);
 		}
 		

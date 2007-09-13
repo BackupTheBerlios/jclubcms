@@ -1,0 +1,4 @@
+Asl Vorschlag für Coding-Standart wäre das nicht schlecht
+Muss nicht alles übernommen werden (Kommentare), aber bezüglich Kontrollstrukturen wäre das schon gut.
+
+http://pear.php.net/manual/de/standards.php

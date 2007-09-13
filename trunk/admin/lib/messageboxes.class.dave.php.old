@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @author David D�ster
+ * @author David Daester
  * @package JClubCMS
  * File: messageboxes.class.php
  * Classes: messageboxes
@@ -91,7 +91,7 @@ class messageboxes {
 		/**
 	 * Der Mail-Exploder
 	 *
-	 * Teil die Mail f�r die einfachere Pr�fung in ihre Subsegmente auf
+	 * Teil die Mail faer die einfachere Pruefung in ihre Subsegmente auf
 	 */
 	private function mailexplode() {
 		$mailarray = explode('@', $this->mail);
@@ -105,7 +105,7 @@ class messageboxes {
 	/**
 	 * Der Domain-Name-Checker
 	 *
-	 * Pr�ft einfach ob die Domain ihre Minimalwerte hat.
+	 * Prueft einfach ob die Domain ihre Minimalwerte hat.
 	 */
 	private function is_domain () {
 		$failer_error = 0;
@@ -121,10 +121,10 @@ class messageboxes {
 	}
 	/**
 	 * Hier wird geschaut ob es ein korrektes Land ist.
-	 * Die L�nderliste wird aus einem Text-File in ein Array abgespitzt
-	 * und nachher wird aus diesem Array gepr�ft.
+	 * Die Laenderliste wird aus einem Text-File in ein Array abgespitzt
+	 * und nachher wird aus diesem Array geprueft.
 	 *
-	 * Quelle der Domains sp�ter vieleicht oline.
+	 * Quelle der Domains spaeter vieleicht oline.
 	 */
 	private function is_country () {
 		$handle = fopen("./config/country.txt", "r");
@@ -150,7 +150,7 @@ class messageboxes {
 	/**
 	 * Der Domain-Name-Checker
 	 *
-	 * Pr�ft einfach ob die Domain ihre Minimalwerte hat.
+	 * Prueft einfach ob die Domain ihre Minimalwerte hat.
 	 */
 	private function is_name () {
 		$failer_error = 0;

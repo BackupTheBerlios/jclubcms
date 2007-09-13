@@ -1,6 +1,6 @@
 <?php
 /** 
- * @author David Däster
+ * @author David Dï¿½ster
  * @package JClubCMS
  * File: formular_check.class.php
  * Classes: formularcheck
@@ -19,7 +19,7 @@ class formular_check {
 		return 0;
 	}
 	/**
-	 * Überprüft ob der angegebene String den nicht erlaubten default-Einträgen 
+	 * ï¿½berprï¿½ft ob der angegebene String den nicht erlaubten default-Eintrï¿½gen 
 	 * von den Forumlaren entspricht
 	 *
 	 * @param string $field
@@ -48,7 +48,7 @@ class formular_check {
 	/**
 	 * Der Mail-Exploder
 	 *
-	 * Teil die Mail für die einfachere Prüfung in ihre Subsegmente auf
+	 * Teil die Mail fuer die einfachere Prï¿½fung in ihre Subsegmente auf
 	 */
 	private function mailexplode() {
 		$mailarray = explode('@', $this->mail);
@@ -62,7 +62,7 @@ class formular_check {
 	/**
 	 * Der Domain-Name-Checker
 	 *
-	 * Prüft einfach ob die Domain ihre Minimalwerte hat.
+	 * Prueft einfach ob die Domain ihre Minimalwerte hat.
 	 */
 	private function is_domain () {
 		$failer_error = 0;
@@ -79,7 +79,7 @@ class formular_check {
 	/**
 	 * Der Domain-Name-Checker
 	 * 
-	 * Prüft einfach ob die Domain ihre Minimalwerte hat.
+	 * Prueft einfach ob die Domain ihre Minimalwerte hat.
 	 */
 	private function is_name () {
 		$failer_error = 0;
@@ -95,10 +95,10 @@ class formular_check {
 	}
 	/**
 	 * Hier wird geschaut ob es ein korrektes Land ist.
-	 * Die Länderliste wird aus einem Text-File in ein Array abgespitzt
-	 * und nachher wird aus diesem Array geprüft.
+	 * Die Lï¿½nderliste wird aus einem Text-File in ein Array abgespitzt
+	 * und nachher wird aus diesem Array geprï¿½ft.
 	 *
-	 * Quelle der Domains später vieleicht oline.
+	 * Quelle der Domains spaeter vieleicht oline.
 	 */
 	private function is_country () {
 		$handle = fopen("./config/country.txt", "r");
@@ -122,7 +122,7 @@ class formular_check {
 		$this->failer_error+=$failer_error;
 	}
 	/**
-	 * Wird aufgerufen, startet alle anderen Funktionen und gibt den Fehlercode zurück.
+	 * Wird aufgerufen, startet alle anderen Funktionen und gibt den Fehlercode zurueck.
 	 *
 	 * @return integer
 	 */
