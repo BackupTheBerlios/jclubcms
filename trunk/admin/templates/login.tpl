@@ -22,10 +22,10 @@
 						<td  class="formailer_header">Anmeldung f&uuml;r die Administration</td>
 					</tr>
 					<tr>
-						<td class="formailer_adress">Benutzername: <input class="formailer_adress_input" type="text" name="name" value="{$user}" /></td>
+						<td class="formailer_adress">Benutzername: <input class="formailer_adress_input" tabindex="1" type="text" name="name" value="{$user}" /></td>
 					</tr>
 					<tr>
-						<td class="formailer_adress">Passwort: <input class="formailer_adress_input" type="password" name="password" /></td>
+						<td class="formailer_adress">Passwort: <input class="formailer_adress_input" tabindex="2" type="password" name="password" /></td>
 					</tr>
 					<tr>
 						<td class="formailer_adress">

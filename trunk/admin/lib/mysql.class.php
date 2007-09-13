@@ -147,7 +147,7 @@ class mysql {
 		foreach ($query_result_by as $value)
 		{
 			//Enthaelt $query ein solcher string, wird die schleife abgebrochen
-			$give_result = (strpos($query, $value) === false)?true:false;
+			$give_result = (strpos($query, $value) === false)?false:true;
 			
 			if($give_result)
 			{
@@ -166,6 +166,7 @@ class mysql {
 			//echo "mysql->query: \$query '$query' contains INSERT<br />\n";
 			mysql_query($query, $this->server_link);
 			$this->no_result = true;
+		
 		}
 		
 		//echo "mysql->query: \$this->result ".print_r($this->result, 1)."<br />\n";
@@ -201,6 +202,7 @@ class mysql {
 				$type = MYSQL_BOTH;
 		}
 
+
 		$data = mysql_fetch_array($this->result, $type);
 
 
@@ -221,7 +223,7 @@ class mysql {
 	public function saverecords($resulttype = "assoc")
 	{
 		$i = 0;
-		while($data = $this->fetcharray())
+		while($data = $this->fetcharray($resulttype))
 		{
 			$this->query_records[$i] = $data;
 			$i++;
@@ -269,7 +271,7 @@ class mysql {
 
 	public function affected_rows() {
 		
-		if($this->no_result == true)
+		if($this->no_result === true)
 		{
 			$number = mysql_affected_rows();
 		}

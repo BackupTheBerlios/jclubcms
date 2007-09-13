@@ -127,7 +127,6 @@ class Session {
     	
     	//echo "session->create_session: mysql-query<br />\nINSERT INTO `jclubbeta`.`admin_session` (`ID`, `session_id`, `user_agent`, `user_ref_ID`, `ip_address`, `login_time`, `last_activity`) VALUES (NULL, '{$this->session_id}', '{$this->user_agent}', $userID, '{$this->ip_adress}', NOW(), NOW())<br />\n";
     	
-    	
     	$num = $mysql->affected_rows();
     	
     	if($num < 1)

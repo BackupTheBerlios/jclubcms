@@ -10,18 +10,18 @@
 		<table cellpadding="0" cellspacing="0" align="center" class="content_tab">
 			<tr>
 			<td class="content_tab_header" colspan="2">
-			{$news.title}
+			{$news.news_title}
 			</td>
 			</tr>
 			<tr>
 			<td class="content_tab_content1">
-			{$news.content}
+			{$news.news_content}
 			</td>
 			<td class="content_tab_content2">
 			<img src="templates/style/icons/date.gif" /> {$news.time}<br />
 			<img src="templates/style/icons/user.gif" /> {$news.name}<br />
 			<a href="?nav_id={$local_link}&action=mail&entry_id={$news.ID}"><img src="templates/style/icons/email.gif" /> E-mail</a>
-			{if $news.hp neq ""}<br /><a href="{$news.hp}" target="_blank"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
+			{if $news.news_hp neq ""}<br /><a href="{$news.news_hp}" target="_blank"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
 			</td>
 			</tr>
 			{* Innere Schlaufe für das Auslesen der Kommentare *}

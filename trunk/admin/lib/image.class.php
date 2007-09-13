@@ -1,23 +1,23 @@
 <?php
 
 /**
- * @author Simon Däster
+ * @author Simon Dï¿½ster
  * @package JClubCMS
  * File: image.class.php
  * Classes: image
  * Requieres: PHP5
  *
- * Die Klasse image ist zuständig für Grafikfunktionen
- * Sie speichert die Informationen über ein Bild ab, kann diese Informationen senden
+ * Die Klasse image ist zustaendig fuer Grafikfunktionen
+ * Sie speichert die Informationen ï¿½ber ein Bild ab, kann diese Informationen senden
  * und das Bild selber ausgeben
  * Wenn keine Bilddatei vorhanden ist, dann wird automatisch ein Fehlerbild erstellt
  * Um Thumbs zu erstellen, kann die Funktion "copy" verwendet werden.
- * "copy" kann auch verwendet werden, um das Bild selber zu verändern.
- * Dazu kann man einfach die Grössen belassen
- * !Achtung: Vorhandene Dateien werden ohne Abfrage überschrieben!!!
+ * "copy" kann auch verwendet werden, um das Bild selber zu verï¿½ndern.
+ * Dazu kann man einfach die Grï¿½ssen belassen
+ * !Achtung: Vorhandene Dateien werden ohne Abfrage ï¿½berschrieben!!!
  *
- * Diese Klasse ist nicht für die Administration der Bilder zuständig
- * Die Klasse wird für jedes Bild gebraucht, um es darzustellen und nötige
+ * Diese Klasse ist nicht fï¿½r die Administration der Bilder zustï¿½ndig
+ * Die Klasse wird fï¿½r jedes Bild gebraucht, um es darzustellen und nï¿½tige
  * Informationen zum jeweiligen Bild zu erhalten
  *
  */
@@ -33,7 +33,7 @@ class image {
 
 
 	/*------------------
-	*** Öffentliche Funktionen ***
+	*** ï¿½ffentliche Funktionen ***
 	------------------*/
 
 
@@ -67,16 +67,20 @@ class image {
 
 
 	/**
-	 * Kopiert das Originalbild uns speichert es in ein neues Bild mit anderen Höhen/Breiten ab
+	 * Kopiert das Originalbild uns speichert es in ein neues Bild mit anderen Hï¿½hen/Breiten ab
 	 *
 	 * @param int $new_x Neue Breite
-	 * @param int $new_y Neue Höhe
+	 * @param int $new_y Neue Hï¿½he
 	 * @param string $file Speicherort
 	 * @param string $new_format[optional] Neues Bildformat
 	 */
 
 	public function copy($new_width, $new_height, $file, $new_format="jpeg") {
 
+		if($this->im == null)
+		{
+			$this->get_im();
+		}
 		$new_im = imagecreatetruecolor($new_width, $new_height);
 
 		imagecopyresized($new_im, $this->im, 0, 0, 0, 0, $new_width, $new_height, $this->width, $this->height);
@@ -93,10 +97,20 @@ class image {
 	public function send_image() {
 
 		$format = $this->graphicformat;
+		
 		$im = $this->im;
 
-		eval("header(\"Content-type: image/$format\");");
-		eval("image$format(\$im);");
+		header("Content-type: image/$format");
+		if($this->im != null)
+		{
+			eval("image$format(\$im);");
+		}
+		else 
+		{
+			readfile($this->file);
+		}
+		
+		
 		
 	}
 
@@ -107,7 +121,7 @@ class image {
 	 * Wird vom Konstruktor aufgerufen
 	 *
 	 * @param string $width Breite des Bildes
-	 * @param string $height Höhe des Bildes
+	 * @param string $height Hï¿½he des Bildes
 	 * @param string $text Text, welcher im Bild steht
 	 * @param string $col_background Die Hintergrundfarbe im String mit RGB-Werten
 	 * @param string $col_text Die Textfarbe im String mit RGB-Werten
@@ -123,7 +137,7 @@ class image {
 
 		$this->im = imagecreatetruecolor($this->width, $this->height);
 
-		//Aus den Parameter für Farbe (RGB-Werte) werden die Farben erstellt
+		//Aus den Parameter fï¿½r Farbe (RGB-Werte) werden die Farben erstellt
 		$background_color = imagecolorallocate ($this->im, (int)substr($col_background, 0,3) , (int)substr($col_background, 3,3) , (int)substr($col_background, 6,3));
 		$text_color = imagecolorallocate($this->im, (int)substr($col_text, 0,3), (int)substr($col_text, 3,3), (int)substr($col_text, 6,3));
 
@@ -135,8 +149,8 @@ class image {
 
 
 	/**
-	 * Sendet Informationen über das Bild, namentlich
-	 * Grafik-Resource, Grafik-Format, die Breite und die Höhe
+	 * Sendet Informationen ï¿½ber das Bild, namentlich
+	 * Grafik-Resource, Grafik-Format, die Breite und die Hï¿½he
 	 *
 	 * @return array ("format", "width", "height") 
 	 */
@@ -170,9 +184,9 @@ class image {
 
 
 	/**
-	 * Schaut, ob das Grafikformat unterstützt wird
+	 * Schaut, ob das Grafikformat unterstï¿½tzt wird
 	 * Speichert das Grafikformat und die Bildressource
-	 * Speichert auch die Höhe und Breite
+	 * Speichert auch die Hï¿½he und Breite
 	 */
 
 	private function get_infos() {
@@ -183,26 +197,24 @@ class image {
 		switch ($array_image[2]) {
 			case 1:
 				$this->graphicformat = "gif";
-				$this->im = imagecreatefromgif($this->file);
+				
 				$supported = true;
 				break;
 
 			case 2:
 				$this->graphicformat = "jpeg";
-				$this->im = imagecreatefromjpeg($this->file);
 				$supported = true;
 				break;
 
 			case 3:
-				$this->graphicformat = "png";
-				$this->im = imagecreatefrompng($this->file);
+				$this->graphicformat = "png";				
 				$supported = true;
 
 				break;
 
 			default:
 
-				$this->create_image(330, 26, "Dieses Format wird nicht unterstützt");
+				$this->create_image(330, 26, "Dieses Format wird nicht unterstï¿½tzt");
 				$this->send_image();
 				$supported = false;
 		}
@@ -213,10 +225,34 @@ class image {
 		}
 
 	}
+	
+	private function get_im()
+	{
+		//Informationen wurden wahrsch. nicht geholt
+		if(empty($this->width) || empty($this->height))
+		{
+			$this->get_infos();
+		}
+		
+		switch($this->graphicformat)
+		{
+			case 'gif':
+				$this->im = imagecreatefromgif($this->file);
+				return true;
+			case 'jpeg':
+				$this->im = imagecreatefromjpeg($this->file);
+				return true;
+			case 'png':
+				$this->im = imagecreatefrompng($this->file);
+				return true;
+			default:
+				return false;
+		}
+	}
 
 
 	/**
-	 *Gibt eine benutzedefinierte PHP-Fehlermeldung aus
+	 *Gibt eine benutzedefinierte PHP-Fehlermeldung aus  !!OUT!!!
 	 *
 	 * @param string $error_msg	Fehlernachricht
 	 * @param konstant $error_type[optional]	Fehlertyp
@@ -224,6 +260,7 @@ class image {
 	private function trigger_error($error_msg, $error_type = E_USER_WARNING) {
 		trigger_error($error_msg, $error_type);
 	}
+	
 
 
 

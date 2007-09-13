@@ -1,26 +1,28 @@
 <?php
 
 /**
- * @author David Däster
+ * @author David Dï¿½ster
  * @package JClubCMS
  * File: messageboxes.class.php
  * Classes: messageboxes
  * Requieres: PHP5
  */
 
-/* Notitz: Hinzufügen und ähnliches geht in etwa so:
+/* Notitz: Hinzufuegen und Aehnliches geht in etwa so:
 - Es wird ne Funktion Add-entry oder add-comment aufgerufen
-- Die Funktion prüft die Korrektheit, und gibt bei Erfolg den Fehlercode 0 aus, und speichert die Daten.
+- Die Funktion prueft die Korrektheit, und gibt bei Erfolg den Fehlercode 0 aus, und speichert die Daten.
 - Bei Fehler gibt sie einen Fehlercode aus, anhand der gefunden Fehler.
-- Die Module fragen anschliessend zurück, welche Fehler es gibt (show_failer).
-- Das Modul gibt die Fehler zurück.
+- Die Module fragen anschliessend zurueck, welche Fehler es gibt (show_failer).
+- Das Modul gibt die Fehler zurueck.
 
-Ungefähre Idee, neuster Stand, nix so wie ist:
-Klasse bekommt entweder ein Array, oder die anzahl der zurückgegebenen werten.
-Erstellen des Array's mit den werten, oder überprüfen anhand bekannter kriterien (default, email, webpage).
+Ungefaehre Idee, neuster Stand, nix so wie ist:
+Klasse bekommt entweder ein Array, oder die anzahl der zurueckgegebenen werten.
+Erstellen des Array's mit den werten, oder ueberpruefen anhand bekannter kriterien (default, email, webpage).
 
-Problem: Woher weiss die Klasse, welcher Datensatz des Arrays zu welcher Zelle in der DB-Tabelle gehört?
-Wie überprüfe ich, ob alle nötigen werte, die von der MySQL-Tabelle nötig sind, angegeben wurden?
+Problem: Woher weiss die Klasse, welcher Datensatz des Arrays zu welcher Zelle in der DB-Tabelle gehoert?
+Wie ueberpruefe ich, ob alle noetigen werte, die von der MySQL-Tabelle noetig sind, angegeben wurden?
+
+
 
 */
 
@@ -38,7 +40,7 @@ class messageboxes {
 	private $captcha_word = "";
 /**
  * Klassenkonstruktor
- * Alle Variablen ausser des Tabellennamens sind optional, d.H werden erst für einen Comment oder
+ * Alle Variablen ausser des Tabellennamens sind optional, d.H werden erst fuer einen Comment oder
  * einen neuen Eintrag gebraucht.
  *
  * @param string $table_name Name der Datenbank-Tabelle worauf zugegriffen werden soll
@@ -48,7 +50,7 @@ class messageboxes {
  * @param string $name Name des Absenders
  * @param string $email EMail-Adresse des Absenders
  * @param string $hp Homepage des Absenders
- * @param int $navigation_id ID der Applikation (z.B. Navigations-ID des Gästebuchs)
+ * @param int $navigation_id ID der Applikation (z.B. Navigations-ID des Gaestebuchs)
  * @param string $captcha_word Eingegebenes Cpatcha-Wort.
  */
 
@@ -89,7 +91,7 @@ class messageboxes {
 		/**
 	 * Der Mail-Exploder
 	 *
-	 * Teil die Mail für die einfachere Prüfung in ihre Subsegmente auf
+	 * Teil die Mail fï¿½r die einfachere Prï¿½fung in ihre Subsegmente auf
 	 */
 	private function mailexplode() {
 		$mailarray = explode('@', $this->mail);
@@ -103,7 +105,7 @@ class messageboxes {
 	/**
 	 * Der Domain-Name-Checker
 	 *
-	 * Prüft einfach ob die Domain ihre Minimalwerte hat.
+	 * Prï¿½ft einfach ob die Domain ihre Minimalwerte hat.
 	 */
 	private function is_domain () {
 		$failer_error = 0;
@@ -119,10 +121,10 @@ class messageboxes {
 	}
 	/**
 	 * Hier wird geschaut ob es ein korrektes Land ist.
-	 * Die Länderliste wird aus einem Text-File in ein Array abgespitzt
-	 * und nachher wird aus diesem Array geprüft.
+	 * Die Lï¿½nderliste wird aus einem Text-File in ein Array abgespitzt
+	 * und nachher wird aus diesem Array geprï¿½ft.
 	 *
-	 * Quelle der Domains später vieleicht oline.
+	 * Quelle der Domains spï¿½ter vieleicht oline.
 	 */
 	private function is_country () {
 		$handle = fopen("./config/country.txt", "r");
@@ -148,7 +150,7 @@ class messageboxes {
 	/**
 	 * Der Domain-Name-Checker
 	 *
-	 * Prüft einfach ob die Domain ihre Minimalwerte hat.
+	 * Prï¿½ft einfach ob die Domain ihre Minimalwerte hat.
 	 */
 	private function is_name () {
 		$failer_error = 0;

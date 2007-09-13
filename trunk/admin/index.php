@@ -7,9 +7,9 @@
  * Diese Seite ist fuer das Anzeigen der Administrationsoberflaeche verantwortlich und laedt alle notwendigen Module.
  */
 
-error_reporting(E_ALL); //Zu Debug-Zwecken
+error_reporting(E_ALL|E_STRICT); //Zu Debug-Zwecken
 
-$microtime = microtime();
+$start_time = microtime(true);
 
 /**Konstanten definieren**/
 define("ADMIN_DIR", "./");
@@ -53,7 +53,7 @@ if($auth->check4user() == false)
 }
 
 
-if($_GET['mode'] == 'logout')
+if($_GET['action'] == 'logout')
 {
 	$auth->logout();
 	exit();
@@ -84,7 +84,7 @@ if(get_magic_quotes_gpc() == 1)
 	}
 }
 
-$paraGetPost = array("_GET" => $_GET, "_POST" => $_POST);
+$paraGetPost = array("GET" => $_GET, "POST" => $_POST);
 
 $mysql->query("SELECT `menu_pagetyp`, `menu_page` FROM `admin_menu` WHERE `menu_ID`= '{$nav_array['nav_id']}'");
 $data = $mysql->fetcharray("assoc");
@@ -127,15 +127,17 @@ elseif($data['menu_pagetyp'] == "pag")
 	$smarty_array[] = array('content_title' => $content_title, 'content_text' => $content_text);
 }
 
-$smarty_array += array('topnav' => $nav_array['topnav'], 'subnav' => $nav_array['subnav']);
+$smarty_array += array('topnav' => $nav_array['topnav'], 'subnav' => $nav_array['subnav'], 'local_link' => $nav_array['nav_id']);
 $smarty->assign($smarty_array);
 
+
 $smarty->assign('shortlink', $admin_menu_shortlinks?1:0);
+
+$smarty->assign('generated_time', round((microtime(true) - $start_time), 4));
 $smarty->display('index.tpl');
+
 //print_r($smarty_array);
 /*
 
 */
-
-
 ?>

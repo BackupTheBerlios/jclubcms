@@ -1,18 +1,18 @@
 <?php
 /**
  * @package JClubCMS
- * @author David däster
+ * @author David Daester
  * File: pagesnav.class.php
  * Classes: pagesnav
  * Requieres: PHP5
  *
  *
- * Die Klasse ist zuständig für das Erstellen des Arrays der Seiten.
+ * Die Klasse ist zustaendig fuer das Erstellen des Arrays der Seiten.
  */
 /**
- * @author David Däster
+ * @author David Daester
  * 
- * Ist für die Seitennavigationen für das Gästebuch und die News zuständig.
+ * Ist fï¿½r die Seitennavigationen fuer das Gaestebuch und die News zustaendig.
  */
 class pagesnav {
 	private $main_url = null;
@@ -24,8 +24,8 @@ class pagesnav {
 	/**
 	 * Klassenkonstruktor
 	 *
-	 * @param int $number_entries Anzahl der Einträge
-	 * @param int $max_entries_pp Einträge pro Seite
+	 * @param int $number_entries Anzahl der Eintraege
+	 * @param int $max_entries_pp Eintraege pro Seite
 	 */
 	public function __construct($number_entries, $max_entries_pp) {
 		$this->main_url = $_SERVER['_URI'];
@@ -47,7 +47,7 @@ class pagesnav {
 		return $number_of_pages;
 	}
 	/**
-	 * Bildet das Seiten-Array für Smarty
+	 * Bildet das Seiten-Array fuer Smarty
 	 *
 	 * @return array $pages_array
 	 */

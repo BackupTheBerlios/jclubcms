@@ -10,6 +10,7 @@ a:link, a:visited {
 	text-decoration: underline; 
 	color: #FF6600;
 }
+
 a:hover {
 	text-decoration: none;
 }
@@ -59,13 +60,6 @@ img {
 	font-family: sans-serif;
 }
 
-#forward, a: {
-	font-size: 11px;
-	text-decoration: underline;
-}
-
-
-
 #error {
 	top: 145px;
 	left: 5%;
@@ -75,33 +69,9 @@ img {
 	font-style: normal;
 	font: 15px;
 	text-align: center;
-	background-color: #DF7B00;
+	background-color: #F4A460;
 	z-index: 2;
 	position: absolute;
-	
-}
-#error {
-	top: 145px;
-	left: 5%;
-	right: 5%;
-	padding: 10px 10px 20px 10px;
-	border: 1px;
-	font-style: normal;
-	font: 15px;
-	text-align: center;
-	background-color: #DF7B00;
-	z-index: 2;
-	position: absolute;
-	
-}
-
-a#error {
-	top: 40px;
-	background-color: #FFD700;
-	color: Red;
-	width: 100px;
-	left: 45%;
-	z-index: 3;
 }
 
 #content {
@@ -112,6 +82,7 @@ a#error {
 	z-index: 2;
 	position: absolute;
 }
+
 #content_txt {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 12px;

@@ -18,77 +18,88 @@ class news implements Module
 	private $post_arr = array();
 	private $get_arr = array();
 
-	
+
 	public function __construct($mysql, $smarty)
 	{
 		$this->mysql = $mysql;
 		$this->smarty = $smarty;
 	}
-	
+
 	public function action($parameters)
 	{
-		$this->post_arr = $parameters['_POST'];
-		$this->get_arr = $parameters['_GET'];
-		
-		switch($this->get['mode'])
+		$this->post_arr = $parameters['POST'];
+		$this->get_arr = $parameters['GET'];
+		if(isset($this->get_arr['action']))
 		{
-			case 'new':
-				$this->add();
-				break;
-			case 'edit':
-				$this->edit();
-				break;
-			case 'del':
-				$this->del();
-				break;
-			case 'view':
-				$this->view();
-				break;
-			case '':
-				$this->view();
-				break;
-			default:
-				$this->error(__LINE__, 1);
+			switch($this->get_arr['action'])
+			{
+				case 'new':
+					$this->add();
+					break;
+				case 'edit':
+					$this->edit();
+					break;
+				case 'del':
+					$this->del();
+					break;
+				case 'view':
+					$this->view(15);
+					break;
+				case '':
+					$this->view(15);
+					break;
+				default:
+					$this->error(__LINE__, 1);
+			}
+		} 
+		else 
+		{
+			$this->view(15);
 		}
 	}
-	
+
 	public function gettplfile()
 	{
 		return $this->tplfile;
 	}
-	
-	private function view()
+
+	private function view($max_entries_pp)
 	{
 		$this->tplfile = 'news.tpl';
 		$news_array = array();
-		$this->mysql->query('SELECT * FROM `news` ORDER BY `news_time` DESC LIMIT 30');
-		$news_array = $this->mysql->get_records();
-		$this->smarty->assign($smarty_array); //!!depressed!!
+		$this->mysql->query('SELECT *, DATE_FORMAT(`news_time`, \'%e.%m.%Y %k:%i\') AS `news_time` FROM `news` ORDER BY `news_time` DESC LIMIT '.$max_entries_pp);
+
+		$data_array = $this->mysql->get_records();
+		$this->mysql->query('SELECT COUNT(*) FROM `news` WHERE `news_ref_ID` = \'0\'');
+		
+		//Kommentaere nicht beachtet und ganzer code uebermittelt
+		$this->smarty->assign('newsarray', $data_array);
 		
 		
+
 	}
-	
+
 	private function add()
 	{
 		;
 	}
-	
+
 	private function edit()
 	{
 		;
 	}
-	
+
 	private function del()
 	{
 		;
 	}
-	
+
 	private function error($line, $errorcode)
 	{
 		$this->tplfile = 'news-error.tpl';
 		$errortext = "";
 		$errortitle = "";
-		
+
 		switch($errorcode)
 		{
 			case 1:
@@ -99,11 +110,11 @@ class news implements Module
 				$errortitle = "allgemeiner Fehler";
 				$errortext = "Sie haben irgendwie ein Fehler verursacht, ich weiss aber auch nicht wie. W&auml;re nett, wenn sie mir das erkl&auml;en k&ouml;nnten.<br />\nInfo: Fehler auf Zeile $line";
 		}
-		
+
 		$this->smarty->assign(array('title' => $errortitle, 'error' => $errortext));
-		
+
 	}
-	
+
 }
 
 ?>

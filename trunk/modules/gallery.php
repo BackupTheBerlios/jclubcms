@@ -2,19 +2,19 @@
 
 /**
  * @package JClubCMS
- * @author Simon Däster
+ * @author Simon Dï¿½ster
  * File: gallery.php
  * Classes: none
  * Requieres: PHP5
  *
  *
- * Dieses Modul ist für die Gallery zuständig, die Anzeige von Bildern
+ * Dieses Modul ist fï¿½r die Gallery zustï¿½ndig, die Anzeige von Bildern
  *in den verschiedenen Alben und richtigen Reihenfolge
  *
- * Sie ist _NICHT_ zuständig für die Administration des Gallery
+ * Sie ist _NICHT_ zustï¿½ndig fï¿½r die Administration des Gallery
  * 
  * INFO:
- * GALLERY IN GALLERY WIRD NOCH NICHT UNTERSTÜTZT
+ * GALLERY IN GALLERY WIRD NOCH NICHT UNTERSTï¿½TZT
  */
 
 require_once("./admin/lib/pagesnav.class.php");
@@ -24,8 +24,8 @@ $gallery = isset($_GET['gallery']) ? ((int) $_GET['gallery']) : false;
 $bild = isset($_GET['bild']) ? ((int) $_GET['bild']) : false;
 $page = isset($_GET['page']) ? ((int) $_GET['page']) : 0;
 
-		//Smarty - Header-Titel
-		$content_title .= "Gallery";
+//Smarty - Header-Titel
+$content_title .= "Gallery";
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 //******************* If-Abragen ******************* /
@@ -36,7 +36,7 @@ if($gallery) {
 	$bildproseite = (int)($gallery_pics_x * $gallery_pics_y);
 	$start = (int)($page*$bildproseite);
 
-	//Anzahl Einträge
+	//Anzahl Eintraege
 	$mysql->query("SELECT * FROM gallery_eintraege WHERE fid_album = '$gallery'");
 	$number = $mysql->num_rows();
 
@@ -47,7 +47,7 @@ if($gallery) {
 	$gallery_name = $items_array[0];
 
 
-	//Einträge abrufen
+	//Eintraege abrufen
 	$mysql->query("SELECT gallery_eintraege.fid_bild FROM `gallery_eintraege`,`gallery_alben`
 					WHERE gallery_alben.ID = '$gallery' AND gallery_eintraege.fid_album = '$gallery'
 					ORDER BY gallery_eintraege.sequence
@@ -66,42 +66,42 @@ if($gallery) {
 
 
 	//Gab es einen Mysql-Fehler??
-	if($error = $mysql->get_error())
+	/*if($error = $mysql->get_error())
 	{
-		$smarty->assign("feedback_title", "<b>Mysql-Fehler</b>");
-		$smarty->assign("feedback_content", "Fehlernummer: {$error[0]}<br />\nFehlertext: {$error[1]}");
-		$mod_tpl = "feedback.tpl";
+	$smarty->assign("feedback_title", "<b>Mysql-Fehler</b>");
+	$smarty->assign("feedback_content", "Fehlernummer: {$error[0]}<br />\nFehlertext: {$error[1]}");
+	$mod_tpl = "feedback.tpl";
 
-	} else {
+	} else {*/
 
-		//Die Menu_ID finden für image.php
-		$mysql->query("Select modules_ID from modules Where modules_name = 'image.php'");
-		$imgMod_ID =  implode("",$mysql->fetcharray("num"));
-		$mysql->query("SELECT menu_ID FROM `menu` where menu_pagetyp = 'mod' And menu_page = $imgMod_ID");
-		$img_ID =  implode("",$mysql->fetcharray("num"));
-		$smarty->assign("img_link", $img_ID);
+	//Die Menu_ID finden fuer image.php
+	$mysql->query("Select modules_ID from modules Where modules_name = 'image.php'");
+	$imgMod_ID =  implode("",$mysql->fetcharray("num"));
+	$mysql->query("SELECT menu_ID FROM `menu` where menu_pagetyp = 'mod' And menu_page = $imgMod_ID");
+	$img_ID =  implode("",$mysql->fetcharray("num"));
+	$smarty->assign("img_link", $img_ID);
 
-		$microtime = microtime()-$microtime;
-		$microtime=round($microtime, 3);
-		//Smarty-Variablen belegen
-		
-		$smarty->assign("generated_time", $microtime);
-		$smarty->assign("thispage", $page+1);
-		$smarty->assign("pages", $pages_array);
-		$smarty->assign("number", $number);
-		$smarty->assign("gal_ID", $gallery);
-		$smarty->assign("gallery_name", $gallery_name);
-		$smarty->assign("breakline", $gallery_pics_x);
-		$smarty->assign("bild_ID", $bild_ID);
-		$smarty->assign("local_link", $nav_id);
-		$mod_tpl = "gallery_album.tpl";
-		
-		//Smarty - Header-Titel
-		$content_title .= " - $gallery_name";
-	}
+	$microtime = microtime()-$microtime;
+	$microtime=round($microtime, 3);
+	//Smarty-Variablen belegen
+
+	$smarty->assign("generated_time", $microtime);
+	$smarty->assign("thispage", $page+1);
+	$smarty->assign("pages", $pages_array);
+	$smarty->assign("number", $number);
+	$smarty->assign("gal_ID", $gallery);
+	$smarty->assign("gallery_name", $gallery_name);
+	$smarty->assign("breakline", $gallery_pics_x);
+	$smarty->assign("bild_ID", $bild_ID);
+	$smarty->assign("local_link", $nav_id);
+	$mod_tpl = "gallery_album.tpl";
+
+	//Smarty - Header-Titel
+	$content_title .= " - $gallery_name";
+	//}
 
 
-	
+
 	/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 	/*-*-*-*-*-*-*-*-*-*-*-*-*-*Bild-Ansicht-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 	/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
@@ -116,19 +116,19 @@ if($gallery) {
 	$album_ID = $shown_bild['fid_album'];
 	$bild_sequence = (int)$shown_bild['sequence'];
 
-	
-	//Das vordere Bild 
-	$mysql->query("SELECT fid_bild FROM `gallery_eintraege` WHERE sequence < $bild_sequence and fid_album = '$album_ID' 
+
+	//Das vordere Bild
+	$mysql->query("SELECT fid_bild FROM `gallery_eintraege` WHERE sequence < $bild_sequence and fid_album = '$album_ID'
 	ORDER BY sequence DESC Limit 1");
 	$prev_bild = $mysql->fetcharray("assoc");
-	
-	//Das hintere Bild 
-	$mysql->query("SELECT fid_bild FROM `gallery_eintraege` WHERE sequence > $bild_sequence and fid_album = '$album_ID' 
+
+	//Das hintere Bild
+	$mysql->query("SELECT fid_bild FROM `gallery_eintraege` WHERE sequence > $bild_sequence and fid_album = '$album_ID'
 	ORDER BY sequence ASC Limit 1");
 	$next_bild = $mysql->fetcharray("assoc");
 
-	
-	//Die Menu_ID finden für image.php und an Smarty weitergeben
+
+	//Die Menu_ID finden fï¿½r image.php und an Smarty weitergeben
 	$mysql->query("Select modules_ID from modules Where modules_name = 'image.php'");
 	$imgMod_ID =  implode("",$mysql->fetcharray("num"));
 	$mysql->query("SELECT menu_ID FROM `menu` where menu_pagetyp = 'mod' And menu_page = $imgMod_ID");
@@ -148,11 +148,11 @@ if($gallery) {
 	$smarty->assign("next_bild", $next_bild['fid_bild']);
 
 	$mod_tpl = "gallery_pic.tpl";
-	
+
 	$content_title = " - Bild $bild";
-	
-	
-	
+
+
+
 
 	/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 	/*-*-*-*-*-*-*-*-*-*-*-*-*-*-Alben-Ansich*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/

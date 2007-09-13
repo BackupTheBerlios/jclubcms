@@ -57,7 +57,9 @@ class Auth
 				//echo "Auth->check4login(): Login-Daten vorhanden als Array<br />\n";
 				//Benutzername und Passwort �berpr�fen
 				$mysql->query("SELECT `user_ID` FROM  `admin_users` WHERE `user_name` = '{$login_data['name']}' AND `user_pw` = '{$login_data['password_encrypted']}' LIMIT 1");
+				
 				$data = $mysql->fetcharray();
+				
 				//echo "Auth->check4login(): Variable USER_ID: {$data[0]}<br />\n";
 				if(is_numeric($data[0]))
 				{
@@ -69,10 +71,9 @@ class Auth
 					$this->user_id = $data[0];
 					
 					//echo "Auth->check4login(): Create-Session() wird aufgerufen<br />\n";
-					if($session->create_session($data[0]))
-					{
-						//echo "Session wurde erfolreich erstellt";
-					}
+					$session->create_session($data[0]);
+					
+					
 					
 					
 					$smarty->assign(array('forward_title' => $auth_forward_title, 'forward_text' => $auth_forward_successlogin, 'forward_linktext' => $auth_forward_linktext, 'forward_link' => $_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']."?".$session->get_sessionstring()));
@@ -125,7 +126,7 @@ class Auth
 		{
 			//echo "Auth->check4user(): Keine Session vorhanden<br />\n";
 			
-			$smarty->assign('file', $_SERVER['PHP_SELF']);
+			$smarty->assign('file', 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']);
 			$smarty->display('login.tpl');
 			return false;
 		} 
@@ -159,8 +160,10 @@ class Auth
 	public function logout()
 	{
 		$this->session->delete();
-		$this->smarty->assign('error_text', "Sie haben sich erfolgreich ausgeloggt");
-		$this->smarty->display('error.tpl');
+		$this->smarty->assign('forward_text', "Sie haben sich erfolgreich ausgeloggt");
+		$this->smarty->assign('forward_linktext', "Zum Login");
+		$this->smarty->assign('forward_link', $_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']);
+		$this->smarty->display('forward.tpl');
 			
 	}
 	/**
