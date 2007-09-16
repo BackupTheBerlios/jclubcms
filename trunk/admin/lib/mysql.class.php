@@ -327,5 +327,11 @@ class mysql {
 		$this->result = null;
 
 	}
+	
+	private function _logError($function, $line, $msg)
+	{
+		$this->_errorexists = true;
+		$this->_error = array('function' => $function, 'line' => $line, 'msg' => $msg);
+	}
 
 };

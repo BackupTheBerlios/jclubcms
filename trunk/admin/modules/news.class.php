@@ -9,6 +9,7 @@
  */
 
 require_once(ADMIN_DIR.'lib/module.interface.php');
+require_once ADMIN_DIR.'lib/messageboxes.class.php';
 
 class news implements Module
 {
@@ -48,6 +49,8 @@ class news implements Module
 				case '':
 					$this->view(15);
 					break;
+				case 'tesst':
+					$this->msboxtest();
 				default:
 					$this->error(__LINE__, 1);
 			}
@@ -61,6 +64,14 @@ class news implements Module
 	public function gettplfile()
 	{
 		return $this->tplfile;
+	}
+	
+	private function msboxtest()
+	{
+		$msbox = new MessageBoxes($this->mysql, 'news', array('ID' => 'news_ID', 'ref_ID' => 'news_ref_ID', 'content' => 'news_content'));
+		debugecho(debug_backtrace(),"Fehler da?: ".var_export($msbox->isError(),1));
+		
+		debugecho(debug_backtrace(),"Fehler bei Tabelle:<br />\n".var_export($msbox->getError(),1));	
 	}
 
 	private function view($max_entries_pp)
