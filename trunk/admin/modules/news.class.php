@@ -51,11 +51,12 @@ class news implements Module
 					break;
 				case 'tesst':
 					$this->msboxtest();
+					break;
 				default:
 					$this->error(__LINE__, 1);
 			}
-		} 
-		else 
+		}
+		else
 		{
 			$this->view(15);
 		}
@@ -65,13 +66,20 @@ class news implements Module
 	{
 		return $this->tplfile;
 	}
-	
+
 	private function msboxtest()
 	{
+		$this->tplfile = 'login.tpl';
 		$msbox = new MessageBoxes($this->mysql, 'news', array('ID' => 'news_ID', 'ref_ID' => 'news_ref_ID', 'content' => 'news_content'));
 		debugecho(debug_backtrace(),"Fehler da?: ".var_export($msbox->isError(),1));
+
+		if ($msbox->isError()) {
+			$this->error(__LINE__, array('title' => 'Fehler in Messagebox', 'text' => var_export($msbox->isError(),1)));
+		}
+
+		debugecho(debug_backtrace(),"Fehler bei Tabelle:<br />\n".var_export($msbox->getError(),1));
 		
-		debugecho(debug_backtrace(),"Fehler bei Tabelle:<br />\n".var_export($msbox->getError(),1));	
+		$msbox->addEntry(array('ID' => '', 'ref_ID' => '', 'content' => 'Hallo und herzlich Willkommen'));
 	}
 
 	private function view($max_entries_pp)
@@ -82,11 +90,11 @@ class news implements Module
 
 		$data_array = $this->mysql->get_records();
 		$this->mysql->query('SELECT COUNT(*) FROM `news` WHERE `news_ref_ID` = \'0\'');
-		
+
 		//Kommentaere nicht beachtet und ganzer code uebermittelt
 		$this->smarty->assign('newsarray', $data_array);
-		
-		
+
+
 
 	}
 
@@ -107,23 +115,35 @@ class news implements Module
 
 	private function error($line, $errorcode)
 	{
-		$this->tplfile = 'news-error.tpl';
+		$this->tplfile = 'error_include.tpl';
 		$errortext = "";
 		$errortitle = "";
 
-		switch($errorcode)
-		{
-			case 1:
-				$errortitle = "Falsche URL-Parameter";
-				$errortext = "Sie haben falsche URL-Parameter weitergegeben. Daher konnte keine entsprechende Aktion ausgef&uuml;fr werden<br />\nInfo: Fehler auf Zeile $line";
-				break;
-			default:
-				$errortitle = "allgemeiner Fehler";
-				$errortext = "Sie haben irgendwie ein Fehler verursacht, ich weiss aber auch nicht wie. W&auml;re nett, wenn sie mir das erkl&auml;en k&ouml;nnten.<br />\nInfo: Fehler auf Zeile $line";
+		if (is_numeric($errorcode)) {
+
+			switch($errorcode)
+			{
+				case 1:
+					$errortitle = "Falsche URL-Parameter";
+					$errortext = "Sie haben falsche URL-Parameter weitergegeben. Daher konnte keine entsprechende Aktion ausgef&uuml;fr werden<br />\nInfo: Fehler auf Zeile $line";
+					break;
+				default:
+					$errortitle = "allgemeiner Fehler";
+					$errortext = "Sie haben irgendwie ein Fehler verursacht, ich weiss aber auch nicht wie. W&auml;re nett, wenn sie mir das erkl&auml;en k&ouml;nnten.<br />\nInfo: Fehler auf Zeile $line";
+			}
+
+			
+		} elseif (is_array($errorcode)) {
+			$errortitle = $errorcode['title'];
+			$errortext = $errorcode['text'];
+		} else {
+			$errortitle = "Fehler";
+			$errortext = "Sie oder das Skript haben ein Fehler verursacht. Die Aktion wurde daher abgebrochen<br />\nInfo: Fehler auf Zeile $line";
 		}
-
-		$this->smarty->assign(array('title' => $errortitle, 'error' => $errortext));
-
+		
+		
+		
+		$this->smarty->assign(array('error_title' => $errortitle, 'error_text' => $errortext));
 	}
 
 }

@@ -136,7 +136,7 @@ class Auth
 			//echo "Auth->check4user(): Session korrupt<br />\n";
 			$session->delete();
 			$smarty->assign('error_text', $auth_error_sessioncorupt);
-			$smarty->display('error.tpl');
+			$smarty->display('error_alone.tpl');
 			
 			return false;
 		}
@@ -147,7 +147,7 @@ class Auth
 			$session->delete();
 			
 			$smarty->assign('error_text', $auth_error_nonactiv);
-			$smarty->display('error.tpl');
+			$smarty->display('error_alone.tpl');
 			
 			return false;
 		}

@@ -1,19 +1,19 @@
 <?php
 /**
- * @author David Däster und Simon Däster
+ * @author David Dï¿½ster und Simon Dï¿½ster
  * @package JClubCMS
- * Dieses Modul ist für die Anzeige des Gästebuches verantwortlich,
- * für die Naviagtion im Gästebuch, und auch noch für das Erstellen
- * der Einträge.
+ * Dieses Modul ist fï¿½r die Anzeige des Gï¿½stebuches verantwortlich,
+ * fï¿½r die Naviagtion im Gï¿½stebuch, und auch noch fï¿½r das Erstellen
+ * der Eintrï¿½ge.
  *
- * Sie ist _NICHT_ zuständig für die Administration des Gästebuches
+ * Sie ist _NICHT_ zustï¿½ndig fï¿½r die Administration des Gï¿½stebuches
  */
 
 /**
  * TEST
- * Bei Fehlern gelangt man nicht mithilfe von JavaScript:history.back() zurück zum Eintragen, 
- * sondern über einen anderen Link.
- * Eingegebene Felder werden übernommen.
+ * Bei Fehlern gelangt man nicht mithilfe von JavaScript:history.back() zurï¿½ck zum Eintragen, 
+ * sondern ï¿½ber einen anderen Link.
+ * Eingegebene Felder werden uebernommen.
  */
 require_once(USER_DIR.'config/gbook_textes.inc.php');
 require_once(USER_DIR.'config/mail_textes.inc.php');
@@ -23,11 +23,11 @@ require_once(ADMIN_DIR.'lib/captcha.class.php');
 require_once(ADMIN_DIR.'lib/smilies.class.php');
 require_once(ADMIN_DIR.'lib/bbcodes.class.php');
 /**
- * Es gibt 4 Actionen, die getrennt ausgeführt werden.
- * 1. New: Ein neuer Eintrag in das Gästebuch
+ * Es gibt 4 Actionen, die getrennt ausgefï¿½hrt werden.
+ * 1. New: Ein neuer Eintrag in das Gï¿½stebuch
  * 2. Comment: Einen Kommentar zu einem bestehenden Eintrag
  * 3. mail: Versenden von Mails an die Authoren
- * 4. default: Ansehen des Gästebuches.
+ * 4. default: Ansehen des Gï¿½stebuches.
  */
 
 $action = "";
@@ -52,7 +52,7 @@ $smilies_mysql = new mysql($db_server, $db_name, $db_user, $db_pw);
 
 switch ($action) {
 	/**
-         * Einen neuen Eintrag erstellen in das Gästebuch.
+         * Einen neuen Eintrag erstellen in das Gï¿½stebuch.
          */
 	case "new":
 
@@ -125,7 +125,7 @@ switch ($action) {
 			}
 			else {
 				/**
-                                 * Wenn die angegebene HP nicht verändert wurde, soll der Eintrag leer sein.
+                                 * Wenn die angegebene HP nicht veraendert wurde, soll der Eintrag leer sein.
                                  */
 				if ($hp == $gbook_entry_hp) {
 					$hp = "";
@@ -163,7 +163,7 @@ switch ($action) {
 
 		}
 		else {
-			/* Auslesen der Navigations_Id für das Captcha-Modul*/
+			/* Auslesen der Navigations_Id fï¿½r das Captcha-Modul*/
 			$mysql->query("SELECT menu_ID FROM `menu`, modules WHERE modules.modules_ID = menu.menu_page
                         and modules.modules_name = 'captcha_image.php' and menu.menu_pagetyp = 'mod'");
 			$captcha_id = $mysql->fetcharray("num");
@@ -191,7 +191,7 @@ switch ($action) {
 		
 		/**
          * Erstellt einen Kommentar zu einem bestehenden Eintrag.
-         * Als Referenz wird immer der Haupteintrag genommen, um so effizient zusammenhängende Beiträge zu suchen.
+         * Als Referenz wird immer der Haupteintrag genommen, um so effizient zusammenhï¿½ngende Beitrï¿½ge zu suchen.
          * 
          * Weiter wird auch der zu kommentierende Beitrag mit allen Kommentare nochmal angezeigt,
          * um sich den Text besser zurecht zu legen.
@@ -224,7 +224,7 @@ switch ($action) {
                          * - Einen Text
                          * - Einen Namen
                          * - eine EMail-Adresse
-                         * |- EMail-Validator prüfen
+                         * |- EMail-Validator prï¿½fen
                          */
 
 			$formular_check = new formular_check();
@@ -271,7 +271,7 @@ switch ($action) {
 				//HP-Check
 				//Sichern
 				/**
-                                 * Wenn die angegebene HP nicht verändert wurde, soll der Eintrag leer sein.
+                                 * Wenn die angegebene HP nicht verï¿½ndert wurde, soll der Eintrag leer sein.
                                  */
 				if ($hp == $gbook_entry_hp) {
 					$hp = "";
@@ -303,13 +303,13 @@ switch ($action) {
 		}
 		else {
 			/**
-                         * Hier befindet man sich, wenn der Kommentieren-Link vom Gästebuch aufgerufen
+                         * Hier befindet man sich, wenn der Kommentieren-Link vom Gï¿½stebuch aufgerufen
                          * wurde.
-                         * Hier wird der Gästebucheintrag ausgelesen, nochmal ausgegeben, entweder
+                         * Hier wird der Gï¿½stebucheintrag ausgelesen, nochmal ausgegeben, entweder
                          * unterhalb oder oberhalb des Formulars.
                          */
 
-			/* Auslesen der Navigations_Id für das Captcha-Modul*/
+			/* Auslesen der Navigations_Id fï¿½r das Captcha-Modul*/
 			$mysql->query("SELECT menu_ID FROM `menu`, modules WHERE modules.modules_ID = menu.menu_page
                         and modules.modules_name = 'captcha_image.php' and menu.menu_pagetyp = 'mod'");
 			$captcha_id = $mysql->fetcharray("num");
@@ -328,8 +328,8 @@ switch ($action) {
 			while ($main_entries = $mysql->fetcharray()) {
 
 				/**
-                                * Für die Kommentare wird ein eigenes Array gebraucht, welches unten
-                                * abgefüllt wird.
+                                * Fï¿½r die Kommentare wird ein eigenes Array gebraucht, welches unten
+                                * abgefï¿½llt wird.
                                 * Dieses Array wird nachher in das $gbook_array=>comments gelegt, und
                                 * nachher an Smarty weitergereicht.
                             */
@@ -352,7 +352,7 @@ switch ($action) {
 				}
 
 				/**
-                                * $gbook_array beinhaltet alle Daten der Gästebucheinträge und deren
+                                * $gbook_array beinhaltet alle Daten der Gï¿½stebucheintrï¿½ge und deren
                                 * Kommentare (comments=>$comment_array) der angezeigten Seite
                                 * 
                                 * Smarty liest nachher das Array mit Hilfe von {foreach} aus
@@ -396,7 +396,7 @@ switch ($action) {
 		}
 		break;
 		/**
-         * Ist die Mail-Funktion speziell für das Gästebuch.
+         * Ist die Mail-Funktion speziell fï¿½r das Gï¿½stebuch.
          * @uses mail_send.class.php
          */
 	case "mail":
@@ -503,7 +503,7 @@ switch ($action) {
 			$mod_tpl = "feedback.tpl";
 		}
 		else {
-			/* Auslesen der Navigations_Id für das Captcha-Modul*/
+			/* Auslesen der Navigations_Id fï¿½r das Captcha-Modul*/
 			$mysql->query("SELECT menu_ID FROM `menu`, modules WHERE modules.modules_ID = menu.menu_page
                         and modules.modules_name = 'captcha_image.php' and menu.menu_pagetyp = 'mod'");
 			$captcha_id = $mysql->fetcharray("num");
@@ -528,11 +528,11 @@ switch ($action) {
 		$comments_mysql->disconnect();
 		break;
 		/**
-         * Liest alle Beiträge aus dem Gästebuch aus.
-         * Zuerst werden nur die Haupteinträge ausgelesen, und nachher Rekursiv die
-         * dazugehörigen Kommentare.
+         * Liest alle Beitrï¿½ge aus dem Gï¿½stebuch aus.
+         * Zuerst werden nur die Haupteintrï¿½ge ausgelesen, und nachher Rekursiv die
+         * dazugehï¿½rigen Kommentare.
          * 
-         * Abgefüllt werden die Daten alle in ein Array, welches an Smarty weitergegeben
+         * Abgefï¿½llt werden die Daten alle in ein Array, welches an Smarty weitergegeben
          * wird, und die Daten nachher ausgibt.
          */
 	default:
@@ -585,7 +585,7 @@ switch ($action) {
 			}
 
 			/**
-                        * $gbook_array beinhaltet alle Daten der Gästebucheinträge und deren
+                        * $gbook_array beinhaltet alle Daten der Gï¿½stebucheintrï¿½ge und deren
                         * Kommentare (comments=>$comment_array) der angezeigten Seite
                         * 
                         * Smarty liest nachher das Array mit Hilfe von {foreach} aus
@@ -617,7 +617,7 @@ switch ($action) {
 		$pages_nav->__destruct();
 
 				/**
-                 * Array der Seiten, wobei der Text immer eines höher ist als der Link.
+                 * Array der Seiten, wobei der Text immer eines hï¿½her ist als der Link.
                  * Page 0 = Seite 1; Page 1 = Seite 2;
         		 */
 

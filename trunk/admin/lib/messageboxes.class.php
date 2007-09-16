@@ -101,16 +101,33 @@ class MessageBoxes {
 		$keys = array_keys($tabledata);
 		$num = count($tabledata);
 
-		NSERT INTO `jclubbeta`.`test` (`ID`, `name`, `text`, `time`, `test`) VALUES (NULL, 'asdf4845asdf',
+		//INSERT INTO `jclubbeta`.`test` (`ID`, `name`, `text`, `time`, `test`) VALUES (NULL, 'asdf4845asdf', '','','')
 		
 		$i = 1;
 		foreach($tabledata as $key => $value) {
 			$sql .= "`{$this->_tablestruct[$key]}`";
 			if ($i != $num) {
-				$sql .= " , ";
+				$sql .= ", ";
 			}
 			$i++;
 		}
+		
+		$sql .= ") VALUES (";
+		
+		$i = 1;
+		foreach ($tabledata as $value) {
+			$sql .= "'".htmlspecialchars($value)."'";
+			if ($i != $num) {
+				$sql .= ", ";
+			}
+			$i++;
+		}
+		
+		$sql .= ")";
+		
+		debugecho(debug_backtrace(), "SQL: $sql");
+		
+		//$this->_mysql->query($sql);
 	}
 	
 	

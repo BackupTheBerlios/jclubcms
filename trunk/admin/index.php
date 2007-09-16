@@ -89,11 +89,11 @@ $paraGetPost = array("GET" => $_GET, "POST" => $_POST);
 $mysql->query("SELECT `menu_pagetyp`, `menu_page` FROM `admin_menu` WHERE `menu_ID`= '{$nav_array['nav_id']}'");
 $data = $mysql->fetcharray("assoc");
 
-if($data['menu_pagetyp'] == "mod")
-{
+if ($data['menu_pagetyp'] == "mod") {
 	$mysql->query("SELECT `modules_name` FROM `admin_modules` WHERE `modules_ID`= '{$data['menu_page']}'");
 	$data = $mysql->fetcharray("assoc");
-	if(!empty($data))
+	
+	if (!empty($data) && $data !== false)
 	{
 		$path = ADMIN_DIR.'modules/'.$data['modules_name'];
 		$split = explode(".", $data['modules_name']);
@@ -108,23 +108,25 @@ if($data['menu_pagetyp'] == "mod")
 
 		} else {
 			$content_text = "Datei $path konnte nicht included werden!!!<br />\n";
-			$smarty_array += array('content_title' => 'Fehler beim Modulladen', 'content_text' => $content_text, 'file' => 'main.tpl');
+			$smarty_array += array('error_title' => 'Fehler beim Modulladen', 'error_text' => $content_text, 'file' => 'error_include.tpl');
 		}
-	}
-	else 
-	{
+	} else {
 		$content_text = "Modul nicht vorhanden!!!<br />\n";
-		$smarty_array += array('content_title' => 'Modul nicht vorhanden', 'content_text' => $content_text, 'file' => 'main.tpl');
+		$smarty_array += array('error_title' => 'Modul nicht vorhanden', 'error_text' => $content_text, 'file' => 'error_include.tpl');
 
 	}
-}
-elseif($data['menu_pagetyp'] == "pag")
-{
+	
+} elseif ($data['menu_pagetyp'] == "pag") {
 	$mysql->query("SELECT `content_title`, `content_text` FROM `admin_content` WHERE `content_ID` = {$data['menu_page']}");
 	$data = $mysql->fetcharray("assoc");
 	$content_title = $data['content_title'];
-	$content_text = $data['content_text'];
-	$smarty_array[] = array('content_title' => $content_title, 'content_text' => $content_text);
+	$content_text = $data['content_text'];	
+	$smarty_array += array('content_title' => $content_title, 'content_text' => $content_text);
+	
+} else {
+		$content_text = "Modul nicht vorhanden!!!<br />\n";
+		$smarty_array += array('error_title' => 'Modul nicht vorhanden', 'error_text' => $content_text, 'file' => 'error_include.tpl');
+
 }
 
 $smarty_array += array('topnav' => $nav_array['topnav'], 'subnav' => $nav_array['subnav'], 'local_link' => $nav_array['nav_id']);
