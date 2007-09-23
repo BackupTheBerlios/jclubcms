@@ -18,7 +18,7 @@
 require_once(USER_DIR.'config/gbook_textes.inc.php');
 require_once(USER_DIR.'config/mail_textes.inc.php');
 require_once(ADMIN_DIR.'lib/pagesnav.class.php');
-require_once(ADMIN_DIR.'lib/formular_check.class.php');
+require_once(ADMIN_DIR.'lib/formularcheck.class.php');
 require_once(ADMIN_DIR.'lib/captcha.class.php');
 require_once(ADMIN_DIR.'lib/smilies.class.php');
 require_once(ADMIN_DIR.'lib/bbcodes.class.php');
@@ -78,7 +78,7 @@ switch ($action) {
                          * - Einen Namen
                          * - eine EMail-Adresse
                          */
-			$formular_check = new formular_check();
+			$formular_check = new FormularCheck();
 			$failer_return = 0;
 			$feedback_content = "";
 
@@ -227,7 +227,7 @@ switch ($action) {
                          * |- EMail-Validator pr�fen
                          */
 
-			$formular_check = new formular_check();
+			$formular_check = new FormularCheck();
 			$failer_return = 0;
 			$feedback_content = "";
 
@@ -418,7 +418,7 @@ switch ($action) {
 
 
 		if($button_click == "Senden") {
-			$formular_check = new formular_check();
+			$formular_check = new FormularCheck();
 			$failer_return = 0;
 			$feedback_content = "";
 
@@ -559,21 +559,23 @@ switch ($action) {
 		$number_of_entry = $number - $start_entry;
 
 		$mysql->query("SELECT * FROM `gbook` WHERE gbook_ref_ID = 0 ORDER BY `gbook_time` DESC LIMIT $start_entry, $gbook_entries_per_page");
+		//debugecho(__LINE__, __FILE__, __FUNCTION__, __CLASS__, "Nach <b>1.</b>While-Schlaufe<br />\n \$sql SELECT * FROM `gbook` WHERE gbook_ref_ID = 0 ORDER BY `gbook_time` DESC LIMIT $start_entry, $gbook_entries_per_page");
 		$gbook_array = array();
 		$i = 0;
-		while ($main_entries = $mysql->fetcharray()) {
+		while ($main_entries = $mysql->fetcharray('assoc')) {
 			/**
                          * Hier kommt ein Kommentar
                          */
 			//$com_mysql = clone $mysql;
-
-			$comments_mysql->query("SELECT * FROM `gbook` WHERE gbook_ref_ID = $main_entries[gbook_ID] ORDER BY `gbook_time`ASC");
+			
+			//debugecho(debug_backtrace(), "\$main_entries ".var_export($main_entries, 1));	
+			$comments_mysql->query("SELECT * FROM `gbook` WHERE gbook_ref_ID = {$main_entries['gbook_ID']} ORDER BY `gbook_time`ASC");
 			$comment_array = array();
 			$j = 0;
-			while ($comment_entries = $comments_mysql->fetcharray()) {
-							
+			while ($comment_entries = $comments_mysql->fetcharray('assoc')) {	
 				$comment_ID = $comment_entries["gbook_ID"];
 				$comment_title = htmlentities($comment_entries["gbook_title"]);
+				
 				$comment_content = $bbcodes->replace_bbcodes($comment_entries["gbook_content"]);
 				$comment_content = $smilies->show_smilie(nl2br(htmlentities($comment_content)), $smilies_mysql);
 				$comment_name = htmlentities($comment_entries["gbook_name"]);
@@ -582,6 +584,7 @@ switch ($action) {
 
 				$comment_array[$j] = array('comment_ID'=>$comment_ID, 'comment_title'=>$comment_title, 'comment_content'=>$comment_content, 'comment_name'=>$comment_name, 'comment_email'=>$comment_ID, 'comment_hp'=>$comment_hp, 'comment_time'=>$comment_time);
 				$j++;
+
 			}
 
 			/**

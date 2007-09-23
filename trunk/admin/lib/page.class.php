@@ -86,7 +86,7 @@ class Page
 
 		$i = 1;
 		$id = $nav_id;
-		$top_id = 0;
+		$top_id = array();
 
 		//Top-IDs herauslesen, damit die rekursive Funktion richtig arbeiten kann, um subnav-Array zu erstellen
 		do {
@@ -110,15 +110,13 @@ class Page
 		//echo "In get_shortlinksmenu_array: <pre>".print_r($topid_array, 1)."</pre> <br />\n";
 
 		//Funktion aufrufen, damit subnav-Array erstellt wird
-		$this->build_subnav_array($table_name, $topid_array, &$menu_array['subnav']);
+		$this->build_subnav_array($table_name, $topid_array, $menu_array['subnav']);
 
 		//topnav-Array erstellen
 		$this->mysql->query("SELECT `menu_ID`, `menu_name`, `menu_image`, `menu_modvar` FROM `$table_name` WHERE `menu_topid` = '0' AND `menu_display` != '0' AND menu_shortlink = '1' ORDER BY `menu_position` ASC");
 		$i = 0;
-		while($data = $this->mysql->fetcharray('assoc'))
-		{
-			$menu_array['topnav'][$i++] = $data;
-		}
+		$this->mysql->saverecords('assoc');
+		$menu_array['topnav'] = $this->mysql->get_records();
 
 		return $menu_array;
 	}
@@ -142,7 +140,7 @@ class Page
 
 		$i = 1;
 		$id = $nav_id;
-		$top_id = 0;
+		$top_id = array();
 
 		//Top-IDs herauslesen, damit die rekursive Funktion richtig arbeiten kann, um subnav-Array zu erstellen
 		do {
@@ -168,15 +166,15 @@ class Page
 		}
 
 		//Funktion aufrufen, damit subnav-Array erstellt wird
-		$this->build_subnav_array($table_name, $topid_array, &$menu_array['subnav']);
+		$this->build_subnav_array($table_name, $topid_array, $menu_array['subnav']);
 
 		//topnav-Array erstellen
 		$this->mysql->query("SELECT `menu_ID`, `menu_name`, `menu_modvar` FROM `$table_name` WHERE `menu_topid` = '0' AND `menu_display` != '0' ORDER BY `menu_position` ASC");
 		$i = 0;
-		while($data = $this->mysql->fetcharray('assoc'))
-		{
-			$menu_array['topnav'][$i++] = $data;
-		}
+		
+		$this->mysql->saverecords('assoc');
+		$menu_array['topnav'] = $this->mysql->get_records();
+		
 
 		return $menu_array;
 
@@ -223,7 +221,7 @@ class Page
 
 			if($j < count($topid_array) && $data['menu_ID'] == $topid_array[$j])
 			{
-				$this->build_subnav_array($table_name, $topid_array, &$subnav_array);
+				$this->build_subnav_array($table_name, $topid_array, $subnav_array);
 			}
 
 			next($mysql_array);
@@ -241,13 +239,14 @@ class Page
 	 * Vorher erledigte dies die Klasse pagesnav
 	 *
 	 * @param int $number_entries Anzahl der Eintraege
-	 * @param int $max_entries_pp maximale Anzahl Eintraege pro Siete
+	 * @param int $max_entries_pp maximale Anzahl Eintraege pro Seite
+	 * @param array $get_array Inhalt von $_GET, kontroliert abzugeben
 	 * @return array $pages_array Array der Eintraege
 	 */
 
-	public function get_pagesnav_array($number_entries, $max_entries_pp)
+	public function get_pagesnav_array($number_entries, $max_entries_pp, $get_array)
 	{
-		return self::get_static_pagesnav_array($number_entries, $main_url);
+		return self::get_static_pagesnav_array($number_entries, $max_entries_pp, $get_array);
 	}
 
 
@@ -259,24 +258,35 @@ class Page
 	 *
 	 * @param int $number_entries Anzahl der Eintraege
 	 * @param int $max_entries_pp maximale Anzahl Eintraege pro Siete
+	 * @param array $get_array Inhalt von $_GET, kontroliert abzugeben
 	 * @return array $pages_array Array der Eintraege
 	 */
 
-	public static function get_static_pagesnav_array($number_entries, $max_entries_pp)
+	public static function get_static_pagesnav_array($number_entries, $max_entries_pp, $get_array)
 	{
-		$main_url = $_SERVER['_URI'];
-		$nav_id = $_REQUEST['nav_id'];
-		$page = $_REQUEST['page'];
-		if ($page < 0) {
-			$page = 0;
+		//$main_url = $_SERVER['REQUEST_URI'];
+		$main_url = $_SERVER['PHP_SELF'];
+		$nav_id = $get_array['nav_id'];
+		$page = $get_array['page'];
+		$apendices = "";
+		if ($page < 1) {
+			$page = 1;
 		}
+		
+		foreach ($get_array as $key => $value) {
+			if ($key != 'nav_id' && $key != 'page') {
+				$apendices .= "&$key=$value";
+			}
+		}
+		
 
 		$number_of_pages = $number_entries / $max_entries_pp;
 
 		$pages_array = array();
-		for ($i = 0; $i < $number_of_pages; $i++) {
-			$link = $main_url.'?nav_id='.$nav_id.'&page='.$i;
-			$pages_array[$i] = array('page'=>$i+1, 'link'=>$link);
+		for ($i = 1; $i < ($number_of_pages+1); $i++) {
+			
+			$link = $main_url.'?nav_id='.$nav_id.'&page='.$i.$apendices;
+			$pages_array[$i] = array('page'=>$i, 'link'=>$link);
 		}
 
 		return $pages_array;

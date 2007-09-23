@@ -25,35 +25,35 @@ class mysql {
 	 *
 	 * @var string
 	 */
-	private $mysql_server = null;
+	private $_mysqlserver = null;
 	
 	/**
 	 * Mysql-Datenbank, mit der gearbeitet wird
 	 *
 	 * @var string
 	 */
-	private $mysql_db = null;
+	private $_mysqldb = null;
 	
 	/**
 	 * Name des Mysql-Users
 	 *
 	 * @var string
 	 */
-	private $mysql_user = null;
+	private $_mysqluser = null;
 	
 	/**
 	 * Password des Mysql-Users
 	 *
 	 * @var string
 	 */
-	private $mysql_pw = null;
+	private $_mysqlpw = null;
 	
 	/**
 	 * Gibt an, ob bei einer Mysql-Verbindung mit gleichem Server und User eine neue Verbindung geoeffnet wird oder nicht.
 	 *
 	 * @var boolean
 	 */
-	private $new_c = null;
+	private $_newc = null;
 
 	
 	/**
@@ -61,30 +61,46 @@ class mysql {
 	 *
 	 * @var resource
 	 */
-	private $server_link = null;
+	private $_serverlink = null;
 	
 	/**
 	 * Verbinungserkennung zur Datenbankabfrage
 	 *
 	 * @var resource
 	 */
-	private $result = null;
+	private $_result = null;
 	
 	/**
 	 * Angabe, ob mysql_query() eine resource zurueckgibt. Fast nur bei SELECT, SHOW, DESCRIBE, EXPLAIN.
 	 *
 	 * @var resource
 	 */
-	private $no_result = false;
+	private $_noresult = false;
 	
 	/**
-	 * Array zum speichern von Mysql-Datensaetzen
+	 * Specichern von Mysql-Datensaetzen
 	 *
 	 * @var array
 	 * @access private
 	 */
-	private $query_records = array();
+	private $_queryrecords = array();
+	
+	
+	/**
+	 * Gibt es ein Fehler
+	 *
+	 * @var boolean
+	 */
+	private $_errorexists = false;
 
+	/**
+	 * Speichern des Fehlers
+	 * 
+	 * @var array
+	 */
+	private $_error = array();
+	
+	
 	/**
 	 * Das Konstrukt dieser Klasse
 	 *
@@ -97,12 +113,12 @@ class mysql {
 
 	function __construct($server, $db, $user, $pw, $newcon = true) {
 
-		$this->mysql_server = $server;
-		$this->mysql_db = $db;
-		$this->mysql_user = $user;
-		$this->mysql_pw = $pw;
-		$this->new_c = $newcon;
-		$this->connect();
+		$this->_mysqlserver = $server;
+		$this->_mysqldb = $db;
+		$this->_mysqluser = $user;
+		$this->_mysqlpw = $pw;
+		$this->_newc = $newcon;
+		$this->_connect();
 	}
 
 	/**
@@ -113,19 +129,27 @@ class mysql {
 	 * @return boolean
 	 */
 
-	private function connect() {
+	private function _connect() {
 
-		$this->server_link = mysql_connect($this->mysql_server, $this->mysql_user, $this->mysql_pw, $this->new_c);
-		if(!is_resource($this->server_link)) {
+		$this->_serverlink = mysql_connect($this->_mysqlserver, $this->_mysqluser, $this->_mysqlpw, $this->_newc);
+		
+		if (!is_resource($this->_serverlink)) {
+			$this->_logError(__FUNCTION__, __FILE__, 'Verbindung zum Mysql-Server fehlgeschlagen');
 			return false;
 		}
 
-		if(!mysql_select_db($this->mysql_db, $this->server_link)) {
+		if (!mysql_select_db($this->_mysqldb, $this->_serverlink)) {
+			$this->_logError(__FUNCTION__, __FILE__, 'Verbindung zur Mysql-Datenbank fehlgeschlagen');
 			return false;
 		} else {
 			return true;
 		}
 
+	}
+	
+	public function escapeString($string)
+	{
+		return mysql_real_escape_string($string, $this->_serverlink);
 	}
 
 	/**
@@ -136,11 +160,24 @@ class mysql {
 	 */
 
 	public function query($query) {
+				
+		if ($this->_errorexists) {
+			return false;
+		}
 		
 		//Query-Record loeschen, weil ein neuer Query gestartet wurde
-		$this->query_records = array();
+		$this->_queryrecords = array();
 		$give_result = false;
-				
+		$success = true;
+
+		//Escapen des Queries
+		/*if ($query = mysql_real_escape_string($query, $this->_serverlink)) {
+			$this->_logError(__FUNCTION__, __LINE__, "Escapen des Queries fehlgeschlagen");
+			debugecho(debug_backtrace(), 'Escape-Probleme');
+			return false;
+		}*/
+		
+			
 		//Kontrolliert, ob der query SELECT, SHOW, EXPLAIN oder DESCRIBE enthaelt. Nur dann gibt mysql_query ein result zurück
 		$query_result_by = array('SELECT', 'Select', 'select', 'SHOW', 'Show', 'show', 'EXPLAIN','Explain', 'explain', 'DESCRIBE', 'Describe', 'describe');
 		
@@ -158,21 +195,21 @@ class mysql {
 		if($give_result == true)
 		{
 			//echo "mysql->query: \$query '$query' doesn't contain INSERT<br />\n";
-			$this->result = mysql_query($query, $this->server_link);
+			$this->_result = mysql_query($query, $this->_serverlink);
 			
 		}
 		else
 		{
-			//echo "mysql->query: \$query '$query' contains INSERT<br />\n";
-			mysql_query($query, $this->server_link);
-			$this->no_result = true;
+			
+			$success = mysql_query($query, $this->_serverlink);
+			$this->_noresult = true;
 		
 		}
 		
 		//echo "mysql->query: \$this->result ".print_r($this->result, 1)."<br />\n";
 		//debugecho(__LINE__, __FILE__, __FUNCTION__, __CLASS__);
 
-		if($this->result === false) {
+		if(($this->_noresult == true && $success == false) || ($this->_noresult == false && $this->_result === false)) {
 			return false;			
 		} else {
 			return true;
@@ -189,6 +226,10 @@ class mysql {
 
 	public function fetcharray($resulttype = "both") {
 
+		if ($this->_errorexists) {
+			return false;
+		}
+		
 		switch ($resulttype)
 		{
 			case "num":
@@ -204,12 +245,12 @@ class mysql {
 		}
 
 
-		$data = mysql_fetch_array($this->result, $type);
+		$data = mysql_fetch_array($this->_result, $type);
 
 
 		if(is_array($data)) {
 			return $data;
-		} else {			
+		} else {
 			return false;
 		}
 
@@ -219,16 +260,23 @@ class mysql {
 	 * Speichert der Datensatz/die Datensaetze der letzen Anfrage intern ab.
 	 *
 	 * @param string[optional] $resulttype "both"|"num"|"assoc"
+	 * @return boolean Erfolg
 	 */
 	
 	public function saverecords($resulttype = "assoc")
 	{
+		if ($this->_errorexists) {
+			return false;
+		}
+		
 		$i = 0;
 		while($data = $this->fetcharray($resulttype))
 		{
-			$this->query_records[$i] = $data;
+			$this->_queryrecords[$i] = $data;
 			$i++;
 		}
+		
+		return true;
 	}
 	
 	/**
@@ -239,14 +287,18 @@ class mysql {
 	
 	public function get_records()
 	{
-		if(!empty($this->query_records))
+		if ($this->_errorexists) {
+			return false;
+		}
+		
+		if(!empty($this->_queryrecords))
 		{
-			return $this->query_records;
+			return $this->_queryrecords;
 		}
 		else
 		{
 			$this->saverecords();
-			return $this->query_records;
+			return $this->_queryrecords;
 		}
 	}
 
@@ -256,9 +308,13 @@ class mysql {
 	 * @return int|false
 	 */
 
-	public function num_rows() {
+	public function num_rows() 
+	{
+		if ($this->_errorexists) {
+			return false;
+		}
 		
-		$number = mysql_num_rows($this->result);
+		$number = mysql_num_rows($this->_result);
 		
 		return $number;
 
@@ -270,12 +326,16 @@ class mysql {
 	 * @return int|false
 	 */
 
-	public function affected_rows() {
+	public function affected_rows() 
+	{
+		if ($this->_errorexists) {
+			return false;
+		}
 		
-		if ($this->no_result === true) {
+		if ($this->_noresult === true) {
 			$number = mysql_affected_rows();
 		} else {
-			$number = mysql_affected_rows($this->result);
+			$number = mysql_affected_rows($this->_result);
 		}
 		
 		return $number;
@@ -289,19 +349,18 @@ class mysql {
 	 */
 
 	public function disconnect() {
-		if(!mysql_close($this->server_link))
+		if (!is_resource($this->_serverlink) && !mysql_close($this->_serverlink))
 		{
 			return false;
 		}
 		
 		return true;
-
-		$this->__destruct();
 	}
 	
 	/**
 	 * Ueberschreibung der magischen Methode clone. So werden beim Klonen wichtige Eigenschaften geloescht.
-	 * Ebenfalls wird eine neue Verbindung zum Mysql-Datenbank hergestellt. Beim Klonen wird nämlich der Konstruktor nicht nochmals aufgerufen
+	 * Ebenfalls wird eine neue Verbindung zum Mysql-Datenbank hergestellt. Beim Klonen wird nämlich der Konstruktor 
+	 * nicht nochmals aufgerufen
 	 *
 	 */
 	
@@ -309,7 +368,7 @@ class mysql {
 	{
 		$this->result = null;
 		$this->new_c = true;
-		$this->connect();
+		$this->_connect();
 	}
 
 	/**
@@ -318,20 +377,49 @@ class mysql {
 	 */
 
 	public function __destruct() {
-		$this->mysql_server = null;
-		$this->mysql_db = null;
-		$this->mysql_user = null;
-		$this->mysql_pw = null;
-		$this->new_c = null;
-		$this->server_link = null;
-		$this->result = null;
+		$this->disconnect();
+		$this->_mysqlserver = null;
+		$this->_mysqldb = null;
+		$this->_mysqluser = null;
+		$this->_mysqlpw = null;
+		$this->_newc = null;
+		$this->_serverlink = null;
+		$this->_result = null;
 
 	}
+	
+	/**
+	 * Speichert intern den Fehler
+	 *
+	 * @param string $function Methode/Funktion
+	 * @param string $line Zeile
+	 * @param string $msg Nachricht
+	 */
 	
 	private function _logError($function, $line, $msg)
 	{
 		$this->_errorexists = true;
 		$this->_error = array('function' => $function, 'line' => $line, 'msg' => $msg);
+	}
+	
+	public function isError()
+	{
+		if ($this->_errorexists == true) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	/**
+	 * Gibt ein Array zurueck, welches Ort, Zeile und Nachricht des Fehlers enthaelt
+	 *
+	 * @return array $error
+	 */
+	
+	public function getError()
+	{
+		return $this->_error;
 	}
 
 };

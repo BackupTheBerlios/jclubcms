@@ -27,10 +27,10 @@
  * @author Monte Ohrt <monte at ohrt dot com>
  * @author Andrei Zmievski <andrei@php.net>
  * @package Smarty
- * @version 2.6.16
+ * @version 2.6.18
  */
 
-/* $Id: Smarty.class.php,v 1.526 2006/11/30 17:01:28 mohrt Exp $ */
+/* $Id: Smarty.class.php,v 1.528 2007/03/06 10:40:06 messju Exp $ */
 
 /**
  * DIR_SEP isn't used anymore, but third party apps might
@@ -57,6 +57,12 @@ define('SMARTY_PHP_PASSTHRU',   0);
 define('SMARTY_PHP_QUOTE',      1);
 define('SMARTY_PHP_REMOVE',     2);
 define('SMARTY_PHP_ALLOW',      3);
+
+/**
+ * sets the default timezone. Without this an E_STRICT-Error occurs
+ */
+
+date_default_timezone_set('Europe/Zurich');
 
 /**
  * @package Smarty
@@ -464,7 +470,7 @@ class Smarty
      *
      * @var string
      */
-    var $_version              = '2.6.16';
+    var $_version              = '2.6.18';
 
     /**
      * current template inclusion depth

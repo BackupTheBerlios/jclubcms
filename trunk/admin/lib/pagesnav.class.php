@@ -29,6 +29,7 @@ class pagesnav {
 	 */
 	public function __construct($number_entries, $max_entries_pp) {
 		$this->main_url = $_SERVER['_URI'];
+		
 		$this->nav_id = $_REQUEST['nav_id'];
 		$this->number_entries = $number_entries;
 		$this->max_entries_pp = $max_entries_pp;
@@ -58,6 +59,7 @@ class pagesnav {
 			$link = $this->main_url.'?nav_id='.$this->nav_id.'&page='.$i;
 			$pages_array[$i] = array('page'=>$i+1, 'link'=>$link);
 		}
+		var_dump($pages_array);
 		return $pages_array;
 	}
 	/**

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package JClubCMS
- * @author David Däster, Simon Däster
+ * @author David Daester, Simon Dï¿½ster
  */
 /*DB-Einstellungen*/
 $db_server = "localhost";
@@ -21,29 +21,29 @@ $gallery_menuview = 2; //Wieviele Bilder Links und Rechts des aktuellen Bildes g
 
 //**Bild und Thumb
 
-//!!! Bilder sind stdmässig in originals abgespeichert, aber wenn sie zu gross sind, in gallery
-$dir_orgImage = "./graphics/originals/"; //Relativ zur Index-Datei
-$dir_galImage = "./graphics/gallery/";  //Relativ zur Index-Datei
+//!!! Bilder sind stdmaessig in originals abgespeichert, aber wenn sie zu gross sind, in gallery
+$dir_orgImage = USER_DIR."graphics/originals/"; //Relativ zur Index-Datei
+$dir_galImage = USER_DIR."graphics/gallery/";  //Relativ zur Index-Datei
 $image_maxheight = 600;
 $image_maxwidth = 600;
 
-$dir_thumb = "./graphics/gallery/thumbs/";  //Relativ zur Index-Datei
+$dir_thumb = USER_DIR."graphics/gallery/thumbs/";  //Relativ zur Index-Datei
 $thumb_maxheight = 150;
 $thumb_maxwidth = 150;
 
 //**Smilies
-$dir_smilies = "./graphics/smilies/";
+$dir_smilies = USER_DIR."graphics/smilies/";
 
 
 /*------$time_format-----------------------
 * Analog des data() von PHP, mit Ausnahmen
-* ------NICHT GEPLANTE UNTERSTÜZUNG--------
+* ------NICHT GEPLANTE UNTERSTï¿½ZUNG--------
 * B	Swatch-Internet-Zeit
-* D	Tag der Woche gekürzt auf drei Buchstaben
-* I Fällt ein Datum in die Sommerzeit
+* D	Tag der Woche gekuerzt auf drei Buchstaben
+* I Fï¿½llt ein Datum in die Sommerzeit
 * l Ausgeschriebener Tag der Woche
 * L	Schaltjahr oder nicht
-* S	Anhang der englischen Aufzählung für einen Monatstag, zwei Zeichen
+* S	Anhang der englischen Aufzï¿½hlung fï¿½r einen Monatstag, zwei Zeichen
 * t	Anzahl der Tage des angegebenen Monats
 * T	Zeitzoneneinstellung des Rechners
 * U	Sekunden seit Beginn der UNIX-Epoche

@@ -7,7 +7,7 @@
  * Requieres: PHP5
  */
 
-class formular_check {
+class FormularCheck {
 	
 	private $mail = null;
 	private $domain = null;
@@ -48,7 +48,7 @@ class formular_check {
 	/**
 	 * Der Mail-Exploder
 	 *
-	 * Teil die Mail fuer die einfachere Pr�fung in ihre Subsegmente auf
+	 * Teil die Mail fuer die einfachere Pruefung in ihre Subsegmente auf
 	 */
 	private function mailexplode() {
 		$mailarray = explode('@', $this->mail);
