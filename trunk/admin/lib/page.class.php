@@ -275,7 +275,7 @@ class Page
 		
 		foreach ($get_array as $key => $value) {
 			if ($key != 'nav_id' && $key != 'page') {
-				$apendices .= "&$key=$value";
+				$apendices .= "&amp;$key=$value";
 			}
 		}
 		
@@ -285,11 +285,39 @@ class Page
 		$pages_array = array();
 		for ($i = 1; $i < ($number_of_pages+1); $i++) {
 			
-			$link = $main_url.'?nav_id='.$nav_id.'&page='.$i.$apendices;
+			$link = $main_url.'?nav_id='.$nav_id.'&amp;page='.$i.$apendices;
 			$pages_array[$i] = array('page'=>$i, 'link'=>$link);
 		}
-
+		
 		return $pages_array;
+	}
+	
+	public function getUri($get_array, $black_list)
+	{
+		return self::getUriStatic($get_array, $black_list);
+	}
+	
+	public static function getUriStatic($get_array, $black_list)
+	{
+		$main_url = $_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF'];
+		
+		$apendices = "";
+		
+		$i = 0;
+		foreach ($get_array as $key => $value) {
+			if (in_array($key, $black_list) == false) {
+				if($i == 0) {
+					$sep = '?';
+				} else {
+					$sep = '&amp;';
+				}
+				
+				$apendices .= $sep."$key=$value";
+				
+				$i++;	
+			}
+		}
+		return $main_url.$apendices;
 	}
 
 

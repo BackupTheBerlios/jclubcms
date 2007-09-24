@@ -134,12 +134,12 @@ class mysql {
 		$this->_serverlink = mysql_connect($this->_mysqlserver, $this->_mysqluser, $this->_mysqlpw, $this->_newc);
 		
 		if (!is_resource($this->_serverlink)) {
-			$this->_logError(__FUNCTION__, __FILE__, 'Verbindung zum Mysql-Server fehlgeschlagen');
+			$this->_logError(__FUNCTION__, __LINE__, 'Verbindung zum Mysql-Server fehlgeschlagen');
 			return false;
 		}
 
 		if (!mysql_select_db($this->_mysqldb, $this->_serverlink)) {
-			$this->_logError(__FUNCTION__, __FILE__, 'Verbindung zur Mysql-Datenbank fehlgeschlagen');
+			$this->_logError(__FUNCTION__, __LINE__, 'Verbindung zur Mysql-Datenbank fehlgeschlagen');
 			return false;
 		} else {
 			return true;
@@ -210,6 +210,7 @@ class mysql {
 		//debugecho(__LINE__, __FILE__, __FUNCTION__, __CLASS__);
 
 		if(($this->_noresult == true && $success == false) || ($this->_noresult == false && $this->_result === false)) {
+			$this->_logError(__FUNCTION__, __LINE__, 'Mysql-Query ist ung&uuml;ltig');
 			return false;			
 		} else {
 			return true;

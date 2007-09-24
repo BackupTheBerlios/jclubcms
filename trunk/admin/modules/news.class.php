@@ -27,6 +27,11 @@ class News implements Module
 	 * @var $mysql mysql
 	 */
 	private $mysql = null;
+	/**
+	 * Smarty-Klasse
+	 *
+	 * @var $smarty Smarty
+	 */
 	private $smarty = null;
 	/**
 	 * Smilie-Klasse
@@ -42,7 +47,7 @@ class News implements Module
 	 * @var MessageBoxes
 	 */
 	private $msbox = null;
-	
+
 	/**
 	 * Aufbau der Klasse
 	 *
@@ -56,7 +61,7 @@ class News implements Module
 		$this->smarty = $smarty;
 	}
 
-	
+
 	/**
 	 * Fuehrt die einzelnen Methoden aus, abhaengig vom parameter
 	 *
@@ -67,11 +72,11 @@ class News implements Module
 		global $dir_smilies;
 		$this->post_arr = $parameters['POST'];
 		$this->get_arr = $parameters['GET'];
-		
+
 		$this->msbox = new MessageBoxes($this->mysql, 'news', array('ID' => 'news_ID', 'ref_ID' => 'news_ref_ID', 'content' => 'news_content', 'name' => 'news_name', 'time' => 'news_time', 'mail' => 'news_email', 'hp' => 'news_hp', 'title' => 'news_title'));
-		
+
 		$this->smilie = new smilies($dir_smilies);
-		
+
 		if (isset($this->get_arr['action'])) {
 			switch ($this->get_arr['action']) {
 				case 'new':
@@ -107,7 +112,7 @@ class News implements Module
 	private function msboxtest()
 	{
 		$this->tplfile = 'main.tpl';
-		
+
 		$str = debugecho(debug_backtrace(),"Fehler da?: ".var_export($this->msbox->isError(),1), 1);
 
 		if ($this->msbox->isError()) {
@@ -119,38 +124,65 @@ class News implements Module
 		//$this->msbox->addEntry(array('ID' => '3', 'ref_ID' => '', 'content' => 'Momentan wird hart an der Klasse messageboxes.class.php gearbeitet', 'name' => 'CO-Admin', 'time' => "NOW()", 'mail' => 'mail@jclub.ch', 'hp' => 'http://www.besj.ch', 'title' => 'Im Wandel'));
 		$this->smarty->assign(array('content_title' => 'Debug-Infos', 'content_text' => $str));
 	}
-	
 
-	
-	
+
+
+
 	private function view($max_entries_pp)
 	{
 		$this->tplfile = 'news.tpl';
 		$news_array = array();
-		
+		$error = false;
+
 		if (isset($this->get_arr['page']) && is_numeric($this->get_arr['page']) && $this->get_arr['page'] > 0) {
 			$page = $this->get_arr['page'];
 		} else {
 			$page = 1;
 		}
 
-		$news_array = $this->msbox->getEntries($max_entries_pp, $page, 'DESC', '%e.%m.%Y %k:%i');
-		$this->mysql->query('SELECT COUNT(*) as many FROM `news`');
-		$data = $this->mysql->fetcharray('assoc');
-		$pagesnav_array = Page::get_static_pagesnav_array($data['many'],$max_entries_pp, $this->get_arr);
+		while ($error == false) {
+			if (($news_array = $this->msbox->getEntries($max_entries_pp, $page, 'DESC', '%e.%m.%Y %k:%i')) == false) {
+				$error = true;
+				$error_text = join(" - ", $this->msbox->getError());
+				$error_title = "Messagebox-Fehler";
+				continue;
+			}
 
-		foreach ($news_array as $key => $value) {
-			$value['news_content'] = $this->smilie->show_smilie($value['news_content'], $this->mysql);
-			foreach ($value['comments'] as $ckey => $cvalue) {
-				$value['comments'][$ckey]['news_content'] = $this->smilie->show_smilie($cvalue['news_content'], $this->mysql);
-				
+			$this->mysql->query('SELECT COUNT(*) as many FROM `news`');
+			$data = $this->mysql->fetcharray('assoc');
+
+			if ($this->mysql->isError() == true) {
+				echo "Hallo, alle hinschauen";
+				$error = true;
+				$error_text = "Ein Mysql-Fehler ist auf der Zeile ".__LINE__." aufgetaucht.<br />\nNachricht: ".join(" - ", $this->mysql->getError());
+				$error_title = "Mysql-Fehler";
+				continue;
 			}
 			
-			$news_array[$key] = $value;
+			
+			$pagesnav_array = Page::get_static_pagesnav_array($data['many'],$max_entries_pp, $this->get_arr);
+
+			foreach ($news_array as $key => $value) {
+				$value['news_content'] = $this->smilie->show_smilie($value['news_content'], $this->mysql);
+				foreach ($value['comments'] as $ckey => $cvalue) {
+					$value['comments'][$ckey]['news_content'] = $this->smilie->show_smilie($cvalue['news_content'], $this->mysql);
+
+				}
+
+				$news_array[$key] = $value;
+
+			}
+
+			$this->smarty->assign('newsarray', $news_array);
+			$this->smarty->assign('pages', $pagesnav_array);
+			break;
+
 		}
-		//Kommentaere nicht beachtet und ganzer code uebermittelt
-		$this->smarty->assign('newsarray', $news_array);
-		$this->smarty->assign('pages', $pagesnav_array);	
+
+		if ($error == true) {
+			$this->error(__LINE__, $error_text, $error_title);
+		}
+
 
 	}
 
@@ -158,21 +190,25 @@ class News implements Module
 	{
 		$this->tplfile = 'news_entry.tpl';
 		$this->smarty->assign('action', $this->get_arr['action']);
-		
-		if (isset($this->get_arr['submit']) && $this->get_arr['submit'] == 'Senden') {
-			;
+
+		if (isset($this->post_arr['btn_send']) && $this->post_arr['btn_send'] == 'Senden') {
+			$this->smarty->assign("forward_text", "Eintrag wurde aus technischen Gr&uuml;nden nicht erstellt");
+			$this->smarty->assign("forward_linktext", "Angucken");
+			$this->smarty->assign("forward_link", Page::getUriStatic($this->get_arr, array('action')));
+			$this->tplfile ='forward_include.tpl';
+			echo "testasdfasddfsfasdfasdfasfasdfasdfasdfasdfasdfasdf";
 		} else {
 			$smilie_arr = $this->smilie->create_smiliesarray($this->mysql);
 		}
-		
-		
+
+
 	}
 
 	private function edit()
 	{
 		$this->tplfile = 'news_entry.tpl';
 		$this->smarty->assign('action', $this->get_arr['action']);
-		
+
 	}
 
 	private function del()
@@ -197,19 +233,19 @@ class News implements Module
 					$errortext = "Sie haben irgendwie ein Fehler verursacht, ich weiss aber auch nicht wie. W&auml;re nett, wenn sie mir das erkl&auml;en k&ouml;nnten.<br />\nInfo: Fehler auf Zeile $line";
 			}
 
-			
+
 		} elseif (is_array($errortext)) {
 			$errortitle = $errortext['title'];
 			$errortext = $errortext['text'];
-			
+
 		} elseif ($errortext == "") {
 			$errortitle = "Fehler";
 			$errortext = "Sie oder das Skript haben ein Fehler verursacht. Die Aktion wurde daher abgebrochen<br />\nInfo: Fehler auf Zeile $line";
-			
+
 		}
-		
-		
-		
+
+
+
 		$this->smarty->assign(array('error_title' => $errortitle, 'error_text' => $errortext));
 	}
 

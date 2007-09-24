@@ -60,6 +60,19 @@ img {
 	font-family: sans-serif;
 }
 
+#forward_inc {
+	background-color: #FFDD90;
+	color: #D2691E;
+	width: 50%;
+	margin: 10% 5% 10% 5%;
+	padding: 20px;
+	position: fixed;
+	z-index: 2;
+	text-align: center;
+	font-size: 15px;
+	font-family: sans-serif;
+}
+
 #error {
 	top: 145px;
 	left: 5%;
