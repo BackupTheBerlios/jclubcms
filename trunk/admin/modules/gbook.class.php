@@ -13,7 +13,7 @@ require_once ADMIN_DIR.'lib/module.interface.php';
 require_once ADMIN_DIR.'lib/messageboxes.class.php';
 require_once ADMIN_DIR.'lib/smilies.class.php';
 
-class GBook implements Module
+class Gbook implements Module
 {
 	/**
 	 * Templatefile
@@ -93,7 +93,7 @@ class GBook implements Module
 					$this->view(5);
 					return true;
 				default:
-					$this->error(__LINE__, 1);
+					throw new CMSException('Gewaehlte Option ist nicht moeglich', EXCEPTION_MODULE_CODE);
 					return false;
 			}
 		} else {
@@ -101,11 +101,22 @@ class GBook implements Module
 			return true;
 		}
 	}
+	
+	/**
+	 * Liefert die zugehoerige Templatedatei
+	 *
+	 * @return string $tplfile Templatedatei
+	 */
 
 	public function gettplfile()
 	{
 		return $this->tplfile;
 	}
+	
+	/**
+	 * Test mit der Messagebox-Klasse
+	 *
+	 */
 
 	private function msboxtest()
 	{
@@ -114,21 +125,25 @@ class GBook implements Module
 		$str = debugecho(debug_backtrace(),"Fehler da?: ".var_export($this->msbox->isError(),1), 1);
 
 		if ($this->msbox->isError()) {
-			$this->error(__LINE__, array('title' => 'Fehler in Messagebox', 'text' => var_export($this->msbox->isError(),1)));
+			throw new CMSException("Fehler in Messagebox.<br />\n".var_export($this->msbox->isError(),1));
 		}
 
 		$str .= debugecho(debug_backtrace(),"Fehler bei Tabelle:<br />\n".var_export($this->msbox->getError(),1), 1);
 
 		//$this->msbox->addEntry(array('ID' => '3', 'ref_ID' => '', 'content' => 'Momentan wird hart an der Klasse messageboxes.class.php gearbeitet', 'name' => 'CO-Admin', 'time' => "NOW()", 'mail' => 'mail@jclub.ch', 'hp' => 'http://www.besj.ch', 'title' => 'Im Wandel'));
 		$str .= "<br />\n";
-		$str .= "Gbook-Array: <br />\n".var_export($this->msbox->getEntries(5,1,'DESC', '%e.%m.%Y %k:%i'), 1);
+		$str .= "Gbook-Array: <br />\n".var_export($this->msbox->getEntries(5,1,'DESC','ASC', '%e.%m.%Y %k:%i'), 1);
 		$str .= "<br />\nFehler-Array von msgbox: <br />\n".var_export($this->msbox->getError(),1);
 		$this->smarty->assign(array('content_title' => 'Debug-Infos', 'content_text' => $str));
 		
 	}
 	
 
-	
+	/**
+	 * Zeigt die Eintraege an
+	 *
+	 * @param int $max_entries_pp Anzahl Eintraege pro Seite
+	 */
 	
 	private function view($max_entries_pp)
 	{
@@ -141,50 +156,124 @@ class GBook implements Module
 			$page = 1;
 		}
 
-		$gbook_array = $this->msbox->getEntries($max_entries_pp, $page, 'DESC', '%e.%m.%Y %k:%i');
+		$gbook_array = $this->msbox->getEntries($max_entries_pp, $page, 'DESC', 'ASC', '%e.%m.%Y %k:%i');
 		$this->mysql->query('SELECT COUNT(*) as many FROM `gbook` WHERE `gbook_ref_ID` = \'0\'');
 		$data = $this->mysql->fetcharray('assoc');
+		
+		
+		
 		$pagesnav_array = Page::get_static_pagesnav_array($data['many'],$max_entries_pp, $this->get_arr);
 
+		$gbook_smarty_array = array();
+		
+		//Inhalt parsen (Smilies) und an Smarty-Array uebergeben
 		foreach ($gbook_array as $key => $value) {
 			$value['gbook_content'] = $this->smilie->show_smilie($value['gbook_content'], $this->mysql);
+			
+			$gbook_smarty_array[$key] = array('ID' => $value['gbook_ID'], 'title' => $value['gbook_title'], 'content' => $value['gbook_content'], 'name' => $value['gbook_name'], 'time' => $value['time'], 'mail' => $value['gbook_ID'], 'hp' => $value['gbook_hp']);
+			
+			//Kommentare durchackern
 			foreach ($value['comments'] as $ckey => $cvalue) {
 				$value['comments'][$ckey]['gbook_content'] = $this->smilie->show_smilie($cvalue['gbook_content'], $this->mysql);
+				
+				$gbook_smarty_array[$key]['comments'][$ckey] = array('ID' => $cvalue['gbook_ID'], 'title' => $cvalue['gbook_title'], 'content' => $cvalue['gbook_content'], 'name' => $cvalue['gbook_name'], 'time' => $cvalue['time'], 'mail' => $cvalue['gbook_ID'], 'hp' => $cvalue['gbook_hp']);
 				
 			}
 			
 			$gbook_array[$key] = $value;
 		}
-		//Kommentaere nicht beachtet und ganzer code uebermittelt
-		$this->smarty->assign('gbook', $gbook_array);
+		
+		$this->smarty->assign('gbook', $gbook_smarty_array);
 		$this->smarty->assign('pages', $pagesnav_array);
 		$this->smarty->assign('entrys', $data['many']);
-		var_dump($this->msbox->getError());
 
 	}
+	
+	/**
+	 * Fuegt einen Eintrag hinzu oder liefert das Forumular dazu
+	 *
+	 */
 
 	private function add()
 	{
-		;
+		$this->smarty->assign('action', $this->get_arr['action']);
+		if (isset($this->post_arr['btn_send']) && $this->post_arr['btn_send'] == 'Senden') {
+			$this->smarty->assign("forward_text", "Eintrag wurde aus technischen Gr&uuml;nden nicht erstellt");
+			$this->smarty->assign("forward_linktext", "Angucken");
+			$this->smarty->assign("forward_link", Page::getUriStatic($this->get_arr, array('action')));
+			$this->tplfile ='forward_include.tpl';
+			
+			
+		} else {
+			$this->tplfile = 'gbook_entry.tpl';
+			$smilie_arr = $this->smilie->create_smiliesarray($this->mysql);
+			$this->smarty->assign('action', $this->get_arr['action']);
+			$news_arr = $this->msbox->getEntry($this->get_arr['id'], '%e.%m.%Y %k:%i');
+			$smarty_arr = array('entry_name' => $news_arr['gbook_name'], 'entry_content' => $news_arr['gbook_content'], 
+								'entry_email' => $news_arr['gbook__email'], 'entry_hp' => $news_arr['gbook__hp'], 'entry_title' => 									$news_arr['gbook__title'], 'entry_time' => $news_arr['time']);
+			$this->smarty->assign($smarty_arr);
+			$smilie_arr = $this->smilie->create_smiliesarray($this->mysql);
+			$this->smarty->assign('smilies_list', $smilie_arr);
+
+		}
+		
+		//$this->msbox->addEntry(array('ID' => '3', 'ref_ID' => '', 'content' => 'Momentan wird hart an der Klasse messageboxes.class.php gearbeitet', 'name' => 'CO-Admin', 'time' => "NOW()", 'mail' => 'mail@jclub.ch', 'hp' => 'http://www.besj.ch', 'title' => 'Im Wandel'));
 	}
 
+	/**
+	 * Editiert einen Eintrag im Mysql oder liefert das zugehoerige Formular.
+	 *
+	 */
+	
 	private function edit()
 	{
-		$this->tplfile = 'news_entry.tpl';
 		$this->smarty->assign('action', $this->get_arr['action']);
 		
+		if (isset($this->post_arr['btn_send']) && $this->post_arr['btn_send'] == 'Senden') {
+			$this->smarty->assign("forward_text", "Eintrag wurde aus technischen Gr&uuml;nden nicht erstellt");
+			$this->smarty->assign("forward_linktext", "Angucken");
+			$this->smarty->assign("forward_link", Page::getUriStatic($this->get_arr, array('action')));
+			$this->tplfile ='forward_include.tpl';
+			
+			
+		} else {
+			$this->tplfile = 'gbook_entry.tpl';
+			$smilie_arr = $this->smilie->create_smiliesarray($this->mysql);
+			$this->smarty->assign('action', $this->get_arr['action']);
+			$news_arr = $this->msbox->getEntry($this->get_arr['id'], '%e.%m.%Y %k:%i');
+			$smarty_arr = array('entry_name' => $news_arr['gbook_name'], 'entry_content' => $news_arr['gbook_content'], 
+								'entry_email' => $news_arr['gbook__email'], 'entry_hp' => $news_arr['gbook__hp'], 'entry_title' => 									$news_arr['gbook__title'], 'entry_time' => $news_arr['time']);
+			$this->smarty->assign($smarty_arr);
+			$smilie_arr = $this->smilie->create_smiliesarray($this->mysql);
+			$this->smarty->assign('smilies_list', $smilie_arr);
+
+		}
+		
 	}
+	
+	/**
+	 * Loescht einen Eintrag im Mysql oder liefert die Auswahlliste
+	 *
+	 */
 
 	private function del()
 	{
 		;
 	}
-
-	private function error($line, $errortext, $errortitle = "Fehler")
-	{
-		$this->tplfile = 'error_include.tpl';
-		$this->smarty->assign(array('error_title' => $errortitle, 'error_text' => $errortext));
-	}
+	
+//	/**
+//	 * Gibt ein Fehler an den User aus.
+//	 *
+//	 * @param int $line Zeile
+//	 * @param string $errortext Text
+//	 * @param string $errortitle Titel
+//	 */
+//
+//	private function error($line, $errortext, $errortitle = "Fehler")
+//	{
+//		$this->tplfile = 'error_include.tpl';
+//		$this->smarty->assign(array('error_title' => $errortitle, 'error_text' => $errortext));
+//	}
 
 }
 

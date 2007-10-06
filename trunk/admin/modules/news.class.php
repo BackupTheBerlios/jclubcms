@@ -48,6 +48,7 @@ class News implements Module
 	 */
 	private $msbox = null;
 
+	
 	/**
 	 * Aufbau der Klasse
 	 *
@@ -65,8 +66,9 @@ class News implements Module
 	/**
 	 * Fuehrt die einzelnen Methoden aus, abhaengig vom parameter
 	 *
-	 * @param unknown_type $parameters
+	 * @param array $parameters POST- und GET-Variablen
 	 */
+	
 	public function action($parameters)
 	{
 		global $dir_smilies;
@@ -95,7 +97,7 @@ class News implements Module
 					$this->view(15);
 					return true;
 				default:
-					$this->error(__LINE__, 1);
+					$this->error(__LINE__, "Sie haben falsche URL-Parameter weitergegeben. Daher konnte keine entsprechende Aktion ausgef&uuml;fr werden", "Falsche URL-Parameter");
 					return false;
 			}
 		} else {
@@ -103,11 +105,22 @@ class News implements Module
 			return true;
 		}
 	}
+	
+	/**
+	 * Liefert die Templatedatei der Klasse zurueck
+	 *
+	 * @return string $tplfile Template-Datei
+	 */
 
 	public function gettplfile()
 	{
 		return $this->tplfile;
 	}
+	
+	/**
+	 * Test mit der Messagebox-Klasse
+	 *
+	 */
 
 	private function msboxtest()
 	{
@@ -126,10 +139,15 @@ class News implements Module
 	}
 
 
-
+	/**
+	 * Zeigt die Eintraege an
+	 *
+	 * @param int $max_entries_pp Anzahl Eintraege pro Seite
+	 */
 
 	private function view($max_entries_pp)
 	{
+		//die("Tsch&uuml;ss");
 		$this->tplfile = 'news.tpl';
 		$news_array = array();
 		$error = false;
@@ -141,18 +159,19 @@ class News implements Module
 		}
 
 		while ($error == false) {
-			if (($news_array = $this->msbox->getEntries($max_entries_pp, $page, 'DESC', '%e.%m.%Y %k:%i')) == false) {
+			
+			if (($news_array = $this->msbox->getEntries($max_entries_pp, $page, 'DESC','ASC', '%e.%m.%Y %k:%i')) == false) {
 				$error = true;
 				$error_text = join(" - ", $this->msbox->getError());
 				$error_title = "Messagebox-Fehler";
 				continue;
 			}
 
+
 			$this->mysql->query('SELECT COUNT(*) as many FROM `news`');
 			$data = $this->mysql->fetcharray('assoc');
 
 			if ($this->mysql->isError() == true) {
-				echo "Hallo, alle hinschauen";
 				$error = true;
 				$error_text = "Ein Mysql-Fehler ist auf der Zeile ".__LINE__." aufgetaucht.<br />\nNachricht: ".join(" - ", $this->mysql->getError());
 				$error_title = "Mysql-Fehler";
@@ -185,66 +204,96 @@ class News implements Module
 
 
 	}
+	
+	
+	/**
+	 * Fuegt einen Eintrag ein oder liefert das Formular dazu
+	 *
+	 */
 
 	private function add()
 	{
-		$this->tplfile = 'news_entry.tpl';
-		$this->smarty->assign('action', $this->get_arr['action']);
-
+		throw  new ErrorException('Dies ist nichts anderes als ein Test-Fehler', EXCEPTION_MODULE_CODE, 2);
 		if (isset($this->post_arr['btn_send']) && $this->post_arr['btn_send'] == 'Senden') {
 			$this->smarty->assign("forward_text", "Eintrag wurde aus technischen Gr&uuml;nden nicht erstellt");
 			$this->smarty->assign("forward_linktext", "Angucken");
 			$this->smarty->assign("forward_link", Page::getUriStatic($this->get_arr, array('action')));
 			$this->tplfile ='forward_include.tpl';
-			echo "testasdfasddfsfasdfasdfasfasdfasdfasdfasdfasdfasdf";
 		} else {
+			$this->tplfile = 'news_entry.tpl';
+			$this->smarty->assign('action', $this->get_arr['action']);
 			$smilie_arr = $this->smilie->create_smiliesarray($this->mysql);
+			$this->smarty->assign('smilies_list', $smilie_arr);
 		}
 
 
 	}
+	
+	/**
+	 * Editiert einen Eintrag im Mysql oder liefert das zugehoerige Formular
+	 *
+	 */
 
 	private function edit()
 	{
-		$this->tplfile = 'news_entry.tpl';
-		$this->smarty->assign('action', $this->get_arr['action']);
+		
+		
+		if (isset($this->post_arr['btn_send']) && $this->post_arr['btn_send'] == 'Senden') {
+			$this->smarty->assign("forward_text", "Eintrag wurde aus technischen Gr&uuml;nden nicht erstellt");
+			$this->smarty->assign("forward_linktext", "Angucken");
+			$this->smarty->assign("forward_link", Page::getUriStatic($this->get_arr, array('action')));
+			$this->tplfile ='forward_include.tpl';
+		} else {
+			$this->tplfile = 'news_entr.tpl';
+			$smilie_arr = $this->smilie->create_smiliesarray($this->mysql);
+			$this->smarty->assign('action', $this->get_arr['action']);
+			$news_arr = $this->msbox->getEntry($this->get_arr['id'], '%e.%m.%Y %k:%i');
+			$smarty_arr = array('entry_name' => $news_arr['news_name'], 'entry_content' => $news_arr['news_content'], 
+								'entry_email' => $news_arr['news_email'], 'entry_hp' => $news_arr['news_hp'], 'entry_title' => 									$news_arr['news_title'], 'entry_time' => $news_arr['time']);
+			$this->smarty->assign($smarty_arr);
+			$smilie_arr = $this->smilie->create_smiliesarray($this->mysql);
+			$this->smarty->assign('smilies_list', $smilie_arr);
+
+		}
 
 	}
+	
+	/**
+	 * Loescht einen Eintrag im Mysql oder liefert die Auswahlliste.
+	 *
+	 */
 
 	private function del()
 	{
 		;
 	}
 
+	/**
+	 * Wird von den Methoden aufgerufen. Gibt einen Fehler in HTML aus.
+	 *
+	 * @param int $line
+	 * @param string $errortext
+	 * @param string[optional] $errortitle
+	 */
+	
 	private function error($line, $errortext, $errortitle = "Fehler")
 	{
 		$this->tplfile = 'error_include.tpl';
 
-		if (is_numeric($errortext)) {
+		if (is_string($errortext) && !empty($errortext)) {
 
-			switch($errortext)
-			{
-				case 1:
-					$errortitle = "Falsche URL-Parameter";
-					$errortext = "Sie haben falsche URL-Parameter weitergegeben. Daher konnte keine entsprechende Aktion ausgef&uuml;fr werden<br />\nInfo: Fehler auf Zeile $line";
-					break;
-				default:
-					$errortitle = "unbekannter Fehler";
-					$errortext = "Sie haben irgendwie ein Fehler verursacht, ich weiss aber auch nicht wie. W&auml;re nett, wenn sie mir das erkl&auml;en k&ouml;nnten.<br />\nInfo: Fehler auf Zeile $line";
-			}
-
+			$errortitle = $errortitle;
+			$errortext = $errortext."<br />\nInfo: Fehler auf Zeile $line";
 
 		} elseif (is_array($errortext)) {
 			$errortitle = $errortext['title'];
-			$errortext = $errortext['text'];
+			$errortext = $errortext['text']."<br />\nInfo: Fehler auf Zeile $line";
 
-		} elseif ($errortext == "") {
+		} else {
 			$errortitle = "Fehler";
 			$errortext = "Sie oder das Skript haben ein Fehler verursacht. Die Aktion wurde daher abgebrochen<br />\nInfo: Fehler auf Zeile $line";
 
 		}
-
-
 
 		$this->smarty->assign(array('error_title' => $errortitle, 'error_text' => $errortext));
 	}

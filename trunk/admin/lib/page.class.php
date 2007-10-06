@@ -34,6 +34,7 @@ class Page
 		$this->mysql = $mysql;
 		$this->auth = new Auth($this, $mysql);
 	}
+	
 
 	/**
 	 * Gibt das Menu-Array zurueck, um das Menu darzustellen
@@ -42,6 +43,7 @@ class Page
 	 * @param boolean $admin_menu Muss das Admin-Menu dargestellt werden?
 	 * @return array $menu_array Array mit den Menu-Eintraegen
 	 */
+	
 
 	public function get_menu_array($shortlinks = false, $admin_menu = false)
 	{
@@ -53,8 +55,7 @@ class Page
 		$table_name = ($admin_menu == true)?"admin_menu":"menu";
 
 		//Ist $nav_id kleiner gleich Null, wird ihr der erste Wert aus der MySQL-Tabelle zugewiesen.
-		if($nav_id <= 0)
-		{
+		if($nav_id <= 0) {
 			$this->mysql->query("SELECT `menu_ID` FROM `$table_name` ORDER BY `menu_position` LIMIT 1");
 			$nav_id = $this->mysql->fetcharray();
 			$nav_id = $nav_id[0];
@@ -68,6 +69,7 @@ class Page
 
 		return $menu_array;
 	}
+	
 
 	/**
 	 * Liefert ein Array zurueck, welches die Menu-Eintraege enthaelt. Die shortlinks-Menu befinden sich hier in der topnav.
@@ -107,7 +109,6 @@ class Page
 			$topid_array[$i] = $temp_array[$max-$i-1];
 		}
 
-		//echo "In get_shortlinksmenu_array: <pre>".print_r($topid_array, 1)."</pre> <br />\n";
 
 		//Funktion aufrufen, damit subnav-Array erstellt wird
 		$this->build_subnav_array($table_name, $topid_array, $menu_array['subnav']);
@@ -196,16 +197,6 @@ class Page
 
 		$this->mysql->query("SELECT `menu_ID`, `menu_name`, `menu_modvar` FROM `$table_name` WHERE `menu_topid` = '{$topid_array[$j]}' AND `menu_display` != '0' AND `menu_shortlink` != '1' ORDER BY `menu_position` ASC");
 		
-		/*Ehemaliger Code: Ungueltig, denn shortlinks werden nur bei shortlink-option angezeigt, sonst nicht!
-		if($shortlink)
-		{
-			$this->mysql->query("SELECT `menu_ID`, `menu_name` FROM `$table_name` WHERE `menu_topid` = '{$topid_array[$j]}' AND `menu_display` != '0' AND `menu_shortlink` != '1' ORDER BY `menu_position` ASC");
-		}
-		else
-		{
-			$this->mysql->query("SELECT `menu_ID`, `menu_name` FROM `$table_name` WHERE `menu_topid` = '{$topid_array[$j]}' AND `menu_display` != '0' ORDER BY `menu_position` ASC");
-		}*/
-
 		$mysql_array = $this->mysql->get_records();
 
 		//Durchlaeuft $mysql_array und baut so die Navigation auf.
@@ -213,22 +204,19 @@ class Page
 
 		//$level aendert sich nicht innerhalb der Funktion, $j hingegen schon, denn sie ist statisch.
 		$level = $j;
-		while($data = current($mysql_array))
-		{
-			$subnav_array[$i] = $data;
+		
+		//Baut den Navigationsbaum auf, indem bei jedem Treffer Topid -> menu_Id ein neuer Ast entsteht. 
+		foreach ($mysql_array as $value) {
+			$subnav_array[$i] = $value;
 			$subnav_array[$i]['level'] = $level;
 			$i++;
 
-			if($j < count($topid_array) && $data['menu_ID'] == $topid_array[$j])
+			if($j < count($topid_array) && $value['menu_ID'] == $topid_array[$j])
 			{
 				$this->build_subnav_array($table_name, $topid_array, $subnav_array);
 			}
-
-			next($mysql_array);
+			
 		}
-
-		//echo "In build_subnav_array: \$i $i, \$j $j, topid_array\n<pre>".print_r($topid_array, 1)."</pre><br />\n";
-		//echo "In build_subnav_array: subnav_array\n<pre>".print_r($subnav_array, 1)."</pre> <br />\n";
 	}
 
 
@@ -292,10 +280,28 @@ class Page
 		return $pages_array;
 	}
 	
+	/**
+	 * Gibt die URL zurueck mit dem aktuellen Skriptund allen $_GET-Variablen ausser denen,
+	 * welche im Array $black_list aufgelistet sind 
+	 *
+	 * @param array $get_array
+	 * @param array $black_list
+	 * @return string $url
+	 */
+	
 	public function getUri($get_array, $black_list)
 	{
 		return self::getUriStatic($get_array, $black_list);
 	}
+	
+	/**
+	 * Gibt die URL zurueck mit dem aktuellen Skriptund allen $_GET-Variablen ausser denen,
+	 * welche im Array $black_list aufgelistet sind 
+	 *
+	 * @param array $get_array
+	 * @param array $black_list
+	 * @return string $url
+	 */
 	
 	public static function getUriStatic($get_array, $black_list)
 	{
@@ -306,7 +312,7 @@ class Page
 		$i = 0;
 		foreach ($get_array as $key => $value) {
 			if (in_array($key, $black_list) == false) {
-				if($i == 0) {
+				if ($i == 0) {
 					$sep = '?';
 				} else {
 					$sep = '&amp;';
@@ -320,7 +326,10 @@ class Page
 		return $main_url.$apendices;
 	}
 
-
+	/**
+	 * Destruktor der Klasse
+	 *
+	 */
 
 	public function __destruct()
 	{

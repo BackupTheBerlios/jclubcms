@@ -18,7 +18,7 @@
 				{$book.title}
 				</td>
 				<td class="content_tab_header" style="border-left: 0px;">
-				Komment&auml;re: {$book.number_of_comments}
+				Kommentare: {$book.number_of_comments}
 				</td>
 			</tr>
 			<tr>

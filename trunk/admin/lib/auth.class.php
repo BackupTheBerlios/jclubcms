@@ -50,7 +50,7 @@ class Auth
 		$smarty = $this->smarty;
 		$session = $this->session;
 
-		global $auth_error_logindata1, $auth_error_logindata2, $auth_forward_linktext, $auth_forward_successlogin, $auth_forward_title;
+		global $auth_error_noentry, $auth_error_failname, $auth_error_failpw, $auth_forward_linktext, $auth_forward_successlogin, $auth_forward_title;
 
 		if (isset($_POST['login']) && $_POST['login'] != "") {
 			$login_data = $this->getlogindata();
@@ -58,33 +58,40 @@ class Auth
 			if (is_array($login_data)) {
 				//echo "Auth->check4login(): Login-Daten vorhanden als Array<br />\n";
 				//Benutzername und Passwort ueberpruefen
-				$mysql->query("SELECT `user_ID` FROM  `admin_users` WHERE `user_name` = '{$login_data['name']}' AND `user_pw` = '{$login_data['password_encrypted']}' LIMIT 1");
-
-				$data = $mysql->fetcharray();
-
-				if(is_numeric($data[0])) {
-					$this->user_id = $data[0];
-					$session->create_session($data[0]);
-
-					$smarty->assign(array('forward_title' => $auth_forward_title, 'forward_text' => $auth_forward_successlogin, 'forward_linktext' => $auth_forward_linktext, 'forward_link' => $_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']."?".$session->get_sessionstring()));
-					$smarty->display('forward.tpl');
-
-
-				} elseif ($data == false) {
-
-					$smarty->assign('login_error', $auth_error_logindata2);
+				$this->mysql->query("SELECT `user_ID` FROM `admin_users` WHERE `user_name` = '{$login_data['name']}' LIMIT 1");
+				if (($data = $this->mysql->fetcharray('assoc')) === false) {
+					$smarty->assign('login_error', $auth_error_failname);
 					$smarty->display('login.tpl');
+					
+				} else {
+					$this->mysql->query("SELECT `user_ID` FROM  `admin_users` WHERE `user_name` = '{$login_data['name']}' AND `user_pw` = '{$login_data['password_encrypted']}' LIMIT 1");
+
+					$data = $mysql->fetcharray();
+
+					if(is_numeric($data[0])) {
+						$this->user_id = $data[0];
+						$session->create_session($data[0]);
+
+						$smarty->assign(array('forward_title' => $auth_forward_title, 'forward_text' => $auth_forward_successlogin, 'forward_linktext' => $auth_forward_linktext, 'forward_link' => $_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']."?".$session->get_sessionstring()));
+						$smarty->display('forward.tpl');
+
+
+					} elseif ($data == false) {
+
+						$smarty->assign('login_error', $auth_error_failpw);
+						$smarty->display('login.tpl');
+					}
 				}
 
 				return true;
-				
+
 			} else {
-				$smarty->assign('login_error', $auth_error_logindata1);
+				$smarty->assign('login_error', $auth_error_noentry);
 				$smarty->display('login.tpl');
 				return true;
-				
+
 			}
-			
+
 		}
 		else
 		{
@@ -190,8 +197,8 @@ class Auth
 			return array('name' => $name, 'password_encrypted' => $password_encrypted);
 		}
 	}
-	
-	
+
+
 	/**
 	 * Ueberprueft die Rechte.
 	 *

@@ -19,7 +19,7 @@ class FormularCheck {
 		return 0;
 	}
 	/**
-	 * �berpr�ft ob der angegebene String den nicht erlaubten default-Eintr�gen 
+	 * �berprueft ob der angegebene String den nicht erlaubten default-Eintr�gen 
 	 * von den Forumlaren entspricht
 	 *
 	 * @param string $field
@@ -101,7 +101,7 @@ class FormularCheck {
 	 * Quelle der Domains spaeter vieleicht oline.
 	 */
 	private function is_country () {
-		$handle = fopen("./config/country.txt", "r");
+		$handle = fopen(USER_DIR."/config/country.txt", "r");
 		$country_array = array();
 		$i = 0;
 		while (!feof($handle)) {

@@ -1,6 +1,6 @@
 <?php
 /** 
- * @author David Däster
+ * @author David Dï¿½ster
  * @package JClubCMS
  * File: mailsend.class.php
  * Classes: mailsend
@@ -10,7 +10,7 @@
  */
 
 /**
- * Klasse fïür den den ganzen Mail-Ablauf
+ * Klasse fuer den den ganzen Mail-Ablauf
  * 1. Phase
  * - Hash-Berechnung 
  * - Ablage in Datenbank
@@ -34,11 +34,11 @@ class mailsend {
 		return 0;
 	}
 	/**
-	 * Versendet den Link um die Mail auszulösen
+	 * Versendet den Link um die Mail auszuloesen
 	 *
 	 * @param object $mysql_link MysqlObjekt
-	 * @param string $mail_reciver_name Mailempängername (aus Datenbank)
-	 * @param string $mail_reciver Mailempfänger (aus Datenbank)
+	 * @param string $mail_reciver_name Mailempï¿½ngername (aus Datenbank)
+	 * @param string $mail_reciver Mailempfï¿½nger (aus Datenbank)
 	 * @param string $mail_sender_name Mailsendername (aus Formular)
 	 * @param string $mail_sender Mailsenderadresse (aus Formular)
 	 * @param string $mail_titel Subjekt des Mails (aus Formular)
@@ -63,13 +63,13 @@ class mailsend {
                 $msg = "Um die Mail zu senden benutzen Sie bitte folgenden Link:\r\n"
                    ."http://www.jclub.ch/index.php?mail=".$hash;
                 $empfaenger = $this->mail_sender;
-                $betreff = 'Bestätigung des Mail-Sendens';
+                $betreff = 'Bestaetigung des Mail-Sendens';
                 $failer = $this->mail_send($empfaenger,$betreff,$msg,$header);
                 return $failer;
 	}
 
 	/**
-	 * Liefert dem Hash der Mail zurück um in die DB abzulegen
+	 * Liefert dem Hash der Mail zurï¿½ck um in die DB abzulegen
 	 *
 	 * @return string
 	 */
@@ -86,7 +86,7 @@ class mailsend {
 	}
 	
 	/**
-	 * Füllt die Daten in die Tabelle ab, um später zu versenden.
+	 * Fuellt die Daten in die Tabelle ab, um spaeter zu versenden.
 	 *
 	 * @param reference $mysql_link MySQL-Objekt
 	 * @param string $mail_hash Hash des Mails
@@ -106,7 +106,7 @@ class mailsend {
 	}
 	
 	/**
-	 * Startet das senden des Links an den Empfänger bei gültigem Hash
+	 * Startet das senden des Links an den Empfï¿½nger bei gï¿½ltigem Hash
 	 *
 	 * @param reference $mysql_link
 	 * @param string $hash
@@ -151,9 +151,9 @@ class mailsend {
 		}
 	}
 		/**
-	 * Zuständig für das Versenden von Mails
+	 * Zustaendig fuer das Versenden von Mails
 	 *
-	 * @param string $reciver Empfänger
+	 * @param string $reciver Empfaenger
 	 * @param string $subject Betreff
 	 * @param string $message Nachricht
 	 * @param string $header Headerdaten (Sender, Name, Mailer)

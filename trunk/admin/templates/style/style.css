@@ -73,7 +73,7 @@ img {
 	font-family: sans-serif;
 }
 
-#error {
+.error {
 	top: 145px;
 	left: 5%;
 	right: 5%;
@@ -85,6 +85,35 @@ img {
 	background-color: #F4A460;
 	z-index: 2;
 	position: absolute;
+}
+
+.error_tab {
+	width: 80%;
+	top: 145px;
+	left: 10%;
+	background-color: #FFDD90;
+	z-index: 2;
+	position: absolute;
+	border: thin;
+	border-style: 
+}
+
+.error_tab_header {
+	text-align: center;
+	font-weight: bold;
+	font-family: Arial;
+	background-color: #FFDD90;
+	border: 1px;
+}
+
+.error_tab_content {
+	text-align: center;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 15px;
+	border: 1px;
+	
+	background-color: #FFDE6A;
+	
 }
 
 #content {

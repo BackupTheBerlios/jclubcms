@@ -49,12 +49,12 @@ function __autoload($class_name)
  * Gibt eine Ausgabe aus mit den Angaben der Datei, Zeile, Funktion (wenn vorhanden), Klasse (wenn vorhanden) und einer 
  * Nachricht (wenn vorhanden). Auch kann die Ausgabe in ein String umgeleitet werden, wenn gewünscht,
  *
- * @param unknown_type $arrOline
- * @param unknown_type $file0msg
- * @param unknown_type $function0ndisp
- * @param unknown_type $class
- * @param unknown_type $msg
- * @param unknown_type $notdisplay
+ * @param array|string $arrOline
+ * @param string $file0msg
+ * @param string|boolean $function0ndisp
+ * @param string $class
+ * @param string $msg
+ * @param boolean $notdisplay
  */
 
 function debugecho($arrOline, $file0msg=null, $function0return = null, $class = null, $msg = null, $return = false)

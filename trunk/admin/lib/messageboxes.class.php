@@ -22,14 +22,16 @@ require_once ADMIN_DIR.'lib/formularcheck.class.php';
 
 class MessageBoxes {
 
+	/**
+	 * Mysql-Klasse
+	 *
+	 * @var mysql
+	 */
 	private $_mysql = null;
 	private $_formCheck = null;
 
 	private $_tablename = null;
 	private $_tablestruct = array('ID' => null, 'content' => null, 'ref_ID' => null, 'name' => null, 'time' => null);
-
-	private $_error = array();
-	private $_errorexists = false;
 
 
 	/**
@@ -47,29 +49,29 @@ class MessageBoxes {
 		if ($mysql instanceof mysql) {
 			$this->_mysql = $mysql;
 		} else {
-			$this->_logError(__FUNCTION__, __LINE__, '1. Parameter ist kein mysql-objekt');
+			throw new CMSException('Falsche Parameterangaben. 1. Parameter ist kein mysql-objekt', EXCEPTION_CORE_CODE);
 		}
 
-		if (is_string($tablename) && !$this->_errorexists) {
+		if (is_string($tablename)) {
 			$this->_tablename = $tablename;
 		} elseif (!$this->_errorexists) {
-			$this->_logError(__FUNCTION__, __LINE__, '2. Parameter ist kein String');
+			throw new CMSException('Falsche Parameterangaben. 2. Parameter ist kein String', EXCEPTION_CORE_CODE);
 		}
 
 		//Ist $tabelstruct ein Array, wird die objekt-eigenschaft verfolstaendigt.
-		if (is_array($tablestruct) && !$this->_errorexists) {
+		if (is_array($tablestruct)) {
 
-			if (!$this->_checkTable($tablestruct) && !$this->_errorexists) {
-				$this->_logError(__FUNCTION__, __LINE__, 'Keine passende Mysql-Tabelle vorhanden');
+			if (!$this->_checkTable($tablestruct)) {
+				throw new CMSException('Falsche Parameterangaben. Keine passende Mysql-Tabelle vorhanden', EXCEPTION_CORE_CODE);
 			}
 
-			if (!$this->_fillStruct($tablestruct) && !$this->_errorexists) {
-				$this->_logError(__FUNCTION__, __LINE__, '3. Parameter beinhahlte nicht ein Index ID oder content');
+			if (!$this->_fillStruct($tablestruct)) {
+				throw new CMSException('Falsche Parameterangaben. 3. Parameter beinhahlte nicht ein Index ID oder content', EXCEPTION_CORE_CODE);
 			}
 
 
-		} elseif (!$this->_errorexists) {
-			$this->_logError(__FUNCTION__, __LINE__, '3. Parameter ist kein Array');
+		} else {
+			throw new CMSException('Falsche Parameterangaben. 3. Parameter ist kein Array', EXCEPTION_CORE_CODE);
 		}
 
 		//Eigene Objekte initialisieren
@@ -86,13 +88,9 @@ class MessageBoxes {
 
 	public function addEntry($tabledata)
 	{
-		if ($this->_errorexists) {
-			return false;
-		}
 
 		if ($tabledata['content'] == "") {
-			$this->_logError(__FUNCTION__, __LINE__, 'Kein Text angegeben');
-			return false;
+			throw new CMSException('Falsche Parameterangaben. Kein Text angegeben', EXCEPTION_CORE_CODE);
 		}
 
 		//ID darf nicht angegeben werden, Gefahr der Ueberschreibung
@@ -120,25 +118,83 @@ class MessageBoxes {
 		$sql[1] .= ")";
 		$sql['string'] = join("", $sql);
 
-		/*$sql .= ") VALUES (";
+		/** MYSQL-ERROR noch abfragen!!! **/
+		//** Update: Nein, Exception regelt das **/
+		$this->_mysql->query($sql);
+		return true;
+	}
+
+	public function editEntry($tabledata)
+	{
+
+		if ($tabledata['content'] == "") {
+			throw new CMSException('Falsche Parameterangaben. Kein Text angegeben', EXCEPTION_CORE_CODE);
+		}
+
+
+		if ($tabledata['ID'] == ""  || !is_numeric($tabledata['ID'])) {
+			throw new CMSException('Falsche Parameterangaben. Kein Text angegeben', EXCEPTION_CORE_CODE);
+		}
+
+		$sql = "UPDATE `$this->_tablename` SET ( ";;
+		$num = count($tabledata);
+
 
 		$i = 1;
-		foreach ($tabledata as $value) {
-		//Zur Sicherheit escapen
-		$sql .= "'".$this->_mysql->escapeString($value)."'";
-		if ($i != $num) {
-		$sql .= ", ";
+		foreach ($tabledata as $key => $value) {
+			$sql .= "`{$this->_tablestruct[$key]}`";
+
+			//Zur Sicherheit escapen
+			$sql .= "'".$this->_mysql->escapeString($value)."'";
+			if ($i != $num) {
+				$sql .= ", ";
+			}
+			$i++;
 		}
-		$i++;
+
+		$sql.= ")";
+
+
+	}
+
+
+	/**
+	 * Liefert ein Tabelleneintrag mit der angegebenen ID und formatiert (wenn angegeben) die Zeit.
+	 *
+	 * @param int $id ID des Eintrags
+	 * @param string $timeformat Zeitformat nach Mysql
+	 * @return array Eintrag, bei Fehler false
+	 */
+
+	public function getEntry($id, $timeformat = "")
+	{
+		$msg_array = array();
+
+		if (!is_numeric($id)) {
+			throw new CMSException('Falsche Parameterangaben. 1. Argument ist kein Zahlenwert', EXCEPTION_CORE_CODE);
 		}
 
-		$sql .= ")";*/
+		if(!is_string($timeformat)) {
+			throw new CMSException('Falsche Parameterangaben. 2. Argument ist kein String', EXCEPTION_CORE_CODE);
+		}
 
-		debugecho(debug_backtrace(), "SQL: {$sql['string']}");
+		$sql = "SELECT * FROM `{$this->_tablename}` WHERE `{$this->_tablestruct['ID']}` = '$id' LIMIT 1";
+		/**
+		 * @var $_mysql mysql
+		 */
+		$this->_mysql->query($sql);
 
-		/** MYSQL-ERROR noch abfragen!!! **/
-		//$this->_mysql->query($sql);
-		return true;
+		$msg_array = $this->_mysql->fetcharray('assoc');
+
+
+
+		if ($timeformat && is_string($timeformat) && isset($this->_tablestruct['time'])) {
+			$msg_array['time'] = $this->_formatTime($msg_array[$this->_tablestruct['time']], $timeformat);
+		}
+
+
+		return $msg_array;
+
 	}
 
 	/**
@@ -152,68 +208,75 @@ class MessageBoxes {
 	 * @return array Eintraege, bei Fehler false
 	 */
 
-	public function getEntries($entries_pp, $page, $order = 'DESC', $timeformat = "")
+	public function getEntries($entries_pp, $page, $order = 'DESC', $corder = 'ASC', $timeformat = "")
 	{
 		$msg_array = array();
-		$strorder = "";
+		$strorder = array();
 
-		if ($this->_errorexists) {
-			return false;
-		}
-
-
-		if ($order != 'ASC' && $order != 'DESC' && $order != "") {
-			$this->_logError(__FUNCTION__, __LINE__, '3. Parameter nicht zulaessig');
-			return false;
-
-		} elseif (isset($this->_tablestruct['time']) && !empty($this->_tablestruct['time']) && $order != "") {
-			$strorder = "ORDER BY {$this->_tablestruct['time']} $order";
-
-		} else {
-			$strorder = "";
-		}
 
 		if (!is_numeric($entries_pp) && !is_numeric($page)) {
-			$this->_logError(__FUNCTION__, __LINE__, 'Angegebene Argumente sind keine Zahlenwerte');
-			return false;
+						throw new CMSException('Falsche Parameterangaben. Angegebene Argumente sind keine Zahlenwerte', EXCEPTION_CORE_CODE);
 		}
 
+
+		//Ordnungsbedingung fuer Mysql-Query
+		if ($order != 'ASC' && $order != 'DESC' && $order != "") {
+			throw new CMSException('Falsche Parameterangaben. 3. Parameter nicht zulaessig', EXCEPTION_CORE_CODE);
+
+		} elseif ($corder != 'ASC' && $corder != 'DESC' && $corder != "") {
+			throw new CMSException('Falsche Parameterangaben. 4. Parameter nicht zulaessig', EXCEPTION_CORE_CODE);
+
+		} elseif (isset($this->_tablestruct['time']) && !empty($this->_tablestruct['time']) && $order != "" && $corder != "") {
+			$strorder['norm'] = "ORDER BY {$this->_tablestruct['time']} $order";
+			$strorder['comm'] = "ORDER BY {$this->_tablestruct['time']} $corder";
+
+
+		} else {
+			$strorder['norm'] = "";
+			$strorder['comm'] = "";
+
+		}
 
 
 		$start = ($page-1)*$entries_pp;
+
 
 		if (isset($this->_tablestruct['ref_ID'])) {
 			$condition = "WHERE `{$this->_tablestruct['ref_ID']}` = '0'";
 		} else {
 			$condition = "";
 		}
-		$sql = "SELECT * FROM `{$this->_tablename}` $condition $strorder LIMIT $start, $entries_pp";
+		$sql = "SELECT * FROM `{$this->_tablename}` $condition {$strorder['norm']} LIMIT $start, $entries_pp";
 		$this->_mysql->query($sql);
 		$this->_mysql->saverecords('assoc');
 		$msg_array = $this->_mysql->get_records();
 
-		if ($condition != "") { //ref_ID muss gesetzt sein.
-			foreach ($msg_array as $key => $value) {
+		//Zeit formatieren und Kommentare holen.
+		foreach ($msg_array as $key => $value) {
 
-				$this->_mysql->query("SELECT * FROM {$this->_tablename} WHERE `{$this->_tablestruct['ref_ID']}` = '{$value[$this->_tablestruct['ID']]}' $strorder");
+			if ($condition != "") {//ref_ID muss gesetzt sein.
+				$this->_mysql->query("SELECT * FROM {$this->_tablename} WHERE `{$this->_tablestruct['ref_ID']}` = '{$value[$this->_tablestruct['ID']]}' {$strorder['comm']}");
 				$this->_mysql->saverecords('assoc');
 				$value['comments'] = $this->_mysql->get_records();
 
-				//Zeit formatieren
-				if ($timeformat && is_string($timeformat) && isset($this->_tablestruct['time'])) {
-					$value['time'] = $this->_formatTime($value[$this->_tablestruct['time']], $timeformat);
+			}
 
+			//Zeit formatieren
+			if ($timeformat && is_string($timeformat) && isset($this->_tablestruct['time'])) {
+				$value['time'] = $this->_formatTime($value[$this->_tablestruct['time']], $timeformat);
+
+				if ($condition != "") {//ref_ID muss gesetzt sein.
 					foreach ($value['comments'] as $key2 => $cvalue) {
 						$value['comments'][$key2]['time'] = $this->_formatTime($cvalue[$this->_tablestruct['time']], $timeformat);
 
 					}
 				}
-				$msg_array[$key] = $value;
-				$msg_array[$key]['number_of_comments'] = count($value['comments']);
 			}
+			//Veraenderte Werte zuweisen
+			$msg_array[$key] = $value;
+			$msg_array[$key]['number_of_comments'] = count($value['comments']);
 		}
-		/** MYSQL-ERROR noch abfragen!!! **/
-		
+
 		return $msg_array;
 
 	}
@@ -234,8 +297,7 @@ class MessageBoxes {
 			$arr = $this->_mysql->fetcharray('assoc');
 			return $arr['time'];
 		} else {
-			$this->_logError(__FUNCTION__, __LINE__, 'Timeformat-String oder Time-String falsch');
-			return false;
+			throw new CMSException('Falsche Parameterangaben. Timeformat-String oder Time-String falsch', EXCEPTION_CORE_CODE);
 		}
 	}
 
@@ -290,48 +352,6 @@ class MessageBoxes {
 		}
 
 		return true;
-	}
-
-
-	/**
-	 * Speichert Fehlers in der Fehlertabelle. Diese Funktionen wird von den Klasseneigenen Funktionen aufgerufen
-	 *
-	 * @param string $function Funktion/Methode, wo der Fehler passier ist
-	 * @param string $line Zeilennummer
-	 * @param string $message Hinweis
-	 */
-	private function _logError($function, $line, $message)
-	{
-		$this->_errorexists = true;
-		$this->_error = array('function' => $function, 'line' => $line, 'message' => $message);
-	}
-
-
-	/**
-	 * Gibt zurueck, ob es ein Fehler gegeben hat.
-	 *
-	 * @return boolean $errorexists
-	 */
-
-	public function isError()
-	{
-		if ($this->_errorexists) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-
-	/**
-	 * Liefert das Array mit den Fehlermeldungen zurueck
-	 *
-	 * @return array $error_array Fehlermeldungen
-	 */
-
-	public function getError()
-	{
-		return $this->_error;
 	}
 }
 ?>

@@ -120,6 +120,7 @@ class mysql {
 		$this->_newc = $newcon;
 		$this->_connect();
 	}
+	
 
 	/**
 	 * Oeffnet die Verbindung zum Server (wird beim Erstellen des Objekts
@@ -134,23 +135,39 @@ class mysql {
 		$this->_serverlink = mysql_connect($this->_mysqlserver, $this->_mysqluser, $this->_mysqlpw, $this->_newc);
 		
 		if (!is_resource($this->_serverlink)) {
-			$this->_logError(__FUNCTION__, __LINE__, 'Verbindung zum Mysql-Server fehlgeschlagen');
-			return false;
+			$mysql_errstr = mysql_error();
+			$mysql_errno = mysql_errno();
+			$error_str = "Verbindung zum Mysql-Server fehlgeschlagen.<br />\n(#$mysql_errno) $mysql_errstr";
+			throw new CMSException($error_str, EXCEPTION_MYSQL_CODE);
 		}
 
 		if (!mysql_select_db($this->_mysqldb, $this->_serverlink)) {
-			$this->_logError(__FUNCTION__, __LINE__, 'Verbindung zur Mysql-Datenbank fehlgeschlagen');
-			return false;
-		} else {
+			throw new CMSException('Verbindung zum Mysql-Server fehlgeschlagen', EXCEPTION_MYSQL_CODE);
+			//$this->_logError(__FUNCTION__, __LINE__, 'Verbindung zur Mysql-Datenbank fehlgeschlagen');
+			//return false;
+		}/* else {
 			return true;
-		}
+		}*/
 
 	}
 	
+	/**
+	 * Maskiert spezielle Zeichen im angegebenen String. Bei Binaerdaten zu verwenden
+	 *
+	 * @param string $string
+	 * @return string maskierter String
+	 */
+	
 	public function escapeString($string)
 	{
-		return mysql_real_escape_string($string, $this->_serverlink);
+		if (($string = mysql_real_escape_string($string, $this->_serverlink)) === false) {
+			$this->_logError(__FUNCTION__, __LINE__, 'Mysql-Anfrage konnte nicht maskiert werden');
+			return false;
+		} else {
+			return $string;
+		}
 	}
+	
 
 	/**
 	 * Sendet eine Anfrage an MySQL. Bei Erfolg liefert sie true, sonst false
@@ -168,46 +185,30 @@ class mysql {
 		//Query-Record loeschen, weil ein neuer Query gestartet wurde
 		$this->_queryrecords = array();
 		$give_result = false;
-		$success = true;
-
-		//Escapen des Queries
-		/*if ($query = mysql_real_escape_string($query, $this->_serverlink)) {
-			$this->_logError(__FUNCTION__, __LINE__, "Escapen des Queries fehlgeschlagen");
-			debugecho(debug_backtrace(), 'Escape-Probleme');
-			return false;
-		}*/
-		
+		$success = true;		
 			
 		//Kontrolliert, ob der query SELECT, SHOW, EXPLAIN oder DESCRIBE enthaelt. Nur dann gibt mysql_query ein result zurück
-		$query_result_by = array('SELECT', 'Select', 'select', 'SHOW', 'Show', 'show', 'EXPLAIN','Explain', 'explain', 'DESCRIBE', 'Describe', 'describe');
+		$query_result_by = array('SELECT', 'SHOW', 'EXPLAIN', 'DESCRIBE');
 		
-		foreach ($query_result_by as $value)
-		{
-			//Enthaelt $query ein solcher string, wird die schleife abgebrochen
-			$give_result = (strpos($query, $value) === false)?false:true;
+		foreach ($query_result_by as $value) {
+			//Enthaelt $query ein Select, Show, usw..., wird die schleife abgebrochen
+			$give_result = (stripos($query, $value) === false)?false:true;
 			
-			if($give_result)
-			{
+			if ($give_result == true) {
 				break;
 			}
 		}
 		
-		if($give_result == true)
-		{
-			//echo "mysql->query: \$query '$query' doesn't contain INSERT<br />\n";
+		if ($give_result == true) {
 			$this->_result = mysql_query($query, $this->_serverlink);
+			$this->_noresult = false;
 			
-		}
-		else
-		{
+		} else {
 			
 			$success = mysql_query($query, $this->_serverlink);
 			$this->_noresult = true;
 		
 		}
-		
-		//echo "mysql->query: \$this->result ".print_r($this->result, 1)."<br />\n";
-		//debugecho(__LINE__, __FILE__, __FUNCTION__, __CLASS__);
 
 		if(($this->_noresult == true && $success == false) || ($this->_noresult == false && $this->_result === false)) {
 			$this->_logError(__FUNCTION__, __LINE__, 'Mysql-Query ist ung&uuml;ltig');
@@ -231,8 +232,7 @@ class mysql {
 			return false;
 		}
 		
-		switch ($resulttype)
-		{
+		switch ($resulttype) {
 			case "num":
 				$type = MYSQL_NUM;
 				break;
@@ -247,8 +247,7 @@ class mysql {
 
 
 		$data = mysql_fetch_array($this->_result, $type);
-
-
+		
 		if(is_array($data)) {
 			return $data;
 		} else {
@@ -302,6 +301,7 @@ class mysql {
 			return $this->_queryrecords;
 		}
 	}
+	
 
 	/**
 	 * Liefert die Anzahl der Datensaetze im Ergebnis
@@ -402,6 +402,12 @@ class mysql {
 		$this->_errorexists = true;
 		$this->_error = array('function' => $function, 'line' => $line, 'msg' => $msg);
 	}
+	
+	/**
+	 * Gibt an, ob ein Fehler aufgetreten ist.
+	 *
+	 * @return boolean
+	 */
 	
 	public function isError()
 	{

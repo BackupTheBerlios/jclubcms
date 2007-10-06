@@ -163,7 +163,7 @@ switch ($action) {
 
 		}
 		else {
-			/* Auslesen der Navigations_Id f�r das Captcha-Modul*/
+			/* Auslesen der Navigations_Id fuer das Captcha-Modul*/
 			$mysql->query("SELECT menu_ID FROM `menu`, modules WHERE modules.modules_ID = menu.menu_page
                         and modules.modules_name = 'captcha_image.php' and menu.menu_pagetyp = 'mod'");
 			$captcha_id = $mysql->fetcharray("num");
