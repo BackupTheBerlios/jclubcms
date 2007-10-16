@@ -17,32 +17,46 @@
  */
 
 if (!defined('EXCEPTION_CORE_CODE')) {
+
+	/**
+	 * Konstante fuer ein Exception im Kern des CMS
+	 *
+	 */
 	define('EXCEPTION_CORE_CODE', 1);
 }
 
 if (!defined('EXCEPTION_MYSQL_CODE')) {
+	/**
+	 * Konstante fuer ein Exception im MySQL
+	 *
+	 */
 	define('EXCEPTION_MYSQL_CODE', 2);
 }
 
 if (!defined('EXCEPTION_MODULE_CODE')) {
+
+	/**
+	 * Konstante fuer ein Exception in den Modules
+	 *
+	 */
 	define('EXCEPTION_MODULE_CODE', 3);
 }
 
 
-class CMSException extends Exception 
+class CMSException extends Exception
 {
-	private $title = "Unbekannter Fehler";
-	
+	private $title = "";
+
 	/**
 	 * Aufbau der Exception-Klasse
 	 *
-	 * @param string $message
-	 * @param int $code
+	 * @param string $message Nachricht
+	 * @param int $code Benutzercode
 	 */
-	
+
 	public function __construct($message, $code = 0)
 	{
-		
+
 		switch ($code) {
 			case EXCEPTION_CORE_CODE:
 				$this->title = "CMS-Core-Fehler";
@@ -54,56 +68,58 @@ class CMSException extends Exception
 				$this->title = 'Modul-Fehler';
 				break;
 			default:
+				$this->title = 'Fehler';
 				break;
 		}
-		
-		// sicherstelen, dass alles korrekt zugewiesen wird 
+
+		// sicherstellen, dass alles korrekt zugewiesen wird
 		parent::__construct($message, $code);
 	}
-	
+
 	/**
 	 * Liefert den Titel zurueck
 	 *
 	 * @return string Fehlertitel
 	 */
-	
+
 	public function getTitle()
 	{
 		return $this->title;
 	}
-	
+
 	/**
 	 * Gibt den Dateinamen ohne Ordnerangaben zurueck.
 	 *
 	 * @return string Dateiname
 	 */
-	
+
 	public function getFilename()
 	{
 		return basename($this->getFile());
 	}
-	
-	
+
+
 	/**
 	 * Ausgabe der Excpetion bei Verwendung als String. Magische Funktion.
 	 *
 	 * @return string Exceptionstring.
 	 */
-	
+
 	public function __toString()
 	{
 		return "<b>{$this->title}</b><br />\nEs ist ein Fehler aufgetreten in der Datei ".basename($this->getFile())." auf  Zeile {$this->getLine()} mit folgendern Nachricht: {$this->getMessage()}";
 	}
-	
+
 	/**
 	 * Exceptionhandler für nicht aufgefangene Exceptions, nicht nur für CMS-Exception.
 	 *
 	 * @param Exception $exception
 	 */
-	
+
 	public static function stdExceptionHandler($exception)
 	{
 		$file = basename($exception->getFile());
+		//Style: padding in px
 		$pad = 5;
 		echo <<<END
 		<html>
@@ -137,7 +153,8 @@ class CMSException extends Exception
 			</body>
 		</html>
 END;
+
+
 	}
-	
 }
 ?>

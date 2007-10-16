@@ -8,7 +8,7 @@
  * Requieres: PHP5
  *
  * Die Klasse image ist zustaendig fuer Grafikfunktionen
- * Sie speichert die Informationen �ber ein Bild ab, kann diese Informationen senden
+ * Sie speichert die Informationen ueber ein Bild ab, kann diese Informationen senden
  * und das Bild selber ausgeben
  * Wenn keine Bilddatei vorhanden ist, dann wird automatisch ein Fehlerbild erstellt
  * Um Thumbs zu erstellen, kann die Funktion "copy" verwendet werden.
@@ -16,8 +16,8 @@
  * Dazu kann man einfach die Gr�ssen belassen
  * !Achtung: Vorhandene Dateien werden ohne Abfrage �berschrieben!!!
  *
- * Diese Klasse ist nicht f�r die Administration der Bilder zust�ndig
- * Die Klasse wird f�r jedes Bild gebraucht, um es darzustellen und n�tige
+ * Diese Klasse ist nicht fuer die Administration der Bilder zustaendig
+ * Die Klasse wird fuer jedes Bild gebraucht, um es darzustellen und noetige
  * Informationen zum jeweiligen Bild zu erhalten
  *
  */
@@ -33,7 +33,7 @@ class image {
 
 
 	/*------------------
-	*** �ffentliche Funktionen ***
+	*** Oeffentliche Funktionen ***
 	------------------*/
 
 
@@ -101,12 +101,9 @@ class image {
 		$im = $this->im;
 
 		header("Content-type: image/$format");
-		if($this->im != null)
-		{
+		if ($this->im != null) {
 			eval("image$format(\$im);");
-		}
-		else 
-		{
+		} else {
 			readfile($this->file);
 		}
 		
@@ -137,7 +134,7 @@ class image {
 
 		$this->im = imagecreatetruecolor($this->width, $this->height);
 
-		//Aus den Parameter f�r Farbe (RGB-Werte) werden die Farben erstellt
+		//Aus den Parameter fuer Farbe (RGB-Werte) werden die Farben erstellt
 		$background_color = imagecolorallocate ($this->im, (int)substr($col_background, 0,3) , (int)substr($col_background, 3,3) , (int)substr($col_background, 6,3));
 		$text_color = imagecolorallocate($this->im, (int)substr($col_text, 0,3), (int)substr($col_text, 3,3), (int)substr($col_text, 6,3));
 
@@ -149,8 +146,8 @@ class image {
 
 
 	/**
-	 * Sendet Informationen �ber das Bild, namentlich
-	 * Grafik-Resource, Grafik-Format, die Breite und die H�he
+	 * Sendet Informationen ueber das Bild, namentlich
+	 * Grafik-Resource, Grafik-Format, die Breite und die Hoehe
 	 *
 	 * @return array ("format", "width", "height") 
 	 */
@@ -184,9 +181,8 @@ class image {
 
 
 	/**
-	 * Schaut, ob das Grafikformat unterst�tzt wird
-	 * Speichert das Grafikformat und die Bildressource
-	 * Speichert auch die H�he und Breite
+	 * Schaut, ob das Grafikformat unterstuetzt wird
+	 * Speichert das Grafikformat, Hoehe und Breite
 	 */
 
 	private function get_infos() {
@@ -214,7 +210,7 @@ class image {
 
 			default:
 
-				$this->create_image(330, 26, "Dieses Format wird nicht unterst�tzt");
+				$this->create_image(300, 26, "Format wird nicht unterstuetzt");
 				$this->send_image();
 				$supported = false;
 		}
@@ -225,6 +221,12 @@ class image {
 		}
 
 	}
+	
+	/**
+	 * Holt die Datenresource aus dem Bild und speichert sie ab
+	 *
+	 * @return boolean Erfolg
+	 */
 	
 	private function get_im()
 	{
@@ -249,20 +251,5 @@ class image {
 				return false;
 		}
 	}
-
-
-	/**
-	 *Gibt eine benutzedefinierte PHP-Fehlermeldung aus  !!OUT!!!
-	 *
-	 * @param string $error_msg	Fehlernachricht
-	 * @param konstant $error_type[optional]	Fehlertyp
-	 */
-	private function trigger_error($error_msg, $error_type = E_USER_WARNING) {
-		trigger_error($error_msg, $error_type);
-	}
-	
-
-
-
 }
 ?>

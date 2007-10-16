@@ -24,30 +24,36 @@ class Gbook implements Module
 	/**
 	 * Mysql-Klasse
 	 *
-	 * @var $mysql mysql
+	 * @var mysql
 	 */
 	private $mysql = null;
+	
+	/**
+	 * Smarty-Klasse
+	 *
+	 * @var Smarty
+	 */
 	private $smarty = null;
 	/**
 	 * Smilie-Klasse
 	 *
-	 * @var smilie
+	 * @var smilies
 	 */
 	private $smilie = null;
 	private $post_arr = array();
 	private $get_arr = array();
 	/**
-	 * Messagebox Klass
+	 * Messagebox Klasse
 	 *
-	 * @var MessageBoxes
+	 * @var Messageboxes
 	 */
 	private $msbox = null;
 	
 	/**
 	 * Aufbau der Klasse
 	 *
-	 * @param Mysql $mysql Mysql-Objekt
-	 * @param Smarty $smarty Smarty-Objekt
+	 * @param object $mysql Mysql-Objekt
+	 * @param object $smarty Smarty-Objekt
 	 */
 
 	public function __construct($mysql, $smarty)
@@ -83,9 +89,6 @@ class Gbook implements Module
 				case 'del':
 					$this->del();
 					return true;
-				case 'test':
-					$this->msboxtest();
-					return true;
 				case 'view':
 					$this->view(5);
 					return true;
@@ -112,32 +115,7 @@ class Gbook implements Module
 	{
 		return $this->tplfile;
 	}
-	
-	/**
-	 * Test mit der Messagebox-Klasse
-	 *
-	 */
 
-	private function msboxtest()
-	{
-		$this->tplfile = 'main.tpl';
-		
-		$str = debugecho(debug_backtrace(),"Fehler da?: ".var_export($this->msbox->isError(),1), 1);
-
-		if ($this->msbox->isError()) {
-			throw new CMSException("Fehler in Messagebox.<br />\n".var_export($this->msbox->isError(),1));
-		}
-
-		$str .= debugecho(debug_backtrace(),"Fehler bei Tabelle:<br />\n".var_export($this->msbox->getError(),1), 1);
-
-		//$this->msbox->addEntry(array('ID' => '3', 'ref_ID' => '', 'content' => 'Momentan wird hart an der Klasse messageboxes.class.php gearbeitet', 'name' => 'CO-Admin', 'time' => "NOW()", 'mail' => 'mail@jclub.ch', 'hp' => 'http://www.besj.ch', 'title' => 'Im Wandel'));
-		$str .= "<br />\n";
-		$str .= "Gbook-Array: <br />\n".var_export($this->msbox->getEntries(5,1,'DESC','ASC', '%e.%m.%Y %k:%i'), 1);
-		$str .= "<br />\nFehler-Array von msgbox: <br />\n".var_export($this->msbox->getError(),1);
-		$this->smarty->assign(array('content_title' => 'Debug-Infos', 'content_text' => $str));
-		
-	}
-	
 
 	/**
 	 * Zeigt die Eintraege an

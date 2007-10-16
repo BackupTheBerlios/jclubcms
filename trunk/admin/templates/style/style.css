@@ -88,7 +88,7 @@ img {
 }
 
 .error_tab {
-	width: 80%;
+	width: 90%;
 	top: 145px;
 	left: 10%;
 	background-color: #FFDD90;
@@ -99,6 +99,7 @@ img {
 }
 
 .error_tab_header {
+	padding: 50px;
 	text-align: center;
 	font-weight: bold;
 	font-family: Arial;
@@ -106,7 +107,7 @@ img {
 	border: 1px;
 }
 
-.error_tab_content {
+.error_tab_content {padding: 50px;
 	text-align: center;
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 15px;

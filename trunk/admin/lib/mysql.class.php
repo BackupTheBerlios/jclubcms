@@ -160,9 +160,9 @@ class mysql {
 	
 	public function escapeString($string)
 	{
+	
 		if (($string = mysql_real_escape_string($string, $this->_serverlink)) === false) {
-			$this->_logError(__FUNCTION__, __LINE__, 'Mysql-Anfrage konnte nicht maskiert werden');
-			return false;
+			throw new CMSException('Mysql-Anfrage konnte nicht maskiert werden', EXCEPTION_MYSQL_CODE);
 		} else {
 			return $string;
 		}
@@ -177,15 +177,15 @@ class mysql {
 	 */
 
 	public function query($query) {
-				
-		if ($this->_errorexists) {
-			return false;
-		}
 		
 		//Query-Record loeschen, weil ein neuer Query gestartet wurde
 		$this->_queryrecords = array();
 		$give_result = false;
-		$success = true;		
+		$success = true;
+		
+		if (!is_string($query)) {
+			throw new CMSException('Angegebener Mysql-Query ist kein String', EXCEPTION_MYSQL_CODE);
+		}
 			
 		//Kontrolliert, ob der query SELECT, SHOW, EXPLAIN oder DESCRIBE enthaelt. Nur dann gibt mysql_query ein result zurück
 		$query_result_by = array('SELECT', 'SHOW', 'EXPLAIN', 'DESCRIBE');
@@ -211,8 +211,7 @@ class mysql {
 		}
 
 		if(($this->_noresult == true && $success == false) || ($this->_noresult == false && $this->_result === false)) {
-			$this->_logError(__FUNCTION__, __LINE__, 'Mysql-Query ist ung&uuml;ltig');
-			return false;			
+			throw new CMSException('Mysql-Query ist ungueltig', EXCEPTION_MYSQL_CODE);		
 		} else {
 			return true;
 		}
@@ -265,10 +264,6 @@ class mysql {
 	
 	public function saverecords($resulttype = "assoc")
 	{
-		if ($this->_errorexists) {
-			return false;
-		}
-		
 		$i = 0;
 		while($data = $this->fetcharray($resulttype))
 		{
@@ -287,10 +282,7 @@ class mysql {
 	
 	public function get_records()
 	{
-		if ($this->_errorexists) {
-			return false;
-		}
-		
+	
 		if(!empty($this->_queryrecords))
 		{
 			return $this->_queryrecords;
@@ -311,10 +303,6 @@ class mysql {
 
 	public function num_rows() 
 	{
-		if ($this->_errorexists) {
-			return false;
-		}
-		
 		$number = mysql_num_rows($this->_result);
 		
 		return $number;
@@ -329,10 +317,6 @@ class mysql {
 
 	public function affected_rows() 
 	{
-		if ($this->_errorexists) {
-			return false;
-		}
-		
 		if ($this->_noresult === true) {
 			$number = mysql_affected_rows();
 		} else {
@@ -352,7 +336,7 @@ class mysql {
 	public function disconnect() {
 		if (!is_resource($this->_serverlink) && !mysql_close($this->_serverlink))
 		{
-			return false;
+			throw new CMSException('Mysql-Verbindung konnte nicht auf Anfrage geschlossen werden', EXCEPTION_MYSQL_CODE);
 		}
 		
 		return true;
@@ -389,44 +373,44 @@ class mysql {
 
 	}
 	
-	/**
-	 * Speichert intern den Fehler
-	 *
-	 * @param string $function Methode/Funktion
-	 * @param string $line Zeile
-	 * @param string $msg Nachricht
-	 */
-	
-	private function _logError($function, $line, $msg)
-	{
-		$this->_errorexists = true;
-		$this->_error = array('function' => $function, 'line' => $line, 'msg' => $msg);
-	}
-	
-	/**
-	 * Gibt an, ob ein Fehler aufgetreten ist.
-	 *
-	 * @return boolean
-	 */
-	
-	public function isError()
-	{
-		if ($this->_errorexists == true) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	/**
-	 * Gibt ein Array zurueck, welches Ort, Zeile und Nachricht des Fehlers enthaelt
-	 *
-	 * @return array $error
-	 */
-	
-	public function getError()
-	{
-		return $this->_error;
-	}
+//	/**
+//	 * Speichert intern den Fehler
+//	 *
+//	 * @param string $function Methode/Funktion
+//	 * @param string $line Zeile
+//	 * @param string $msg Nachricht
+//	 */
+//	
+//	private function _logError($function, $line, $msg)
+//	{
+//		$this->_errorexists = true;
+//		$this->_error = array('function' => $function, 'line' => $line, 'msg' => $msg);
+//	}
+//	
+//	/**
+//	 * Gibt an, ob ein Fehler aufgetreten ist.
+//	 *
+//	 * @return boolean
+//	 */
+//	
+//	public function isError()
+//	{
+//		if ($this->_errorexists == true) {
+//			return true;
+//		} else {
+//			return false;
+//		}
+//	}
+//	
+//	/**
+//	 * Gibt ein Array zurueck, welches Ort, Zeile und Nachricht des Fehlers enthaelt
+//	 *
+//	 * @return array $error
+//	 */
+//	
+//	public function getError()
+//	{
+//		return $this->_error;
+//	}
 
 };

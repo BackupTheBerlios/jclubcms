@@ -126,9 +126,9 @@ class Page
 	/**
 	 * Gibt das Menu-Array zurück, wo die Top-Navigation aus Eintraegen mit topID == 0 besteht
 	 *
-	 * @param int $nav_id
-	 * @param string $table_name
-	 * @return array $menu_array
+	 * @param int $nav_id Navigations-ID
+	 * @param string $table_name Name der MySQL-Tabelle
+	 * @return array $menu_array Array des Menus
 	 */
 
 	private function get_topidsmenu_array($nav_id, $table_name)
@@ -184,9 +184,9 @@ class Page
 	/**
 	 * Baut das Subnav-Array auf
 	 *
-	 * @param string $table_name
-	 * @param array $topid_array
-	 * @param array[reference] &$subnav_array
+	 * @param string $table_name Name der MySQL-Tabelle
+	 * @param array $topid_array Array mit den Top-IDs
+	 * @param array[reference] &$subnav_array Array, wo die Navigation gespeichert wird
 	 */
 
 	private function build_subnav_array($table_name, $topid_array, &$subnav_array)
@@ -239,9 +239,8 @@ class Page
 
 
 	/**
-	 * Die statische(!) Funktion zur Rueckgabe der Seitennavigation.
-	 * Sie kann aufgerufen werden, ohne dass es eine Initialisierung der Klasse braucht
-	 * Nachtrag: warscheinlich unnötig, da index.php die klasse Page initialiert.
+	 * Liefert ein Array, welches die Eintraege der Seitennavigation enthält.
+	 * Klasse braucht nicht initialisiert zu werden.
 	 * 
 	 *
 	 * @param int $number_entries Anzahl der Eintraege
@@ -284,9 +283,9 @@ class Page
 	 * Gibt die URL zurueck mit dem aktuellen Skriptund allen $_GET-Variablen ausser denen,
 	 * welche im Array $black_list aufgelistet sind 
 	 *
-	 * @param array $get_array
-	 * @param array $black_list
-	 * @return string $url
+	 * @param array $get_array Array der $_GET-Variablen
+	 * @param array $black_list Array mit den $_GET-Keys, die nicht vorkommen sollen
+	 * @return string $url URL-String
 	 */
 	
 	public function getUri($get_array, $black_list)
@@ -298,12 +297,12 @@ class Page
 	 * Gibt die URL zurueck mit dem aktuellen Skriptund allen $_GET-Variablen ausser denen,
 	 * welche im Array $black_list aufgelistet sind 
 	 *
-	 * @param array $get_array
-	 * @param array $black_list
-	 * @return string $url
+	 * @param array $get_array Array der $_GET-Variablen
+	 * @param array $black_list Array mit den $_GET-Keys, die nicht vorkommen sollen
+	 * @return string $url URL-String
 	 */
 	
-	public static function getUriStatic($get_array, $black_list)
+	public static function getUriStatic($get_array, $black_list = array())
 	{
 		$main_url = $_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF'];
 		

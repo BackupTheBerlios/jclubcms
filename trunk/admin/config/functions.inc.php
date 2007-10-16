@@ -80,8 +80,8 @@ function debugecho($arrOline, $file0msg=null, $function0return = null, $class = 
 		$str .= "Class $class; ";
 	}
 	
-	if ($function) {
-		$str .= "Function $function; ";
+	if ($function0return) {
+		$str .= "Function $function0return; ";
 	}
 	
 	if ($msg) {

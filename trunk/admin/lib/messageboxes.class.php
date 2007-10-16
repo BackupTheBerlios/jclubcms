@@ -20,7 +20,33 @@ require_once ADMIN_DIR.'lib/captcha.class.php';
 require_once ADMIN_DIR.'lib/mysql.class.php';
 require_once ADMIN_DIR.'lib/formularcheck.class.php';
 
-class MessageBoxes {
+if (!defined('MSGBOX_FORMCHECK_OK')) {
+	/**
+	 * Forumlarwert ist sauber
+	 *
+	 */
+	define('MSGBOX_FORMCHECK_OK', 1);
+}
+
+
+if (!defined('MSGBOX_FORMCHECK_NONE')) {
+	/**
+	 * Formularwert enthaelt Std-Wert oder ist leer
+	 *
+	 */
+	define('MSGBOX_FORMCHECK_NONE', 2);
+}
+
+
+if (!defined('MSGBOX_FORMCHECK_INVALID')) {
+	/**
+	 * Formularwert ist ungueltig
+	 *
+	 */
+	define('MSGBOX_FORMCHECK_INVALID', 4);
+}
+
+class Messageboxes {
 
 	/**
 	 * Mysql-Klasse
@@ -28,7 +54,13 @@ class MessageBoxes {
 	 * @var mysql
 	 */
 	private $_mysql = null;
+	/**
+	 * FormularCheck-Klasse
+	 *
+	 * @var FormularCheck
+	 */
 	private $_formCheck = null;
+	private $_form_checked = false;
 
 	private $_tablename = null;
 	private $_tablestruct = array('ID' => null, 'content' => null, 'ref_ID' => null, 'name' => null, 'time' => null);
@@ -38,7 +70,7 @@ class MessageBoxes {
 	 * Baut die Klasse auf. Kontrolliert, ob ein MySQL-Objetk weitergegeben wurde und testet (mittels anderer
 	 * Methoden), ob der Tabellenname und die Struktur stimmen.
 	 *
-	 * @param MySQL-Objekt $mysql Mysql-Objekt
+	 * @param mysql $mysql Mysql-Objekt
 	 * @param string $tablename Tabellenname
 	 * @param array $tablestruct Struktur der Tabelle
 	 */
@@ -66,7 +98,7 @@ class MessageBoxes {
 			}
 
 			if (!$this->_fillStruct($tablestruct)) {
-				throw new CMSException('Falsche Parameterangaben. 3. Parameter beinhahlte nicht ein Index ID oder content', EXCEPTION_CORE_CODE);
+				throw new CMSException('Falsche Parameterangaben. 3. Parameter beinhahlte nicht ein Index ID, Content- oder Zeit-Schluessel', EXCEPTION_CORE_CODE);
 			}
 
 
@@ -88,43 +120,63 @@ class MessageBoxes {
 
 	public function addEntry($tabledata)
 	{
-
 		if ($tabledata['content'] == "") {
 			throw new CMSException('Falsche Parameterangaben. Kein Text angegeben', EXCEPTION_CORE_CODE);
 		}
 
+		if ($this->_form_checked == false) {
+			throw  new CMSException('Eingaben wurde nicht auf Gueltigkeit ueberprueft', EXCEPTION_CORE_CODE);
+		}
+
+		//Formular-Check durchfuehren
+
 		//ID darf nicht angegeben werden, Gefahr der Ueberschreibung
 		$tabledata['ID'] = "";
+		//Time muss beim Argument nicht angegeben werden, darum wird der Schluessel hier definiert.
+		$tabledata['time'] = "NOW()";
 
 
-		$sql[0] = "INSERT INTO `$this->_tablename` ( ";
-		$sql[1] = ") VALUES (";
+		$sql['def'] = "INSERT INTO `$this->_tablename` ( ";
+		$sql['val'] = ") VALUES (";
 		$num = count($tabledata);
 
 
 		$i = 1;
 		foreach ($tabledata as $key => $value) {
-			$sql[0] .= "`{$this->_tablestruct[$key]}`";
+			$sql['def'] .= "`{$this->_tablestruct[$key]}`";
 
 			//Zur Sicherheit escapen
-			$sql[1] .= "'".$this->_mysql->escapeString($value)."'";
+			if ($key == 'time') {
+				$sql['val'] .= "NOW()";
+			} else {
+				$sql['val'] .= "'".$this->_mysql->escapeString($value)."'";
+			}
+			
 			if ($i != $num) {
-				$sql[0] .= ", ";
-				$sql[1] .= ", ";
+				$sql['def'] .= ", ";
+				$sql['val'] .= ", ";
 			}
 			$i++;
 		}
 
-		$sql[1] .= ")";
-		$sql['string'] = join("", $sql);
+		$sql['val'] .= ")";
+		$query = join("", $sql);
 
 		/** MYSQL-ERROR noch abfragen!!! **/
 		//** Update: Nein, Exception regelt das **/
-		$this->_mysql->query($sql);
+		$this->_mysql->query($query);
 		return true;
 	}
 
-	public function editEntry($tabledata)
+
+	/**
+	 * Ueberprueft die Eintrage und fuegt sie in die MySQL-Tabelle per Update-Befehl ein.
+	 *
+	 * @param array $tabledata einzugebende Daten
+	 * @param array $tablestddata Standartdaten aus dem Formular, welche nicht gebraucht werden duerfen.
+	 */
+
+	public function editEntry($tabledata, $tablestddata)
 	{
 
 		if ($tabledata['content'] == "") {
@@ -136,7 +188,7 @@ class MessageBoxes {
 			throw new CMSException('Falsche Parameterangaben. Kein Text angegeben', EXCEPTION_CORE_CODE);
 		}
 
-		$sql = "UPDATE `$this->_tablename` SET ( ";;
+		$sql = "UPDATE `$this->_tablename` SET ( ";
 		$num = count($tabledata);
 
 
@@ -156,6 +208,7 @@ class MessageBoxes {
 
 
 	}
+
 
 
 	/**
@@ -179,9 +232,6 @@ class MessageBoxes {
 		}
 
 		$sql = "SELECT * FROM `{$this->_tablename}` WHERE `{$this->_tablestruct['ID']}` = '$id' LIMIT 1";
-		/**
-		 * @var $_mysql mysql
-		 */
 		$this->_mysql->query($sql);
 
 		$msg_array = $this->_mysql->fetcharray('assoc');
@@ -196,6 +246,8 @@ class MessageBoxes {
 		return $msg_array;
 
 	}
+
+
 
 	/**
 	 * Liefert die Tabelleneintraege im angegebenen Bereich (wenn moeglich) zeitlich geordnet und (wenn angegeben)
@@ -215,7 +267,7 @@ class MessageBoxes {
 
 
 		if (!is_numeric($entries_pp) && !is_numeric($page)) {
-						throw new CMSException('Falsche Parameterangaben. Angegebene Argumente sind keine Zahlenwerte', EXCEPTION_CORE_CODE);
+			throw new CMSException('Falsche Parameterangaben. Angegebene Argumente sind keine Zahlenwerte', EXCEPTION_CORE_CODE);
 		}
 
 
@@ -281,6 +333,75 @@ class MessageBoxes {
 
 	}
 
+	/**
+	 * Kontrolliert die Daten auf Standarteintraege und leere Strings; ebenso wird die Mail-Adresse und die Homepage kontrolliert.
+	 * Zurueck kommt ein Array mit den Schluesseln vom $tabledata mit folgenden Angaben:
+	 * true -> angaben richtig
+	 * false -> angaben leer oder Standartwert
+	 * 'invalid' -> ungueltig (nur bei mail)
+	 * string -> korrigierter wert (nur bei hp)
+	 *
+	 * @param array $tabledata
+	 * @param array $stddata Standartangaben
+	 * @return array $arr_rtn Ergebniss
+	 */
+
+	public function formCheck($tabledata, $stddata)
+	{
+		$arr_rtn = array();
+		$ok = true;
+		
+		if (!is_array($tabledata)) {
+			throw  new CMSException('Falsche Parameterangaben in Funktion '.__FUNCTION__.'. 1. Parameter kein Array', EXCEPTION_CORE_CODE);
+		}
+		
+		echo "\nFormcheck: ";
+		var_dump($tabledata);
+		
+		foreach ($tabledata as $key => $value) {
+			if (array_key_exists($key, $stddata)) {
+				$ok = $this->_formCheck->field_check($value, $stddata[$key]);
+			} else {
+				$ok = $this->_formCheck->field_check($value);
+			}
+			
+			if ($ok === true) {
+				$arr_rtn[$key] = MSGBOX_FORMCHECK_OK;
+			} else {
+				$arr_rtn[$key] = MSGBOX_FORMCHECK_NONE;
+			}
+		
+			
+			//Mail und Hp noch seperat testen
+			if ($key == 'mail' && $ok === true) {
+				
+				if ($this->_formCheck->mailcheck($value) > 0) {
+					$arr_rtn[$key] = MSGBOX_FORMCHECK_INVALID;
+				} else {
+					$arr_rtn[$key] = MSGBOX_FORMCHECK_OK;
+				}
+
+			} elseif ($key == 'hp' && $ok === true) {
+
+				$value = $this->_formCheck->hpcheck($value);
+				$arr_rtn[$key] = $value;
+				
+			//Bei Standartwert (oder leer :-)) wird bei 'hp' ein leer-String zurueckgegeben
+			} elseif ($key == 'hp' && $ok === false) {
+				$arr_rtn[$key] = "";
+			}
+
+
+		}
+		
+		
+		$this->_form_checked = true;
+		
+		return $arr_rtn;
+
+	}
+
+
 
 	/**
 	 * Formatiert die angegeben Zeit mittels Mysql
@@ -301,6 +422,7 @@ class MessageBoxes {
 		}
 	}
 
+
 	/**
 	 * Fuellt die Eigenschaft _tablestruct mit den Werten, welche an den Konstruktor weitergegeben wurden.
 	 * Wichtige Angaben sind ID und content als Schluessel. $this->_tablestruct enthaelt danach ein Array, desen Werte
@@ -312,10 +434,10 @@ class MessageBoxes {
 
 	private function _fillStruct($tablestruct)
 	{
-		//Mindest ID und content muessen vorhanden sein
-		if (array_key_exists("ID", $tablestruct) && array_key_exists("content", $tablestruct)) {
+		//Mindest ID, content und time muessen vorhanden sein
+		if (array_key_exists("ID", $tablestruct) && array_key_exists("content", $tablestruct) && array_key_exists("time", $tablestruct)) {
 
-			//So werden unnoetige Schluessel ueberschrieben. Kommt z.B. time nicht vor, wird es ueberschrieben.
+			//So werden die unnoetig vordefinierten Schluesseln im $_tablestruct ueberschrieben,  z.B. time
 			$this->_tablestruct = $tablestruct;
 			return true;
 		} else {

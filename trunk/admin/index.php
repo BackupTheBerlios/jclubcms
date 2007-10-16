@@ -9,7 +9,7 @@
 
 
 
-error_reporting(E_ALL|E_STRICT); //Zu Debug-Zwecken
+error_reporting(E_ALL | E_STRICT); //Zu Debug-Zwecken
 
 $start_time = microtime(true);
 
@@ -37,7 +37,7 @@ require_once ADMIN_DIR.'lib/cmsexception.class.php';
 
 try {
 	set_exception_handler(array('CMSException', 'stdExceptionHandler'));
-
+	
 	//Smarty-Objekt
 	$smarty = new Smarty();
 	$smarty->compile_check = true;
@@ -74,13 +74,6 @@ try {
 
 	$nav_array = $page->get_menu_array($admin_menu_shortlinks, true);
 
-	//echo "<pre>".print_r($nav_array, 1)."</pre>\n";
-
-	//var_dump($error);
-
-	//echo "\$error <pre>".print_r($error, 1)."</pre>\n";
-	//echo "Index: Ende der Datei<br />\n";
-
 	//Wenn's nicht laeuft, muessen uebermittelte Variablen geparst werden
 	if(get_magic_quotes_gpc() == 0)
 	{
@@ -94,7 +87,7 @@ try {
 			$_POST[$key] = addslashes($value);
 		}
 	}
-
+	
 	$paraGetPost = array("GET" => $_GET, "POST" => $_POST);
 
 	$mysql->query("SELECT `menu_pagetyp`, `menu_page` FROM `admin_menu` WHERE `menu_ID`= '{$nav_array['nav_id']}'");
@@ -116,9 +109,6 @@ try {
 			{
 				include_once($path);
 
-				//Exceptions abfangen
-
-				echo 'Fehler abfangen';
 				if(class_exists($class)) {
 					$module = new $class($mysql, $smarty);
 					$module->action($paraGetPost);
@@ -182,11 +172,8 @@ $smarty_array += array('topnav' => $nav_array['topnav'], 'subnav' => $nav_array[
 
 	$smarty->assign('shortlink', $admin_menu_shortlinks?1:0);
 
+
 	$smarty->assign('generated_time', round((microtime(true) - $start_time), 4));
 	$smarty->display('index.tpl');
 
-//print_r($smarty_array);
-/*
-
-*/
 ?>
