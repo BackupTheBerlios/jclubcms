@@ -15,10 +15,13 @@
                                 Sonst gibt es ein stinknormaler link*}
                                 {if $SEND_FORMS}
                                   <form action="{$feedback_link}" method="post" class="formailer_options">
-                                    {foreach from=$form_array item=value key=name}
+							{foreach from=$form_array item=value key=name}
                                     <input type="hidden" name="{$name}" value="{$value}" />
                                     {/foreach}
                                     <input type="submit" name="weiter" value="{$feedback_linktext}" />
+							{if $SE_SUB}
+							<input type="submit" name="rauf" value="{$feedback_linktext2}" />
+							{/if}
                                   </form>                                  
                                 {else}
                                   <a href="{$feedback_link}">{$feedback_linktext}</a>

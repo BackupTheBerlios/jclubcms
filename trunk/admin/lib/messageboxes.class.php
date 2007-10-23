@@ -151,7 +151,7 @@ class Messageboxes {
 			} else {
 				$sql['val'] .= "'".$this->_mysql->escapeString($value)."'";
 			}
-			
+
 			if ($i != $num) {
 				$sql['def'] .= ", ";
 				$sql['val'] .= ", ";
@@ -176,8 +176,12 @@ class Messageboxes {
 	 * @param array $tablestddata Standartdaten aus dem Formular, welche nicht gebraucht werden duerfen.
 	 */
 
-	public function editEntry($tabledata, $tablestddata)
+	public function editEntry($tabledata)
 	{
+		if ($this->_form_checked == false) {
+			throw  new CMSException('Eingaben wurde nicht auf Gueltigkeit ueberprueft', EXCEPTION_CORE_CODE);
+		}
+
 
 		if ($tabledata['content'] == "") {
 			throw new CMSException('Falsche Parameterangaben. Kein Text angegeben', EXCEPTION_CORE_CODE);
@@ -185,27 +189,33 @@ class Messageboxes {
 
 
 		if ($tabledata['ID'] == ""  || !is_numeric($tabledata['ID'])) {
-			throw new CMSException('Falsche Parameterangaben. Kein Text angegeben', EXCEPTION_CORE_CODE);
+			throw new CMSException('Falsche Parameterangaben. ID nicht angegeben', EXCEPTION_CORE_CODE);
 		}
-
-		$sql = "UPDATE `$this->_tablename` SET ( ";
+		
+		$sql = "UPDATE `$this->_tablename` SET  ";
 		$num = count($tabledata);
 
 
 		$i = 1;
 		foreach ($tabledata as $key => $value) {
-			$sql .= "`{$this->_tablestruct[$key]}`";
+			//ID wird in WHERE-Klausel verwendet
+			if ($key != 'ID') {
+				$sql .= "`{$this->_tablestruct[$key]}`";
 
-			//Zur Sicherheit escapen
-			$sql .= "'".$this->_mysql->escapeString($value)."'";
-			if ($i != $num) {
-				$sql .= ", ";
+				//Zur Sicherheit escapen
+				$sql .= " = '".$this->_mysql->escapeString($value)."'";
+				if ($i != ($num - 1)) {
+					$sql .= ", ";
+				}
 			}
 			$i++;
 		}
 
-		$sql.= ")";
+		$sql .= " WHERE {$this->_tablestruct['ID']} = {$tabledata['ID']}";
 
+
+		$this->_mysql->query($sql);
+		return true;
 
 	}
 
@@ -254,7 +264,7 @@ class Messageboxes {
 	 * zeitformatiert zurueck.
 	 *
 	 * @param int $entries_pp Eintraege pro Seite
-	 * @param int $page Seite
+	 * @param int $page Seite (startet bei 1)
 	 * @param string $order Reihenfolge DESC|ASC
 	 * @param string $timeformat Zeitformat nach Mysql
 	 * @return array Eintraege, bei Fehler false
@@ -262,8 +272,9 @@ class Messageboxes {
 
 	public function getEntries($entries_pp, $page, $order = 'DESC', $corder = 'ASC', $timeformat = "")
 	{
-		$msg_array = array();
-		$strorder = array();
+		$msg_array = array();	//Array mit den Nachrichten
+		$strorder = array();	//Array mit den Anordnungsbedingungen-Strings
+		$num = 0; //Anzahl Eintraege
 
 
 		if (!is_numeric($entries_pp) && !is_numeric($page)) {
@@ -279,9 +290,9 @@ class Messageboxes {
 			throw new CMSException('Falsche Parameterangaben. 4. Parameter nicht zulaessig', EXCEPTION_CORE_CODE);
 
 		} elseif (isset($this->_tablestruct['time']) && !empty($this->_tablestruct['time']) && $order != "" && $corder != "") {
+			//Ordnungsbedingungen-Strings in top-nachrichten und kommentaren
 			$strorder['norm'] = "ORDER BY {$this->_tablestruct['time']} $order";
 			$strorder['comm'] = "ORDER BY {$this->_tablestruct['time']} $corder";
-
 
 		} else {
 			$strorder['norm'] = "";
@@ -292,24 +303,33 @@ class Messageboxes {
 
 		$start = ($page-1)*$entries_pp;
 
-
+		//Bedingungen fuer top-news
 		if (isset($this->_tablestruct['ref_ID'])) {
 			$condition = "WHERE `{$this->_tablestruct['ref_ID']}` = '0'";
 		} else {
 			$condition = "";
 		}
+		
+		//top-nachrichten auslesen
 		$sql = "SELECT * FROM `{$this->_tablename}` $condition {$strorder['norm']} LIMIT $start, $entries_pp";
 		$this->_mysql->query($sql);
 		$this->_mysql->saverecords('assoc');
 		$msg_array = $this->_mysql->get_records();
+		
+		//Eintraege zahlen
+		$num += count($msg_array);
 
 		//Zeit formatieren und Kommentare holen.
 		foreach ($msg_array as $key => $value) {
 
-			if ($condition != "") {//ref_ID muss gesetzt sein.
+			if ($condition != "") {//ref_ID ist also gesetzt.
+				
 				$this->_mysql->query("SELECT * FROM {$this->_tablename} WHERE `{$this->_tablestruct['ref_ID']}` = '{$value[$this->_tablestruct['ID']]}' {$strorder['comm']}");
 				$this->_mysql->saverecords('assoc');
 				$value['comments'] = $this->_mysql->get_records();
+				
+				//Eintrage zaehlen
+				$num += count($value['comments']);
 
 			}
 
@@ -317,20 +337,40 @@ class Messageboxes {
 			if ($timeformat && is_string($timeformat) && isset($this->_tablestruct['time'])) {
 				$value['time'] = $this->_formatTime($value[$this->_tablestruct['time']], $timeformat);
 
-				if ($condition != "") {//ref_ID muss gesetzt sein.
+				if ($condition != "") {//ref_ID ist also gesetzt.
+					
 					foreach ($value['comments'] as $key2 => $cvalue) {
 						$value['comments'][$key2]['time'] = $this->_formatTime($cvalue[$this->_tablestruct['time']], $timeformat);
 
 					}
 				}
 			}
+			
 			//Veraenderte Werte zuweisen
 			$msg_array[$key] = $value;
 			$msg_array[$key]['number_of_comments'] = count($value['comments']);
 		}
 
+		$msg_array['many'] = $num;
 		return $msg_array;
 
+	}
+	
+	/**
+	 * Loescht einen Eintrag aus der Datenbank
+	 *
+	 * @param unknown_type $id
+	 */
+	
+	public function delEntry($id)
+	{
+		if (!is_int($id)) {
+			throw new CMSException('Falsche Parameterangaben. Parameter nicht zulaessig', EXCEPTION_CORE_CODE);
+		}
+		
+		$query = "DELETE FROM `{$this->_tablename}` WHERE `{$this->_tablestruct['ID']}` = '$id'";
+	
+		$this->_mysql->query($query);
 	}
 
 	/**
@@ -350,31 +390,30 @@ class Messageboxes {
 	{
 		$arr_rtn = array();
 		$ok = true;
-		
+
 		if (!is_array($tabledata)) {
 			throw  new CMSException('Falsche Parameterangaben in Funktion '.__FUNCTION__.'. 1. Parameter kein Array', EXCEPTION_CORE_CODE);
 		}
-		
-		echo "\nFormcheck: ";
+
 		var_dump($tabledata);
-		
+
 		foreach ($tabledata as $key => $value) {
 			if (array_key_exists($key, $stddata)) {
 				$ok = $this->_formCheck->field_check($value, $stddata[$key]);
 			} else {
 				$ok = $this->_formCheck->field_check($value);
 			}
-			
+
 			if ($ok === true) {
 				$arr_rtn[$key] = MSGBOX_FORMCHECK_OK;
 			} else {
 				$arr_rtn[$key] = MSGBOX_FORMCHECK_NONE;
 			}
-		
-			
+
+
 			//Mail und Hp noch seperat testen
 			if ($key == 'mail' && $ok === true) {
-				
+
 				if ($this->_formCheck->mailcheck($value) > 0) {
 					$arr_rtn[$key] = MSGBOX_FORMCHECK_INVALID;
 				} else {
@@ -385,18 +424,18 @@ class Messageboxes {
 
 				$value = $this->_formCheck->hpcheck($value);
 				$arr_rtn[$key] = $value;
-				
-			//Bei Standartwert (oder leer :-)) wird bei 'hp' ein leer-String zurueckgegeben
+
+				//Bei Standartwert (oder leer :-)) wird bei 'hp' ein leer-String zurueckgegeben
 			} elseif ($key == 'hp' && $ok === false) {
 				$arr_rtn[$key] = "";
 			}
 
 
 		}
-		
-		
+
+
 		$this->_form_checked = true;
-		
+
 		return $arr_rtn;
 
 	}

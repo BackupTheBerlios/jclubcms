@@ -310,6 +310,7 @@ class Page
 		
 		$i = 0;
 		foreach ($get_array as $key => $value) {
+			
 			if (in_array($key, $black_list) == false) {
 				if ($i == 0) {
 					$sep = '?';
