@@ -34,7 +34,7 @@ class Page
 		$this->mysql = $mysql;
 		$this->auth = new Auth($this, $mysql);
 	}
-	
+
 
 	/**
 	 * Gibt das Menu-Array zurueck, um das Menu darzustellen
@@ -43,13 +43,17 @@ class Page
 	 * @param boolean $admin_menu Muss das Admin-Menu dargestellt werden?
 	 * @return array $menu_array Array mit den Menu-Eintraegen
 	 */
-	
+
 
 	public function get_menu_array($shortlinks = false, $admin_menu = false)
 	{
 		$menu_array = array();
 
-		$nav_id = (int)$_GET['nav_id'];
+		if (array_key_exists('nav_id', $_GET)) {
+			$nav_id = (int)$_GET['nav_id'];
+		} else {
+			$nav_id = 0;
+		}
 
 		//Ob es das Admin- oder User-Menu ist, aendert sich der Tabellen-Name im MySQL.
 		$table_name = ($admin_menu == true)?"admin_menu":"menu";
@@ -69,7 +73,7 @@ class Page
 
 		return $menu_array;
 	}
-	
+
 
 	/**
 	 * Liefert ein Array zurueck, welches die Menu-Eintraege enthaelt. Die shortlinks-Menu befinden sich hier in der topnav.
@@ -172,10 +176,10 @@ class Page
 		//topnav-Array erstellen
 		$this->mysql->query("SELECT `menu_ID`, `menu_name`, `menu_modvar` FROM `$table_name` WHERE `menu_topid` = '0' AND `menu_display` != '0' ORDER BY `menu_position` ASC");
 		$i = 0;
-		
+
 		$this->mysql->saverecords('assoc');
 		$menu_array['topnav'] = $this->mysql->get_records();
-		
+
 
 		return $menu_array;
 
@@ -196,7 +200,7 @@ class Page
 		static $i = 0, $j = 0;
 
 		$this->mysql->query("SELECT `menu_ID`, `menu_name`, `menu_modvar` FROM `$table_name` WHERE `menu_topid` = '{$topid_array[$j]}' AND `menu_display` != '0' AND `menu_shortlink` != '1' ORDER BY `menu_position` ASC");
-		
+
 		$mysql_array = $this->mysql->get_records();
 
 		//Durchlaeuft $mysql_array und baut so die Navigation auf.
@@ -204,8 +208,8 @@ class Page
 
 		//$level aendert sich nicht innerhalb der Funktion, $j hingegen schon, denn sie ist statisch.
 		$level = $j;
-		
-		//Baut den Navigationsbaum auf, indem bei jedem Treffer Topid -> menu_Id ein neuer Ast entsteht. 
+
+		//Baut den Navigationsbaum auf, indem bei jedem Treffer Topid -> menu_Id ein neuer Ast entsteht.
 		foreach ($mysql_array as $value) {
 			$subnav_array[$i] = $value;
 			$subnav_array[$i]['level'] = $level;
@@ -215,7 +219,7 @@ class Page
 			{
 				$this->build_subnav_array($table_name, $topid_array, $subnav_array);
 			}
-			
+
 		}
 	}
 
@@ -259,26 +263,26 @@ class Page
 		if ($page < 1) {
 			$page = 1;
 		}
-		
+
 		foreach ($get_array as $key => $value) {
 			if ($key != 'nav_id' && $key != 'page') {
 				$apendices .= "&amp;$key=$value";
 			}
 		}
-		
+
 
 		$number_of_pages = $number_entries / $max_entries_pp;
 
 		$pages_array = array();
 		for ($i = 1; $i < ($number_of_pages+1); $i++) {
-			
+
 			$link = $main_url.'?nav_id='.$nav_id.'&amp;page='.$i.$apendices;
 			$pages_array[$i] = array('page'=>$i, 'link'=>$link);
 		}
-		
+
 		return $pages_array;
 	}
-	
+
 	/**
 	 * Gibt die URL zurueck mit dem aktuellen Skriptund allen $_GET-Variablen ausser denen,
 	 * welche im Array $black_list aufgelistet sind 
@@ -287,12 +291,12 @@ class Page
 	 * @param array $black_list Array mit den $_GET-Keys, die nicht vorkommen sollen
 	 * @return string $url URL-String
 	 */
-	
+
 	public function getUri($get_array, $black_list)
 	{
 		return self::getUriStatic($get_array, $black_list);
 	}
-	
+
 	/**
 	 * Gibt die URL zurueck mit dem aktuellen Skriptund allen $_GET-Variablen ausser denen,
 	 * welche im Array $black_list aufgelistet sind 
@@ -301,26 +305,26 @@ class Page
 	 * @param array $black_list Array mit den $_GET-Keys, die nicht vorkommen sollen
 	 * @return string $url URL-String
 	 */
-	
+
 	public static function getUriStatic($get_array, $black_list = array())
 	{
 		$main_url = $_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF'];
-		
+
 		$apendices = "";
-		
+
 		$i = 0;
 		foreach ($get_array as $key => $value) {
-			
+
 			if (in_array($key, $black_list) == false) {
 				if ($i == 0) {
 					$sep = '?';
 				} else {
 					$sep = '&amp;';
 				}
-				
+
 				$apendices .= $sep."$key=$value";
-				
-				$i++;	
+
+				$i++;
 			}
 		}
 		return $main_url.$apendices;

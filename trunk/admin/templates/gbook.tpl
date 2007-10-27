@@ -37,6 +37,8 @@
 					{if $book.hp neq ""}<br /><a href="http://{$book.hp}" target="_blank"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
 				</td>
 				<td class="content_tab_content2" style="text-align:right">
+				<a href="./index.php?nav_id={$local_link}&amp;action=comment&amp;id={$book.ID}&amp;{$SID}"><img src="templates/style/icons/pencil.gif" />Kommentieren</a>
+					<br />
 					<a href="./index.php?nav_id={$local_link}&amp;action=edit&amp;id={$book.ID}&amp;{$SID}"><img src="templates/style/icons/pencil.gif" />Editieren</a>
 					<br />
 					<a href="./index.php?nav_id={$local_link}&amp;action=del&amp;id={$book.ID}&amp;{$SID}"><img src="templates/style/icons/del.gif" />L&ouml;schen</a>
@@ -62,7 +64,7 @@
 				</tr>
 			{/foreach}
 			<tr>
-				<td colspan="3" class="content_tab_content1" align="center"><a href="?nav_id={$local_link}&action=comment&ref_ID={$book.ID}&amp;{$SID}"><img src="templates/style/icons/comment.gif" />Neuer Kommentar</a></td>
+				<td colspan="3" class="content_tab_content1" align="center"><a href="?nav_id={$local_link}&action=comment&id={$book.ID}&amp;{$SID}"><img src="templates/style/icons/comment.gif" />Neuer Kommentar</a></td>
 			</tr>
 		</table>
 	{/foreach}

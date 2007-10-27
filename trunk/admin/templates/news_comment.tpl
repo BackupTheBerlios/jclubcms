@@ -7,6 +7,23 @@
 <script type="text/javascript" src="../javascript/smilies.js"></script>
     {************************************************************}
     {************************************************************}
+	<table cellpadding="0" cellspacing="0" align="center" class="content_tab">
+			<tr>
+				<td class="content_tab_header" colspan="2">
+				{$news.news_title}
+				</td>
+			</tr>
+			<tr>
+				<td class="content_tab_content1">
+				{$news.news_content}
+				</td>
+				<td class="content_tab_content2">
+					<img src="templates/style/icons/date.gif" /> {$news.time}<br />
+					<img src="templates/style/icons/user.gif" /> {$news.news_name}<br />
+					<a href="?nav_id={$local_link}&action=mail&entry_id={$news.ID}&amp;{$SID}"><img src="templates/style/icons/email.gif" /> E-mail</a>
+					{if $news.hp neq ""}<br /><a href="{$news.hp}" target="_blank"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
+				</td>
+			</tr>
 	{*Fehlerausgabe wenn noetig*}
 	{if $dump_errors}
 	<table class="content_tab" align="center">
@@ -18,11 +35,11 @@
 		</tr>
 	</table>
 	{/if}
-    <form name="newentry" method="post" action="?nav_id={$local_link}&action={$action}&{$SID}">
-	 <input type="hidden" name="ID" value="{$entry_ID}" />
-      <table cellpadding="0" cellspacing="0" align="center" class="content_tab">
+	<!-- Eintrags-Formular -->
+    <form name="newentry" method="post" action="?nav_id={$local_link}&id={$news.ID}&action={$action}&{$SID}">
+      <table cellpadding="0" cellspacing="0" align="center" class="content_tab">	  
         <tr>
-          <td class="formailer_header" colspan="2"><img src="templates/style/icons/pencil.gif" /><input class="formailer_header_input" name="title" type="text" onclick="select()" value="{$entry_title}" />{if $action == 'edit'}&nbsp;&nbsp;&nbsp;&nbsp;{$entry_time}{/if}</td>
+          <td class="formailer_header" colspan="2"></td>
         </tr>
         <tr>
           <td class="formailer_txt">

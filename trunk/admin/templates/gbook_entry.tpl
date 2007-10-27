@@ -7,6 +7,17 @@
 <script type="text/javascript" src="../javascript/smilies.js"></script>
     {************************************************************}
     {************************************************************}
+	{*Fehlerausgabe wenn noetig*}
+	{if $dump_errors}
+	<table class="content_tab" align="center">
+		<tr>
+			<td class="formailer_header" style="background-color: #EC6442">{$error_title|default:"Einige Daten sind ungueltig"}</td>
+		</tr>
+		<tr>
+			<td class="formailer_txt" style="background-color: #ED4B23">{$error_content}</td>
+		</tr>
+	</table>
+	{/if}
     <form name="newentry" method="post" action="?nav_id={$local_link}&action={$action}&{$SID}">
       <table cellpadding="0" cellspacing="0" align="center" class="content_tab">
         <tr>

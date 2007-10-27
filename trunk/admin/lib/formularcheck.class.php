@@ -46,7 +46,6 @@ class FormularCheck {
 	public function hpcheck ($hp) {
 		$hp = str_replace("http://", "", $hp);
 		$hp = str_replace("ftp://", "", $hp);
-		echo(__LINE__.__FILE__. __FUNCTION__.__CLASS__."\n\$hp $hp\n");
 		return $hp;
 	}
 	
@@ -77,7 +76,6 @@ class FormularCheck {
 		for ($i = strpos($mailarray[1], ".")+1; $i < strlen($mailarray[1]); $i++) {
 			$this->country .= $mailarray[1][$i];
 		}
-		echo "\nCountry: {$this->country}\n";
 		$domainarray = explode('.', $mailarray[1]);
 		$this->domain = $domainarray[0];
 	}

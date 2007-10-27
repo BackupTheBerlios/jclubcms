@@ -20,7 +20,7 @@
                                     {/foreach}
                                     <input type="submit" name="weiter" value="{$feedback_linktext}" />
 							{if $SE_SUB}
-							<input type="submit" name="rauf" value="{$feedback_linktext2}" />
+							<input type="submit" name="nein" value="{$feedback_linktext2}" />
 							{/if}
                                   </form>                                  
                                 {else}

@@ -63,7 +63,7 @@ try {
 	}
 
 
-	if($_GET['action'] == 'logout')
+	if(array_key_exists('action', $_GET) && $_GET['action'] == 'logout')
 	{
 		$auth->logout();
 		exit();

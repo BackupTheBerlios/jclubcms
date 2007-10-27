@@ -167,6 +167,58 @@ class Messageboxes {
 		$this->_mysql->query($query);
 		return true;
 	}
+	
+	public function commentEntry($id, array $tabledata)
+	{
+		if (!is_int($id)) {
+			throw new CMSException('Falsche Parameterangaben. Angegeben ID ist kein Int-Wert', EXCEPTION_CORE_CODE);
+		}
+		
+		if ($tabledata['content'] == "") {
+			throw new CMSException('Falsche Parameterangaben. Kein Text angegeben', EXCEPTION_CORE_CODE);
+		}
+
+		if ($this->_form_checked == false) {
+			throw  new CMSException('Eingaben wurde nicht auf Gueltigkeit ueberprueft', EXCEPTION_CORE_CODE);
+		}
+
+		//Formular-Check durchfuehren
+
+		//ID darf nicht angegeben werden, Gefahr der Ueberschreibung
+		$tabledata['ref_ID'] = $id;
+		//Time muss beim Argument nicht angegeben werden, darum wird der Schluessel hier definiert.
+		$tabledata['time'] = "NOW()";
+
+
+		$sql['def'] = "INSERT INTO `$this->_tablename` ( ";
+		$sql['val'] = ") VALUES (";
+		$num = count($tabledata);
+
+
+		$i = 1;
+		foreach ($tabledata as $key => $value) {
+			$sql['def'] .= "`{$this->_tablestruct[$key]}`";
+
+			//Zur Sicherheit escapen
+			if ($key == 'time') {
+				$sql['val'] .= "NOW()";
+			} else {
+				$sql['val'] .= "'".$this->_mysql->escapeString($value)."'";
+			}
+
+			if ($i != $num) {
+				$sql['def'] .= ", ";
+				$sql['val'] .= ", ";
+			}
+			$i++;
+		}
+
+		$sql['val'] .= ")";
+		$query = join("", $sql);
+
+		$this->_mysql->query($query);
+		return true;
+	}
 
 
 	/**
@@ -357,7 +409,7 @@ class Messageboxes {
 	}
 	
 	/**
-	 * Loescht einen Eintrag aus der Datenbank
+	 * Loescht einen Eintrag aus der Datenbank inkl. alle Kommentaren
 	 *
 	 * @param unknown_type $id
 	 */
@@ -368,9 +420,47 @@ class Messageboxes {
 			throw new CMSException('Falsche Parameterangaben. Parameter nicht zulaessig', EXCEPTION_CORE_CODE);
 		}
 		
+		if (array_key_exists('ref_ID', $this->_tablestruct)) {
+			$query = "SELECT `{$this->_tablestruct['ID']}` FROM `{$this->_tablename}` WHERE `{$this->_tablestruct['ref_ID']}` = '$id'";
+			$this->_mysql->query($query);
+			$this->_mysql->saverecords('assoc');
+			$id_arr = $this->_mysql->get_records();
+			
+			for ($i = 0; $i < count($id_arr); $i++) {
+				$query = "DELETE FROM `{$this->_tablename}` WHERE `{$this->_tablestruct['ID']}` = '{$id_arr[$i][$this->_tablestruct['ID']]}'";
+				$this->_mysql->query($query);
+			}
+		}
+			
+		
 		$query = "DELETE FROM `{$this->_tablename}` WHERE `{$this->_tablestruct['ID']}` = '$id'";
 	
 		$this->_mysql->query($query);
+	}
+	
+	/**
+	 * Gibt an, ob die angegeben ID ein Kommentar ist oder nicht
+	 *
+	 * @param int $id
+	 * @return boolean
+	 */
+	
+	public function is_comment($id)
+	{
+		if (!is_numeric($id)) {
+			throw new CMSException('Parameter ungueltig', EXCEPTION_CORE_CODE);
+		}
+		
+		$this->_mysql->query("SELECT `{$this->_tablestruct['ref_ID']}` FROM `{$this->_tablename}` WHERE `{$this->_tablestruct['ID']}` = '$id' LIMIT 1");
+		$this->_mysql->saverecords('assoc');
+		$data = $this->_mysql->get_records();
+		
+		if ($data[$this->_tablestruct['ref_ID']] == 0) {
+			return false;	//Kein Kommentar, sondern Haupteintrag
+		} else {
+			return true;
+		}
+		
 	}
 
 	/**
@@ -378,12 +468,12 @@ class Messageboxes {
 	 * Zurueck kommt ein Array mit den Schluesseln vom $tabledata mit folgenden Angaben:
 	 * true -> angaben richtig
 	 * false -> angaben leer oder Standartwert
-	 * 'invalid' -> ungueltig (nur bei mail)
+	 * 'invalid' -> ungueltig (nur bei email)
 	 * string -> korrigierter wert (nur bei hp)
 	 *
 	 * @param array $tabledata
 	 * @param array $stddata Standartangaben
-	 * @return array $arr_rtn Ergebniss
+	 * @return array $arr_rtn Ergebnis
 	 */
 
 	public function formCheck($tabledata, $stddata)
@@ -394,8 +484,6 @@ class Messageboxes {
 		if (!is_array($tabledata)) {
 			throw  new CMSException('Falsche Parameterangaben in Funktion '.__FUNCTION__.'. 1. Parameter kein Array', EXCEPTION_CORE_CODE);
 		}
-
-		var_dump($tabledata);
 
 		foreach ($tabledata as $key => $value) {
 			if (array_key_exists($key, $stddata)) {
@@ -412,7 +500,7 @@ class Messageboxes {
 
 
 			//Mail und Hp noch seperat testen
-			if ($key == 'mail' && $ok === true) {
+			if ($key == 'email' && $ok === true) {
 
 				if ($this->_formCheck->mailcheck($value) > 0) {
 					$arr_rtn[$key] = MSGBOX_FORMCHECK_INVALID;
@@ -475,7 +563,7 @@ class Messageboxes {
 	{
 		//Mindest ID, content und time muessen vorhanden sein
 		if (array_key_exists("ID", $tablestruct) && array_key_exists("content", $tablestruct) && array_key_exists("time", $tablestruct)) {
-
+			
 			//So werden die unnoetig vordefinierten Schluesseln im $_tablestruct ueberschrieben,  z.B. time
 			$this->_tablestruct = $tablestruct;
 			return true;

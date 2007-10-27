@@ -159,8 +159,7 @@ class mysql {
 	 */
 	
 	public function escapeString($string)
-	{
-	
+	{	
 		if (($string = mysql_real_escape_string($string, $this->_serverlink)) === false) {
 			throw new CMSException('Mysql-Anfrage konnte nicht maskiert werden', EXCEPTION_MYSQL_CODE);
 		} else {

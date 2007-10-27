@@ -36,6 +36,8 @@
 					{if $news.hp neq ""}<br /><a href="{$news.hp}" target="_blank"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
 				</td>
 				<td class="content_tab_content2" style="text-align:right">
+					<a href="./index.php?nav_id={$local_link}&amp;action=comment&amp;id={$news.news_ID}&amp;{$SID}"><img src="templates/style/icons/pencil.gif" />Kommentieren</a>
+					<br />
 					<a href="./index.php?nav_id={$local_link}&amp;action=edit&amp;id={$news.news_ID}&amp;{$SID}"><img src="templates/style/icons/pencil.gif" />Editieren</a>
 					<br />
 					<a href="./index.php?nav_id={$local_link}&amp;action=del&amp;id={$news.news_ID}&amp;{$SID}"><img src="templates/style/icons/del.gif" />L&ouml;schen</a>
