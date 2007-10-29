@@ -19,7 +19,7 @@
  * - Auslese aus Datenbank
  * - Versand des Mails
  */
-class mailsend {
+class Mailsend {
 	private $mail_reciver_name;
 	private $mail_reciver;
 	private $mail_sender_name;

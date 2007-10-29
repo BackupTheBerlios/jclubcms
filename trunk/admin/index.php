@@ -43,7 +43,7 @@ try {
 	$smarty->compile_check = true;
 	$smarty->debugging = false;
 	
-	$mysql = new mysql($db_server, $db_name, $db_user, $db_pw);
+	$mysql = new Mysql($db_server, $db_name, $db_user, $db_pw);
 
 
 	$page = new Page($smarty, $mysql);
@@ -104,18 +104,13 @@ try {
 		{
 			$path = ADMIN_DIR.'modules/'.$data['modules_name'];
 			$split = explode(".", $data['modules_name']);
-			$class = $split[0];
+			$class = ucfirst($split[0]);	//Klassen sind "first-character-uppercase"
+
 			if(file_exists($path))
 			{
 				include_once($path);
 
 				if(class_exists($class)) {
-					$module = new $class($mysql, $smarty);
-					$module->action($paraGetPost);
-					$smarty_array['file'] = $module->gettplfile();
-
-				} elseif (class_exists(ucfirst($class))) {
-					$class = ucfirst($class);
 					$module = new $class($mysql, $smarty);
 					$module->action($paraGetPost);
 					$smarty_array['file'] = $module->gettplfile();

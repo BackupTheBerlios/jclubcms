@@ -82,7 +82,7 @@ class News implements Module
 
 		$this->msbox = new Messageboxes($this->mysql, 'news', array('ID' => 'news_ID', 'ref_ID' => 'news_ref_ID', 'content' => 'news_content', 'name' => 'news_name', 'time' => 'news_time', 'email' => 'news_email', 'hp' => 'news_hp', 'title' => 'news_title'));
 
-		$this->smilie = new smilies($dir_smilies);
+		$this->smilie = new Smilies($dir_smilies);
 
 		//Je nach Get-Parameter die zugehoerige Anweisung ausfuehren
 		if (isset($this->get_arr['action'])) {

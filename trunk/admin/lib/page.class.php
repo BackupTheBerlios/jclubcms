@@ -41,7 +41,7 @@ class Page
 	 *
 	 * @param boolean $shortlinks Sind in der topnav shortlinks?
 	 * @param boolean $admin_menu Muss das Admin-Menu dargestellt werden?
-	 * @return array $menu_array Array mit den Menu-Eintraegen
+	 * @return array $menu_array Array mit den Menu-Eintraegen Keys: nav_id, topnav, subnav
 	 */
 
 

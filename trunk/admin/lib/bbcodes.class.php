@@ -20,7 +20,7 @@
  * -> Nicht jeder BBCode sollte ueberall verwendet werden koennen (URL und IMG nicht im Gaestebuch)
  */
 
-class bbcodes {
+class Bbcodes {
 	private $bbcodes_array;
 	private $type;
 	private $mysql_link;

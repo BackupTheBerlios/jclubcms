@@ -1,13 +1,13 @@
 <?php
 /** 
- * @author David D�ster
+ * @author David Daester
  * @package JClubCMS
  * File: formular_check.class.php
  * Classes: formularcheck
  * Requieres: PHP5
  */
 
-class FormularCheck {
+class Formularcheck {
 	
 	private $mail = null;
 	private $domain = null;
@@ -123,7 +123,7 @@ class FormularCheck {
 	 */
 	private function is_country () {
 		if (!file_exists(USER_DIR."/config/country.txt")) {
-			throw new CMSException('Datei mit Laenderendungen nicht gefunden', EXCEPTION_CORE_CODE);
+			throw new CMSException('Datei mit Laenderendungen nicht gefunden', EXCEPTION_LIBARY_CODE);
 		}
 		$handle = fopen(USER_DIR."/config/country.txt", "r");
 		$country_array = array();

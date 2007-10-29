@@ -12,7 +12,7 @@
  * Last modification: 2005-09-05
 */
 
-class captcha
+class Captcha
 {
 	var $session_key = null;
 	var $temp_dir    = null;

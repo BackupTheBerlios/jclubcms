@@ -72,7 +72,7 @@
  * Die date()-Funktion wird bewusst ausgelassen, damit auch nach 2038 noch funktionsfähig ist.
  */
 
-class timeparser {
+class Timeparser {
 	private $mysql_time_set = "Y-m-d H:i:s";
 	private $time_string = "";
 	private $time_format = "";

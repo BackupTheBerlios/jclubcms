@@ -23,7 +23,7 @@
  */
 
 
-class image {
+class Image {
 
 	private $file = null;
 	private $im = null;

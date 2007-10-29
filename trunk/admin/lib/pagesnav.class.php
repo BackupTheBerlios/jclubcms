@@ -12,9 +12,9 @@
 /**
  * @author David Daester
  * 
- * Ist f�r die Seitennavigationen fuer das Gaestebuch und die News zustaendig.
+ * Ist fuer die Seitennavigationen fuer das Gaestebuch und die News zustaendig.
  */
-class pagesnav {
+class Pagesnav {
 	private $main_url = null;
 	private $nav_id = null;
 	private $number_entries = null;

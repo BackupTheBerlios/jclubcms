@@ -17,7 +17,7 @@
  * Evnt. noch Administration der Smilies.
  */
 
-class smilies {
+class Smilies {
 	/**
 	 * Pfad zu den Smilies
 	 *

@@ -42,6 +42,15 @@ if (!defined('EXCEPTION_MODULE_CODE')) {
 	define('EXCEPTION_MODULE_CODE', 3);
 }
 
+if (!defined('EXCEPTION_LIBARY_CODE')) {
+
+	/**
+	 * Konstante fuer ein Exception in den Libaries
+	 *
+	 */
+	define('EXCEPTION_LIBARY_CODE', 4);
+}
+
 
 class CMSException extends Exception
 {
@@ -66,6 +75,9 @@ class CMSException extends Exception
 				break;
 			case EXCEPTION_MODULE_CODE:
 				$this->title = 'Modul-Fehler';
+				break;
+			case EXCEPTION_LIBARY_CODE:
+				$this->title = "Libary-Fehler";
 				break;
 			default:
 				$this->title = 'Fehler';
