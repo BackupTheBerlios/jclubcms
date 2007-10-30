@@ -141,7 +141,7 @@ class Auth
 			return false;
 		}
 
-		$this->smarty->assign('SID', $session->get_sessionstring());
+		$this->smarty->assign('SID', $this->session->get_sessionstring());
 		return true;
 
 	}
