@@ -46,71 +46,22 @@ class Image {
 	 * @param string $file Bilddatei
 	 */
 
-	public function __construct($file) {
+	public function __construct($file) 
+	{
 
-		if($file != "" && is_file($file))
-		{
+		if($file != "" && is_file($file) && file_exists($file)) {
 			$this->file = $file;
 
 			$this->get_infos();
 
-		}
-		else
-		{
-			$this->file = "";
-			$this->create_image(180, 100, "Bild nicht gefunden");
-		}
-
-
-	}
-
-
-
-	/**
-	 * Kopiert das Originalbild uns speichert es in ein neues Bild mit anderen H�hen/Breiten ab
-	 *
-	 * @param int $new_x Neue Breite
-	 * @param int $new_y Neue H�he
-	 * @param string $file Speicherort
-	 * @param string $new_format[optional] Neues Bildformat
-	 */
-
-	public function copy($new_width, $new_height, $file, $new_format="jpeg") {
-
-		if($this->im == null)
-		{
-			$this->get_im();
-		}
-		$new_im = imagecreatetruecolor($new_width, $new_height);
-
-		imagecopyresized($new_im, $this->im, 0, 0, 0, 0, $new_width, $new_height, $this->width, $this->height);
-		eval("image$new_format(\$new_im, \$file);");
-		imagedestroy($new_im);
-
-	}
-
-	/**
-	 * Senden das Bild per HTTP an den User
-	 *
-	 */
-
-	public function send_image() {
-
-		$format = $this->graphicformat;
-		
-		$im = $this->im;
-
-		header("Content-type: image/$format");
-		if ($this->im != null) {
-			eval("image$format(\$im);");
 		} else {
-			readfile($this->file);
+			$this->file = "";			
+			$this->create_image(180, 100, 'Bild nicht gefunden');
 		}
-		
-		
-		
-	}
 
+
+	}
+	
 	/**
 	 * Ein Bild wird erstellt. 
 	 * Die Farben sind vorgegeben
@@ -118,13 +69,13 @@ class Image {
 	 * Wird vom Konstruktor aufgerufen
 	 *
 	 * @param string $width Breite des Bildes
-	 * @param string $height H�he des Bildes
+	 * @param string $height Hoehe des Bildes
 	 * @param string $text Text, welcher im Bild steht
 	 * @param string $col_background Die Hintergrundfarbe im String mit RGB-Werten
 	 * @param string $col_text Die Textfarbe im String mit RGB-Werten
 	 */
 
-	public function create_image($width, $height, $text="Bild nicht gefunden", $col_background = "000000000", $col_text="050255070") {
+	public function create_image($width, $height, $text="Bild nicht gefunden", $col_background = "000000000", $col_text="050255070") 	{
 
 		//Fest vorgegeben
 		$this->graphicformat = "jpeg";
@@ -141,6 +92,64 @@ class Image {
 		imagefill($this->im, 0,0, $background_color);
 		imagestring($this->im, 5, 5, 35, $text, $text_color);
 	}
+	
+
+
+
+
+	/**
+	 * Kopiert das Originalbild uns speichert es in ein neues Bild mit anderen Hoehen/Breiten ab
+	 *
+	 * @param int $new_x Neue Breite
+	 * @param int $new_y Neue Hoehe
+	 * @param string $file Speicherort
+	 * @param string $new_format[optional] Neues Bildformat
+	 */
+
+	public function copy($new_width, $new_height, $file, $new_format="jpeg") 
+	{
+
+		if ($file != '' && is_file($file) && file_exists($file)) {
+			$this->create_image(300, 26, "Kopieren fehlgeschlagen");
+		}
+		
+		if($this->im == null)
+		{
+			$this->get_im();
+		}
+		$new_im = imagecreatetruecolor($new_width, $new_height);
+
+		imagecopyresized($new_im, $this->im, 0, 0, 0, 0, $new_width, $new_height, $this->width, $this->height);
+		eval("image$new_format(\$new_im, \$file);");
+		imagedestroy($new_im);
+		
+		return true;
+
+	}
+
+	/**
+	 * Senden das Bild per HTTP an den User
+	 *
+	 */
+
+	public function send_image() 
+	{
+
+		$format = $this->graphicformat;
+		
+		$im = $this->im;
+
+		header("Content-type: image/$format");
+		if ($this->im != null) {
+			eval("image$format(\$im);");
+		} else {
+			readfile($this->file);
+		}
+		
+		
+		
+	}
+
 
 
 
@@ -152,7 +161,8 @@ class Image {
 	 * @return array ("format", "width", "height") 
 	 */
 
-	public function send_infos() {
+	public function send_infos() 
+	{
 		return array("format" => $this->graphicformat,"width" => $this->width,
 		"height" => $this->height);
 	}
@@ -164,7 +174,8 @@ class Image {
 	 *
 	 */
 
-	public function __destruct() {
+	public function __destruct() 
+	{
 		$file = null;
 		$im = null;
 		$graphicformat = null;
@@ -185,7 +196,8 @@ class Image {
 	 * Speichert das Grafikformat, Hoehe und Breite
 	 */
 
-	private function get_infos() {
+	private function get_infos() 
+	{
 
 		$supported = false;
 		$array_image = getimagesize($this->file);
@@ -211,7 +223,6 @@ class Image {
 			default:
 
 				$this->create_image(300, 26, "Format wird nicht unterstuetzt");
-				$this->send_image();
 				$supported = false;
 		}
 

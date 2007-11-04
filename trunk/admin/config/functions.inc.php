@@ -11,91 +11,47 @@
  *
  */
 
-
 function __autoload($class_name)
 {
-
-	//Funktioniert nur, wenn im ADMIN-Modus!!!! -> Aendern
+	//Kleine Unschönheit: Wenn der Autoload in der obersten index.php aufgerufen wird, klappts nicht!!
 	if (!defined(ADMIN_DIR)) {
-		debug_print_backtrace();
-		echo "ADMIN_DIR nicht definiert!<br />\n";
-		
+	
 		$len_dirfile = strlen(__FILE__);
 		
+		//Entweder wird nach Unix-Path-Style ('/') oder nach Windows-Path-Style ('\') gesucht
 		if ($file = strrchr(__FILE__, '/')) {
 			$needle = '/';
 		} else {
 			$file = strrchr(__FILE__, '\\');
 			$needle = '\\';
 		}
+		
 		$len_file = strlen($file);
+		
+		//Gibt den directory-path zurueck
 		$dir = substr(__FILE__, 0, $len_dirfile - $len_file);
+		
+		//Ordner gerade oberhalb der Datei
 		$sub_dir = strrchr($dir, $needle);
 		$len_sub = strlen($sub_dir);
+		
+		//Direcotry ohne Unterordner (der gerade oberhalb der Datei liegt)
 		$dir = substr(__FILE__, 0, $$len_dirfile - $len_file - $len_sub);
-		echo $dir;
 		
+		//Nicht bereits im Adminordner
+		if (strripos($dir, 'admin') === false) {
+			$dir .= $needle.'admin';
+		}
 		
 		$class_file = strtolower($class_name);
-		require_once("$dir/lib/$class_file.class.php");
+		include_once $dir.$needle.'lib'.$needle.$class_file.'.class.php';
+		
 	} else {
 		$class_file = strtolower($class_name);
-		require_once(ADMIN_DIR."lib/$class_file.php");
+		include_once ADMIN_DIR.'lib'.$needle.$class_file.'.class.php';
 	}
 }
 
-
-/**
- * Gibt eine Ausgabe aus mit den Angaben der Datei, Zeile, Funktion (wenn vorhanden), Klasse (wenn vorhanden) und einer 
- * Nachricht (wenn vorhanden). Auch kann die Ausgabe in ein String umgeleitet werden, wenn gewünscht,
- *
- * @param array|string $arrOline
- * @param string $file0msg
- * @param string|boolean $function0ndisp
- * @param string $class
- * @param string $msg
- * @param boolean $notdisplay
- */
-
-function debugecho($arrOline, $file0msg=null, $function0return = null, $class = null, $msg = null, $return = false)
-{
-	//echo "<pre>".print_r($arrOline,1)."</pre>";
-	//Es kann auch ein Array mittels debug_backtrace() als Argumetn gegeben werden
-	if (is_array($arrOline)) {
-		$line = $arrOline[0]['line'];
-		$file = $arrOline[0]['file'];
-		$function = $arrOline[0]['function'];
-		$class = $arrOline[0]['class'];
-		$msg = $file0msg;
-		$return = $function0return;
-		
-	} else {
-		$line = $arrOline;
-		$file = $file0msg;
-		$fucntion = $function0return;
-	}
-	
-	$str = "There was an test in $file on line $line. ";
-	if ($class) {
-		$str .= "Class $class; ";
-	}
-	
-	if ($function0return) {
-		$str .= "Function $function0return; ";
-	}
-	
-	if ($msg) {
-		$str .= "Message: $msg ";
-	}
-	$str .= "<br />\n";
-	
-	if ($return == true) {
-		return $str;
-	} else {
-		echo $str;
-	}
-	
-}
 
 
 ?>

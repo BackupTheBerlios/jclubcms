@@ -21,9 +21,9 @@ define("USER_DIR", "./");
 
 
 //Config laden
-require_once(USER_DIR.'config/config.inc.php');
+require_once(USER_DIR.'config/user-config.inc.php');
 
-//Funktionen laden  !!depressed!!
+require_once ADMIN_DIR.'config/global-config.inc.php';
 require_once(ADMIN_DIR.'config/functions.inc.php');
 
 //notwendige Module laden
@@ -94,7 +94,7 @@ $page_id = $page_data["menu_page"];
 
 $child_array = array();
 $root_array = array();
-//Die Stufe beginnt von unten zu z�hlen, statt von oben. Wird am Schluss umgerechnet
+//Die Stufe beginnt von unten zu zaehlen, statt von oben. Wird am Schluss umgerechnet
 $invlevel = 1;
 
 //Alle Eintr�ge unterhalb des $nav_id Eintrags werden gelesen

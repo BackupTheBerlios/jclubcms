@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @author Simon Däster
+ * @author Simon Dï¿½ster
  * @package JClubCMS
  * File: image.php
  * Classes: -
@@ -9,16 +9,16 @@
  *
  * GRUNDSATZ:
  * "Befindet sich ein Bild im Ordner Gallery oder im Thumb, dann ist es dort richtig. D.h.
- *  es hat die richtige Grösse und sieht korrekt aus!!"
- * --> Kann zu Konflikt führen, wenn config.inc.php geändert wird
+ *  es hat die richtige Grï¿½sse und sieht korrekt aus!!"
+ * --> Kann zu Konflikt fï¿½hren, wenn config.inc.php geï¿½ndert wird
  *
  * Diese Datei (image.php= wird aufgerufen, um ein Bild darzustellen.
- * Sie fragt die Datenbank nach der übermittelten ID ab und erhält so die Bilddatei
+ * Sie fragt die Datenbank nach der ï¿½bermittelten ID ab und erhï¿½lt so die Bilddatei
  * Ist ein Bild zu gross, wird es verkleinert im Ordner 'gallery' abgespeichert
- * Mithilfe der Klasse "image" wird das Bild (verändert) ausgegeben
+ * Mithilfe der Klasse "image" wird das Bild (verï¿½ndert) ausgegeben
  * 
- * Die image-Klasse wird auch für Thumbs gebraucht
- * Ist ein Thumb nicht vorhanden, wird es automatisch aus dem zugehörigen Bild
+ * Die image-Klasse wird auch fï¿½r Thumbs gebraucht
+ * Ist ein Thumb nicht vorhanden, wird es automatisch aus dem zugehï¿½rigen Bild
  * erstellt und im Ordner 'thumb' abgespeichert.
  *
  */
@@ -41,7 +41,7 @@ if($bild)
 
 	$bild_mysql = $mysql->fetcharray();
 
-	
+
 	if(empty($bild_mysql)) {
 		$img = new image(""); //Fehlerbild ausgeben, weil kein Eintrag vorhanden ist
 		$img->create_image(240, 80, "Keine Id zu diesem Bild", "000000255", "200150080");
@@ -52,20 +52,20 @@ if($bild)
 	//Entweder liegt das Bild im Gallery-Ordner oder es ist zu gross oder richtig;
 	if(is_file($dir_galImage.$bild_mysql['filename'])) {
 		$img = new image($dir_galImage.$bild_mysql['filename']);
-		
+
 	} else {
-		
+
 		$img = new image($dir_orgImage.$bild_mysql['filename']);
 		$bild_data = $img->send_infos();
-		
+
 		if($bild_data['height'] > $image_maxheight || $bild_data['width'] > $image_maxwidth) {
 			$verhaeltnis = $bild_data['height'] / $bild_data['width'];
 
-			//Neue Breite zuweisen und neue Höhe berechnen
+			//Neue Breite zuweisen und neue Hoehe berechnen
 			$bild_newwidth = $image_maxwidth;
 			$bild_newheight = floor($verhaeltnis * $bild_newwidth);		//Abrunden
 
-			//Wenn die Höhe noch zu gross ist, wird die max. Höhe bestimmt und neue Breite berechnet
+			//Wenn die Hï¿½he noch zu gross ist, wird die max. Hï¿½he bestimmt und neue Breite berechnet
 			if($bild_newheight > $image_maxheight)
 			{
 				$bild_newheight = $image_maxheight;
@@ -74,19 +74,19 @@ if($bild)
 
 			//verkleinertes Bild in den Ordner speichern
 			$img->copy($bild_newwidth, $bild_newheight, $dir_galImage.$bild_mysql['filename']);
-			
-			//Alte Instanz löschen
+
+			//Alte Instanz lï¿½schen
 			$img->__destruct();
-			
+
 			//Neue Instanz mit kleinem Bild
 			$img = new image($dir_galImage.$bild_mysql['filename']);
-		}	
+		}
 	}
 
 	//Bild ausgeben
 	$img->send_image();
-	
-	
+
+
 }
 //****** THUMB *****//
 elseif($thumb)
@@ -96,40 +96,40 @@ elseif($thumb)
 
 	$bild_mysql = $mysql->fetcharray();
 
-	//Überprüfung, ob ein Eintrag vorhanden ist
+	//ï¿½berprï¿½fung, ob ein Eintrag vorhanden ist
 	if(empty($bild_mysql))
 	{
 		$img = new image(""); //Fehlerbild ausgeben, weil kein Eintrag vorhanden ist
 		$img->create_image(80, 80, "Keine Id", "000000255", "200150080");
 		$img->send_image();
-		die();	
+		die();
 	}
 
 	//Existiert kein Thumb, wird eins erstellt
-	if(!is_file($dir_thumb.$bild_mysql['filename'])) 
+	if(!is_file($dir_thumb.$bild_mysql['filename']))
 	{
 		//***Neues Thumb erstellen
-		
+
 		$orgImg = new image($dir_orgImage.$bild_mysql['filename']);
 		$bild_data = $orgImg->send_infos();
-		
+
 		$verhaeltnis = $bild_data['height'] / $bild_data['width'];
-		
-		//Neue Breite zuweisen (meist ist die zu gross) und neue Höhe berechnen
-			$bild_newwidth = $thumb_maxwidth;
-			$bild_newheight = floor($verhaeltnis * $bild_newwidth);		//Abrunden
 
-			//Wenn die Höhe noch zu gross ist, wird die max. Höhe bestimmt und neue Breite berechnet
-			if($bild_newheight > $thumb_maxheight)
-			{
-				$bild_newheight = $thumb_maxheight;
-				$bild_newwidth = floor((1/$verhaeltnis) * $bild_newheight);	//Abrunden
-			}
+		//Neue Breite zuweisen (meist ist die zu gross) und neue Hï¿½he berechnen
+		$bild_newwidth = $thumb_maxwidth;
+		$bild_newheight = floor($verhaeltnis * $bild_newwidth);		//Abrunden
 
-			$orgImg->copy($bild_newwidth, $bild_newheight, $dir_thumb.$bild_mysql['filename'], "jpeg");	
+		//Wenn die Hï¿½he noch zu gross ist, wird die max. Hï¿½he bestimmt und neue Breite berechnet
+		if($bild_newheight > $thumb_maxheight)
+		{
+			$bild_newheight = $thumb_maxheight;
+			$bild_newwidth = floor((1/$verhaeltnis) * $bild_newheight);	//Abrunden
+		}
+
+		$orgImg->copy($bild_newwidth, $bild_newheight, $dir_thumb.$bild_mysql['filename'], "jpeg");
 	}
 
-	
+
 	//Bild ausgeben
 	$img = new image($dir_thumb.$bild_mysql['filename']);
 	$img->send_image();

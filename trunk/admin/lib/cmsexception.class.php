@@ -131,16 +131,36 @@ class CMSException extends Exception
 	public static function stdExceptionHandler($exception)
 	{
 		$file = basename($exception->getFile());
+		
+		//1. Gartenhag nicht umbrechen -> String bei replace verkleinern und Gartenhag voranhaengen
+		$strTrace = '#'.str_replace('#', "<br />\n#", substr($exception->getTraceAsString(), 1));
+		
+		self::printException($file, $exception->getLine(), $exception->getMessage(), $strTrace);
+		
+
+	}
+	
+	/**
+	 * Gibt eine Exception-Fehlermeldung heraus
+	 *
+	 * @param string $file Datei
+	 * @param string $line Zeile
+	 * @param string $msg Nachricht
+	 * @param string $trace Trace
+	 */
+
+	public static function printException($file, $line, $msg, $trace)
+	{
 		//Style: padding in px
 		$pad = 5;
 		echo <<<END
 		<html>
 			<head>
-				<title>Jclub</title>
+				<title>Jclub -  Fehler</title>
 			</head>
 			<body>
 				<p style="margin-left: 20%; font-size: 28px; font-weight: bold;">Es ist ein unerwarteter Fehler aufgetreten</p>
-				<table style="margin-left: 20%; width: 50%; border-style: solid;">
+				<table style="margin-left: 20%; border-style: solid;">
 					<tr style="background-color: #FFDD90">
 						<td colspan="2" style="font-weight: bold; padding:{$pad}px">Fehlertabelle</td>
 					</tr>
@@ -150,23 +170,22 @@ class CMSException extends Exception
 					</tr>
 					<tr style="background-color: #EFEFEF; padding: 30px">
 						<td style="padding:{$pad}px">Zeile</td>
-						<td style="padding:{$pad}px">{$exception->getLine()}</td>
+						<td style="padding:{$pad}px">$line</td>
 					</tr>
 					<tr>
 						<td style="padding:{$pad}px">Nachricht</td>
-						<td style="padding:{$pad}px">{$exception->getMessage()}</td>
+						<td style="padding:{$pad}px">$msg</td>
 					</tr>
 					<tr style="background-color: #EFEFEF;">
 						<td style="padding:{$pad}px">Trace</td>
-						<td style="padding:{$pad}px">{$exception->getTraceAsString()}</td>
+						<td style="padding:{$pad}px">$trace</td>
 					</tr>
 				</table>
 				<p style="margin-left: 20%; font-style: italic">Sollte dieser Fehler &ouml;fters auftreten, kontaktieren Sie bitte den Administrator. Danke.</p>
 			</body>
 		</html>
 END;
-
-
 	}
+	
 }
 ?>

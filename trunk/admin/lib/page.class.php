@@ -45,12 +45,12 @@ class Page
 	 */
 
 
-	public function get_menu_array($shortlinks = false, $admin_menu = false)
+	public function get_menu_array($get_array, $shortlinks = false, $admin_menu = false)
 	{
 		$menu_array = array();
 
-		if (array_key_exists('nav_id', $_GET)) {
-			$nav_id = (int)$_GET['nav_id'];
+		if (array_key_exists('nav_id',$get_array)) {
+			$nav_id = (int)$get_array['nav_id'];
 		} else {
 			$nav_id = 0;
 		}
@@ -60,7 +60,7 @@ class Page
 
 		//Ist $nav_id kleiner gleich Null, wird ihr der erste Wert aus der MySQL-Tabelle zugewiesen.
 		if($nav_id <= 0) {
-			$this->mysql->query("SELECT `menu_ID` FROM `$table_name` ORDER BY `menu_position` LIMIT 1");
+			$this->mysql->query("SELECT `menu_ID` FROM `$table_name` ORDER BY `menu_position` ASC LIMIT 1");
 			$nav_id = $this->mysql->fetcharray();
 			$nav_id = $nav_id[0];
 		}
@@ -70,6 +70,7 @@ class Page
 
 		//Damit muss im index nicht nochmal die $nav_id kontroliert werden
 		$menu_array['nav_id'] = $nav_id;
+		
 
 		return $menu_array;
 	}

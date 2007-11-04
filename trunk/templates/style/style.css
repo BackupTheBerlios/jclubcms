@@ -10,8 +10,14 @@ a:link, a:visited {
 	text-decoration: underline; 
 	color: #FF6600;
 }
+
 a:hover {
 	text-decoration: none;
+}
+
+h1 {
+	text-align: center;
+	font-size: 25px;
 }
 
 img {
@@ -46,6 +52,76 @@ img {
 	
 }
 
+#forward {
+	background-color: #FFDD90;
+	color: #D2691E;
+	width: 90%;
+	margin: 10% 5% 10% 5%;
+	padding: 20px;
+	position: fixed;
+	z-index: 2;
+	text-align: center;
+	font-size: 15px;
+	font-family: sans-serif;
+}
+
+#forward_inc {
+	background-color: #FFDD90;
+	color: #D2691E;
+	width: 50%;
+	margin: 10% 5% 10% 5%;
+	padding: 20px;
+	position: fixed;
+	z-index: 2;
+	text-align: center;
+	font-size: 15px;
+	font-family: sans-serif;
+}
+
+.error {
+	top: 145px;
+	left: 5%;
+	right: 5%;
+	padding: 10px 10px 20px 10px;
+	border: 1px;
+	font-style: normal;
+	font: 15px;
+	text-align: center;
+	background-color: #F4A460;
+	z-index: 2;
+	position: absolute;
+}
+
+.error_tab {
+	width: 90%;
+	top: 145px;
+	left: 10%;
+	background-color: #FFDD90;
+	z-index: 2;
+	position: absolute;
+	border: thin;
+	border-style: 
+}
+
+.error_tab_header {
+	padding: 50px;
+	text-align: center;
+	font-weight: bold;
+	font-family: Arial;
+	background-color: #FFDD90;
+	border: 1px;
+}
+
+.error_tab_content {padding: 50px;
+	text-align: center;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 15px;
+	border: 1px;
+	
+	background-color: #FFDE6A;
+	
+}
+
 #content {
 	top: 145px;
 	left: 22%;
@@ -54,6 +130,7 @@ img {
 	z-index: 2;
 	position: absolute;
 }
+
 #content_txt {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 12px;

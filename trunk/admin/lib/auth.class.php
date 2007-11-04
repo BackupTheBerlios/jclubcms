@@ -21,12 +21,29 @@ class Auth
 	/**
 	 * Page-Klasse
 	 *
-	 * @var page
+	 * @var Page
 	 */
 	private $page;
 	
+	/**
+	 * Session-Klasse
+	 *
+	 * @var Session
+	 */
 	private $session;
+	
+	/**
+	 * Mysql-Klasse
+	 *
+	 * @var Mysql
+	 */
 	private $mysql;
+	
+	/**
+	 * User-ID
+	 *
+	 * @var int
+	 */
 	private $user_id;
 
 	/**
@@ -47,18 +64,19 @@ class Auth
 	/**
 	 * Ueberprueft ob sich jemand einloggt 
 	 *
+	 * @param array $post_array $_POST-Daten
 	 * @return boolean Antwort, ob sich jemand einloggt.
 	 */
 
-	public function check4login()
+	public function check4login($post_array)
 	{
 
 
 		global $auth_error_noentry, $auth_error_failname, $auth_error_failpw, $auth_forward_linktext, $auth_forward_successlogin, $auth_forward_title;
 
 		//Login-Formular gesendet?
-		if (isset($_POST['login']) && $_POST['login'] != "") {
-			$login_data = $this->getlogindata();
+		if (isset($post_array['login']) && $post_array['login'] != "") {
+			$login_data = $this->getlogindata($post_array);
 
 			
 			if (is_array($login_data)) {
@@ -107,17 +125,18 @@ class Auth
 
 	/**
 	 * Schaut nach, ob sich ein User rechtmaessig eingeloggt hat, und prueft auf deren Rechmaessigkeit
-	 *
+	 * 
+	 * @param array $get_array $_GET-Daten
 	 * @return boolean
 	 */
 
-	public function check4user()
+	public function check4user($get_array)
 	{
 		global $session_timeout;
 
 		global $auth_error_nonactiv, $auth_error_sessioncorupt;
 
-		if ($this->session->watch4session() == false) {
+		if ($this->session->watch4session($get_array) == false) {
 			$this->smarty->assign('file', 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']);
 			$this->smarty->display('login.tpl');
 			return false;
@@ -166,26 +185,27 @@ class Auth
 	/**
 	 * List die Logindaten heraus oder gibt einen Fehlerwert zurueck
 	 *
+	 * @param array $post_array $_POST-Daten
 	 * @return array|int
 	 */
 
-	private function getlogindata()
+	private function getlogindata($post_array)
 	{
 		$name = "";
 		$password_encrypted = "";
 		
 		$error = 0;
 
-		if (isset($_POST['name']) && !empty($_POST['name'])) {
-			$name = $_POST['name'];
+		if (isset($post_array['name']) && !empty($post_array['name'])) {
+			$name = $post_array['name'];
 
 		} else {
 			$error = 1;
 
 		}
 
-		if (isset($_POST['password'])&& !empty($_POST['password'])) {
-			$password_encrypted = md5($_POST['password']);
+		if (isset($post_array['password'])&& !empty($post_array['password'])) {
+			$password_encrypted = md5($post_array['password']);
 
 		} else {
 			$error += 2;

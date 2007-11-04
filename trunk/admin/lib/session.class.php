@@ -37,14 +37,15 @@ class Session {
     /**
      * Schaut, ob der User bereits eine Session hat
      *
+     * @param array $get_array $_GET-Daten
      * @return boolean Session vorhanden
      */
     
-    public function watch4session()
+    public function watch4session($get_array)
     {
-    	if(!empty($_GET[$this->session_name]) && is_string($_GET[$this->session_name]) && strlen($_GET[$this->session_name]) == 32)
+    	if(!empty($get_array[$this->session_name]) && is_string($get_array[$this->session_name]) && strlen($get_array[$this->session_name]) == 32)
     	{
-    		$this->session_id = $_GET[$this->session_name];
+    		$this->session_id = $get_array[$this->session_name];
     		return true;
     	} else {
     		return false;

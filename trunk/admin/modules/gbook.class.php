@@ -256,7 +256,6 @@ class Gbook implements Module
 			unset($entry['title']);
 			$check = $this->exefcheck($entry);
 			$answer = $this->fcheck2answer($check);
-			var_dump($answer);
 
 			if ($answer == "") {
 				$entry['hp'] = $check['hp'];

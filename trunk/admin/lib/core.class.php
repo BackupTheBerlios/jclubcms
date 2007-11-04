@@ -23,8 +23,7 @@ error_reporting(E_ALL | E_STRICT); //Zu Debug-Zwecken
 $start_time = microtime(true);
 
 //Config laden
-require_once USER_DIR.'config/config.inc.php';
-require_once ADMIN_DIR.'config/config.inc.php';
+require_once ADMIN_DIR.'config/global-config.inc.php';
 require_once ADMIN_DIR.'config/functions.inc.php';
 
 
@@ -87,7 +86,7 @@ class Core
 		 * @var array
 		 */
 
-	private $gpc = array('GET' => null, 'POST' => null, 'COOKIE' => null);
+	private $gpc = array('GET' => array(), 'POST' => array(), 'COOKIE' => array());
 
 	/**
 		 * Navigations-Id
@@ -125,29 +124,32 @@ class Core
 
 			$this->initPage();
 
-
-
 		} catch(CMSException $e) {
 
+			$strTrace = '#'.str_replace('#', "<br />\n#", substr($e->getTraceAsString(), 1));
 			//Ist Smarty nicht vorhanden, wird eine Nachricht ueber den Exceptionhandler geschickt, der kein Smarty braucht.
 			if (!class_exists('Smarty') || !($this->smarty instanceof Smarty)) {
-				throw new Exception($e->getMessage(), $e->getCode());
-				
+				CMSException::printException($e->getFilename(), $e->getLine(), $e->getMessage(), $strTrace);
 			}
+			
+			CMSException::printException($e->getFilename(), $e->getLine(), $e->getMessage(), $strTrace);
 
-			$this->smarty_array['file'] = 'error_include.tpl';
-			$this->smarty_array['error_title'] = $e->getTitle();
-			$this->smarty_array['error_text'] = $e->getMessage()."<br />\nFehler aufgetreten in der Datei ".$e->getFilename()." auf Zeile ".$e->getLine();
-			$this->smarty->assign($this->smarty_array);
-			$this->smarty->display('index.tpl');
+//			$this->smarty_array['file'] = 'error_include.tpl';
+//			$this->smarty_array['error_title'] = $e->getTitle();
+//			$this->smarty_array['error_text'] = $e->getMessage()."<br />\nFehler aufgetreten in der Datei ".$e->getFilename()." auf Zeilenummer ".$e->getLine();
+//			$this->smarty_array['error_text'] .= str_replace('#', '<br />#', $e->getTraceAsString());
+//			$this->smarty->assign($this->smarty_array);
+//			$this->smarty->display('index.tpl');
+
+			echo "<pre>".var_export($e->getTrace(),1)."</pre>";
 
 		}
 	}
 
 	/**
-		 * Initialsieren der Objekte
-		 *
-		 */
+	 * Initialsieren der Objekte
+	 *
+	 */
 
 	private function initObjects()
 	{
@@ -165,37 +167,46 @@ class Core
 	}
 
 	/**
-		 * Kontrolliere, ob magic_quotes_gpc ON, sonst selber veraendern
-		 *
-		 */
+	 * Kontrolliere, ob magic_quotes_gpc ON, sonst selber veraendern
+	 *
+	 */
 
 	private function checkGpc()
 	{
-		//Wenn's nicht laeuft, muessen uebermittelte Variablen geparst werden
-		if(get_magic_quotes_gpc() == 0) {
-
-			foreach($_GET as $key => $value) {
-				$this->gpc['GET'] = addslashes($value);
-				unset($_GET[$key]);
-			}
-
-			foreach($_POST as $key => $value) {
-				$this->gpc['POST'] = addslashes($value);
-				unset($_POST[$key]);
-			}
-
-			foreach($_COOKIE as $key => $value) {
-				$this->gpc['COOKIE'] = addslashes($value);
-				unset($_COOKIE[$key]);
-			}
+		$globals = array('GET' => $_GET, 'POST' => $_POST, 'COOKIE' => $_COOKIE);
+		
+		if (get_magic_quotes_gpc() == 0) {
+			$activ = false;
+		} else {
+			$activ = true;
 		}
+		
+		foreach ($globals as $gkey => $gvalue) {
+			
+			foreach ($gvalue as $key => $value) {
+				
+				//Bei inkativen magic_quotes_gpc we
+				if ($activ == false) {
+					$value = addslashes($value);
+				}
+				
+				$this->gpc[$gkey][$key] = $value;
+					
+			}
+			
+		}
+				
+		unset($_GET);
+		unset($_POST);
+		unset($_COOKIE);	
+		
 	}
 
 
 	/**
-		 * Durchfuehren der Admin-Kontrollen zum Einloggen in den Admin-Bereich
-		 *
-		 */
+	 * Durchfuehren der Admin-Kontrollen zum Einloggen in den Admin-Bereich
+	 *
+	 */
 
 	private function checkAdmin()
 	{
@@ -205,38 +216,38 @@ class Core
 		}
 
 		//Testet auf Logout und fuehrt es durch
-		if(array_key_exists('action', $_GET) && $_GET['action'] == 'logout') {
+		if(array_key_exists('action', $this->gpc['GET']) && $this->gpc['GET']['action'] == 'logout') {
 			$auth->logout();
-			exit();
+			exit;
 		}
 
 		//Haltet nach Login oder User ausschau (inkl. Sicherheitstest)
-		if(($this->auth->check4login() == true) || ($this->auth->check4user() == false))
+		if(($this->auth->check4login($this->gpc['POST']) == true) || ($this->auth->check4user($this->gpc['GET']) == false))
 		{
-			exit();
+			exit;
 		}
 	}
 
 
 
 	/**
-		 * Initialisiert den Seiteninhalt
-		 *
-		 */
+	 * Initialisiert den Seiteninhalt
+	 *
+	 */
 
 	private function initPage()
 	{
 		$this->tplfile = 'index.tpl';
 
-		$admin_menu_shortlinks = true;
-
-		$this->loadNav($admin_menu_shortlinks);
-
 		if ($this->is_admin == true) {
 			$table = 'admin_menu';
+			$shortlink = true;
 		} else {
 			$table = 'menu';
+			$shortlink = true;
 		}
+		
+		$this->loadNav($shortlink);
 
 		$this->mysql->query("SELECT `menu_pagetyp`, `menu_page` FROM `$table` WHERE `menu_ID`= '{$this->nav_id}'");
 		$data = $this->mysql->fetcharray("assoc");
@@ -244,10 +255,10 @@ class Core
 		$page_id = (int)$data['menu_page'];
 
 		if ($data['menu_pagetyp'] == 'mod') {
-			$loaded = $this->loadModule($page_id);
+			$this->loadModule($page_id);
 
 		} elseif ($data['menu_pagetyp'] == 'pag') {
-			$loaded = $this->loadContent($page_id);
+			$this->loadContent($page_id);
 
 		} else {
 			$content_text = "Das angegebene Modul konnte nicht gefunden werden<br />\n";
@@ -266,9 +277,10 @@ class Core
 	}
 
 	/**
-		 * Laedt die Navigation und speicher sie in $this->smarty_array
-		 *
-		 */
+	 * Laedt die Navigation und speicher sie in $this->smarty_array
+	 *
+	 * @parambooleane $shortlinks
+	 */
 
 	private function loadNav($shortlinks = false)
 	{
@@ -278,7 +290,7 @@ class Core
 			$admin = false;
 		}
 
-		$nav_array = $this->page->get_menu_array($shortlinks, $admin);
+		$nav_array = $this->page->get_menu_array($this->gpc['GET'], $shortlinks, $admin);
 		$this->smarty_array['topnav'] = $nav_array['topnav'];
 		$this->smarty_array['subnav'] = $nav_array['subnav'];
 		$this->smarty_array['local_link'] = ($this->nav_id = $nav_array['nav_id']);
@@ -286,10 +298,11 @@ class Core
 	}
 
 	/**
-		 * Laedt ein Modul und fuehrt es aus. Anschliessend wird das zugehoerige Template im $smarty_arry gespeichert
-		 *
-		 * @param int $module_ID
-		 */
+	 * Laedt ein Modul und fuehrt es aus. Anschliessend wird das zugehoerige Template im $smarty_arry gespeichert
+	 *
+	 * @param int $module_ID
+	 */
+	
 
 	private function loadModule($module_ID)
 	{
@@ -303,7 +316,7 @@ class Core
 		}
 
 		//Modul aus Datenbank lesen
-		$this->mysql->query("SELECT `modules_name` FROM `$mod_table` WHERE `modules_ID`= '$module_ID' LIMIT 1");
+		$this->mysql->query("SELECT `modules_name`,`modules_template` FROM `$mod_table` WHERE `modules_ID`= '$module_ID' LIMIT 1");
 		$data = $this->mysql->fetcharray("assoc");
 
 		if (empty($data) && $data == false) {
@@ -313,7 +326,7 @@ class Core
 		}
 
 		//Modul-Path ermittelnt
-		if ($is_admin == true) {
+		if ($this->is_admin == true) {
 			$path = ADMIN_DIR.'modules/'.$data['modules_name'];
 		} else {
 			$path = USER_DIR.'modules/'.$data['modules_name'];
@@ -346,16 +359,22 @@ class Core
 		//Modul ausfuehren
 		$module = new $class($this->mysql, $this->smarty);
 		$module->action($this->gpc);
+
+		//Wenn das Modul kein Tmplate zurueckgibt -> Beenden
+		if ($data['modules_template'] == 'no') {
+			exit;
+		}
+
 		$this->smarty_array['file'] = $module->gettplfile();
 
 	}
 
 
 	/**
-		 * Laedt den Inhalt aus der Datenbank mit der angegebenen ID
-		 *
-		 * @param int $page_ID
-		 */
+	 * Laedt den Inhalt aus der Datenbank mit der angegebenen ID
+	 *
+	 * @param int $page_ID
+	 */
 
 	private function loadContent($page_ID)
 	{
