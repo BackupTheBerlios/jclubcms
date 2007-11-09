@@ -57,8 +57,8 @@ class Captcha_image extends Module
 		$this->tmp_dir_path               = './data/temp/';
 		$this->captcha_expires_after = 420;
 		$this->gpc = $gpc;
-
-
+		$this->initCaptcha();
+		$this->cleanUp();
 	}
 
 	//Gibt kein Template zurueck

@@ -18,12 +18,12 @@
 		&nbsp;
 	</div>
 	<div id="navigation">
-		<div class="navigation_links">
+		<div class="navigation_links"{if $shortlink} style="text-align:right"{/if}>
       
         {*Hier kommt die Navigation, ausgelesen aus der DB*}
-        {section name=topnav loop=$nav}
-          <a href="./index.php?nav_id={$nav[topnav].menu_ID}">{$nav[topnav].menu_name}</a>
-        {/section}
+        {foreach item=topnav from=$topnav}
+          <a href="?nav_id={$topnav.menu_ID}">{$topnav.menu_name}</a>
+        {/foreach}
         
       </div>
     </div>
@@ -43,7 +43,7 @@
       {else}
       <div class="subnavigation_links3">
       {/if}        
-        <a href="./index.php?nav_id={$subnav.menu_ID}">{$subnav.menu_name}</a>  
+        <a href="?nav_id={$subnav.menu_ID}">{$subnav.menu_name}</a>  
       </div>
       {/foreach}
       
@@ -51,5 +51,6 @@
     <!--Header Ende -->
     {include file="$file"|default:"main.tpl"}
     </div>
+	<!--Erstellt in {$generated_time}s-->
   </body>
 </html>

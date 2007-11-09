@@ -61,9 +61,10 @@ class CMSException extends Exception
 	 *
 	 * @param string $message Nachricht
 	 * @param int $code Benutzercode
+	 * @param string $title Fehlertitel
 	 */
 
-	public function __construct($message, $code = 0)
+	public function __construct($message, $code = 0, $title = "")
 	{
 
 		switch ($code) {
@@ -82,6 +83,10 @@ class CMSException extends Exception
 			default:
 				$this->title = 'Fehler';
 				break;
+		}
+		
+		if (!empty($title)) {
+			$this->title .= " - $title";
 		}
 
 		// sicherstellen, dass alles korrekt zugewiesen wird

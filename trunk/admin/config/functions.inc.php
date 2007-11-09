@@ -36,7 +36,7 @@ function __autoload($class_name)
 		$len_sub = strlen($sub_dir);
 		
 		//Direcotry ohne Unterordner (der gerade oberhalb der Datei liegt)
-		$dir = substr(__FILE__, 0, $$len_dirfile - $len_file - $len_sub);
+		$dir = substr(__FILE__, 0, $len_dirfile - $len_file - $len_sub);
 		
 		//Nicht bereits im Adminordner
 		if (strripos($dir, 'admin') === false) {

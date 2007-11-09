@@ -3,7 +3,7 @@
  * @author David Daester
  * @package JClubCMS
  * File: formular_check.class.php
- * Classes: formularcheck
+ * Classes: Formularcheck
  * Requieres: PHP5
  */
 
@@ -33,6 +33,37 @@ class Formularcheck {
 		} else {
 			return true;
 		}
+	}
+	
+	/**
+	 * Überprüft, ob das angegebene Array Leer-String oder default-Einträge hat
+	 * (@see field_check)
+	 *
+	 * @param array $fields Zu überprüfende Felder
+	 * @param array $unalloweds Default-Array
+	 * @return array Fehlerarray
+	 */
+	
+	public function field_check_arr(array $fields, array $unalloweds = array())
+	{
+		if (!is_array($fields) || !is_array($unalloweds)) {
+			throw  new CMSException('Falsche Parameterangaben in Funktion '.__FUNCTION__.'. 1. oder 2. Parameter kein Array', EXCEPTION_LIBARY_CODE);
+		}
+		
+		$arr_rtn = array();
+		
+		foreach ($fields as $key => $value) {
+			
+			if (array_key_exists($key, $unalloweds) == true) {
+				$arr_rtn[$key] = $this->field_check($value, $unalloweds[$key]);
+			} else {
+				$arr_rtn[$key] = $this->field_check($value);
+			}
+			
+			
+		}
+		
+		return $arr_rtn;
 	}
 	
 	

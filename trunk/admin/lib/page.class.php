@@ -56,7 +56,7 @@ class Page
 		}
 
 		//Ob es das Admin- oder User-Menu ist, aendert sich der Tabellen-Name im MySQL.
-		$table_name = ($admin_menu == true)?"admin_menu":"menu";
+		$table_name = ($admin_menu === true)?"admin_menu":"menu";
 
 		//Ist $nav_id kleiner gleich Null, wird ihr der erste Wert aus der MySQL-Tabelle zugewiesen.
 		if($nav_id <= 0) {

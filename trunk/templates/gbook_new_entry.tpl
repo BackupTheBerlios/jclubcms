@@ -7,6 +7,17 @@
 <script type="text/javascript" src="./javascript/smilies.js"></script>
     {************************************************************}
     {************************************************************}
+	{*Fehlerausgabe wenn noetig*}
+	{if $dump_errors}
+	<table class="content_tab" align="center">
+		<tr>
+			<td class="formailer_header" style="background-color: #EC6442">{$error_title|default:"Einige Daten sind ungueltig"}</td>
+		</tr>
+		<tr>
+			<td class="formailer_txt" style="background-color: #ED4B23">{$error_content}</td>
+		</tr>
+	</table>
+	{/if}
     <form name="newentry" method="post" action="?nav_id={$nav_id}&action=new">
       <input type="hidden" name="sessionscode" value="{$sessionscode}" />
       <table cellpadding="0" cellspacing="0" align="center" class="content_tab">
@@ -32,7 +43,7 @@
                 <td><div style="font-size: 10px">Sollte der Text nicht erkennbar sein, neues Bild w&auml;hlen</div></td>
               </tr>
               <tr>
-                <td><input type="text" size="15" name="captcha_word" value="{$content}" /></td>
+                <td><input type="text" size="15" name="captcha_word" value="" /></td>
                 <td><input type="submit" name="captcha_revoke" value="Anderes Bild bitte!" /></td>
               </tr>
             </table>

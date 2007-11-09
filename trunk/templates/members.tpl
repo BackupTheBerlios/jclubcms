@@ -1,26 +1,27 @@
       <div id="content">
 		<div id="content_txt">
-            {foreach key=index item=name from=$name}
+            {foreach item=member from=$members}
             <table cellpadding="0" cellspacing="0" align="center" class="content_tab">
               <tr>
                 <td class="content_tab_header" colspan="2">
-                {$name}
+                {$member.members_ID}
                 </td>
               </tr>
               <tr  class="content_tab_content1">
                 <td>
-                <a href="./index.php?nav_id=40&pic={$IDimage.$index}"><img src="./index.php?nav_id=41&thumb={$IDimage.$index}" /></a>
+                <a href="?nav_id={$image_link}&pic={$member.members_FIDimage}"><img src="./index.php?nav_id=41&thumb={$IDimage.$index}" /></a>
                 </td>
                 <td class="content_tab_content1">
-                  Spitzname: {$spitzname.$index}<br />
-                  Geburtstag: {$birthday.$index}<br />
-                  Lieblingssong: {$song.$index}<br />
-                  Beruf: {$job.$index}<br />
-                  Motto: {$motto.$index}
+                  Spitzname: {$member.members_spitzname}<br />
+                  Geburtstag: {$member.members_birthday}<br />
+                  Lieblingssong: {$member.members_song}<br />
+			   Hobby: {$member.members_hobby}<br />
+                  Beruf: {$member.members_job}<br />
+                  Motto: {$member.members_motto}
                 </td>
               </tr>
               <tr>
-              	<td colspan="2" class="content_tab_content1"><a href="?nav_id={$local_link}&action=mail&entry_id={$ID.$index}">Mail an {$spitzname.$index}</a></td>
+              	<td colspan="2" class="content_tab_content1"><a href="?nav_id={$local_link}&action=mail&entry_id={$member.members_ID}">Mail an {$member.members_spitzname}</a></td>
               </tr>
             </table>
             {/foreach}

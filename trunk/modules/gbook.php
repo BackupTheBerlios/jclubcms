@@ -305,7 +305,7 @@ switch ($action) {
 			/**
                          * Hier befindet man sich, wenn der Kommentieren-Link vom G�stebuch aufgerufen
                          * wurde.
-                         * Hier wird der G�stebucheintrag ausgelesen, nochmal ausgegeben, entweder
+                         * Hier wird der Gästebucheintrag ausgelesen, nochmal ausgegeben, entweder
                          * unterhalb oder oberhalb des Formulars.
                          */
 
@@ -620,7 +620,7 @@ switch ($action) {
 		$pages_nav->__destruct();
 
 				/**
-                 * Array der Seiten, wobei der Text immer eines h�her ist als der Link.
+                 * Array der Seiten, wobei der Text immer eines höher ist als der Link.
                  * Page 0 = Seite 1; Page 1 = Seite 2;
         		 */
 

@@ -1,11 +1,11 @@
 <?php 
 
 /**
- * @author Simon Daester
+ * @author Simon Däster
  * @package JClubCMS
  * gbook.class.php
  * 
- * Diese Klasse ist zustaendig fuer das Editieren der Gaestebucheintraege. Auch koennen neue Beitraege hinzugefuegt oder geloescht
+ * Diese Klasse ist zuständig für das Editieren der Gästebucheinträge. Auch können neue Beiträge hinzugefügt oder gelöscht
  * werden
  */
 
@@ -67,15 +67,15 @@ class Gbook implements Module
 
 
 	/**
-	 * Fuehrt die einzelnen Methoden aus, abhaengig vom parameter
+	 * Führt die einzelnen Methoden aus, abhängig vom Parameter
 	 *
 	 * @param array $parameters $_POST- und $_GET-Arrays
 	 */
-	public function action($parameters)
+	public function action($gpc)
 	{
 		global $dir_smilies;
-		$this->post_arr = $parameters['POST'];
-		$this->get_arr = $parameters['GET'];
+		$this->post_arr = $gpc['POST'];
+		$this->get_arr = $gpc['GET'];
 
 		$this->msbox = new MessageBoxes($this->mysql, 'gbook', array('ID' => 'gbook_ID', 'ref_ID' => 'gbook_ref_ID', 'content' => 'gbook_content', 'name' => 'gbook_name', 'time' => 'gbook_time', 'email' => 'gbook_email', 'hp' => 'gbook_hp', 'title' => 'gbook_title'));
 
@@ -102,7 +102,7 @@ class Gbook implements Module
 					$this->view(5);
 					return true;
 				default:
-					throw new CMSException('Gewaehlte Option ist nicht moeglich', EXCEPTION_MODULE_CODE);
+					throw new CMSException('Gewählte Option ist nicht möglich', EXCEPTION_MODULE_CODE);
 					return false;
 			}
 		} else {
@@ -112,7 +112,7 @@ class Gbook implements Module
 	}
 
 	/**
-	 * Liefert die zugehoerige Templatedatei
+	 * Liefert die zugehörige Templatedatei
 	 *
 	 * @return string $tplfile Templatedatei
 	 */
@@ -124,9 +124,9 @@ class Gbook implements Module
 
 
 	/**
-	 * Zeigt die Eintraege an
+	 * Zeigt die Einträge an
 	 *
-	 * @param int $max_entries_pp Anzahl Eintraege pro Seite
+	 * @param int $max_entries_pp Anzahl Einträge pro Seite
 	 */
 
 	private function view($max_entries_pp)
@@ -150,7 +150,7 @@ class Gbook implements Module
 
 		$gbook_smarty_array = array();
 
-		//Inhalt parsen (Smilies) und an Smarty-Array uebergeben
+		//Inhalt parsen (Smilies) und an Smarty-Array übergeben
 		foreach ($gbook_array as $key => $value) {
 
 			//Nur gbook-Daten ohne $gbook_array['many'] abchecken
@@ -178,7 +178,7 @@ class Gbook implements Module
 	}
 
 	/**
-	 * Fuegt einen Eintrag hinzu oder liefert das Forumular dazu
+	 * Fügt einen Eintrag hinzu oder liefert das Forumular dazu
 	 *
 	 */
 
@@ -186,7 +186,7 @@ class Gbook implements Module
 	{
 		global $gbook_entry_name, $gbook_entry_content, $gbook_entry_email, $gbook_entry_hp, $gbook_entry_title;
 
-		//Eingetragen und ueberpruefen
+		//Eingetragen und überprüfen
 		if (isset($this->post_arr['btn_send']) && $this->post_arr['btn_send'] == 'Senden') {
 
 			$answer = "";
@@ -215,7 +215,7 @@ class Gbook implements Module
 			} else {
 				$this->tplfile ='gbook_entry.tpl';
 
-				$title = 'ungueltige Angaben';
+				$title = 'ungültige Angaben';
 
 				$this->smarty->assign('dump_errors', true);
 				$this->smarty->assign('error_title', $title);
@@ -249,6 +249,7 @@ class Gbook implements Module
 
 	private function comment()
 	{
+		
 		if (isset($this->post_arr['btn_send']) && $this->post_arr['btn_send'] == 'Senden') {
 
 			$answer = "";
@@ -272,7 +273,7 @@ class Gbook implements Module
 				$this->smarty->assign("feedback_link", 'http://'.$link);
 				$this->tplfile ='feedback.tpl';
 
-				//Falsche Eintraege
+				//Falsche Einträge
 			} else {
 
 				$gbook = $this->msbox->getEntry($this->get_arr['id'], $this->timeformat);
@@ -281,7 +282,7 @@ class Gbook implements Module
 
 				$this->tplfile ='gbook_comment.tpl';
 
-				$title = 'ungueltige Angaben';
+				$title = 'ungültige Angaben';
 
 				$this->smarty->assign('gbook', $gbook);
 
@@ -319,7 +320,7 @@ class Gbook implements Module
 
 
 	/**
-	 * Editiert einen Eintrag im Mysql oder liefert das zugehoerige Formular.
+	 * Editiert einen Eintrag im Mysql oder liefert das zugehörige Formular.
 	 *
 	 */
 
@@ -327,7 +328,7 @@ class Gbook implements Module
 	{
 
 
-		//Eingetragen und ueberpruefen
+		//Eingetragen und überprüfen
 		if (isset($this->post_arr['btn_send']) && $this->post_arr['btn_send'] == 'Senden') {
 
 			$answer = "";
@@ -344,7 +345,7 @@ class Gbook implements Module
 				//In Datenbank einschreiben
 				$this->msbox->editEntry($entry);
 
-				//Angaben fuer Benutzer
+				//Angaben für Benutzer
 				$answer = "Eintrag wurde erfolgreich ver&auml;ndert";
 				$title = "Eintrag erstellt";
 				$link = Page::getUriStatic($this->get_arr, array('action'));
@@ -360,7 +361,7 @@ class Gbook implements Module
 			} else {
 				$this->tplfile ='gbook_entry.tpl';
 
-				$title = 'ungueltige Angaben';
+				$title = 'ungültige Angaben';
 
 				$this->smarty->assign('dump_errors', true);
 				$this->smarty->assign('error_title', $title);
@@ -394,7 +395,7 @@ class Gbook implements Module
 	}
 
 	/**
-	 * Loescht einen Eintrag im Mysql oder liefert die Auswahlliste
+	 * Löscht einen Eintrag im Mysql oder liefert die Auswahlliste
 	 *
 	 */
 
@@ -403,29 +404,29 @@ class Gbook implements Module
 		$linktext = "JA";
 		$linktext2 = "NEIN";
 		
-		//Bestaetigung zum Loeschen geklickt
+		//Bestätigung zum Löschen geklickt
 		if (isset($this->post_arr['weiter']) && $this->post_arr['weiter'] == $linktext && isset($this->post_arr['del_ID'])) {
 			$this->msbox->delEntry((int)$this->post_arr['del_ID']);
-			$title = "Loeschung erfolgreich";
-			$msg = "Nachricht wurde erfolgreich geloescht";
-			$linktext = "Zum Gaestebuch";
+			$title = "Löschung erfolgreich";
+			$msg = "Nachricht wurde erfolgreich gelöscht";
+			$linktext = "Zum Gästebuch";
 			$link = Page::getUriStatic($this->get_arr, array('action'));
 			
 
 		} elseif (isset($this->post_arr['nein']) && $this->post_arr['nein'] == $linktext2 && isset($this->post_arr['del_ID'])) {
-			$title = "Loeschung abgebrochen";
-			$msg = "Sie haben die Loeschung der Nachricht abgebrochen";
-			$linktext = "Zum Gaestebuch";
+			$title = "Löschung abgebrochen";
+			$msg = "Sie haben die Löschung der Nachricht abgebrochen";
+			$linktext = "Zum Gästebuch";
 			$link = Page::getUriStatic($this->get_arr, array('action'));
 
 		} elseif (isset($this->get_arr['id'])) {
 			$id = (int)$this->get_arr['id'];
-			$title = "<b>Loeschung</b> bestaetigen";
+			$title = "<b>Löschung</b> bestätigen";
 			$msg = "<form>\n\t<fieldset>\n\t<legend>Nachricht</legend>\n<br />\n";
 			$nr = $this->msbox->getEntry($id);
 			$msg .= $this->smilie->show_smilie($nr['gbook_content'], $this->mysql);
 			$msg .= "\n\t</fieldset>\n</form>";
-			$msg .= "Wollen Sie die <b>Nachricht</b> mit der ID $id mit allen <b>Kommentaren(!) wirklich loeschen</b>?<br />\nDie Loeschung ist UNWIDERRUFLICH!<br />";
+			$msg .= "Wollen Sie die <b>Nachricht</b> mit der ID $id mit allen <b>Kommentaren(!) wirklich löschen</b>?<br />\nDie Löschung ist UNWIDERRUFLICH!<br />";
 
 			$this->smarty->assign("SEND_FORMS", true);
 			$this->smarty->assign("SE_SUB", true);
@@ -435,8 +436,8 @@ class Gbook implements Module
 			$link = Page::getUriStatic($this->get_arr, array('id'));
 		} else {
 			$title = "Falscher Aufruf";
-			$msg = "Sie haben einen Link aufgerufen, der nicht gueltig ist!!";
-			$linktext = "Zum Gaestebuch";
+			$msg = "Sie haben einen Link aufgerufen, der nicht gültig ist!!";
+			$linktext = "Zum Gästebuch";
 			$link = Page::getUriStatic($this->get_arr, array('action'));
 		}
 
@@ -456,12 +457,12 @@ class Gbook implements Module
 
 
 	/**
-	 * Fuehrt msbox::formCheck aus. Der 1. Parameter enthaelt die Daten; ist er nicht angegeben, werden die Daten 
-	 * aus dem Post-Formular geholt. Der 2. Parameter enthaelt die Standartwerten; ist er nicht angegeben, werden die 
+	 * Führt msbox::formCheck aus. Der 1. Parameter enthält die Daten; ist er nicht angegeben, werden die Daten 
+	 * aus dem Post-Formular geholt. Der 2. Parameter enthält die Standartwerten; ist er nicht angegeben, werden die 
 	 * Daten aus der gbook_textes-Datei geholt
 	 *
 	 * @param array $data Daten
-	 * @param array $std Standartwerte
+	 * @param array $std Standardwerte
 	 * @return array $check Antwort von msbox::formcheck
 	 */
 
@@ -484,9 +485,9 @@ class Gbook implements Module
 
 
 	/**
-	 * Erstellt aus den Rueckgabewerten von msbox::formcheck eine Antwort
+	 * Erstellt aus den Rückgabewerten von msbox::formcheck eine Antwort
 	 *
-	 * @param array $check Rueckgabewerf von msbox::formcheck
+	 * @param array $check Rückgabewerf von msbox::formcheck
 	 * @return string $answer Antwort
 	 */
 
@@ -505,7 +506,7 @@ class Gbook implements Module
 					case MSGBOX_FORMCHECK_OK:
 						break;
 					default:
-						throw new CMSException('Ungueltiger Rueckgabewert der msbox-Klasse', EXCEPTION_MODULE_CODE);
+						throw new CMSException('Ungültiger Rückgabewert der msbox-Klasse', EXCEPTION_MODULE_CODE);
 
 				}
 			}
@@ -517,9 +518,9 @@ class Gbook implements Module
 
 
 	/**
-	 * Gibt ein Array mit den Smarty-Entry-Variablen zurueck. Die Werte werden je nach $mode
+	 * Gibt ein Array mit den Smarty-Entry-Variablen zurück. Die Werte werden je nach $mode
 	 * mit den Standartdaten belegt oder aus den Post-Formular-Daten geholt
-	 * Keys: entry_ID (hoechstens bei post), entry_name, entry_content entry_email, entry_hp, entry_title;
+	 * Keys: entry_ID (höchstens bei post), entry_name, entry_content entry_email, entry_hp, entry_title;
 	 *
 	 * @param string $mode 'std'|'post'
 	 * @return array Smarty-Array
@@ -530,7 +531,7 @@ class Gbook implements Module
 		global $gbook_entry_name, $gbook_entry_content, $gbook_entry_email, $gbook_entry_hp, $gbook_entry_title;
 
 		switch ($mode) {
-			//Standartwerte
+			//Standardwerte
 			case 'std':
 				$arr =  array('entry_name' => $gbook_entry_name, 'entry_content' => $gbook_entry_content,
 				'entry_email' => $gbook_entry_email, 'entry_hp' => $gbook_entry_hp, 'entry_title' => 									$gbook_entry_title);
@@ -550,7 +551,7 @@ class Gbook implements Module
 				break;
 
 			default:
-				throw new CMSException('Ungueltiger Parameter', EXCEPTION_MODULE_CODE);
+				throw new CMSException('Ungültiger Parameter', EXCEPTION_MODULE_CODE);
 				break;
 		}
 
@@ -559,7 +560,7 @@ class Gbook implements Module
 
 
 	/**
-	 * Gibt die Post-Daten aus dem Formular zurueck:
+	 * Gibt die Post-Daten aus dem Formular zurück:
 	 * ID (wenn vorhanden), content, name, email, hp, title sind die Keys
 	 *
 	 * @return array $entry Daten

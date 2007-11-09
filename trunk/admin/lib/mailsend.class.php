@@ -106,7 +106,7 @@ class Mailsend {
 	}
 	
 	/**
-	 * Startet das senden des Links an den Empf�nger bei g�ltigem Hash
+	 * Startet das senden des Links an den Empfänger bei gültigem Hash
 	 *
 	 * @param reference $mysql_link
 	 * @param string $hash

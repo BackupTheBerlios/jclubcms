@@ -173,7 +173,7 @@ while (($next_topid != 0 || $next_topid != false))	{
 
 /**
  * Die $invlevels m�ssen noch umgekehrt werden. Momentan ist der tiefste Eintrags-Lebel 1, 
- * aber der h�chste Eintragslevel soll 1 werden
+ * aber der hoechste Eintragslevel soll 1 werden
  */
 
 //Das Anzahl Level wird abgespeichtert
