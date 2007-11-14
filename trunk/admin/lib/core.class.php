@@ -43,6 +43,12 @@ set_exception_handler(array('CMSException', 'stdExceptionHandler'));
 class Core
 {
 	/**
+	 * Core-Objekt (das einzige!)
+	 *
+	 * @var Core
+	 */
+	private static $core = null;
+	/**
 		 * Mysql-Objekt
 		 *
 		 * @var Mysql
@@ -102,13 +108,21 @@ class Core
 		 */		
 	private $tplfile = null;
 
+	
+	public static function singleton()
+	{
+		if (!isset(self::$core) && !(self::$core instanceof Core)) {
+			self::$core = new Core;
+			self::$core;
+		}
+	}
 
 	/**
 		 * Aufbau der Klasse
 		 *
 		 */
 
-	public function __construct()
+	private function __construct()
 	{
 		//Abfangen von Exceptions
 		try {
@@ -156,6 +170,7 @@ class Core
 		$this->smarty = new Smarty();
 		$this->smarty->compile_check = true;
 		$this->smarty->debugging = false;
+		$this->smarty->config_dir = 'config';
 
 		$this->mysql = new Mysql($db_server, $db_name, $db_user, $db_pw);
 

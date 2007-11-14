@@ -7,28 +7,31 @@
  * Jax Captcha Class v1.o1 - Copyright (c) 2005, Andreas John aka Jack (tR)
  * This program and it's moduls are Open Source in terms of General Public License (GPL) v2.0
  * 
+ * Modified through Simon Däster aka Redox for propper use in PHP 5
+ * 
  * class.captcha.php 		(captcha class module)
  * 
- * Last modification: 2005-09-05
+ * Last modification through Jack (tR): 2005-09-05
+ * Last modification through Redox: 2007-11-13
 */
 
 class Captcha
 {
-	var $session_key = null;
-	var $temp_dir    = null;
-	var $width       = 160;
-	var $height      = 60;
-	var $jpg_quality = 15;
+	private $session_key = null;
+	private $temp_dir    = null;
+	private $width       = 160;
+	private $height      = 60;
+	private $jpg_quality = 15;
 
 
 	/**
-		 * Constructor - Initializes Captcha class!
-		 *
-		 * @param string $session_key
-		 * @param string $temp_dir
-		 * @return captcha
-		 */
-	function captcha( $session_key, $temp_dir )
+	 * Constructor - Initializes Captcha class!
+	 *
+	 * @param string $session_key
+	 * @param string $temp_dir
+	 * @return captcha
+	 */
+	public function __construct( $session_key, $temp_dir )
 	{
 		$this->session_key = $session_key;
 		$this->temp_dir    = $temp_dir;
@@ -36,13 +39,13 @@ class Captcha
 
 
 	/**
-		 * Generates Image file for captcha
-		 *
-		 * @param string $location
-		 * @param string $char_seq
-		 * @return unknown
-		 */
-	function _generate_image( $location, $char_seq )
+	 * Generates Image file for captcha
+	 *
+	 * @param string $location
+	 * @param string $char_seq
+	 * @return true
+	 */
+	private function _generate_image( $location, $char_seq )
 	{
 		$num_chars = strlen($char_seq);
 
@@ -78,8 +81,8 @@ class Captcha
 			$presign = round( rand( 0, 1 ) );
 			$angle = round( rand( 0, 25 ) );
 			if ($presign==true) $angle = -1*$angle;
-
-			ImageTTFText( $img, $fontsize, $angle, $start_x+$i*$max_x_ofs, $y_pos, $color, './data/default.ttf', substr($char_seq,$i,1) );
+			
+			ImageTTFText( $img, $fontsize, $angle, $start_x+$i*$max_x_ofs, $y_pos, $color, $this->temp_dir.'../default.ttf', substr($char_seq,$i,1) );
 		}
 
 		// create image file
@@ -92,12 +95,12 @@ class Captcha
 
 
 	/**
-		 * Returns name of the new generated captcha image file
-		 *
-		 * @param int $num_chars
-		 * @return mixed encrypted string or false when an error occured
-		 */
-	function get_pic( $num_chars=8 )
+	 * Returns name of the new generated captcha image file
+	 *
+	 * @param int $num_chars
+	 * @return mixed encrypted string or false when an error occured
+	 */
+	public function get_pic( $num_chars=8 )
 	{
 		// define characters of which the captcha can consist
 		$alphabet = array(
@@ -130,12 +133,12 @@ class Captcha
 	}
 
 	/**
-		 * check hash of password against hash of searched characters
-		 *
-		 * @param string $char_seq
-		 * @return boolean
-		 */
-	function verify( $char_seq )
+	 * check hash of password against hash of searched characters
+	 *
+	 * @param string $char_seq
+	 * @return boolean
+	 */
+	public function verify( $char_seq )
 	{
 		$fh = fopen( $this->temp_dir.'/'.'cap_'.$this->session_key.'.txt', "r" );
 		$hash = fgets( $fh );

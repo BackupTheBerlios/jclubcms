@@ -6,14 +6,16 @@
  * Jax Captcha Class v1.o1 - Copyright (c) 2005, Andreas John aka Jack (tR)
  * This program and it's moduls are Open Source in terms of General Public License (GPL) v2.0
  *
- * captcha_image.php 		(captcha image service)
- *
- * Last modification: 2005-09-05
+ * captcha_image.class.php 		(captcha image service)
+ * Modified through Simon Däster aka Redox for propper use in PHP 5
  * 
- * 
+ * Last modification through Jack (tR): 2005-09-05
+ * Last modification through Redox: 2007-11-13
 **/
 
-class Captcha_image extends Module
+require_once ADMIN_DIR.'lib/module.interface.php';
+
+class Captcha_image implements Module
 {
 	/**
 	 * Path zu den Captcha-Bildern

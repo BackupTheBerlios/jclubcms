@@ -12,6 +12,8 @@
 
 require_once ADMIN_DIR.'lib/module.interface.php';
 
+require_once ADMIN_DIR.'lib/captcha.class.php';
+
 require_once ADMIN_DIR.'lib/mailsend.class.php';  //Für das versenden vom senden des Mails
 require_once ADMIN_DIR.'lib/formularcheck.class.php'; //Überprüfen der Formularfelder
 require_once USER_DIR.'config/mail_textes.inc.php'; //Standard-Texte für Mailformular und -fehler
@@ -89,7 +91,7 @@ class Members implements Module
 		return $this->tpl_file;
 	}
 
-	public function view()
+	private function view()
 	{
 		$this->tpl_file = "members.tpl";
 		$members = array();
@@ -109,28 +111,35 @@ class Members implements Module
 	 *
 	 */
 
-	public function mail()
+	private function mail()
 	{
-		
-		
-		global $mail_entry_title, $mail_entry_content, $mail_entry_name, $mail_entry_email;
-		global $gbook_title_onerror_de, $gbook_content_onerror_de, $gbook_name_onerror_de, $gbook_email_onerror_de, $gbook_email_checkfaild_de, $gbook_captcha_onerror_de;
-		global $mail_saved_title, $mail_saved_content, $news_mail_link, $mail_failer_title, $mail_failer_content;
-		
-		echo "TEST: ".$GLOBALS['mail_entry_title'].$GLOBALS['mail_entry_content'].$GLOBALS['mail_entry_name'].$GLOBALS['mail_entry_email'];
-		
 
+		$this->smarty->config_load('textes.de.conf', 'Mail');
+		$mail_vars = $this->smarty->get_config_vars();
+		$this->smarty->config_load('textes.de.conf', 'Error');
+		$error_vars = $this->smarty->get_config_vars();
 		
-		$this->initCaptcha($captcha, $sessioncode);
+		$sessioncode = null;
+		
+		//Captcha zurücksetzen
+		if (key_exists('captcha_revoke', $this->gpc['POST'])) {
+			$new_code = true;
+		} else {
+			$new_code = false;
+		}
+		
+		$captcha = $this->initCaptcha($sessioncode, $new_code);
+		
 
 		if (isset($this->gpc['POST']['btn_send']) && $this->gpc['POST']['btn_send'] == 'Senden') {
-
+			/*Formular wurde gesendet */
 
 			//Formular-Kontrolle
-			if ($this->gpc['POST']['entry_id'] !== $this->gpc['GET']['entry_id']) {
+			if ($this->gpc['POST']['entry_id'] != $this->gpc['GET']['entry_id']) {
 				throw new CMSException("Sie benutzen das falsche Formular für diese Mailadresse", EXCEPTION_MODULE_CODE, 'Datenkollision');
 			}
 
+			//Benutzung einfacher Variablen
 			$title = $this->gpc['POST']["title"];
 			$content = $this->gpc['POST']["content"];
 			$name = $this->gpc['POST']["name"];
@@ -138,14 +147,13 @@ class Members implements Module
 			$entry_id = $this->gpc['POST']["entry_id"];
 			$captcha_word = $this->gpc['POST']['captcha_word'];
 			
-			echo "$title, $content, $name, $email";
-
 			$answer = "";
 
+			//Einleitung zur Formularcheck
 			$formcheck = new Formularcheck();
 			$val = array($title, $content, $name, $email);
-			$std = array($mail_entry_title, $mail_entry_content, $mail_entry_name, $mail_entry_email);
-			$err = array($gbook_title_onerror_de, $gbook_content_onerror_de, $gbook_name_onerror_de, $gbook_email_onerror_de);
+			$std = array($mail_vars['entry_title'], $mail_vars['entry_content'], $mail_vars['entry_name'], $mail_vars['entry_email']);
+			$err = array($error_vars['title_error'], $error_vars['content_error'], $error_vars['name_error'], $error_vars['email_error']);
 			
 			var_dump(array('val' => $val, 'std' => $std, 'err' => $err));
 
@@ -153,26 +161,24 @@ class Members implements Module
 
 			//Fehlerarray durchgehen
 			foreach ($rtn_arr as $key => $value) {
-				if ($value === true) {
+				if ($value === false) {
 					$answer .= $err[$key]."<br />\n";
 				}
 			}
 
 			//Email-Adresse auf Gültigkeit prüfen
-			if ($formcheck->mailcheck($email) > 0) {
-				$answer .= $gbook_email_checkfaild_de;
+			if ($email != "" && $formcheck->mailcheck($email) > 0) {
+				$answer .= $error_vars['email_checkfailed'];
 			}
 
 			//Captcha-Image prüfen
 			if(!$captcha->verify($captcha_word)) {
-				$answer .= $gbook_captcha_onerror_de."<br />";
+				$answer .= $error_vars['captcha_error']."<br />";
 			}
 
 
-
-
 			//Mail schicken oder
-			if ($answer === "") {
+			if ($answer === "" && false) {
 
 				$navigation_id = $this->smarty->get_template_vars('local_link');
 
@@ -198,10 +204,10 @@ class Members implements Module
 					$feedback_linktext = $news_mail_link;
 				}
 
-				$smarty->assign("feedback_title", $feedback_title);
-				$smarty->assign("feedback_content", $feedback_content);
-				$smarty->assign("link", $feedback_link);
-				$smarty->assign("link_text", $feedback_linktext);
+				$this->smarty->assign("feedback_title", $feedback_title);
+				$this->smarty->assign("feedback_content", $feedback_content);
+				$this->smarty->assign("link", $feedback_link);
+				$this->smarty->assign("link_text", $feedback_linktext);
 				$this->tpl_file = "feedback.tpl";
 
 				//Zurück zum Mailformular
@@ -215,6 +221,8 @@ class Members implements Module
 				//Fehlerausgabe
 				$this->smarty->assign(array('dump_errors' => true, 'error_title' => 'Fehler im Formular',
 				'error_content' => $answer));
+				
+				var_dump($answer);
 
 			}
 
@@ -224,13 +232,13 @@ class Members implements Module
 
 			//Captcha erneuern
 			if (key_exists('captcha_revoke', $this->gpc['POST'])) {
-				$data = array('entry_id' => $this->gpc['POST']['entry_id'], 'entry_title' => $this->gpc['POST']['title'], 'entry_content' => $this->gpc['POST']['content'], 'entry_name' => $this->gpc['POST']['name'], 'entry_email' => $this->gpc['POST']['email']);
+				$data = array('entry_id' => $this->gpc['POST']['entry_id'], 'entry_title' => $this->gpc['POST']['title'], 'entry_content' => $this->gpc['POST']['content'], 'entry_name' => $this->gpc['POST']['name'], 'entry_email' => $this->gpc['POST']['email'], 'sessioncode' => $sessioncode);
 			} else {
 
-				$data = array('entry_id' => $this->gpc['GET']['entry_id'], 'entry_title' => $mail_entry_title, 'entry_content' => $mail_entry_content, 'entry_name' => $mail_entry_name, 'entry_email' => $mail_entry_email);
+				$data = array('entry_id' => $this->gpc['GET']['entry_id'], 'entry_title' => $mail_vars['entry_title'], 'entry_content' => $mail_vars['entry_content'], 'entry_name' => $mail_vars['entry_name'], 'entry_email' => $mail_vars['entry_email'], 'sessioncode' => $sessioncode);
 			}
-
-			var_dump($data);
+			
+			$this->smarty->assign('captcha_img', $captcha->get_pic(6));
 			
 			$this->mailform($data);
 
@@ -238,30 +246,43 @@ class Members implements Module
 
 	}
 
+	
+	
+	/**
+	 * Gibt das Mailformular aus
+	 *
+	 * @param array $data Daten für Smarty
+	 */
+
 	private function mailform(array $data)
 	{
 		$this->tpl_file = "mail_form.tpl";
 
 		$this->mysql->query("SELECT `members_name` FROM `members` WHERE `members_ID` = '{$data['entry_id']}' LIMIT 1");
 		$member_array = $this->mysql->fetcharray();
-		$member_name = $member_array["members_name"];
 
-		$this->smarty->assign($data);
-		$this->smarty->assign("reciver_name", $member_name);
+		$this->smarty->assign(array('entry_id' => $data['entry_id'], 'entry_title' => $data['entry_title'], 'entry_content' => $data['entry_content'], 'entry_name' => $data['entry_name'], 'entry_email' => $data['entry_email'], 'sessioncode' => $data['sessioncode']));
+		$this->smarty->assign("reciver_name", $member_array["members_name"]);
 	}
 
 
-	//Initialisier die Captcha-Klasse
-	private function initCaptcha(&$catpcha, &$sessoncode)
+	/**
+	 * Initialisiert die Captcha-Klasse
+	 *
+	 * @param string[reference] $sessioncode Sessioncode, wird generiert oder übernommen
+	 * @param boolean $new_code Neuer Sessioncode generieren?
+	 * @return Captcha Captcha-Objekt
+	 */
+	private function initCaptcha(&$sessioncode, $new_code = false)
 	{
 		//Captcha Start
-		if(isset($this->gpc['POST']['sessionscode']) && $this->gpc['POST']['sessionscode'] != "") {
-			$sessionscode = $this->gpc['POST']['sessionscode'];
+		if($new_code == false && key_exists('sessioncode', $this->gpc['POST']) && !empty($this->gpc['POST']['sessioncode'])) {
+			$sessioncode = $this->gpc['POST']['sessioncode'];
 		} else {
-			$sessionscode = md5(microtime(true)*round(rand(1,40000)));
+			$sessioncode = md5(microtime(true)*round(rand(1,40000)));
 		}
-
-		$captcha = new captcha($sessionscode, "./data/temp");
+		
+		return new Captcha($sessioncode, USER_DIR."data/temp/");
 	}
 
 }

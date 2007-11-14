@@ -1,7 +1,7 @@
 <?php
 /**
  * @package JClubCMS
- * @author David Daester, Simon D�ster
+ * @author David Däster, Simon Däster
  */
 
 /*News-Einstellungen*/
@@ -15,7 +15,7 @@ $gallery_menuview = 2; //Wieviele Bilder Links und Rechts des aktuellen Bildes g
 
 /*------$time_format-----------------------
 * Analog des data() von PHP, mit Ausnahmen
-* ------NICHT GEPLANTE UNTERST�ZUNG--------
+* ------NICHT GEPLANTE UNTERSTÜZUNG--------
 * B	Swatch-Internet-Zeit
 * D	Tag der Woche gekuerzt auf drei Buchstaben
 * I Fuellt ein Datum in die Sommerzeit
