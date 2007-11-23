@@ -6,7 +6,7 @@
 		</tr>
 		<tr>
 			<td colspan="2" align="center">{foreach item=page from=$pages}
-			<a href="{$page.link}">[{$page.page}]</a>
+			{if $page.link != ""}<a href="{$page.link}">[{$page.page}]</a>{else}[{$page.page}]{/if}
 			{/foreach}
 			</td>
 		</tr>
@@ -28,7 +28,7 @@
 				<td class="content_tab_content2">
 				<img src="templates/style/icons/date.gif" /> {$book.time}<br />
 				<img src="templates/style/icons/user.gif" /> {$book.name}<br />
-				<a href="?nav_id={$local_link}&action=mail&entry_id={$book.email}"><img src="templates/style/icons/email.gif" /> E-mail</a>
+				<a href="?mail&nav_id={$local_link}&entry_id={$book.ID}"><img src="templates/style/icons/email.gif" /> E-mail</a>
 				{if $book.hp neq ""}<br /><a href="http://{$book.hp}" target="_blank"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
 				</td>
 			</tr>
@@ -36,13 +36,13 @@
 			{foreach key=schluessel item=comment from=$book.comments}
 				<tr>
 					<td class="content_tab_content1">
-					{$comment.comment_content}
+					{$comment.content}
 					</td>
 					<td class="content_tab_content2">
-					<img src="templates/style/icons/date.gif" /> {$comment.comment_time}<br />
-					<img src="templates/style/icons/user.gif" /> {$comment.comment_name}<br />
-					<a href="?nav_id={$local_link}&action=mail&entry_id={$comment.comment_email}"><img src="templates/style/icons/email.gif" /> E-mail</a>
-					{if $comment.comment_hp neq ""}<br /><a href="http://{$comment.comment_hp}" target="_blank"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
+					<img src="templates/style/icons/date.gif" /> {$comment.time}<br />
+					<img src="templates/style/icons/user.gif" /> {$comment.name}<br />
+					<a href="?mail&nav_id={$local_link}&entry_id={$comment.ID}"><img src="templates/style/icons/email.gif" /> E-mail</a>
+					{if $comment.hp neq ""}<br /><a href="http://{$comment.hp}" target="_blank"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
 					</td>
 				</tr>
 			{/foreach}
@@ -57,7 +57,7 @@
 		</tr>
 		<tr>
 			<td colspan="2" align="center">{foreach item=page from=$pages}
-				<a href="{$page.link}">[{$page.page}]</a>
+				{if $page.link != ""}<a href="{$page.link}">[{$page.page}]</a>{else}[{$page.page}]{/if}
 		{/foreach}
 			</td>
 		</tr>

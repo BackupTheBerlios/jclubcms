@@ -23,28 +23,28 @@ class Auth
 	 *
 	 * @var Page
 	 */
-	private $page;
+	private $_page;
 	
 	/**
 	 * Session-Klasse
 	 *
 	 * @var Session
 	 */
-	private $session;
+	private $_session;
 	
 	/**
 	 * Mysql-Klasse
 	 *
 	 * @var Mysql
 	 */
-	private $mysql;
+	private $_mysql;
 	
 	/**
 	 * User-ID
 	 *
 	 * @var int
 	 */
-	private $user_id;
+	private $_user_id;
 
 	/**
 	 * Oeffnet die Autorisierungsklasse
@@ -55,9 +55,9 @@ class Auth
 
 	public function __construct($smarty, $mysql)
 	{
-		$this->smarty = $smarty;
-		$this->mysql = $mysql;
-		$this->session = new Session('s', $mysql);
+		$this->_smarty = $smarty;
+		$this->_mysql = $mysql;
+		$this->_session = new Session('s', $mysql);
 
 	}
 
@@ -71,60 +71,60 @@ class Auth
 	public function check4login($post_array)
 	{
 
-
+		
 		global $auth_error_noentry, $auth_error_failname, $auth_error_failpw, $auth_forward_linktext, $auth_forward_successlogin, $auth_forward_title;
 
+		echo __METHOD__, " ", var_export($post_array,1), "\n";
+		
 		//Login-Formular gesendet?
-		if (isset($post_array['login']) && $post_array['login'] != "") {
-			$login_data = $this->getlogindata($post_array);
-
+		if (isset($post_array['login']) && $post_array['login'] == "Anmelden") {
+			$login_data = $this->_getlogindata($post_array);
 			
 			if (is_array($login_data)) {
-				//echo "Auth->check4login(): Login-Daten vorhanden als Array<br />\n";
+
 				//Benutzername und Passwort ueberpruefen
-				$this->mysql->query("SELECT `user_ID` FROM `admin_users` WHERE `user_name` = '{$login_data['name']}' LIMIT 1");
-				if (($data = $this->mysql->fetcharray('assoc')) === false) {
-					$this->smarty->assign('login_error', $auth_error_failname);
-					$this->smarty->display('login.tpl');
+				$this->_mysql->query("SELECT `user_ID` FROM `admin_users` WHERE `user_name` = '{$login_data['name']}' LIMIT 1");
+				
+				if (($data = $this->_mysql->fetcharray('assoc')) === false) {
+					$this->_smarty->assign('login_error', $auth_error_failname);
+					$this->_smarty->display('login.tpl');
 					
 				} else {
-					$this->mysql->query("SELECT `user_ID` FROM  `admin_users` WHERE `user_name` = '{$login_data['name']}' AND `user_pw` = '{$login_data['password_encrypted']}' LIMIT 1");
+					$this->_mysql->query("SELECT `user_ID` FROM  `admin_users` WHERE `user_name` = '{$login_data['name']}' AND `user_pw` = '{$login_data['password_encrypted']}' LIMIT 1");
 
-					$data = $this->mysql->fetcharray();
+					$data = $this->_mysql->fetcharray();
 
 					if(is_numeric($data[0])) {
-						$this->user_id = $data[0];
-						$this->session->create_session($data[0]);
+						$this->_user_id = $data[0];
+						$this->_session->create_session($data[0]);
 
-						$this->smarty->assign(array('forward_title' => $auth_forward_title, 'forward_text' => $auth_forward_successlogin, 'forward_linktext' => $auth_forward_linktext, 'forward_link' => $_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']."?".$this->session->get_sessionstring()));
-						$this->smarty->display('forward.tpl');
+						$this->_smarty->assign(array('forward_title' => $auth_forward_title, 'forward_text' => $auth_forward_successlogin, 'forward_linktext' => $auth_forward_linktext, 'forward_link' => $_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']."?".$this->_session->get_sessionstring()));
+						$this->_smarty->display('forward.tpl');
 
 
 					} elseif ($data == false) {
 
-						$this->smarty->assign('login_error', $auth_error_failpw);
-						$this->smarty->display('login.tpl');
+						$this->_smarty->assign('login_error', $auth_error_failpw);
+						$this->_smarty->display('login.tpl');
 					}
 				}
 
 				return true;
 
 			} else {
-				$this->smarty->assign('login_error', $auth_error_noentry);
-				$this->smarty->display('login.tpl');
+				$this->_smarty->assign('login_error', $auth_error_noentry);
+				$this->_smarty->display('login.tpl');
 				return true;
 
 			}
 
-		}
-		else
-		{
+		} else {
 			return false;
 		}
 	}
 
 	/**
-	 * Schaut nach, ob sich ein User rechtmaessig eingeloggt hat, und prueft auf deren Rechmaessigkeit
+	 * Schaut nach, ob sich ein User rechtmaessig eingeloggt hat, und prüft auf deren Rechmaessigkeit
 	 * 
 	 * @param array $get_array $_GET-Daten
 	 * @return boolean
@@ -136,31 +136,31 @@ class Auth
 
 		global $auth_error_nonactiv, $auth_error_sessioncorupt;
 
-		if ($this->session->watch4session($get_array) == false) {
-			$this->smarty->assign('file', 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']);
-			$this->smarty->display('login.tpl');
+		if ($this->_session->watch4session($get_array) == false) {
+			$this->_smarty->assign('file', 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']);
+			$this->_smarty->display('login.tpl');
 			return false;
 		}
 
-		if ($this->session->checksession() == false) {
+		if ($this->_session->checksession() == false) {
 
-			$this->session->delete();
-			$this->smarty->assign('error_text', $auth_error_sessioncorupt);
-			$this->smarty->display('error_alone.tpl');
-
-			return false;
-		}
-
-		if ($this->session->activ($session_timeout) == false) {
-			$this->session->delete();
-
-			$this->smarty->assign('error_text', $auth_error_nonactiv);
-			$this->smarty->display('error_alone.tpl');
+			$this->_session->delete();
+			$this->_smarty->assign('error_text', $auth_error_sessioncorupt);
+			$this->_smarty->display('error_alone.tpl');
 
 			return false;
 		}
 
-		$this->smarty->assign('SID', $this->session->get_sessionstring());
+		if ($this->_session->activ($session_timeout) == false) {
+			$this->_session->delete();
+
+			$this->_smarty->assign('error_text', $auth_error_nonactiv);
+			$this->_smarty->display('error_alone.tpl');
+
+			return false;
+		}
+
+		$this->_smarty->assign('SID', $this->_session->get_sessionstring());
 		return true;
 
 	}
@@ -172,12 +172,12 @@ class Auth
 
 	public function logout()
 	{
-		$this->session->delete();
+		$this->_session->delete();
 
-		$this->smarty->assign('forward_text', "Sie haben sich erfolgreich ausgeloggt");
-		$this->smarty->assign('forward_linktext', "Zum Login");
-		$this->smarty->assign('forward_link', $_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']);
-		$this->smarty->display('forward.tpl');
+		$this->_smarty->assign('forward_text', "Sie haben sich erfolgreich ausgeloggt");
+		$this->_smarty->assign('forward_linktext', "Zum Login");
+		$this->_smarty->assign('forward_link', $_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']);
+		$this->_smarty->display('forward.tpl');
 	}
 
 
@@ -189,7 +189,7 @@ class Auth
 	 * @return array|int
 	 */
 
-	private function getlogindata($post_array)
+	private function _getlogindata($post_array)
 	{
 		$name = "";
 		$password_encrypted = "";
@@ -225,7 +225,7 @@ class Auth
 	 * @param string $rightname Name des Rechts
 	 */
 
-	private function controlrights($rightname)
+	private function _controlrights($rightname)
 	{
 		;
 	}

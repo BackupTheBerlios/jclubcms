@@ -19,6 +19,7 @@
 	</table>
 	{/if}
     <form name="newentry" method="post" action="?nav_id={$local_link}&action={$action}&{$SID}">
+	<input type="hidden" name="ID" value="{$entry_ID}" />
       <table cellpadding="0" cellspacing="0" align="center" class="content_tab">
         <tr>
           <td class="formailer_header" colspan="2"><img src="templates/style/icons/pencil.gif" /><input class="formailer_header_input" name="title" type="text" onclick="select()" value="{$entry_title}" />{if $action == 'edit'}&nbsp;&nbsp;&nbsp;&nbsp;{$entry_time}{/if}</td>

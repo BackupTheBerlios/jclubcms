@@ -21,18 +21,18 @@
  */
 
 class Bbcodes {
-	private $bbcodes_array;
-	private $type;
-	private $mysql_link;
+	private $_bbcodes_array;
+	private $_type;
+	private $_mysql_link;
 	/**
  	 * Konstruktor der Klasse
  	 *
- 	 * @param object $mysql_link Datenverbindung zur MySQL
  	 * @param string $type Welchen Inhalt muss geparst werden (GB, News, Content)
+ 	 * @param object $mysql_link Datenverbindung zur MySQL
  	 */
 	public function __construct($type, $mysql_link) {
-		$this->type = $type;
-		$this->mysql_link = $mysql_link;
+		$this->_type = $type;
+		$this->_mysql_link = $mysql_link;
 
 	}
 	/**
@@ -40,34 +40,34 @@ class Bbcodes {
  	 *
  	 */
 	public function __destruct() {
-		$this->bbcodes_array = NULL;
+		$this->_bbcodes_array = NULL;
 	}
 	/**
  	 * Holt die BBCodes aus der Datenbank. Geschieht am Anfang, damit nachher dauernd mit den gleichen Daten gearbeitet wird.
  	 *
  	 * @param object $mysql_link Datenverbindung zur MySQL
  	 */
-	private function check_type() {
-		//$mysql_link = $this->mysql_link;
-		$query = "SHOW COLUMNS FROM bbcodes LIKE 'bbcodes_rights'";
-		$this->mysql_link->query($query);
-		$tabledata = $this->mysql_link->fetcharray('assoc');
-		$found = eregi($this->type, $tabledata["Type"]);
+	private function _check_type() {
+		//$mysql_link = $this->_mysql_link;
+		$query = "SHOW COLUMNS FROM `bbcodes` LIKE 'bbcodes_rights'";
+		$this->_mysql_link->query($query);
+		$tabledata = $this->_mysql_link->fetcharray('assoc');
+		$found = eregi($this->_type, $tabledata["Type"]);
 		return $found;
 	}
 
 	public function get_bbcodes() {
-		if ($this->check_type()== 1) {
-			//$mysql_link = $this->mysql_link;
-			$query = "SELECT * FROM `bbcodes` WHERE find_in_set('$this->type', `bbcodes_rights`)";
-			$this->mysql_link->query($query);
+		if ($this->_check_type()== 1) {
+			//$mysql_link = $this->_mysql_link;
+			$query = "SELECT * FROM `bbcodes` WHERE find_in_set('$this->_type', `bbcodes_rights`)";
+			$this->_mysql_link->query($query);
 			$bbcodes_array = array();
 
-			$this->mysql_link->saverecords('assoc');
-			$bbcodes_array = $this->mysql_link->get_records();
+			$this->_mysql_link->saverecords('assoc');
+			$bbcodes_array = $this->_mysql_link->get_records();
 			
-			$this->bbcodes_array = $bbcodes_array;
-			return $this->bbcodes_array;
+			$this->_bbcodes_array = $bbcodes_array;
+			return $this->_bbcodes_array;
 
 		} else {
 			return 0;
@@ -75,12 +75,12 @@ class Bbcodes {
 	}
 
 	public function replace_bbcodes($text) {
-		if ($this->check_type()== 1) {
-			//$this->mysql_link = $this->mysql_link;
-			$query = "SELECT * FROM `bbcodes` WHERE find_in_set( '$this->type', `bbcodes_rights`)";
-			$this->mysql_link->query($query);
+		if ($this->_check_type()== 1) {
+			//$this->_mysql_link = $this->_mysql_link;
+			$query = "SELECT * FROM `bbcodes` WHERE find_in_set( '$this->_type', `bbcodes_rights`)";
+			$this->_mysql_link->query($query);
 			
-			while ($bbcodes_data = $this->mysql_link->fetcharray()) {
+			while ($bbcodes_data = $this->_mysql_link->fetcharray()) {
 				$text = preg_replace($bbcodes_data["bbcodes_regex"], $bbcodes_data["bbcodes_htmltag"], $text);
 			}
 		}

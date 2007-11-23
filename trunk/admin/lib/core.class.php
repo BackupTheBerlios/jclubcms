@@ -1,7 +1,13 @@
 <?php
 
 /**
- * file: core.class.php
+ * @package JClubCMS
+ * @author Simon Däster
+ * File: core.class.php
+ * Classes: core
+ * Requires: PHP5
+ * 
+ * 
  * Die core-Datei erledigt:
  * -laedt notweindige Libaries
  * -registriert den Exception-Handler
@@ -10,9 +16,10 @@
  * -Erstellten der notwendigen Objekte (smarty, mysql)
  * -Initialiesieren der Rechteverwaltung und testen auf erfolgreiches login
  * -Erstellen der Navigation
- * -Ueberpruefen der Benutzerangaben ueber $_GET / $_POST
+ * -Ueberpruefen der Benutzerangaben ueber $_GET / $_POST / $_COOKIE
  * -Aufrufen des geladenen Moduls
- * -Aufrufen des geladenen Moduls
+ * -Aufrufen der geladenen Seite
+ * 
  * 
  */
 
@@ -47,73 +54,72 @@ class Core
 	 *
 	 * @var Core
 	 */
-	private static $core = null;
+	private static $_core = null;
 	/**
 		 * Mysql-Objekt
 		 *
 		 * @var Mysql
 		 */
-	private $mysql = null;
+	private $_mysql = null;
 	/**
 		 * Smarty-Objekt
 		 *
 		 * @var Smarty
 		 */
-	private $smarty = null;
+	private $_smarty = null;
 	/**
 		 * Auth-Objekt
 		 *
 		 * @var Auth
 		 */
-	private $auth = null;
+	private $_auth = null;
 	/**
 		 * Page-Objekt
 		 *
 		 * @var Page
 		 */
-	private $page = null;
+	private $_page = null;
 
 	/**
 		 * Admin-Modus?
 		 *
 		 * @var boolean
 		 */
-	private $is_admin = false;
+	private $_is_admin = false;
 
 	/**
 		 * Smarty-Array
 		 *
 		 * @var array
 		 */
-	private $smarty_array = null;
+	private $_smarty_array = null;
 	/**
 		 * Enthaelt kontrollierte GET, POST, COOKIE-Parameter
 		 *
 		 * @var array
 		 */
 
-	private $gpc = array('GET' => array(), 'POST' => array(), 'COOKIE' => array());
+	private $_gpc = array('GET' => array(), 'POST' => array(), 'COOKIE' => array());
 
 	/**
 		 * Navigations-Id
 		 * 
 		 * @var string
 		 */
-	private $nav_id = null;
+	private $_nav_id = null;
 
 	/**
 		 * Template-Datei
 		 *
 		 * @var string
 		 */		
-	private $tplfile = null;
+	private $_tplfile = null;
 
-	
+
 	public static function singleton()
 	{
-		if (!isset(self::$core) && !(self::$core instanceof Core)) {
-			self::$core = new Core;
-			self::$core;
+		if (!isset(self::$_core) && !(self::$_core instanceof Core)) {
+			self::$_core = new Core;
 		}
 	}
 
@@ -126,32 +132,34 @@ class Core
 	{
 		//Abfangen von Exceptions
 		try {
-			$this->initObjects();
-			$this->checkGpc();
+			$this->_initObjects();
+			$this->_checkGpc();
 
-			$this->smarty_array = array();
+			$this->_smarty_array = array();
 
 			if (ADMIN_DIR == './') {
-				$this->is_admin = true;
-				$this->checkAdmin();
+				$this->_is_admin = true;
+				$this->_checkAdmin();
 			}
 
-			$this->initPage();
+			$this->_initPage();
 
 		} catch(CMSException $e) {
 
 			$strTrace = '#'.str_replace('#', "<br />\n#", substr($e->getTraceAsString(), 1));
 			//Ist Smarty nicht vorhanden, wird eine Nachricht ueber den Exceptionhandler geschickt, der kein Smarty braucht.
-			if (!class_exists('Smarty') || !($this->smarty instanceof Smarty)) {
+			if (!class_exists('Smarty') || !($this->_smarty instanceof Smarty)) {
 				CMSException::printException($e->getFilename(), $e->getLine(), $e->getMessage(), $strTrace);
-			}
 
-			$this->smarty_array['file'] = 'error_include.tpl';
-			$this->smarty_array['error_title'] = $e->getTitle();
-			$this->smarty_array['error_text'] = $e->getMessage()."<br />\nFehler aufgetreten in der Datei ".$e->getFilename()." auf Zeilenummer ".$e->getLine();
-			$this->smarty_array['error_text'] .= "<br />\n".$strTrace;
-			$this->smarty->assign($this->smarty_array);
-			$this->smarty->display('index.tpl');
+			} else {
+
+				$this->_smarty_array['file'] = 'error_include.tpl';
+				$this->_smarty_array['error_title'] = $e->getTitle();
+				$this->_smarty_array['error_text'] = $e->getMessage()."<br />\nFehler aufgetreten in der Datei ".$e->getFilename()." auf Zeilenummer ".$e->getLine();
+				$this->_smarty_array['error_text'] .= "<br />\n"."<div style=\"font-size: 11px\">".$strTrace."</div>";
+				$this->_smarty->assign($this->_smarty_array);
+				$this->_smarty->display('index.tpl');
+			}
 
 
 
@@ -163,20 +171,20 @@ class Core
 	 *
 	 */
 
-	private function initObjects()
+	private function _initObjects()
 	{
 		global $db_server, $db_name, $db_user, $db_pw;
 		//Smarty-Objekt
-		$this->smarty = new Smarty();
-		$this->smarty->compile_check = true;
-		$this->smarty->debugging = false;
-		$this->smarty->config_dir = 'config';
+		$this->_smarty = new Smarty();
+		$this->_smarty->compile_check = true;
+		$this->_smarty->debugging = false;
+		$this->_smarty->config_dir = 'config';
 
-		$this->mysql = new Mysql($db_server, $db_name, $db_user, $db_pw);
+		$this->_mysql = new Mysql($db_server, $db_name, $db_user, $db_pw);
 
 
-		$this->page = new Page($this->smarty, $this->mysql);
-		$this->auth = new Auth($this->smarty, $this->mysql);
+		$this->_page = new Page($this->_smarty, $this->_mysql);
+		$this->_auth = new Auth($this->_smarty, $this->_mysql);
 	}
 
 	/**
@@ -184,7 +192,7 @@ class Core
 	 *
 	 */
 
-	private function checkGpc()
+	private function _checkGpc()
 	{
 		$globals = array('GET' => $_GET, 'POST' => $_POST, 'COOKIE' => $_COOKIE);
 
@@ -198,12 +206,12 @@ class Core
 
 			foreach ($gvalue as $key => $value) {
 
-				//Bei inkativen magic_quotes_gpc we
+				//Bei inkativen magic_quotes_gpc addslashes anwenden
 				if ($activ == false) {
 					$value = addslashes($value);
 				}
 
-				$this->gpc[$gkey][$key] = $value;
+				$this->_gpc[$gkey][$key] = $value;
 
 			}
 
@@ -222,22 +230,21 @@ class Core
 	 *
 	 */
 
-	private function checkAdmin()
+	private function _checkAdmin()
 	{
-
-		if ($this->is_admin != true) {
+		echo __METHOD__, "\n";
+		if ($this->_is_admin != true) {
 			throw new CMSException('Interne Funktion nicht ausfuehrbar', EXCEPTION_CORE_CODE);
 		}
 
 		//Testet auf Logout und fuehrt es durch
-		if(array_key_exists('action', $this->gpc['GET']) && $this->gpc['GET']['action'] == 'logout') {
-			$auth->logout();
+		if(array_key_exists('action', $this->_gpc['GET']) && $this->_gpc['GET']['action'] == 'logout') {
+			$this->_auth->logout();
 			exit;
 		}
 
 		//Haltet nach Login oder User ausschau (inkl. Sicherheitstest)
-		if(($this->auth->check4login($this->gpc['POST']) == true) || ($this->auth->check4user($this->gpc['GET']) == false))
-		{
+		if($this->_auth->check4login($this->_gpc['POST']) == true || $this->_auth->check4user($this->_gpc['GET']) == false) {
 			exit;
 		}
 	}
@@ -249,12 +256,13 @@ class Core
 	 *
 	 */
 
-	private function initPage()
+	private function _initPage()
 	{
 		global $start_time;
-		$this->tplfile = 'index.tpl';
+		//echo "\$start_time $start_time\n";
+		$this->_tplfile = 'index.tpl';
 
-		if ($this->is_admin == true) {
+		if ($this->_is_admin == true) {
 			$table = 'admin_menu';
 			$shortlink = true;
 		} else {
@@ -262,55 +270,58 @@ class Core
 			$shortlink = false;
 		}
 
-		$this->loadNav($shortlink);
+		$this->_loadNav($shortlink);
+		$this->_check_spec_action();
 
-		$this->mysql->query("SELECT `menu_pagetyp`, `menu_page` FROM `$table` WHERE `menu_ID`= '{$this->nav_id}'");
-		$data = $this->mysql->fetcharray("assoc");
+		$this->_mysql->query("SELECT `menu_pagetyp`, `menu_page` FROM `$table` WHERE `menu_ID`= '{$this->_nav_id}'");
+		$data = $this->_mysql->fetcharray("assoc");
 
 		$page_id = (int)$data['menu_page'];
 
 		if ($data['menu_pagetyp'] == 'mod') {
-			$this->loadModule($page_id);
+			$this->_loadModule($page_id);
 
 		} elseif ($data['menu_pagetyp'] == 'pag') {
-			$this->loadContent($page_id);
+			$this->_loadContent($page_id);
 
 		} else {
 			throw new CMSException("Das angegebene Modul konnte nicht gefunden werden", null, 'Modul nicht vorhanden');
 		}
 
-		$this->smarty->assign('shortlink', $shortlink);
+		$this->_smarty->assign('shortlink', $shortlink);
 
-		$this->smarty->assign('generated_time', round(((float)(microtime(true) - $start_time)),5));
+		$this->_smarty->assign('generated_time', round(((float)(microtime(true) - $start_time)),5));
 
 
-		$this->smarty->assign($this->smarty_array);
-		$this->smarty->display($this->tplfile);
+		$this->_smarty->assign($this->_smarty_array);
+		$this->_smarty->display($this->_tplfile);
 
 
 
 	}
 
 	/**
-	 * Laedt die Navigation und speicher sie in $this->smarty_array
+	 * Laedt die Navigation und speicher sie in $this->_smarty_array
 	 *
 	 * @parambooleane $shortlinks
 	 */
 
-	private function loadNav($shortlinks = false)
+	private function _loadNav($shortlinks = false)
 	{
-		if ($this->is_admin === true) {
+		if ($this->_is_admin === true) {
 			$adminmenu = true;
 		} else {
 			$adminmenu = false;
 		}
 
-		$nav_array = $this->page->get_menu_array($this->gpc['GET'], $shortlinks, $adminmenu);
-		$this->smarty_array['topnav'] = $nav_array['topnav'];
-		$this->smarty_array['subnav'] = $nav_array['subnav'];
-		$this->smarty_array['local_link'] = ($this->nav_id = $nav_array['nav_id']);
+		$nav_array = $this->_page->get_menu_array($this->_gpc['GET'], $shortlinks, $adminmenu);
+		$this->_smarty_array['topnav'] = $nav_array['topnav'];
+		$this->_smarty_array['subnav'] = $nav_array['subnav'];
+		$this->_smarty_array['local_link'] = ($this->_nav_id = $nav_array['nav_id']);
 
-		if ($this->is_admin === true) {
+
+
+		if ($this->_is_admin === true) {
 			$menu_table = 'admin_menu';
 			$mod_table = 'admin_modules';
 		} else {
@@ -319,15 +330,15 @@ class Core
 		}
 
 
-		$this->mysql->query("SELECT `$menu_table`.`menu_ID` as 'image_ID' FROM `$menu_table`, `$mod_table` WHERE `$mod_table`.`modules_file` = 'image_send.class.php' AND `$mod_table`.`modules_ID` = `$menu_table`.`menu_page` AND `$menu_table`.`menu_pagetyp` = 'mod' LIMIT 1");
-		$data = $this->mysql->fetcharray('assoc');
+		$this->_mysql->query("SELECT `$menu_table`.`menu_ID` as 'image_ID' FROM `$menu_table`, `$mod_table` WHERE `$mod_table`.`modules_file` = 'image_send.class.php' AND `$mod_table`.`modules_ID` = `$menu_table`.`menu_page` AND `$menu_table`.`menu_pagetyp` = 'mod' LIMIT 1");
+		$data = $this->_mysql->fetcharray('assoc');
 
-		$this->smarty_array['image_link'] = $data['image_ID'];
+		$this->_smarty_array['image_link'] = $data['image_ID'];
 
-		$this->mysql->query("SELECT `$menu_table`.`menu_ID` as 'captcha_ID' FROM `$menu_table`, `$mod_table` WHERE `$mod_table`.`modules_file` = 'captcha_image.class.php' AND `$mod_table`.`modules_ID` = `$menu_table`.`menu_page` AND `$menu_table`.`menu_pagetyp` = 'mod' LIMIT 1");
-		$data = $this->mysql->fetcharray('assoc');
-		
-		$this->smarty_array['captcha_link'] = $data['captcha_ID'];
+		$this->_mysql->query("SELECT `$menu_table`.`menu_ID` as 'captcha_ID' FROM `$menu_table`, `$mod_table` WHERE `$mod_table`.`modules_file` = 'captcha_image.class.php' AND `$mod_table`.`modules_ID` = `$menu_table`.`menu_page` AND `$menu_table`.`menu_pagetyp` = 'mod' LIMIT 1");
+		$data = $this->_mysql->fetcharray('assoc');
+
+		$this->_smarty_array['captcha_link'] = $data['captcha_ID'];
 
 	}
 
@@ -338,28 +349,28 @@ class Core
 	 */
 
 
-	private function loadModule($module_ID)
+	private function _loadModule($module_ID)
 	{
 		//Kann ueberschrieben, aber damit sicher etwas steht -> speichern
-		$this->smarty->assign('content_title', 'JClub');
+		$this->_smarty->assign('content_title', 'JClub');
 
-		if ($this->is_admin == true) {
+		if ($this->_is_admin == true) {
 			$mod_table = 'admin_modules';
 		} else {
 			$mod_table = 'modules';
 		}
 
 		//Modul aus Datenbank lesen
-		$this->mysql->query("SELECT `modules_file`,`modules_template` FROM `$mod_table` WHERE `modules_ID`= '$module_ID' LIMIT 1");
-		$data = $this->mysql->fetcharray("assoc");
+		$this->_mysql->query("SELECT `modules_file`,`modules_template_support` FROM `$mod_table` WHERE `modules_ID`= '$module_ID' LIMIT 1");
+		$data = $this->_mysql->fetcharray("assoc");
 
 		if (empty($data) && $data == false) {
-			throw new CMSException("Für die angegebene Modul-ID ist kein Modul hinterlegt!!!", null, 'Modul nicht gefunden');
+			throw new CMSException("F&uuml;r die angegebene Modul-ID ist kein Modul hinterlegt!!!", EXCEPTION_CORE_CODE, 'Modul nicht gefunden');
 			return;
 		}
 
 		//Modul-Path ermittelnt
-		if ($this->is_admin == true) {
+		if ($this->_is_admin == true) {
 			$path = ADMIN_DIR.'modules/'.$data['modules_file'];
 		} else {
 			$path = USER_DIR.'modules/'.$data['modules_file'];
@@ -369,7 +380,7 @@ class Core
 
 		//File pruefen
 		if(!file_exists($path)) {
-			throw new CMSException("Datei $path konnte nicht included werden!!!", null, 'Fehler beim Modulladen');
+			throw new CMSException("Datei $path konnte nicht included werden!!!", EXCEPTION_CORE_CODE, 'Fehler beim Modulladen');
 			return;
 		}
 
@@ -382,21 +393,21 @@ class Core
 
 		//Existenz der Klasse pruefen
 		if(!class_exists($class)) {
-			throw new CMSException("Klasse $class nicht vorhanden!!!", null, 'Klasse fehlt');
+			throw new CMSException("Klasse $class nicht vorhanden!!!", EXCEPTION_CORE_CODE, 'Klasse fehlt');
 			return;
 		}
-	
+
 		//Modul ausfuehren
-		$module = new $class($this->mysql, $this->smarty);
-		$module->action($this->gpc);	
+		$module = new $class($this->_mysql, $this->_smarty);
+		$module->action($this->_gpc);
 
 
-		//Wenn das Modul kein Tmplate zurueckgibt -> Beenden
-		if ($data['modules_template'] == 'no') {
+		//Wenn das Modul kein Template zurueckgibt -> Beenden
+		if ($data['modules_template_support'] == 'no') {
 			exit;
 		}
 
-		$this->smarty_array['file'] = $module->gettplfile();
+		$this->_smarty_array['file'] = $module->gettplfile();
 
 	}
 
@@ -407,19 +418,78 @@ class Core
 	 * @param int $page_ID
 	 */
 
-	private function loadContent($page_ID)
+	private function _loadContent($page_ID)
 	{
-		if ($this->is_admin == true) {
+		if ($this->_is_admin == true) {
 			$cnt_table = 'admin_content';
 		} else {
 			$cnt_table = 'content';
 		}
-		$this->mysql->query("SELECT `content_title`, `content_text` FROM `$cnt_table` WHERE `content_ID` = $page_ID");
-		$data = $this->mysql->fetcharray("assoc");
+		$this->_mysql->query("SELECT `content_title`, `content_text` FROM `$cnt_table` WHERE `content_ID` = $page_ID");
+		$data = $this->_mysql->fetcharray("assoc");
 		$content_title = $data['content_title'];
 		$content_text = $data['content_text'];
-		$this->smarty_array += array('content_title' => $content_title, 'content_text' => $content_text);
+		$this->_smarty_array += array('content_title' => $content_title, 'content_text' => $content_text);
 	}
+
+	/**
+	 * Prüft auf spezielle Aktionen durch
+	 *
+	 */
+	private function _check_spec_action()
+	{
+		//echo "\n".__METHOD__." nav_id $this->_nav_id\n";
+		if (key_exists('mail', $this->_gpc['GET'])) {
+			//echo "\n".__METHOD__." mail ist ein get-parameter\n";
+			//Nav_id null oder 0 und get-parameter mail vorhanden?
+			$this->_mysql->query("SELECT `menu`.`menu_ID` FROM `menu`,`modules` WHERE `modules`.`modules_name` = 'mail' AND `modules`.`modules_ID` = `menu`.`menu_page` AND `menu`.`menu_pagetyp` = 'mod' LIMIT 1");
+			$data = $this->_mysql->fetcharray('num');
+			$this->_smarty_array['local_link'] = $this->_nav_id = (int)$data[0];
+		}
+	}
+	
+
+	//	private function _exe_reserved_action()
+	//	{
+	//		$reserved_action = Action::get_reserved_action();
+	//
+	//		foreach ($reserved_action as $key => $value) {
+	//			/* Durchlaufen der reservierten Aktionen */
+	//
+	//			if (key_exists('action', $this->_gpc['GET']) && $this->_gpc['GET']['action'] == $key) {
+	//				/* Testen auf GET-Parameter */
+	//
+	//				$action = new Action($this->_smarty, $this->_mysql, $this);
+	//
+	//				if (method_exists($action, "_exe_reserved_$key") == false) {
+	//					throw new CMSException('Interne Funktion nicht vorhanden', EXCEPTION_CORE_CODE, 'Funktion fehlt');
+	//				}
+	//
+	//				switch ($value) {
+	//					case 'both':
+	//						/* Egal ob Admin- oder Usermodus */
+	//						call_user_method("_exe_reserved_$key", $action);
+	//						break;
+	//					case 'admin':
+	//						/* Nur Adminmodues */
+	//						if ($this->_is_admin === true) {
+	//							call_user_method("_exe_reserved_$key", $action);
+	//						}
+	//						break;
+	//					case 'user':
+	//						/* Nur Usermodues */
+	//						if ($this->_is_admin === false) {
+	//							call_user_method("_exe_reserved_$key", $action);
+	//						}
+	//						break;
+	//					default:
+	//						throw new CMSException('Aufgrund ung&uuml;ltigen internen Daten wurde die Ausf&uuml;rung abgebrochen', EXCEPTION_CORE_CODE, 'Internes Datenproblem');
+	//
+	//				}
+	//
+	//			}
+	//		}
+	//	}
 
 }
 

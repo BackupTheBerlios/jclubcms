@@ -54,7 +54,7 @@ if (!defined('EXCEPTION_LIBARY_CODE')) {
 
 class CMSException extends Exception
 {
-	private $title = "";
+	private $_title = "";
 
 	/**
 	 * Aufbau der Exception-Klasse
@@ -66,46 +66,45 @@ class CMSException extends Exception
 
 	public function __construct($message, $code = 0, $title = "")
 	{
-
+		// sicherstellen, dass alles korrekt zugewiesen wird
+		parent::__construct($message, $code);
+		
 		switch ($code) {
 			case EXCEPTION_CORE_CODE:
-				$this->title = "CMS-Core-Fehler";
+				$this->_title = "CMS-Core-Fehler";
 				break;
 			case EXCEPTION_MYSQL_CODE:
-				$this->title = 'Mysql-Fehler';
+				$this->_title = 'Mysql-Fehler';
 				break;
 			case EXCEPTION_MODULE_CODE:
-				$this->title = 'Modul-Fehler';
+				$this->_title = 'Modul-Fehler';
 				break;
 			case EXCEPTION_LIBARY_CODE:
-				$this->title = "Libary-Fehler";
+				$this->_title = "Libary-Fehler";
 				break;
 			default:
-				$this->title = 'Fehler';
+				$this->_title = 'Fehler';
 				break;
 		}
 		
 		if (!empty($title)) {
-			$this->title .= " - $title";
-		}
-
-		// sicherstellen, dass alles korrekt zugewiesen wird
-		parent::__construct($message, $code);
+			$this->_title .= " - $title";
+		}		
 	}
 
 	/**
-	 * Liefert den Titel zurueck
+	 * Liefert den Titel zurück
 	 *
 	 * @return string Fehlertitel
 	 */
 
 	public function getTitle()
 	{
-		return $this->title;
+		return $this->_title;
 	}
 
 	/**
-	 * Gibt den Dateinamen ohne Ordnerangaben zurueck.
+	 * Gibt den Dateinamen ohne Ordnerangaben zurück.
 	 *
 	 * @return string Dateiname
 	 */
@@ -124,7 +123,7 @@ class CMSException extends Exception
 
 	public function __toString()
 	{
-		return "<b>{$this->title}</b><br />\nEs ist ein Fehler aufgetreten in der Datei ".basename($this->getFile())." auf  Zeile {$this->getLine()} mit folgendern Nachricht: {$this->getMessage()}";
+		return "<b>{$this->_title}</b><br />\nEs ist ein Fehler aufgetreten in der Datei ".basename($this->getFile())." auf  Zeile {$this->getLine()} mit folgendern Nachricht: {$this->getMessage()}";
 	}
 
 	/**
@@ -137,7 +136,7 @@ class CMSException extends Exception
 	{
 		$file = basename($exception->getFile());
 		
-		//1. Gartenhag nicht umbrechen -> String bei replace verkleinern und Gartenhag voranhaengen
+		//1. Gartenhag nicht umbrechen -> String bei replace verkleinern und Gartenhag voranhängen
 		$strTrace = '#'.str_replace('#', "<br />\n#", substr($exception->getTraceAsString(), 1));
 		
 		self::printException($file, $exception->getLine(), $exception->getMessage(), $strTrace);
@@ -170,20 +169,20 @@ class CMSException extends Exception
 						<td colspan="2" style="font-weight: bold; padding:{$pad}px">Fehlertabelle</td>
 					</tr>
 					<tr>
-						<td style="padding:{$pad}px">Datei</td>
-						<td style="padding:{$pad}px">$file</td>
+						<td style="padding: {$pad}px">Datei</td>
+						<td style="padding: {$pad}px">$file</td>
 					</tr>
 					<tr style="background-color: #EFEFEF; padding: 30px">
-						<td style="padding:{$pad}px">Zeile</td>
-						<td style="padding:{$pad}px">$line</td>
+						<td style="padding: {$pad}px">Zeile</td>
+						<td style="padding: {$pad}px">$line</td>
 					</tr>
 					<tr>
-						<td style="padding:{$pad}px">Nachricht</td>
-						<td style="padding:{$pad}px">$msg</td>
+						<td style="padding: {$pad}px">Nachricht</td>
+						<td style="padding: {$pad}px">$msg</td>
 					</tr>
 					<tr style="background-color: #EFEFEF;">
-						<td style="padding:{$pad}px">Trace</td>
-						<td style="padding:{$pad}px">$trace</td>
+						<td style="padding: {$pad}px">Trace</td>
+						<td style="padding: {$pad}px">$trace</td>
 					</tr>
 				</table>
 				<p style="margin-left: 20%; font-style: italic">Sollte dieser Fehler &ouml;fters auftreten, kontaktieren Sie bitte den Administrator. Danke.</p>

@@ -17,7 +17,7 @@
  * GALLERY IN GALLERY WIRD NOCH NICHT UNTERST�TZT
  */
 
-require_once("./admin/lib/pagesnav.class.php");
+require_once ADMIN_DIR."lib/page.class.php";
 
 //Nummern zuweisen oder false/1
 $gallery = isset($_GET['gallery']) ? ((int) $_GET['gallery']) : false;

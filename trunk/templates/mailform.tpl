@@ -4,6 +4,7 @@
 		<div id="content_txt">
 		<table width = 100% class="content_tab">
 		</table>
+		Mail an {$reciver_name}:
 		{*Fehlerausgabe wenn noetig*}
 		{if $dump_errors}
 		<table class="content_tab" align="center">
@@ -11,12 +12,12 @@
 				<td class="formailer_header" style="background-color: #EC6442">{$error_title|default:"Einige Daten sind ungueltig"}</td>
 			</tr>
 			<tr>
-				<td class="formailer_txt" style="background-color: #ED4B23">{$error_content}</td>
+				<td class="formailer_txt" style="background-color: #ED4B23">{foreach item=error_content from=$error_contents}<li>{$error_content}</li>{/foreach}</td>
 			</tr>
 		</table>
 		{/if}
-		Mail an {$reciver_name}:
-		<form method="post" action="?nav_id={$local_link}&action=mail&entry_id={$entry_id}">
+		
+		<form method="post" action="">
 		<table cellpadding="0" cellspacing="0" align="center" class="content_tab">
                 <input type="hidden" name="sessioncode" value="{$sessioncode}" />
 			 <input type="hidden" name="entry_id" value="{$entry_id}" />

@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * @author David Daester
  * @package JClubCMS
  * File: formular_check.class.php
@@ -8,13 +8,13 @@
  */
 
 class Formularcheck {
-	
+
 	private $mail = null;
 	private $domain = null;
 	private $country = null;
 	private $name = null;
 	private $failer_error = 0;
-	
+
 	public function __construct () {
 		return 0;
 	}
@@ -26,7 +26,7 @@ class Formularcheck {
 	 * @param string $not_allowed
 	 * @return boolean
 	 */
-	
+
 	public function field_check ($field, $not_allowed = NULL) {
 		if ($field == "" || $field == $not_allowed) {
 			return false;
@@ -34,7 +34,7 @@ class Formularcheck {
 			return true;
 		}
 	}
-	
+
 	/**
 	 * Überprüft, ob das angegebene Array Leer-String oder default-Einträge hat
 	 * (@see field_check)
@@ -43,43 +43,43 @@ class Formularcheck {
 	 * @param array $unalloweds Default-Array
 	 * @return array Fehlerarray
 	 */
-	
+
 	public function field_check_arr(array $fields, array $unalloweds = array())
 	{
 		if (!is_array($fields) || !is_array($unalloweds)) {
 			throw  new CMSException('Falsche Parameterangaben in Funktion '.__FUNCTION__.'. 1. oder 2. Parameter kein Array', EXCEPTION_LIBARY_CODE);
 		}
-		
+
 		$arr_rtn = array();
-		
+
 		foreach ($fields as $key => $value) {
-			
+
 			if (array_key_exists($key, $unalloweds) == true) {
 				$arr_rtn[$key] = $this->field_check($value, $unalloweds[$key]);
 			} else {
 				$arr_rtn[$key] = $this->field_check($value);
 			}
-			
-			
+
+
 		}
-		
+
 		return $arr_rtn;
 	}
-	
-	
+
+
 	/**
 	 * Ersetzt http:// und ftp:// mit einem Leerzeichen, da die Templates diesen Aufruf machen
 	 *
 	 * @param string $hp
 	 * @return string
 	 */
-	
+
 	public function hpcheck ($hp) {
 		$hp = str_replace("http://", "", $hp);
 		$hp = str_replace("ftp://", "", $hp);
 		return $hp;
 	}
-	
+
 	/**
 	 * Wird aufgerufen, startet alle anderen Funktionen und gibt den Fehlercode zurueck.
 	 *
@@ -94,23 +94,28 @@ class Formularcheck {
 
 		return $this->failer_error;
 	}
-	
+
 	/**
 	 * Der Mail-Exploder
 	 *
 	 * Teil die Mail fuer die einfachere Pruefung in ihre Subsegmente auf
 	 */
-	
+
 	private function mailexplode() {
 		$mailarray = explode('@', $this->mail);
 		$this->name = $mailarray[0];
-		for ($i = strpos($mailarray[1], ".")+1; $i < strlen($mailarray[1]); $i++) {
-			$this->country .= $mailarray[1][$i];
+		if (key_exists(1, $mailarray)) {
+
+			for ($i = strpos($mailarray[1], ".")+1; $i < strlen($mailarray[1]); $i++) {
+				$this->country .= $mailarray[1][$i];
+			}
+			$domainarray = explode('.', $mailarray[1]);
+			$this->domain = $domainarray[0];
+		} else {
+			$this->failer_error++;
 		}
-		$domainarray = explode('.', $mailarray[1]);
-		$this->domain = $domainarray[0];
 	}
-	
+
 	/**
 	 * Der Domain-Name-Checker
 	 *
@@ -176,8 +181,8 @@ class Formularcheck {
 		}
 		$this->failer_error+=$failer_error;
 	}
-		
-	
+
+
 	/**
 	 * Klassendestruktor
 	 *

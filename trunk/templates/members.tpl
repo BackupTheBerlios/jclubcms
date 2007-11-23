@@ -9,7 +9,7 @@
               </tr>
               <tr  class="content_tab_content1">
                 <td>
-                <a href="?nav_id={$image_link}&pic={$member.members_FIDimage}"><img src="./index.php?nav_id=41&thumb={$IDimage.$index}" /></a>
+                <a href="?nav_id={$image_link}&bild={$member.members_FIDimage}"><img src="?nav_id=41&thumb={$member.members_FIDimage}" /></a>
                 </td>
                 <td class="content_tab_content1">
                   Spitzname: {$member.members_spitzname}<br />
@@ -21,7 +21,7 @@
                 </td>
               </tr>
               <tr>
-              	<td colspan="2" class="content_tab_content1"><a href="?nav_id={$local_link}&action=mail&entry_id={$member.members_ID}">Mail an {$member.members_spitzname}</a></td>
+              	<td colspan="2" class="content_tab_content1"><a href="?mail&nav_id={$local_link}&entry_id={$member.members_ID}">Mail an {$member.members_spitzname}</a></td>
               </tr>
             </table>
             {/foreach}

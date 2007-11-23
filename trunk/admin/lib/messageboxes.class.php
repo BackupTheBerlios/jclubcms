@@ -246,7 +246,7 @@ class Messageboxes {
 		
 		$sql = "UPDATE `$this->_tablename` SET  ";
 		$num = count($tabledata);
-
+		echo __METHOD__." \$num $num<br />\n";
 
 		$i = 1;
 		foreach ($tabledata as $key => $value) {
@@ -256,15 +256,16 @@ class Messageboxes {
 
 				//Zur Sicherheit escapen
 				$sql .= " = '".$this->_mysql->escapeString($value)."'";
-				if ($i != ($num - 1)) {
+				if ($i != $num) {
 					$sql .= ", ";
 				}
 			}
 			$i++;
 		}
 
-		$sql .= " WHERE {$this->_tablestruct['ID']} = {$tabledata['ID']}";
+		$sql .= " WHERE `{$this->_tablestruct['ID']}` = '{$tabledata['ID']}'";
 
+		echo __METHOD__." ".var_export($sql,1)."<br />\n";
 
 		$this->_mysql->query($sql);
 		return true;
@@ -584,7 +585,7 @@ class Messageboxes {
 	{
 		$table_infos = array();
 		$colums_names = array();
-		$this->_mysql->query('SHOW COLUMNS FROM '.$this->_tablename);
+		$this->_mysql->query("SHOW COLUMNS FROM `$this->_tablename`");
 		$this->_mysql->saverecords('assoc');
 		$table_infos = $this->_mysql->get_records();
 

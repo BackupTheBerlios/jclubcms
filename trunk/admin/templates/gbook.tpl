@@ -7,7 +7,7 @@
 		</tr>
 		<tr>
 			<td colspan="2" align="center">{foreach item=page from=$pages}
-			<a href="{$page.link}">[{$page.page}]</a>
+			{if $page.link != ""}<a href="{$page.link}">[{$page.page}]</a>{else}[{$page.page}]{/if}
 			{/foreach}
 			</td>
 		</tr>
@@ -33,15 +33,15 @@
 				<td class="content_tab_content2">
 					<img src="templates/style/icons/date.gif" /> {$book.time}<br />
 					<img src="templates/style/icons/user.gif" /> {$book.name}<br />
-					<a href="?nav_id={$local_link}&action=mail&entry_id={$book.mail}"><img src="templates/style/icons/email.gif" /> E-mail</a>
+					<a href="?mail&nav_id={$local_link}&entry_id={$book.mail}"><img src="templates/style/icons/email.gif" /> E-mail</a>
 					{if $book.hp neq ""}<br /><a href="http://{$book.hp}" target="_blank"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
 				</td>
 				<td class="content_tab_content2" style="text-align:right">
-				<a href="./index.php?nav_id={$local_link}&amp;action=comment&amp;id={$book.ID}&amp;{$SID}"><img src="templates/style/icons/pencil.gif" />Kommentieren</a>
+				<a href="?nav_id={$local_link}&amp;action=comment&amp;id={$book.ID}&amp;{$SID}"><img src="templates/style/icons/pencil.gif" />Kommentieren</a>
 					<br />
-					<a href="./index.php?nav_id={$local_link}&amp;action=edit&amp;id={$book.ID}&amp;{$SID}"><img src="templates/style/icons/pencil.gif" />Editieren</a>
+					<a href="?nav_id={$local_link}&amp;action=edit&amp;id={$book.ID}&amp;{$SID}"><img src="templates/style/icons/pencil.gif" />Editieren</a>
 					<br />
-					<a href="./index.php?nav_id={$local_link}&amp;action=del&amp;id={$book.ID}&amp;{$SID}"><img src="templates/style/icons/del.gif" />L&ouml;schen</a>
+					<a href="?nav_id={$local_link}&amp;action=del&amp;id={$book.ID}&amp;{$SID}"><img src="templates/style/icons/del.gif" />L&ouml;schen</a>
 				</td>
 			</tr>
 			{* Innere Schlaufe für das Auslesen der Kommentare *}
@@ -53,13 +53,13 @@
 					<td class="content_tab_content2">
 						<img src="templates/style/icons/date.gif" /> {$comment.time}<br />
 						<img src="templates/style/icons/user.gif" /> {$comment.name}<br />
-						<a href="?nav_id={$local_link}&action=mail&entry_id={$comment.email}"><img src="templates/style/icons/email.gif" /> E-mail</a>
+						<a href="?mail&nav_id={$local_link}&entry_id={$comment.email}"><img src="templates/style/icons/email.gif" /> E-mail</a>
 						{if $comment.hp neq ""}<br /><a href="http://{$comment.hp}" target="_blank"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
 					</td>
 					<td class="content_tab_content2" style="text-align:right">
-					<a href="./index.php?nav_id={$local_link}&amp;action=edit&amp;id={$comment.ID}&amp;{$SID}"><img src="templates/style/icons/pencil.gif" />Editieren</a>
+					<a href="?nav_id={$local_link}&amp;action=edit&amp;id={$comment.ID}&amp;{$SID}"><img src="templates/style/icons/pencil.gif" />Editieren</a>
 					<br />
-					<a href="./index.php?nav_id={$local_link}&amp;action=del&amp;id={$comment.ID}&amp;{$SID}"><img src="templates/style/icons/del.gif" />L&ouml;schen</a>
+					<a href="?nav_id={$local_link}&amp;action=del&amp;id={$comment.ID}&amp;{$SID}"><img src="templates/style/icons/del.gif" />L&ouml;schen</a>
 				</td>
 				</tr>
 			{/foreach}
@@ -74,7 +74,7 @@
 		</tr>
 		<tr>
 			<td colspan="2" align="center">{foreach item=page from=$pages}
-				<a href="{$page.link}">[{$page.page}]</a>
+				{if $page.link != ""}<a href="{$page.link}">[{$page.page}]</a>{else}[{$page.page}]{/if}
 		{/foreach}
 			</td>
 		</tr>

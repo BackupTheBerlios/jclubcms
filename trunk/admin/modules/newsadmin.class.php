@@ -14,7 +14,7 @@ require_once ADMIN_DIR.'lib/messageboxes.class.php';
 require_once ADMIN_DIR.'lib/smilies.class.php';
 require_once USER_DIR.'config/gbook_textes.inc.php';
 
-class News implements Module
+class Newsadmin implements Module
 {
 	/**
 	 * Templatefile
@@ -69,23 +69,23 @@ class News implements Module
 	/**
 	 * Fuehrt die einzelnen Methoden aus, abhaengig vom parameter
 	 *
-	 * @param array $parameters POST- und GET-Variablen
+	 * @param array $parameters POST, GET und COOKIE-Variablen
 	 */
 
-	public function action($parameters)
+	public function action($gpc)
 	{
 		//Daten initialisieren
 		global $dir_smilies;
-		$this->post_arr = $parameters['POST'];
-		$this->get_arr = $parameters['GET'];
+		$this->post_arr = $gpc['POST'];
+		$this->get_arr = $gpc['GET'];
 
 
 		$this->msbox = new Messageboxes($this->mysql, 'news', array('ID' => 'news_ID', 'ref_ID' => 'news_ref_ID', 'content' => 'news_content', 'name' => 'news_name', 'time' => 'news_time', 'email' => 'news_email', 'hp' => 'news_hp', 'title' => 'news_title'));
 
 		$this->smilie = new Smilies($dir_smilies);
 
-		//Je nach Get-Parameter die zugehoerige Anweisung ausfuehren
-		if (isset($this->get_arr['action'])) {
+		//Je nach Get-Parameter die zugehörige Anweisung ausfuehren
+		if (key_exists('action', $this->get_arr)) {
 			switch ($this->get_arr['action']) {
 				case 'new':
 					$this->add();
@@ -128,9 +128,9 @@ class News implements Module
 	}
 
 	/**
-	 * Zeigt die Eintraege an
+	 * Zeigt die Einträge an
 	 *
-	 * @param int $max_entries_pp Anzahl Eintraege pro Seite
+	 * @param int $max_entries_pp Anzahl Einträge pro Seite
 	 */
 
 	private function view($max_entries_pp)
@@ -151,7 +151,7 @@ class News implements Module
 		//Daten holen
 		$news_array = $this->msbox->getEntries($max_entries_pp, $page, 'DESC','ASC', $this->timeformat);
 
-		$pagesnav_array = Page::get_static_pagesnav_array($data['many'],$max_entries_pp, $this->get_arr);
+		$pagesnav_array = Page::get_static_pagesnav_array($news_array['many'],$max_entries_pp, $this->get_arr);
 
 
 		$this->smarty->assign('entrys', $news_array['many']);
@@ -402,7 +402,7 @@ class News implements Module
 			$news_arr = $this->msbox->getEntry($this->get_arr['id'], $this->timeformat);
 
 			//Template-Daten erstellen
-			$smarty_arr = array('entry_ID' => $this->get_arr['ID'], 'entry_name' => $news_arr['news_name'],
+			$smarty_arr = array('entry_ID' => $this->get_arr['id'], 'entry_name' => $news_arr['news_name'],
 			'entry_content' => $news_arr['news_content'], 'entry_email' => $news_arr['news_email'],
 			'entry_hp' => $news_arr['news_hp'], 'entry_title' => $news_arr['news_title'], 'entry_time' => $news_arr['time']);
 
@@ -593,11 +593,11 @@ class News implements Module
 
 	private function getPostVars()
 	{
+		$entry = array('content' => $this->post_arr['content'], 'name' => $this->post_arr['name'], 'email' => $this->post_arr['email'], 'hp' => $this->post_arr['hp'], 'title' => $this->post_arr['title']);
+		
 		if (array_key_exists('ID', $this->post_arr)) {
 			$entry['ID'] = $this->post_arr['ID'];
 		}
-
-		$entry= array('content' => $this->post_arr['content'], 'name' => $this->post_arr['name'], 'email' => $this->post_arr['email'], 'hp' => $this->post_arr['hp'], 'title' => $this->post_arr['title']);
 
 		return $entry;
 	}

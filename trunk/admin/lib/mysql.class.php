@@ -210,7 +210,7 @@ class Mysql {
 		}
 
 		if(($this->_noresult == true && $success == false) || ($this->_noresult == false && $this->_result === false)) {
-			throw new CMSException('Mysql-Query ist ungueltig', EXCEPTION_MYSQL_CODE);		
+			throw new CMSException("Mysql-Query ist ung&uuml;ltig<br />\n".mysql_error($this->_serverlink), EXCEPTION_MYSQL_CODE);		
 		} else {
 			return true;
 		}

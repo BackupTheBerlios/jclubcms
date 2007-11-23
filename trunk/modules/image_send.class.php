@@ -7,7 +7,7 @@
  * Diese Klasse ist zustaendig fuer das Editieren der Gaestebucheintraege. Auch koennen neue Beitraege hinzugefuegt oder geloescht
  * werden
  */
-
+require_once ADMIN_DIR.'lib/module.interface.php';
 require_once ADMIN_DIR.'lib/image.class.php';
 
 class Image_send implements Module
@@ -17,36 +17,36 @@ class Image_send implements Module
 	 *
 	 * @var Image
 	 */	
-	private $img = null;
+	private $_img = null;
 
 	/**
 	 * Mysql-Objekt
 	 *
 	 * @var Mysql
 	 */
-	private $mysql = null;
+	private $_mysql = null;
 
 	/**
 	 * GET, POST, COOKIE
 	 *
 	 * @var array
 	 */
-	private $gpc = null;
+	private $_gpc = null;
 
-	public function __construct($smarty, $mysql)
+	public function __construct($mysql, $smarty)
 	{
-		$this->mysql = $mysql;
+		$this->_mysql = $mysql;
 	}
 
 	public function action($gpc)
 	{
-		$this->gpc = $gpc;
+		$this->_gpc = $gpc;
 		if (isset($gpc['GET']['bild'])) {
-			$this->initImg($gpc['GET']['bild']);
+			$this->_initImg($gpc['GET']['bild']);
 		} elseif (isset($gpc['GET']['thumb'])) {
-			$this->initThumb($gpc['GET']['thumb']);
+			$this->_initThumb($gpc['GET']['thumb']);
 		} else {
-			$this->initErrImg('Keine Parameter');
+			$this->_initErrImg('Keine Parameter');
 		}
 	}
 
@@ -61,64 +61,66 @@ class Image_send implements Module
 	 *
 	 */
 
-	private function initImg($bild_ID)
+	private function _initImg($bild_ID)
 	{
-		global $dir_orgImage, $dir_galImage, $image_maxheight, $image_maxwidth, $thumb_maxheight, $thumb_maxwidth;
-
+		global $dir_galImage, $dir_orgImage;
+		global $image_maxheight, $image_maxwidth;
 		//Eintrag zur ID vorhanden?
-		$this->mysql->query("SELECT `filename` FROM `bilder` WHERE `bilder_ID` = '$bild_ID' LIMIT 1");
+		$this->_mysql->query("SELECT `filename` FROM `bilder` WHERE `bilder_ID` = '$bild_ID' LIMIT 1");
 
-		$mysql_data = $this->mysql->fetcharray();
+		$mysql_data = $this->_mysql->fetcharray();
 
 
 		if(empty($mysql_data)) {
 			
-			$this->initErrImg(80, 80, "Keine ID");
+			$this->_initErrImg(100, 80, "Keine ID");
 			return;
 		}
 
 		//Entweder liegt das Bild im Gallery-Ordner oder im Origianl-Ordner (mit falscher Groesse?)
-		if(is_file($dir_galImage.$bild_data['filename'])) {
-			$this->img = new Image($dir_galImage.$mysql_data['filename']);
+		if(is_file($dir_galImage.$mysql_data['filename'])) {
+			$this->_img = new Image($dir_galImage.$mysql_data['filename']);
 
 		} else {
 
-			$this->img = new Image($dir_orgImage.$mysql_data['filename']);
-			$bild_data = $img->send_infos();
+			$this->_img = new Image($dir_orgImage.$mysql_data['filename']);
+			$bild_data = $this->_img->send_infos();
 
 			if($bild_data['height'] > $image_maxheight || $bild_data['width'] > $image_maxwidth) {
-				$newSize = $this->calcSize($bild_data['width'], $bild_data['height'], $image_maxwidth, $image_maxheight);
+				$newSize = $this->_calcSize($bild_data['width'], $bild_data['height'], $image_maxwidth, $image_maxheight);
 				//verkleinertes Bild in den Ordner speichern
-				$this->img->copy($newSize['width'], $newSize['height'], $dir_galImage.$bild_mysql['filename']);
+				$this->_img->copy($newSize['width'], $newSize['height'], $dir_galImage.$mysql_data['filename']);
 
 				//Alte Instanz loeschen
-				unset($this->img);
+				unset($this->_img);
 
 				//Neue Instanz mit kleinem Bild
-				$this->img = new Image($dir_galImage.$bild_mysql['filename']);
+				$this->_img = new Image($dir_galImage.$mysql_data['filename']);
 			}
 		}
 
 		//Bild ausgeben
-		$this->img->send_image();
+		$this->_img->send_image();
 	}
 
 	/**
 	 * Initialisiert den Thumb
 	 *
 	 */
-	private function initThumb($thumb)
+	private function _initThumb($thumb)
 	{
+		global $dir_thumb, $dir_orgImage;
+		global $thumb_maxheight, $thumb_maxwidth;
 		//Eintrag zur ID vorhanden?
-		$this->mysql->query("SELECT `filename` FROM `bilder` WHERE `bilder_ID` = '$thumb' LIMIT 1");
+		$this->_mysql->query("SELECT `filename` FROM `bilder` WHERE `bilder_ID` = '$thumb' LIMIT 1");
 
-		$mysql_data = $this->mysql->fetcharray();
+		$mysql_data = $this->_mysql->fetcharray();
 
 		//Ueberpruefung, ob ein Eintrag vorhanden ist
 		if(empty($mysql_data))
 		{
 			//Fehlerbild ausgeben, weil kein Eintrag vorhanden ist
-			$this->initErrImg(80, 80, "Keine ID");
+			$this->_initErrImg(100, 80, "Keine ID");
 			return;
 		}
 
@@ -128,16 +130,16 @@ class Image_send implements Module
 			$orgImg = new Image($dir_orgImage.$mysql_data['filename']);
 			$bild_data = $orgImg->send_infos();
 
-			$newSize = $this->calcSize($bild_data['width'], $bild_data['height'], $thumb_maxwidth, $thumb_maxheight);
+			$newSize = $this->_calcSize($bild_data['width'], $bild_data['height'], $thumb_maxwidth, $thumb_maxheight);
 
-			$orgImg->copy($newSize['width'] , $newSize['height'], $dir_thumb.$bild_mysql['filename'], "jpeg");
+			$orgImg->copy($newSize['width'] , $newSize['height'], $dir_thumb.$mysql_data['filename'], "jpeg");
 			unset($orgImg);
 		}
 
 
 		//Bild ausgeben
-		$this->img = new Image($dir_thumb.$bild_mysql['filename']);
-		$this->img->send_image();
+		$this->_img = new Image($dir_thumb.$mysql_data['filename']);
+		$this->_img->send_image();
 	}
 
 	/**
@@ -150,12 +152,13 @@ class Image_send implements Module
 	 * @param string $col_text Textfarbe
 	 */
 
-	private function initErrImg($width = 100, $height = 80, $text = 'Bild nicht da', $col_bg = "000000255", $col_text = "200150080")
+	private function _initErrImg($width = 100, $height = 80, $text = 'Bild nicht da', $col_bg = "000000255", $col_text = "200150080")
 	{
-		$this->img = new Image('');
-		$this->img->create_image($width, $height, $text, $col_bg, $col_text);
-		$this->img->send_image();
+		$this->_img = new Image('');
+		$this->_img->create_image($width, $height, $text, $col_bg, $col_text);
+		$this->_img->send_image();
 	}
+	
 
 	/**
 	 * Berechnet die neue Groesse anhand der Parameter
@@ -167,7 +170,7 @@ class Image_send implements Module
 	 * @return array neue Hoehe und Breite
 	 */
 
-	private function calcSize($isWidth, $isHeight, $maxWidth, $maxHeight) {
+	private function _calcSize($isWidth, $isHeight, $maxWidth, $maxHeight) {
 		$verhaeltnis = (float) $isHeight / $isWidth;
 
 		//Neue Breite zuweisen und neue Hoehe berechnen
