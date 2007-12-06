@@ -5,31 +5,31 @@
     <table cellpadding="0" cellspacing="0" align="center" class="content_tab">
       <tr>
         <td class="content_tab_header" colspan="2">
-            {$gbook.title}
+            {$gbook.gbook_title}
         </td>
       </tr>
       <tr>
         <td class="content_tab_content1">
-          {$gbook.content}
+          {$gbook.gbook_content}
         </td>
         <td class="content_tab_content2">
-        <img src="templates/style/icons/date.gif" /> {$gbook.time}<br />
-        <img src="templates/style/icons/user.gif" /> {$gbook.name}<br />
-        <a href="?nav_id={$local_link}&action=mail&entry_id={$gbook.email}"><img src="templates/style/icons/email.gif" /> E-mail</a><br />
-        {if $gbook.hp neq ""}<a href="?nav_id={$local_link}&action=mail&entry_id={$gbook.email}"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
+        <img src="templates/style/icons/date.gif" /> {$gbook.gbook_time}<br />
+        <img src="templates/style/icons/user.gif" /> {$gbook.gbook_name}<br />
+        <a href="?mail&nav_id={$local_link}&entry_id={$gbook.gbook_email}"><img src="templates/style/icons/email.gif" /> E-mail</a><br />
+        {if $gbook.gbook_hp neq ""}<a href="$gbook.gbook_hp"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
         </td>
       </tr>
       {* Innere Schlaufe für das Auslesen der Kommentare *}
       {foreach key=schluessel item=comment from=$gbook.comments}
       <tr>
         <td class="content_tab_content1">
-          {$comment.comment_content}
+          {$comment.gbook_content}
         </td>
         <td class="content_tab_content2">
-          <img src="templates/style/icons/date.gif" /> {$comment.comment_time}<br />
-          <img src="templates/style/icons/user.gif" /> {$comment.comment_name}<br />
-          <a href="?nav_id={$local_link}&action=mail&entry_id={$comment.comment_email}"><img src="templates/style/icons/email.gif" /> E-mail</a><br />
-          {if $comment.comment_hp neq ""}<a href="http://{$comment.comment_hp}"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
+          <img src="templates/style/icons/date.gif" /> {$comment.gbook_time}<br />
+          <img src="templates/style/icons/user.gif" /> {$comment.gbook_name}<br />
+          <a href="?mail&nav_id={$local_link}&entry_id={$comment.gbook_email}"><img src="templates/style/icons/email.gif" /> E-mail</a><br />
+          {if $comment.gbook_hp neq ""}<a href="http://{$comment.gbook_hp}"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
         </td>
       </tr>
       {/foreach}

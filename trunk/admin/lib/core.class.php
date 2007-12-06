@@ -115,6 +115,15 @@ class Core
 		 */		
 	private $_tplfile = null;
 
+	/**
+	 * Über diese Methode wird das Core-Objekt initialisiert. Der Grund, warum das über diese Methode
+	 * und nicht über den Konstruktor geschieht, ist folgender: Es soll nur ein Core-Objekt geben.
+	 * Daher wird ein Core-Objekt mit singelton initialiert. Wurde aber vorher ein Core-Objekt initialisiert,
+	 * passiert keine neue Initialisierung eines Core-Objekts. Es gibt maximal ein Objekt der Core-Klasse.
+	 * @link http://www.php.net/manual/en/language.oop5.patterns.php - singleton.
+	 *
+	 */
+
 
 	public static function singleton()
 	{
@@ -124,9 +133,10 @@ class Core
 	}
 
 	/**
-		 * Aufbau der Klasse
-		 *
-		 */
+	 * Der Konstruktor baut die Klasse auf. Der Konstruktor ist privat,
+	 * die Initalisierung geschieht über die Methode singelton.
+	 *
+	 */
 
 	private function __construct()
 	{
@@ -167,7 +177,8 @@ class Core
 	}
 
 	/**
-	 * Initialsieren der Objekte
+	 * Initialisiert die nötigen Objekte für den Aufbau des CMS.
+	 * @deprecated Verwendung der globalen Variablen
 	 *
 	 */
 
@@ -188,7 +199,9 @@ class Core
 	}
 
 	/**
-	 * Kontrolliere, ob magic_quotes_gpc ON, sonst selber veraendern
+	 * Kontrolliere, ob die globalen Variablen "geslashet" sind.
+	 * Überprüft, ob magic_quotes_gpc ON ist (automatisches Slashen). Ist dies nicht
+	 * der Fall, wird das Slashen selber gemacht.
 	 *
 	 */
 
@@ -217,6 +230,7 @@ class Core
 
 		}
 
+		/* Nur noch die Gespeicherten Werte nutzen */
 		unset($_GET);
 		unset($_POST);
 		unset($_COOKIE);
@@ -267,7 +281,7 @@ class Core
 			$shortlink = true;
 		} else {
 			$table = 'menu';
-			$shortlink = false;
+			$shortlink = true;
 		}
 
 		$this->_loadNav($shortlink);
@@ -447,7 +461,7 @@ class Core
 			$this->_smarty_array['local_link'] = $this->_nav_id = (int)$data[0];
 		}
 	}
-	
+
 
 	//	private function _exe_reserved_action()
 	//	{

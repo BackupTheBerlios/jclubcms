@@ -252,15 +252,16 @@ class Messageboxes {
 		foreach ($tabledata as $key => $value) {
 			//ID wird in WHERE-Klausel verwendet
 			if ($key != 'ID') {
+				if ($i != 1) {
+					$sql .= ", ";
+				}
 				$sql .= "`{$this->_tablestruct[$key]}`";
 
 				//Zur Sicherheit escapen
 				$sql .= " = '".$this->_mysql->escapeString($value)."'";
-				if ($i != $num) {
-					$sql .= ", ";
-				}
+				
+				$i++;
 			}
-			$i++;
 		}
 
 		$sql .= " WHERE `{$this->_tablestruct['ID']}` = '{$tabledata['ID']}'";
@@ -282,7 +283,7 @@ class Messageboxes {
 	 * @return array Eintrag, bei Fehler false
 	 */
 
-	public function getEntry($id, $timeformat = "")
+	public function getEntry($id, $timeformat = "", $comments = false)
 	{
 		$msg_array = array();
 
@@ -294,15 +295,24 @@ class Messageboxes {
 			throw new CMSException('Falsche Parameterangaben. 2. Argument ist kein String', EXCEPTION_LIBARY_CODE);
 		}
 
+		/*Haupt-Nachricht*/
 		$sql = "SELECT * FROM `{$this->_tablename}` WHERE `{$this->_tablestruct['ID']}` = '$id' LIMIT 1";
 		$this->_mysql->query($sql);
 
 		$msg_array = $this->_mysql->fetcharray('assoc');
 
-
+		/*Kommentare*/
+		$this->_mysql->query("SELECT * FROM {$this->_tablename} WHERE `{$this->_tablestruct['ref_ID']}` = '$id' ORDER BY `{$this->_tablestruct['time']}` DESC");
+		$this->_mysql->saverecords('assoc');
+		$msg_array['comments'] = $this->_mysql->get_records();
+		
 
 		if ($timeformat && is_string($timeformat) && isset($this->_tablestruct['time'])) {
-			$msg_array['time'] = $this->_formatTime($msg_array[$this->_tablestruct['time']], $timeformat);
+			$msg_array[$this->_tablestruct['time']] = $this->_formatTime($msg_array[$this->_tablestruct['time']], $timeformat);
+		}
+		
+		foreach ($msg_array['comments'] as $key => $value) {
+			$msg_array['comments'][$key][$this->_tablestruct['time']] = $this->_formatTime($value[$this->_tablestruct['time']], $timeformat);
 		}
 
 
@@ -404,7 +414,6 @@ class Messageboxes {
 			$msg_array[$key]['number_of_comments'] = count($value['comments']);
 		}
 
-		$msg_array['many'] = $num;
 		return $msg_array;
 
 	}

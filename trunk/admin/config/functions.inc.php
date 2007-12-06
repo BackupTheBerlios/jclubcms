@@ -7,7 +7,7 @@
  * File: functions.inc.ph
  * 
  * Diese Datei beinhaltet Funktionen, die nicht einer Klasse zugeordnet werden können. Dies betriff meist
- * auf ueberladene magische Funktionen
+ * auf ueberladene magische Funktionen zu.
  *
  */
 
@@ -19,7 +19,7 @@ function __autoload($class_name)
 		$len_dirfile = strlen(__FILE__);
 		
 		//Entweder wird nach Unix-Path-Style ('/') oder nach Windows-Path-Style ('\') gesucht
-		if ($file = strrchr(__FILE__, '/')) {
+		if (($file = strrchr(__FILE__, '/')) == true) {
 			$needle = '/';
 		} else {
 			$file = strrchr(__FILE__, '\\');
