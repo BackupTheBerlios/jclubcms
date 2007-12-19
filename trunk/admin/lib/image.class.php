@@ -83,7 +83,6 @@ class Image {
 		$this->height = $height;
 
 		$this->im = imagecreatetruecolor($this->width, $this->height);
-		echo "$this->im = imagecreatetruecolor($this->width, $this->height)";
 
 		//Aus den Parameter fuer Farbe (RGB-Werte) werden die Farben erstellt
 		$background_color = imagecolorallocate ($this->im, (int)substr($col_background, 0,3) , (int)substr($col_background, 3,3) , (int)substr($col_background, 6,3));

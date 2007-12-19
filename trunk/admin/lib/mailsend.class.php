@@ -61,7 +61,7 @@ class Mailsend {
                 $header = 'From: Jclub.ch <mail_query@jclub.ch>'."\r\n"
                           .'X-Mailer: PHP/' . phpversion();
                 $msg = "Um die Mail zu senden benutzen Sie bitte folgenden Link:\r\n"
-                   ."http://www.jclub.ch/index.php?action=mail&hash=".$hash;
+                   ."http://{$_SERVER['HTTP_HOST']}{$_SERVER['SCRIPT_NAME']}?mail&hash=".$hash;
                 $empfaenger = $this->_mail_sender;
                 $betreff = 'Bestaetigung des Mail-Sendens';
                 $failer = $this->_mail_send($empfaenger,$betreff,$msg,$header);

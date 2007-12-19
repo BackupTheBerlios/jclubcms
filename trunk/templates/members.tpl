@@ -1,5 +1,6 @@
       <div id="content">
 		<div id="content_txt">
+			<h1>Mitglieder</h1>
             {foreach item=member from=$members}
             <table cellpadding="0" cellspacing="0" align="center" class="content_tab">
               <tr>

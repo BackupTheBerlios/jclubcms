@@ -1,5 +1,6 @@
       <div id="content">
 		<div id="content_txt">
+		<h1>News</h1>
 		<table class="pagesnav" align="center"><tr>
 		{foreach item=page from=$pages}
 		<td>{if $page.link != ""}<a href="{$page.link}">[{$page.page}]</a>{else}[{$page.page}]{/if}</td>

@@ -1,5 +1,6 @@
       <div id="content">
 		<div id="content_txt">
+		<h2>Neuer Eintrag schreiben</h2>
     <table width = 100% class="content_tab">
     </table>
     {************************************************************}
@@ -18,7 +19,7 @@
 		</tr>
 	</table>
 	{/if}
-    <form name="newentry" method="post" action="?nav_id={$nav_id}&action=new">
+    <form name="newentry" method="post" action="">
       <input type="hidden" name="sessionscode" value="{$sessionscode}" />
       <table cellpadding="0" cellspacing="0" align="center" class="content_tab">
         <tr>
@@ -37,7 +38,7 @@
           <td colspan="2" style="padding: 10px;" class="formailer_txt">
             <table border="0">
               <tr>
-                <td rowspan="2"><img src="index.php?nav_id={$captcha_id}&img={$captcha_img}" /></td>
+                <td rowspan="2"><img src="?nav_id={$captcha_link}&img={$captcha_img}" /></td>
                 <td><div style="font-size: 10px">Bitte den Text eingeben,<br /> der im Bild steht</div></td>
                 
                 <td><div style="font-size: 10px">Sollte der Text nicht erkennbar sein, neues Bild w&auml;hlen</div></td>

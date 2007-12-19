@@ -2,6 +2,7 @@
 	  
 	  <div id="content">
 		<div id="content_txt">
+		<h1>Mail schreiben</h1>
 		<table width = 100% class="content_tab">
 		</table>
 		Mail an {$reciver_name}:

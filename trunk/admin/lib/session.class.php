@@ -103,7 +103,7 @@ class Session {
     		return false;
     	}
     	
-    	$mysql->query("UPDATE `jclubbeta`.`admin_session` SET `last_activity` = NOW() WHERE `admin_session`.`session_id` = '{$this->session_id}' LIMIT 1 ;");
+    	$mysql->query("UPDATE `admin_session` SET `last_activity` = NOW() WHERE `admin_session`.`session_id` = '{$this->session_id}' LIMIT 1 ;");
     	
     	
     	
@@ -124,7 +124,8 @@ class Session {
     	$this->session_id = md5(sha1((time().rand())));
     	
     	$return = true;
-    	$mysql->query("INSERT INTO `jclubbeta`.`admin_session` (`ID`, `session_id`, `user_agent`, `user_ref_ID`, `ip_address`, `login_time`, `last_activity`) VALUES (NULL, '{$this->session_id}', '{$this->user_agent}', $userID, '{$this->ip_adress}', NOW(), NOW())");
+    	$mysql->query("INSERT INTO `admin_session` (`ID`, `session_id`, `user_agent`, `user_ref_ID`, `ip_address`, `login_time`, `last_activity`) VALUES (NULL, '{$this->session_id}', '{$this->user_agent}', $userID, '{$this->ip_adress}', NOW(), NOW())");
+    	
     	
     	//echo "session->create_session: mysql-query<br />\nINSERT INTO `jclubbeta`.`admin_session` (`ID`, `session_id`, `user_agent`, `user_ref_ID`, `ip_address`, `login_time`, `last_activity`) VALUES (NULL, '{$this->session_id}', '{$this->user_agent}', $userID, '{$this->ip_adress}', NOW(), NOW())<br />\n";
     	

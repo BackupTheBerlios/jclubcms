@@ -72,13 +72,16 @@ class Members implements Module
 		$this->_gpc = $gpc;
 
 		$this->_smarty->debugging = false;
-
-		switch ($this->_gpc['GET']['action']) {
-			case 'mail':
-				$this->_mail();
-				break;
-			default:
-				$this->_view();
+		if (key_exists('action', $this->_gpc['GET'])) {
+			switch ($this->_gpc['GET']['action']) {
+				case 'mail':
+					$this->_mail();
+					break;
+				default:
+					$this->_view();
+			}
+		} else {
+			$this->_view();
 		}
 
 

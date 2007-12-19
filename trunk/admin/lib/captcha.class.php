@@ -74,7 +74,7 @@ class Captcha
 		if(isset($data_dir) && !empty($data_dir)) {
 			$this->_data_dir = $data_dir;
 		} else {
-			$this->_data_dir = USER_DIR.'data/';
+			$this->_data_dir = USER_DIR.'data';		
 		}
 	}
 
@@ -123,7 +123,7 @@ class Captcha
 			$angle = round( rand( 0, 25 ) );
 			if ($presign==true) $angle = -1*$angle;
 			
-			ImageTTFText( $img, $fontsize, $angle, $start_x+$i*$max_x_ofs, $y_pos, $color, $this->_data_dir.'default.ttf', substr($char_seq,$i,1) );
+			ImageTTFText( $img, $fontsize, $angle, $start_x+$i*$max_x_ofs, $y_pos, $color, $this->_data_dir.'/default.ttf', substr($char_seq,$i,1) );
 		}
 
 		// create image file
@@ -179,10 +179,15 @@ class Captcha
 	 */
 	public function verify( $char_seq )
 	{
-		$fh = fopen( $this->_temp_dir.'/'.'cap_'.$this->_session_key.'.txt', "r" );
+		$fh = fopen($this->_temp_dir.'/'.'cap_'.$this->_session_key.'.txt', "r" );
 		$hash = fgets( $fh );
 
 		if (md5(strtolower($char_seq)) == $hash) {
+			/* Einmal richtig -> Datei löschen */
+			echo "unlink($this->_temp_dir.'/'.'cap_'.$this->_session_key.'.txt')";
+			if (!unlink($this->_temp_dir.'/'.'cap_'.$this->_session_key.'.txt')) {
+				throw new CMSException('Datei konnte nicht gelöscht werden', EXCEPTION_LIBARY_CODE, 'Sicherheits-Hinweis');
+			}
 			return true;
 		} else {
 			return false;

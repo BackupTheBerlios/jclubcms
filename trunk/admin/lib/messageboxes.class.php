@@ -262,11 +262,10 @@ class Messageboxes {
 				
 				$i++;
 			}
+			
 		}
 
 		$sql .= " WHERE `{$this->_tablestruct['ID']}` = '{$tabledata['ID']}'";
-
-		echo __METHOD__." ".var_export($sql,1)."<br />\n";
 
 		$this->_mysql->query($sql);
 		return true;
@@ -306,6 +305,7 @@ class Messageboxes {
 		$this->_mysql->saverecords('assoc');
 		$msg_array['comments'] = $this->_mysql->get_records();
 		
+
 
 		if ($timeformat && is_string($timeformat) && isset($this->_tablestruct['time'])) {
 			$msg_array[$this->_tablestruct['time']] = $this->_formatTime($msg_array[$this->_tablestruct['time']], $timeformat);
@@ -398,7 +398,7 @@ class Messageboxes {
 
 			//Zeit formatieren
 			if ($timeformat && is_string($timeformat) && isset($this->_tablestruct['time'])) {
-				$value['time'] = $this->_formatTime($value[$this->_tablestruct['time']], $timeformat);
+				$value[$this->_tablestruct['time']] = $this->_formatTime($value[$this->_tablestruct['time']], $timeformat);
 
 				if ($condition != "") {//ref_ID ist also gesetzt.
 					
@@ -495,36 +495,27 @@ class Messageboxes {
 			throw  new CMSException('Falsche Parameterangaben in Funktion '.__FUNCTION__.'. 1. Parameter kein Array', EXCEPTION_LIBARY_CODE);
 		}
 
-		foreach ($tabledata as $key => $value) {
-			if (array_key_exists($key, $stddata)) {
-				$ok = $this->_formCheck->field_check($value, $stddata[$key]);
-			} else {
-				$ok = $this->_formCheck->field_check($value);
-			}
+		$check_arr = $this->_formCheck->field_check_arr($tabledata, $stddata);
+		
+		foreach ($check_arr as $key => $value) {
 
-			if ($ok === true) {
+			if ($value === true) {
 				$arr_rtn[$key] = MSGBOX_FORMCHECK_OK;
 			} else {
 				$arr_rtn[$key] = MSGBOX_FORMCHECK_NONE;
 			}
 
-
 			//Mail und Hp noch seperat testen
-			if ($key == 'email' && $ok === true) {
-
-				if ($this->_formCheck->mailcheck($value) > 0) {
+			if ($key == 'email' && $value === true && $this->_formCheck->mailcheck($tabledata[$key]) > 0) {
 					$arr_rtn[$key] = MSGBOX_FORMCHECK_INVALID;
-				} else {
-					$arr_rtn[$key] = MSGBOX_FORMCHECK_OK;
-				}
 
-			} elseif ($key == 'hp' && $ok === true) {
+			} elseif ($key == 'hp' && $value === true) {
 
-				$value = $this->_formCheck->hpcheck($value);
-				$arr_rtn[$key] = $value;
+				$new_hp= $this->_formCheck->hpcheck($tabledata[$key]);
+				$arr_rtn[$key] = $new_hp;
 
 				//Bei Standartwert (oder leer :-)) wird bei 'hp' ein leer-String zurueckgegeben
-			} elseif ($key == 'hp' && $ok === false) {
+			} elseif ($key == 'hp' && $value === false) {
 				$arr_rtn[$key] = "";
 			}
 

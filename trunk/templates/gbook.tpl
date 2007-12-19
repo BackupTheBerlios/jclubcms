@@ -1,5 +1,6 @@
 <div id="content">
 	<div id="content_txt">
+		<h1>G&auml;stebuch</h1>
 	<table width="640" align="center" class="content_tab">
 		<tr>
 			<td><a href="?nav_id={$local_link}&action=new"><img src="templates/style/icons/book_open.gif" />Neuer Eintrag</a></td><td align="right">{if $entries == 1}{$entries} Eintrag{else}{$entries} Eintr&auml;ge{/if} (+{if $comments == 1}{$comments} Kommentar{else}{$comments} Kommentare{/if})</td>

@@ -142,6 +142,8 @@ class Core
 	{
 		//Abfangen von Exceptions
 		try {
+			/* Ausgabe-Pufferung aktivieren - wird bei initPage geleert*/
+			//ob_start(array(&$this, "_output_callback"));
 			$this->_initObjects();
 			$this->_checkGpc();
 
@@ -246,7 +248,6 @@ class Core
 
 	private function _checkAdmin()
 	{
-		echo __METHOD__, "\n";
 		if ($this->_is_admin != true) {
 			throw new CMSException('Interne Funktion nicht ausfuehrbar', EXCEPTION_CORE_CODE);
 		}
@@ -302,15 +303,13 @@ class Core
 			throw new CMSException("Das angegebene Modul konnte nicht gefunden werden", null, 'Modul nicht vorhanden');
 		}
 
-		$this->_smarty->assign('shortlink', $shortlink);
+		$this->_smarty_array['shortlink'] = $shortlink;
 
-		$this->_smarty->assign('generated_time', round(((float)(microtime(true) - $start_time)),5));
+		$this->_smarty_array['generated_time'] = round(((float)(microtime(true) - $start_time)),5);
 
 
 		$this->_smarty->assign($this->_smarty_array);
 		$this->_smarty->display($this->_tplfile);
-
-
 
 	}
 
@@ -332,6 +331,7 @@ class Core
 		$this->_smarty_array['topnav'] = $nav_array['topnav'];
 		$this->_smarty_array['subnav'] = $nav_array['subnav'];
 		$this->_smarty_array['local_link'] = ($this->_nav_id = $nav_array['nav_id']);
+		$this->_smarty_array['param']['nav_id'] = "nav_id";
 
 
 
@@ -347,7 +347,7 @@ class Core
 		$this->_mysql->query("SELECT `$menu_table`.`menu_ID` as 'image_ID' FROM `$menu_table`, `$mod_table` WHERE `$mod_table`.`modules_file` = 'image_send.class.php' AND `$mod_table`.`modules_ID` = `$menu_table`.`menu_page` AND `$menu_table`.`menu_pagetyp` = 'mod' LIMIT 1");
 		$data = $this->_mysql->fetcharray('assoc');
 
-		$this->_smarty_array['image_link'] = $data['image_ID'];
+		$this->_smarty_array['img_link'] = $data['image_ID'];
 
 		$this->_mysql->query("SELECT `$menu_table`.`menu_ID` as 'captcha_ID' FROM `$menu_table`, `$mod_table` WHERE `$mod_table`.`modules_file` = 'captcha_image.class.php' AND `$mod_table`.`modules_ID` = `$menu_table`.`menu_page` AND `$menu_table`.`menu_pagetyp` = 'mod' LIMIT 1");
 		$data = $this->_mysql->fetcharray('assoc');
@@ -419,7 +419,7 @@ class Core
 		//Wenn das Modul kein Template zurueckgibt -> Beenden
 		if ($data['modules_template_support'] == 'no') {
 			exit;
-		}
+		}		
 
 		$this->_smarty_array['file'] = $module->gettplfile();
 
@@ -439,7 +439,7 @@ class Core
 		} else {
 			$cnt_table = 'content';
 		}
-		$this->_mysql->query("SELECT `content_title`, `content_text` FROM `$cnt_table` WHERE `content_ID` = $page_ID");
+		$this->_mysql->query("SELECT `content_title`, `content_text` FROM `$cnt_table` WHERE `content_ID` = '$page_ID'");
 		$data = $this->_mysql->fetcharray("assoc");
 		$content_title = $data['content_title'];
 		$content_text = $data['content_text'];
@@ -460,6 +460,14 @@ class Core
 			$data = $this->_mysql->fetcharray('num');
 			$this->_smarty_array['local_link'] = $this->_nav_id = (int)$data[0];
 		}
+	}
+	
+	private function _output_callback($string)
+	{
+		$umlaut = array('ä', 'ö', 'ü', 'Ä','Ö', 'Ü');
+		$httpumlaut = array('&auml;', '&ouml;', '&uuml;', '&Auml;','&Ouml;', '&Uuml;');
+		str_replace($umlaut, $httpumlaut, $string);
+		return $string;
 	}
 
 

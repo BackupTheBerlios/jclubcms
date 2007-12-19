@@ -12,6 +12,9 @@
  */
 
 require_once ADMIN_DIR.'lib/module.interface.php';
+require_once ADMIN_DIR.'lib/captcha.class.php';
+require_once ADMIN_DIR.'lib/formularcheck.class.php';
+require_once ADMIN_DIR.'lib/mailsend.class.php';
 
 class Mailmodule implements Module
 {
@@ -173,7 +176,7 @@ class Mailmodule implements Module
 				$navigation_id = $this->_smarty->get_template_vars('local_link');
 
 				$this->_mysql->query("SELECT `{$this->mail_tbl['column_name']}`, `{$this->mail_tbl['column_email']}` FROM `{$this->mail_tbl['table']}` WHERE `{$this->mail_tbl['column_ID']}` = '$entry_id'");
-				$mail_reciver = $this->_mysql->fetcharray();
+				$mail_reciver = $this->_mysql->fetcharray('assoc');
 				$mail_reciver_name = $mail_reciver[$this->mail_tbl['column_name']];
 				$mail_reciver_email = $mail_reciver[$this->mail_tbl['column_email']];
 
@@ -308,7 +311,7 @@ class Mailmodule implements Module
 			$this->_sessioncode = md5(microtime(true)*round(rand(1,40000)));
 		}
 
-		$this->_captcha = new Captcha($this->_sessioncode, USER_DIR."data/temp/captcha/");
+		$this->_captcha = new Captcha($this->_sessioncode, USER_DIR."data/temp/captcha");
 	}
 
 

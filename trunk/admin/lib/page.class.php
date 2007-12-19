@@ -103,7 +103,7 @@ class Page
 	 * 
 	 *
 	 * @param int $number_entries Anzahl der Eintraege
-	 * @param int $max_entries_pp maximale Anzahl Eintraege pro Siete
+	 * @param int $max_entries_pp maximale Anzahl Eintraege pro Seite
 	 * @param array $get_array Inhalt von $_GET, kontroliert abzugeben
 	 * @return array $pages_array Array der Eintraege
 	 */
@@ -113,10 +113,11 @@ class Page
 		//$main_url = $_SERVER['REQUEST_URI'];
 		$main_url = $_SERVER['PHP_SELF'];
 		$nav_id = $get_array['nav_id'];
-		$page = $get_array['page'];
 		$apendices = "";
-		if ($page < 1) {
+		if (!key_exists('page', $get_array) || $get_array['page'] < 1) {
 			$page = 1;
+		} else {
+			$page = $get_array['page'];
 		}
 
 		foreach ($get_array as $key => $value) {
@@ -126,10 +127,18 @@ class Page
 		}
 
 
-		$number_of_pages = $number_entries / $max_entries_pp;
+		$number_of_pages = ceil($number_entries / $max_entries_pp);
 
 		$pages_array = array();
-		for ($i = 1; $i < ($number_of_pages+1); $i++) {
+		
+		/* Vorwärtslink setzen */
+		if ($page > 1) {
+			$link = $main_url.'?nav_id='.$nav_id.'&amp;page='.($page-1).$apendices;
+			$pages_array[0] = array('page'=>'<', 'link'=>$link);		
+		}
+		
+		/*Seiten dazwischen ausgeben */
+		for ($i = 1; $i <= $number_of_pages; $i++) {
 
 			if ($i == $page) {
 				$link = null;
@@ -137,6 +146,13 @@ class Page
 				$link = $main_url.'?nav_id='.$nav_id.'&amp;page='.$i.$apendices;
 			}
 			$pages_array[$i] = array('page'=>$i, 'link'=>$link);
+
+		}
+		
+		/* Rückwärtslink setzen */
+		if ($page < $number_of_pages) {
+			$link = $main_url.'?nav_id='.$nav_id.'&amp;page='.($page+1).$apendices;
+			$pages_array[] = array('page'=>'>', 'link'=>$link);		
 		}
 
 		return $pages_array;
@@ -233,17 +249,19 @@ class Page
 
 
 		//topid-Array umkehren, damit oberste Schicht der Menus zuerst ausgelesen wird
-		$temp_array = $topid_array;
+		$topid_array = array_reverse($topid_array);
+		/*$temp_array = $topid_array;
 		$max = count($topid_array);
 		for($i = 0; $i < $max; $i++)
 		{
 			$topid_array[$i] = $temp_array[$max-$i-1];
-		}
+		}*/
 
 
 		//Funktion aufrufen, damit subnav-Array erstellt wird
 		$this->_build_subnav_array($table_name, $topid_array, $menu_array['subnav']);
 
+		
 		//topnav-Array erstellen
 		$this->mysql->query("SELECT `menu_ID`, `menu_name`, `menu_image`, `menu_modvar` FROM `$table_name` WHERE `menu_topid` = '0' AND `menu_display` != '0' AND menu_shortlink = '1' ORDER BY `menu_position` ASC");
 		$i = 0;
@@ -313,7 +331,12 @@ class Page
 	}
 
 	/**
-	 * Baut das Subnav-Array auf
+	 * Baut das Subnav-Array auf. Das mitgelieferte Topid-Array wird durchgearbeitet, indem zuerst alle
+	 * Menu-Einträge der ersten TopID (1. Schlüssel des TopID-Arrays) aus der Datenbank gelesen werden.
+	 * Die Menu-Einträge werden durchgearbeitet als Array durchgearbeitet. Tritt ein Menu-Eintrag auf, welcher
+	 * die Menu-ID hat, welcher der Id des 2. Schlüssels des TopID-Arrays entspricht, werden alle Menu-Einträge
+	 * mit dieser TopID aufgerufen. Das ganze beginnt dann wieder von vorn mit dem durcharbeiten, menuID = topID usw.
+	 * Daher wird bei menuID = topID die Funktion rekursiv aufgerufen
 	 *
 	 * @param string $table_name Name der MySQL-Tabelle
 	 * @param array $topid_array Array mit den Top-IDs
@@ -324,26 +347,33 @@ class Page
 	{
 		$mysql_array = array();
 		//$j wird gebraucht, um $topid_array durchzugehen. $i brauchts fuer $subnav_array.
-		static $i = 0, $j = 0;
+		static $i = 0, $st_level = 0, $j = 0;
 
-		$this->mysql->query("SELECT `menu_ID`, `menu_name`, `menu_modvar` FROM `$table_name` WHERE `menu_topid` = '{$topid_array[$j]}' AND `menu_display` != '0' AND `menu_shortlink` != '1' ORDER BY `menu_position` ASC");
+		$this->mysql->query("SELECT `menu_ID`, `menu_name`, `menu_modvar` FROM `$table_name` WHERE `menu_topid` = '{$topid_array[0]}' AND `menu_display` != '0' AND `menu_shortlink` != '1' ORDER BY `menu_position` ASC");
 
 		$mysql_array = $this->mysql->get_records();
 
 		//Durchlaeuft $mysql_array und baut so die Navigation auf.
-		$j++;
+		//$j++;
 
 		//$level aendert sich nicht innerhalb der Funktion, $j hingegen schon, denn sie ist statisch.
-		$level = $j;
+		$st_level++;
+		array_shift($topid_array);
 
+		$lc_level = $st_level;
 		//Baut den Navigationsbaum auf, indem bei jedem Treffer Topid -> menu_Id ein neuer Ast entsteht.
 		foreach ($mysql_array as $value) {
+			
 			$subnav_array[$i] = $value;
-			$subnav_array[$i]['level'] = $level;
+			$subnav_array[$i]['level'] = $lc_level;
 			$i++;
-
-			if($j < count($topid_array) && $value['menu_ID'] == $topid_array[$j])
+			
+			/**if($j < count($topid_array) && $value['menu_ID'] == $topid_array[$j])
 			{
+				$this->_build_subnav_array($table_name, $topid_array, $subnav_array);
+			}*/
+			
+			if (count($topid_array) > 0 && $value['menu_ID'] == $topid_array[0]) {
 				$this->_build_subnav_array($table_name, $topid_array, $subnav_array);
 			}
 

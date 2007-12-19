@@ -21,35 +21,45 @@ class Newsadmin implements Module
 	 *
 	 * @var string
 	 */
-	private $tplfile = null;
+	private $_tplfile = null;
 	/**
 	 * Mysql-Klasse
 	 *
-	 * @var mysql
+	 * @var Mysql
 	 */
-	private $mysql = null;
+	private $_mysql = null;
 	/**
 	 * Smarty-Klasse
 	 *
 	 * @var Smarty
 	 */
-	private $smarty = null;
+	private $_smarty = null;
 	/**
 	 * Smilie-Klasse
 	 *
-	 * @var smilies
+	 * @var Smilies
 	 */
-	private $smilie = null;
-	private $post_arr = array();
-	private $get_arr = array();
+	private $_smilie = null;
 	/**
 	 * Messagebox Klass
 	 *
 	 * @var Messageboxes
 	 */
-	private $msbox = null;
+	private $_msbox = null;
 
-	private $timeformat = '%e.%m.%Y %k:%i';
+	/**
+	 * POST, GET, COOKIE-Array
+	 *
+	 * @var array
+	 */
+	private $_gpc = array();
+	
+	/**
+	 * Zeitformat
+	 *
+	 * @var string
+	 */
+	private $_timeformat = '%e.%m.%Y %k:%i';
 
 
 	/**
@@ -61,8 +71,8 @@ class Newsadmin implements Module
 
 	public function __construct($mysql, $smarty)
 	{
-		$this->mysql = $mysql;
-		$this->smarty = $smarty;
+		$this->_mysql = $mysql;
+		$this->_smarty = $smarty;
 	}
 
 
@@ -76,34 +86,34 @@ class Newsadmin implements Module
 	{
 		//Daten initialisieren
 		global $dir_smilies;
-		$this->post_arr = $gpc['POST'];
-		$this->get_arr = $gpc['GET'];
+		$this->_gpc['POST'] = $gpc['POST'];
+		$this->_gpc['GET'] = $gpc['GET'];
 
 
-		$this->msbox = new Messageboxes($this->mysql, 'news', array('ID' => 'news_ID', 'ref_ID' => 'news_ref_ID', 'content' => 'news_content', 'name' => 'news_name', 'time' => 'news_time', 'email' => 'news_email', 'hp' => 'news_hp', 'title' => 'news_title'));
+		$this->_msbox = new Messageboxes($this->_mysql, 'news', array('ID' => 'news_ID', 'ref_ID' => 'news_ref_ID', 'content' => 'news_content', 'name' => 'news_name', 'time' => 'news_time', 'email' => 'news_email', 'hp' => 'news_hp', 'title' => 'news_title'));
 
-		$this->smilie = new Smilies($dir_smilies);
+		$this->_smilie = new Smilies($dir_smilies);
 
 		//Je nach Get-Parameter die zugehörige Anweisung ausfuehren
-		if (key_exists('action', $this->get_arr)) {
-			switch ($this->get_arr['action']) {
+		if (key_exists('action', $this->_gpc['GET'])) {
+			switch ($this->_gpc['GET']['action']) {
 				case 'new':
-					$this->add();
+					$this->_add();
 					return true;
 				case 'comment':
-					$this->comment();
+					$this->_comment();
 					return true;
 				case 'edit':
-					$this->edit();
+					$this->_edit();
 					return true;
 				case 'del':
-					$this->del();
+					$this->_del();
 					return true;
 				case 'view':
-					$this->view(15);
+					$this->_view(15);
 					return true;
 				case '':
-					$this->view(15);
+					$this->_view(15);
 					return true;
 				default:
 					//Falsche Angaben enden im Fehler
@@ -111,7 +121,7 @@ class Newsadmin implements Module
 			}
 		} else {
 			//Keine Angabe -> Ausgabe der News
-			$this->view(15);
+			$this->_view(15);
 			return true;
 		}
 	}
@@ -124,7 +134,7 @@ class Newsadmin implements Module
 
 	public function gettplfile()
 	{
-		return $this->tplfile;
+		return $this->_tplfile;
 	}
 
 	/**
@@ -133,47 +143,45 @@ class Newsadmin implements Module
 	 * @param int $max_entries_pp Anzahl Einträge pro Seite
 	 */
 
-	private function view($max_entries_pp)
+	private function _view($max_entries_pp)
 	{
 
 		//Daten definiere und initialisieren
-		$this->tplfile = 'news.tpl';
+		$this->_tplfile = 'news.tpl';
 		$news_array = array();
 		$error = false;
 
 		//Seite herausfinden
-		if (isset($this->get_arr['page']) && is_numeric($this->get_arr['page']) && $this->get_arr['page'] > 0) {
-			$page = $this->get_arr['page'];
+		if (isset($this->_gpc['GET']['page']) && is_numeric($this->_gpc['GET']['page']) && $this->_gpc['GET']['page'] > 0) {
+			$page = $this->_gpc['GET']['page'];
 		} else {
 			$page = 1;
 		}
 
 		//Daten holen
-		$news_array = $this->msbox->getEntries($max_entries_pp, $page, 'DESC','ASC', $this->timeformat);
+		$news_array = $this->_msbox->getEntries($max_entries_pp, $page, 'DESC','ASC', $this->_timeformat);
+		$this->_mysql->query('SELECT COUNT(*) as many FROM `news` WHERE `news_ref_ID` = \'0\'');
+		$entries = $this->_mysql->fetcharray('num');
 
-		$pagesnav_array = Page::get_static_pagesnav_array($news_array['many'],$max_entries_pp, $this->get_arr);
+		$pagesnav_array = Page::get_static_pagesnav_array($entries[0],$max_entries_pp, $this->_gpc['GET']);
 
 
-		$this->smarty->assign('entrys', $news_array['many']);
-		//Key 'many' loeschen, damit es nicht als News-Nachricht auftaucht.
-		unset($news_array['many']);
-
+		$this->_smarty->assign('entrys', $entries[0]);
+	
 		foreach ($news_array as $key => $value) {
 
-			//Nur news-Daten ohne $news_array['many'] abchecken
-
-			$value['news_content'] = $this->smilie->show_smilie($value['news_content'], $this->mysql);
+			$value['news_content'] = $this->_smilie->show_smilie($value['news_content'], $this->_mysql);
 
 			foreach ($value['comments'] as $ckey => $cvalue) {
-				$value['comments'][$ckey]['news_content'] = $this->smilie->show_smilie($cvalue['news_content'], $this->mysql);
+				$value['comments'][$ckey]['news_content'] = $this->_smilie->show_smilie($cvalue['news_content'], $this->_mysql);
 			}
 
 			$news_array[$key] = $value;
 
 		}
 
-		$this->smarty->assign('newsarray', $news_array);
-		$this->smarty->assign('pages', $pagesnav_array);
+		$this->_smarty->assign('newsarray', $news_array);
+		$this->_smarty->assign('pages', $pagesnav_array);
 
 	}
 
@@ -183,61 +191,61 @@ class Newsadmin implements Module
 	 *
 	 */
 
-	private function add()
+	private function _add()
 	{
 
 		//Eingetragen und ueberpruefen
-		if (isset($this->post_arr['btn_send']) && $this->post_arr['btn_send'] == 'Senden') {
+		if (isset($this->_gpc['POST']['btn_send']) && $this->_gpc['POST']['btn_send'] == 'Senden') {
 
 			$answer = "";
 
-			$entry = $this->getPostVars();
+			$entry = $this->_getPostVars();
 
-			$check = $this->exefcheck($entry);
-			$answer = $this->fcheck2answer($check);
+			$check = $this->_exefcheck($entry);
+			$answer = $this->_fcheck2answer($check);
 
 			if ($answer == "") {
 				$entry['hp'] = $check['hp'];
 				$entry['time'] = "NOW()";
-				$this->msbox->addEntry($entry);
+				$this->_msbox->addEntry($entry);
 				$answer = "Eintrag wurde erfolgreich erstellt";
 				$title = "Eintrag erstellt";
-				$link = Page::getUriStatic($this->get_arr, array('action'));
+				$link = Page::getUriStatic($this->_gpc['GET'], array('action'));
 				$linktext = 'Angugcken';
 
-				$this->smarty->assign('feedback_title', $title);
-				$this->smarty->assign("feedback_content", $answer);
-				$this->smarty->assign("feedback_linktext", $linktext);
-				$this->smarty->assign("feedback_link", 'http://'.$link);
-				$this->tplfile ='feedback.tpl';
+				$this->_smarty->assign('feedback_title', $title);
+				$this->_smarty->assign("feedback_content", $answer);
+				$this->_smarty->assign("feedback_linktext", $linktext);
+				$this->_smarty->assign("feedback_link", 'http://'.$link);
+				$this->_tplfile ='feedback.tpl';
 
 			} else {
 
-				$this->tplfile ='news_entry.tpl';
+				$this->_tplfile ='news_entry.tpl';
 
 				$title = 'ungueltige Angaben';
 
-				$this->smarty->assign('dump_errors', true);
-				$this->smarty->assign('error_title', $title);
-				$this->smarty->assign('error_content', $answer);
+				$this->_smarty->assign('dump_errors', true);
+				$this->_smarty->assign('error_title', $title);
+				$this->_smarty->assign('error_content', $answer);
 
-				$smarty_arr = $this->getSmartyVars('post');
+				$smarty_arr = $this->_getSmartyVars('post');
 
-				$this->smarty->assign('action', $this->get_arr['action']);
-				$this->smarty->assign($smarty_arr);
-				$smilie_arr = $this->smilie->create_smiliesarray($this->mysql);
-				$this->smarty->assign('smilies_list', $smilie_arr);
+				$this->_smarty->assign('action', $this->_gpc['GET']['action']);
+				$this->_smarty->assign($smarty_arr);
+				$smilie_arr = $this->_smilie->create_smiliesarray($this->_mysql);
+				$this->_smarty->assign('smilies_list', $smilie_arr);
 			}
 
 		} else {
 
-			$smarty_arr = $this->getSmartyVars('std');
+			$smarty_arr = $this->_getSmartyVars('std');
 
-			$this->tplfile = 'news_entry.tpl';
-			$this->smarty->assign('action', $this->get_arr['action']);
-			$this->smarty->assign($smarty_arr);
-			$smilie_arr = $this->smilie->create_smiliesarray($this->mysql);
-			$this->smarty->assign('smilies_list', $smilie_arr);
+			$this->_tplfile = 'news_entry.tpl';
+			$this->_smarty->assign('action', $this->_gpc['GET']['action']);
+			$this->_smarty->assign($smarty_arr);
+			$smilie_arr = $this->_smilie->create_smiliesarray($this->_mysql);
+			$this->_smarty->assign('smilies_list', $smilie_arr);
 		}
 
 
@@ -248,73 +256,73 @@ class Newsadmin implements Module
 	 *
 	 */
 
-	private function comment()
+	private function _comment()
 	{
-		if (isset($this->post_arr['btn_send']) && $this->post_arr['btn_send'] == 'Senden') {
+		if (isset($this->_gpc['POST']['btn_send']) && $this->_gpc['POST']['btn_send'] == 'Senden') {
 
 			$answer = "";
-			$entry = $this->getPostVars();
+			$entry = $this->_getPostVars();
 			unset($entry['title']);
-			$check = $this->exefcheck($entry);
-			$answer = $this->fcheck2answer($check);
+			$check = $this->_exefcheck($entry);
+			$answer = $this->_fcheck2answer($check);
 			var_dump($answer);
 
 			if ($answer == "") {
 				$entry['hp'] = $check['hp'];
 				$entry['time'] = "NOW()";
-				$this->msbox->commentEntry((int)$this->get_arr['id'], $entry);
+				$this->_msbox->commentEntry((int)$this->_gpc['GET']['id'], $entry);
 				$answer = "Eintrag wurde erfolgreich erstellt";
 				$title = "Eintrag erstellt";
-				$link = Page::getUriStatic($this->get_arr, array('action'));
+				$link = Page::getUriStatic($this->_gpc['GET'], array('action'));
 				$linktext = 'Angugcken';
 
-				$this->smarty->assign('feedback_title', $title);
-				$this->smarty->assign("feedback_content", $answer);
-				$this->smarty->assign("feedback_linktext", $linktext);
-				$this->smarty->assign("feedback_link", 'http://'.$link);
-				$this->tplfile ='feedback.tpl';
+				$this->_smarty->assign('feedback_title', $title);
+				$this->_smarty->assign("feedback_content", $answer);
+				$this->_smarty->assign("feedback_linktext", $linktext);
+				$this->_smarty->assign("feedback_link", 'http://'.$link);
+				$this->_tplfile ='feedback.tpl';
 
 				//Falsche Eintraege
 			} else {
 
-				$news = $this->msbox->getEntry($this->get_arr['id'], $this->timeformat);
-				$news['news_content'] = $this->smilie->show_smilie($news['news_content'], $this->mysql);
-				$news['ID'] = $this->get_arr['id'];
+				$news = $this->_msbox->getEntry($this->_gpc['GET']['id'], $this->_timeformat);
+				$news['news_content'] = $this->_smilie->show_smilie($news['news_content'], $this->_mysql);
+				$news['ID'] = $this->_gpc['GET']['id'];
 
-				$this->tplfile ='news_comment.tpl';
+				$this->_tplfile ='news_comment.tpl';
 
 				$title = 'ungueltige Angaben';
 
-				$this->smarty->assign('news', $news);
+				$this->_smarty->assign('news', $news);
 
-				$this->smarty->assign('dump_errors', true);
-				$this->smarty->assign('error_title', $title);
-				$this->smarty->assign('error_content', $answer);
+				$this->_smarty->assign('dump_errors', true);
+				$this->_smarty->assign('error_title', $title);
+				$this->_smarty->assign('error_content', $answer);
 
-				$smarty_arr = $this->getSmartyVars('post');
+				$smarty_arr = $this->_getSmartyVars('post');
 
-				$this->smarty->assign('action', $this->get_arr['action']);
-				$this->smarty->assign($smarty_arr);
-				$smilie_arr = $this->smilie->create_smiliesarray($this->mysql);
-				$this->smarty->assign('smilies_list', $smilie_arr);
+				$this->_smarty->assign('action', $this->_gpc['GET']['action']);
+				$this->_smarty->assign($smarty_arr);
+				$smilie_arr = $this->_smilie->create_smiliesarray($this->_mysql);
+				$this->_smarty->assign('smilies_list', $smilie_arr);
 			}
 
 			//1. Aufruf des Formulars
 		} else {
-			$news = $this->msbox->getEntry($this->get_arr['id'], $this->timeformat);
-			$news['news_content'] = $this->smilie->show_smilie($news['news_content'], $this->mysql);
-			$news['ID'] = $this->get_arr['id'];
+			$news = $this->_msbox->getEntry($this->_gpc['GET']['id'], $this->_timeformat);
+			$news['news_content'] = $this->_smilie->show_smilie($news['news_content'], $this->_mysql);
+			$news['ID'] = $this->_gpc['GET']['id'];
 
-			$this->tplfile ='news_comment.tpl';
+			$this->_tplfile ='news_comment.tpl';
 			
-			$this->smarty->assign('news', $news);
+			$this->_smarty->assign('news', $news);
 
-			$smarty_arr = $this->getSmartyVars('std');
+			$smarty_arr = $this->_getSmartyVars('std');
 
-			$this->smarty->assign('action', $this->get_arr['action']);
-			$this->smarty->assign($smarty_arr);
-			$smilie_arr = $this->smilie->create_smiliesarray($this->mysql);
-			$this->smarty->assign('smilies_list', $smilie_arr);
+			$this->_smarty->assign('action', $this->_gpc['GET']['action']);
+			$this->_smarty->assign($smarty_arr);
+			$smilie_arr = $this->_smilie->create_smiliesarray($this->_mysql);
+			$this->_smarty->assign('smilies_list', $smilie_arr);
 		}
 	}
 
@@ -323,20 +331,20 @@ class Newsadmin implements Module
 	 *
 	 */
 
-	private function edit()
+	private function _edit()
 	{
 
 
 
 		//Eingetragen und ueberpruefen
-		if (isset($this->post_arr['btn_send']) && $this->post_arr['btn_send'] == 'Senden') {
+		if (isset($this->_gpc['POST']['btn_send']) && $this->_gpc['POST']['btn_send'] == 'Senden') {
 
 			$answer = "";
 
-			$entry = $this->getPostVars();
+			$entry = $this->_getPostVars();
 
-			$check = $this->exefcheck($entry);
-			$answer = $this->fcheck2answer($check);
+			$check = $this->_exefcheck($entry);
+			$answer = $this->_fcheck2answer($check);
 
 
 
@@ -347,21 +355,21 @@ class Newsadmin implements Module
 				$entry['hp'] = $check['hp'];
 
 				//In Datenbank einschreiben
-				$this->msbox->editEntry($entry);
+				$this->_msbox->editEntry($entry);
 
 				//Angaben fuer Benutzer
 				$answer = "Eintrag wurde erfolgreich ver&auml;ndert";
 				$title = "Eintrag ver&auml;ndert";
-				$link = Page::getUriStatic($this->get_arr, array('action'));
+				$link = Page::getUriStatic($this->_gpc['GET'], array('action'));
 				$linktext = 'Angugcken';
 
 				/* Smarty-Werte */
-				$this->tplfile ='feedback.tpl';
+				$this->_tplfile ='feedback.tpl';
 
-				$this->smarty->assign('feedback_title', $title);
-				$this->smarty->assign("feedback_content", $answer);
-				$this->smarty->assign("feedback_linktext", $linktext);
-				$this->smarty->assign("feedback_link", 'http://'.$link);
+				$this->_smarty->assign('feedback_title', $title);
+				$this->_smarty->assign("feedback_content", $answer);
+				$this->_smarty->assign("feedback_linktext", $linktext);
+				$this->_smarty->assign("feedback_link", 'http://'.$link);
 
 
 				//Dateneingaben waren fehlerhaft
@@ -370,45 +378,45 @@ class Newsadmin implements Module
 				//Action an Template mitteilen, zur Anpassung des Formulars
 
 
-				$news_arr = $this->msbox->getEntry($this->get_arr['id'], $this->timeformat);
+				$news_arr = $this->_msbox->getEntry($this->_gpc['GET']['id'], $this->_timeformat);
 
-				$smarty_arr = $this->getSmartyVars('post');
+				$smarty_arr = $this->_getSmartyVars('post');
 				$smarty_arr['entry_time'] = $news_arr['time'];
 
 				$title = 'ung&uuml;ltige Angaben';
 
-				$this->tplfile ='news_entry.tpl';
+				$this->_tplfile ='news_entry.tpl';
 
-				$this->smarty->assign($smarty_arr);
+				$this->_smarty->assign($smarty_arr);
 
-				$this->smarty->assign('dump_errors', true);
-				$this->smarty->assign('error_title', $title);
-				$this->smarty->assign('error_content', $answer);
+				$this->_smarty->assign('dump_errors', true);
+				$this->_smarty->assign('error_title', $title);
+				$this->_smarty->assign('error_content', $answer);
 
-				$this->smarty->assign('action', $this->get_arr['action']."&id={$entry['ID']}");
+				$this->_smarty->assign('action', $this->_gpc['GET']['action']."&id={$entry['ID']}");
 
-				$smilie_arr = $this->smilie->create_smiliesarray($this->mysql);
-				$this->smarty->assign('smilies_list', $smilie_arr);
+				$smilie_arr = $this->_smilie->create_smiliesarray($this->_mysql);
+				$this->_smarty->assign('smilies_list', $smilie_arr);
 			}
 
 			//1. Aufruf des Editier-Formulars
 		} else {
 
-			$this->tplfile = 'news_entry.tpl';
+			$this->_tplfile = 'news_entry.tpl';
 			//Action an Template mitteilen, zur Anpassung des Formulars
-			$this->smarty->assign('action', $this->get_arr['action']);
+			$this->_smarty->assign('action', $this->_gpc['GET']['action']);
 
 			//Daten aus dem msbox-Objekt holen
-			$news_arr = $this->msbox->getEntry($this->get_arr['id'], $this->timeformat);
+			$news_arr = $this->_msbox->getEntry($this->_gpc['GET']['id'], $this->_timeformat);
 
 			//Template-Daten erstellen
-			$smarty_arr = array('entry_ID' => $this->get_arr['id'], 'entry_name' => $news_arr['news_name'],
+			$smarty_arr = array('entry_ID' => $this->_gpc['GET']['id'], 'entry_name' => $news_arr['news_name'],
 			'entry_content' => $news_arr['news_content'], 'entry_email' => $news_arr['news_email'],
 			'entry_hp' => $news_arr['news_hp'], 'entry_title' => $news_arr['news_title'], 'entry_time' => $news_arr['time']);
 
-			$this->smarty->assign($smarty_arr);
-			$smilie_arr = $this->smilie->create_smiliesarray($this->mysql);
-			$this->smarty->assign('smilies_list', $smilie_arr);
+			$this->_smarty->assign($smarty_arr);
+			$smilie_arr = $this->_smilie->create_smiliesarray($this->_mysql);
+			$this->_smarty->assign('smilies_list', $smilie_arr);
 
 		}
 
@@ -419,56 +427,56 @@ class Newsadmin implements Module
 	 *
 	 */
 
-	private function del()
+	private function _del()
 	{
 		$linktext = "JA";
 		$linktext2 = "NEIN";
 
 		//Bestaetigung zum Loeschen geklickt
-		if (isset($this->post_arr['weiter']) && $this->post_arr['weiter'] == $linktext && isset($this->post_arr['del_ID'])) {
-			$this->msbox->delEntry((int)$this->post_arr['del_ID']);
+		if (isset($this->_gpc['POST']['weiter']) && $this->_gpc['POST']['weiter'] == $linktext && isset($this->_gpc['POST']['del_ID'])) {
+			$this->_msbox->delEntry((int)$this->_gpc['POST']['del_ID']);
 			$title = "Loeschung erfolgreich";
 			$msg = "Nachricht wurde erfolgreich geloescht";
 			$linktext = "Zu den News";
-			$link = Page::getUriStatic($this->get_arr, array('action'));
+			$link = Page::getUriStatic($this->_gpc['GET'], array('action'));
 
 			//Abbruch der Loeschung
-		} elseif (isset($this->post_arr['nein']) && $this->post_arr['nein'] == $linktext2 && isset($this->post_arr['del_ID'])) {
+		} elseif (isset($this->_gpc['POST']['nein']) && $this->_gpc['POST']['nein'] == $linktext2 && isset($this->_gpc['POST']['del_ID'])) {
 			$title = "Loeschung abgebrochen";
 			$msg = "Sie haben die Loeschung der Nachricht abgebrochen";
 			$linktext = "Zu den News";
-			$link = Page::getUriStatic($this->get_arr, array('action'));
+			$link = Page::getUriStatic($this->_gpc['GET'], array('action'));
 
 			//Aufruf des Loeschvorgangs
-		} elseif (isset($this->get_arr['id'])) {
-			$id = (int)$this->get_arr['id'];
+		} elseif (isset($this->_gpc['GET']['id'])) {
+			$id = (int)$this->_gpc['GET']['id'];
 			$title = "<b>Loeschung</b> bestaetigen";
 			$msg = "<form>\n\t<fieldset>\n\t<legend>Nachricht</legend>\n<br />\n";
-			$nr = $this->msbox->getEntry($id);
-			$msg .= $this->smilie->show_smilie($nr['news_content'], $this->mysql);
+			$nr = $this->_msbox->getEntry($id);
+			$msg .= $this->_smilie->show_smilie($nr['news_content'], $this->_mysql);
 			$msg .= "\n\t</fieldset>\n</form>";
 			$msg .= "Wollen Sie die <b>Nachricht</b> mit der ID $id mit allen <b>Kommentaren(!) wirklich loeschen</b>?<br />\nDie Loeschung ist UNWIDERRUFLICH!<br />";
 
-			$this->smarty->assign("SEND_FORMS", true);
-			$this->smarty->assign("SE_SUB", true);
-			$this->smarty->assign("feedback_linktext2", $linktext2);
-			$this->smarty->assign("form_array", array('del_ID' => $id));
+			$this->_smarty->assign("SEND_FORMS", true);
+			$this->_smarty->assign("SE_SUB", true);
+			$this->_smarty->assign("feedback_linktext2", $linktext2);
+			$this->_smarty->assign("form_array", array('del_ID' => $id));
 
-			$link = Page::getUriStatic($this->get_arr, array('id'));
+			$link = Page::getUriStatic($this->_gpc['GET'], array('id'));
 
 			//Ungueltiger Aufruf
 		} else {
 			$title = "Falscher Aufruf";
 			$msg = "Sie haben einen Link aufgerufen, der nicht gueltig ist!!";
 			$linktext = "Zu den News";
-			$link = Page::getUriStatic($this->get_arr, array('action'));
+			$link = Page::getUriStatic($this->_gpc['GET'], array('action'));
 		}
 
-		$this->smarty->assign('feedback_title', $title);
-		$this->smarty->assign("feedback_content", $msg);
-		$this->smarty->assign("feedback_linktext", $linktext);
-		$this->smarty->assign("feedback_link", 'http://'.$link);
-		$this->tplfile ='feedback.tpl';
+		$this->_smarty->assign('feedback_title', $title);
+		$this->_smarty->assign("feedback_content", $msg);
+		$this->_smarty->assign("feedback_linktext", $linktext);
+		$this->_smarty->assign("feedback_link", 'http://'.$link);
+		$this->_tplfile ='feedback.tpl';
 	}
 
 
@@ -491,20 +499,20 @@ class Newsadmin implements Module
 	 * @return array $check Antwort von msbox::formcheck
 	 */
 
-	private function exefcheck(array $data = null, array $std = null)
+	private function _exefcheck(array $data = null, array $std = null)
 	{
 		global $gbook_entry_name, $gbook_entry_content, $gbook_entry_email, $gbook_entry_hp, $gbook_entry_title;
 
 		if ($data == null) {
-			$data = $this->getPostVars();
-			$data['ID'] = $this->get_arr['id'];
+			$data = $this->_getPostVars();
+			$data['ID'] = $this->_gpc['GET']['id'];
 		}
 
 		if ($std == null) {
 			$std = array('content' => $gbook_entry_content, 'name' => $gbook_entry_name, 'email' => $gbook_entry_email, 'hp' => $gbook_entry_hp, 'title' => $gbook_entry_title);
 		}
 
-		$check = $this->msbox->formCheck($data, $std);
+		$check = $this->_msbox->formCheck($data, $std);
 		return $check;
 	}
 
@@ -516,7 +524,7 @@ class Newsadmin implements Module
 	 * @return string $answer Antwort
 	 */
 
-	private function fcheck2answer(array $check)
+	private function _fcheck2answer(array $check)
 	{
 		$answer = "";
 		foreach ($check as $key => $value) {
@@ -551,7 +559,7 @@ class Newsadmin implements Module
 	 * @return array Smarty-Array
 	 */
 
-	private function getSmartyVars($mode = 'std')
+	private function _getSmartyVars($mode = 'std')
 	{
 		global $gbook_entry_name, $gbook_entry_content, $gbook_entry_email, $gbook_entry_hp, $gbook_entry_title;
 
@@ -565,7 +573,7 @@ class Newsadmin implements Module
 				//Post-Variablen
 			case 'post':
 
-				$entry = $this->getPostVars();
+				$entry = $this->_getPostVars();
 
 				if (array_key_exists('ID', $entry)) {
 					$arr['entry_ID'] = $entry['ID'];
@@ -591,12 +599,12 @@ class Newsadmin implements Module
 	 * @return array $entry Daten
 	 */
 
-	private function getPostVars()
+	private function _getPostVars()
 	{
-		$entry = array('content' => $this->post_arr['content'], 'name' => $this->post_arr['name'], 'email' => $this->post_arr['email'], 'hp' => $this->post_arr['hp'], 'title' => $this->post_arr['title']);
+		$entry = array('content' => $this->__gpc['POST']['content'], 'name' => $this->_gpc['POST']['name'], 'email' => $this->_gpc['POST']['email'], 'hp' => $this->_gpc['POST']['hp'], 'title' => $this->_gpc['POST']['title']);
 		
-		if (array_key_exists('ID', $this->post_arr)) {
-			$entry['ID'] = $this->post_arr['ID'];
+		if (array_key_exists('ID', $this->_gpc['POST'])) {
+			$entry['ID'] = $this->_gpc['POST']['ID'];
 		}
 
 		return $entry;

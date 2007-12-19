@@ -21,35 +21,44 @@ class News implements Module
 	 *
 	 * @var string
 	 */
-	private $tplfile = null;
+	private $_tplfile = null;
 	/**
 	 * Mysql-Klasse
 	 *
-	 * @var mysql
+	 * @var Mysql
 	 */
-	private $mysql = null;
+	private $_mysql = null;
 	/**
 	 * Smarty-Klasse
 	 *
 	 * @var Smarty
 	 */
-	private $smarty = null;
+	private $_smarty = null;
 	/**
 	 * Smilie-Klasse
 	 *
-	 * @var smilies
+	 * @var Smilies
 	 */
-	private $smilie = null;
-	private $post_arr = array();
-	private $get_arr = array();
+	private $_smilie = null;
 	/**
 	 * Messagebox Klass
 	 *
 	 * @var Messageboxes
 	 */
-	private $msbox = null;
-
-	private $timeformat = '%e.%m.%Y %k:%i';
+	private $_msbox = null;
+	/**
+	 * GET, POST, COOKIE-Array
+	 * 
+	 * @var array
+	 */
+	private $_gpc = array();
+	
+	/**
+	 * Zeitformat
+	 *
+	 * @var string
+	 */
+	private $_timeformat = '%e.%m.%Y %k:%i';
 
 
 	/**
@@ -61,8 +70,8 @@ class News implements Module
 
 	public function __construct($mysql, $smarty)
 	{
-		$this->mysql = $mysql;
-		$this->smarty = $smarty;
+		$this->_mysql = $mysql;
+		$this->_smarty = $smarty;
 	}
 
 
@@ -76,16 +85,14 @@ class News implements Module
 	{
 		//Daten initialisieren
 		global $dir_smilies;
-		$this->post_arr = $gpc['POST'];
-		$this->get_arr = $gpc['GET'];
+		$this->_gpc = $gpc;
 
+		$this->_msbox = new Messageboxes($this->_mysql, 'news', array('ID' => 'news_ID', 'ref_ID' => 'news_ref_ID', 'content' => 'news_content', 'name' => 'news_name', 'time' => 'news_time', 'email' => 'news_email', 'hp' => 'news_hp', 'title' => 'news_title'));
 
-		$this->msbox = new Messageboxes($this->mysql, 'news', array('ID' => 'news_ID', 'ref_ID' => 'news_ref_ID', 'content' => 'news_content', 'name' => 'news_name', 'time' => 'news_time', 'email' => 'news_email', 'hp' => 'news_hp', 'title' => 'news_title'));
-
-		$this->smilie = new Smilies($dir_smilies);
+		$this->_smilie = new Smilies($dir_smilies);
 
 		//Keine Angabe -> Ausgabe der News
-		$this->view(15);
+		$this->_view(10);
 		return true;
 
 	}
@@ -98,7 +105,7 @@ class News implements Module
 
 	public function gettplfile()
 	{
-		return $this->tplfile;
+		return $this->_tplfile;
 	}
 
 	/**
@@ -107,47 +114,46 @@ class News implements Module
 	 * @param int $max_entries_pp Anzahl Einträge pro Seite
 	 */
 
-	private function view($max_entries_pp)
+	private function _view($max_entries_pp)
 	{
 
 		//Daten definiere und initialisieren
-		$this->tplfile = 'news.tpl';
+		$this->_tplfile = 'news.tpl';
 		$news_array = array();
 		$error = false;
 
 		//Seite herausfinden
-		if (isset($this->get_arr['page']) && is_numeric($this->get_arr['page']) && $this->get_arr['page'] > 0) {
-			$page = $this->get_arr['page'];
+		if (isset($this->_gpc['GET']['page']) && is_numeric($this->_gpc['GET']['page']) && $this->_gpc['GET']['page'] > 0) {
+			$page = $this->_gpc['GET']['page'];
 		} else {
 			$page = 1;
 		}
 
 		//Daten holen
-		$news_array = $this->msbox->getEntries($max_entries_pp, $page, 'DESC','ASC', $this->timeformat);
+		$news_array = $this->_msbox->getEntries($max_entries_pp, $page, 'DESC','ASC', $this->_timeformat);
 
-		$pagesnav_array = Page::get_static_pagesnav_array($news_array['many'],$max_entries_pp, $this->get_arr);
+		$this->_mysql->query('SELECT COUNT(*) as many FROM `news` WHERE `news_ref_ID` = \'0\'');
+		$entries = $this->_mysql->fetcharray('num');
+		$pagesnav_array = Page::get_static_pagesnav_array($entries[0],$max_entries_pp, $this->_gpc['GET']);
 
 
-		$this->smarty->assign('entrys', $news_array['many']);
-		//Key 'many' loeschen, damit es nicht als News-Nachricht auftaucht.
-		unset($news_array['many']);
+		$this->_smarty->assign('entrys', $entries[0]);
 
 		foreach ($news_array as $key => $value) {
 
 			//Nur news-Daten ohne $news_array['many'] abchecken
 
-			$value['news_content'] = $this->smilie->show_smilie($value['news_content'], $this->mysql);
+			$value['news_content'] = $this->_smilie->show_smilie($value['news_content'], $this->_mysql);
 
 			foreach ($value['comments'] as $ckey => $cvalue) {
-				$value['comments'][$ckey]['news_content'] = $this->smilie->show_smilie($cvalue['news_content'], $this->mysql);
+				$news_array[$key]['comments'][$ckey]['news_content'] = $this->_smilie->show_smilie($cvalue['news_content'], $this->_mysql);
 			}
 
-			$news_array[$key] = $value;
 
 		}
 
-		$this->smarty->assign('newsarray', $news_array);
-		$this->smarty->assign('pages', $pagesnav_array);
+		$this->_smarty->assign('newsarray', $news_array);
+		$this->_smarty->assign('pages', $pagesnav_array);
 
 	}
 }
