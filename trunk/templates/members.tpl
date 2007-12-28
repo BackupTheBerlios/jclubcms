@@ -5,12 +5,12 @@
             <table cellpadding="0" cellspacing="0" align="center" class="content_tab">
               <tr>
                 <td class="content_tab_header" colspan="2">
-                {$member.members_ID}
+                {$member.members_name}
                 </td>
               </tr>
               <tr  class="content_tab_content1">
                 <td>
-                <a href="?nav_id={$image_link}&bild={$member.members_FIDimage}"><img src="?nav_id=41&thumb={$member.members_FIDimage}" /></a>
+                <a href="?{$param.nav_id}={$img_link}&bild={$member.members_FIDimage}"><img src="?{$param.nav_id}={$img_link}&thumb={$member.members_FIDimage}" /></a>
                 </td>
                 <td class="content_tab_content1">
                   Spitzname: {$member.members_spitzname}<br />
@@ -22,7 +22,7 @@
                 </td>
               </tr>
               <tr>
-              	<td colspan="2" class="content_tab_content1"><a href="?mail&nav_id={$local_link}&entry_id={$member.members_ID}">Mail an {$member.members_spitzname}</a></td>
+              	<td colspan="2" class="content_tab_content1"><a href="?mail&{$param.nav_id}={$local_link}&entry_id={$member.members_ID}">Mail an {$member.members_spitzname}</a></td>
               </tr>
             </table>
             {/foreach}

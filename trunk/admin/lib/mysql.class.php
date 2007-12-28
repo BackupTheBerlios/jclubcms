@@ -210,7 +210,8 @@ class Mysql {
 		}
 
 		if(($this->_noresult == true && $success == false) || ($this->_noresult == false && $this->_result === false)) {
-			throw new CMSException("Mysql-Query ist ung&uuml;ltig<br />\n".mysql_error($this->_serverlink), EXCEPTION_MYSQL_CODE);		
+			throw new CMSException("Mysql-Query ist ung&uuml;ltig<br />\n".mysql_error($this->_serverlink), EXCEPTION_MYSQL_CODE);
+			
 		} else {
 			return true;
 		}
@@ -264,8 +265,7 @@ class Mysql {
 	public function saverecords($resulttype = "assoc")
 	{
 		$i = 0;
-		while($data = $this->fetcharray($resulttype))
-		{
+		while($data = $this->fetcharray($resulttype)) {
 			$this->_queryrecords[$i] = $data;
 			$i++;
 		}

@@ -41,8 +41,8 @@ class Image_send implements Module
 	public function action($gpc)
 	{
 		$this->_gpc = $gpc;
-		if (isset($gpc['GET']['bild'])) {
-			$this->_initImg($gpc['GET']['bild']);
+		if (isset($gpc['GET']['img'])) {
+			$this->_initImg($gpc['GET']['img']);
 		} elseif (isset($gpc['GET']['thumb'])) {
 			$this->_initThumb($gpc['GET']['thumb']);
 		} else {

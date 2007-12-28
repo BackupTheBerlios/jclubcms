@@ -54,7 +54,7 @@
 	{/foreach}
 	<table width="640" align="center" class="content_tab">
 		<tr>
-			<td><a href="?nav_id={$local_link}&action=new"><img src="templates/style/icons/book_open.gif" />Neuer Eintrag</a></td><td align="right">{if $entrys lte 1}{$entrys} Eintrag{else}{$entrys} Eintr&auml;ge{/if}</td>
+			<td><a href="?nav_id={$local_link}&action=new"><img src="templates/style/icons/book_open.gif" />Neuer Eintrag</a></td><td align="right">{if $entries == 1}{$entries} Eintrag{else}{$entries} Eintr&auml;ge{/if} (+{if $comments == 1}{$comments} Kommentar{else}{$comments} Kommentare{/if})</td>
 		</tr>
 		<tr>
 			<td colspan="2" align="center">{foreach item=page from=$pages}

@@ -385,7 +385,7 @@ class Messageboxes {
 		//Zeit formatieren und Kommentare holen.
 		foreach ($msg_array as $key => $value) {
 
-			if ($condition != "") {//ref_ID ist also gesetzt.
+			if ($condition != "") {//ref_ID ist demnach gesetzt.
 				
 				$this->_mysql->query("SELECT * FROM {$this->_tablename} WHERE `{$this->_tablestruct['ref_ID']}` = '{$value[$this->_tablestruct['ID']]}' {$strorder['comm']}");
 				$this->_mysql->saverecords('assoc');

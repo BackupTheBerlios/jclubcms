@@ -326,15 +326,17 @@ class Core
 		} else {
 			$adminmenu = false;
 		}
-
+	
+		/*Menu-Array ermitteln und in Smarty-Array speichertn, um später zu assignen (@link initPage() ) */
 		$nav_array = $this->_page->get_menu_array($this->_gpc['GET'], $shortlinks, $adminmenu);
 		$this->_smarty_array['topnav'] = $nav_array['topnav'];
 		$this->_smarty_array['subnav'] = $nav_array['subnav'];
 		$this->_smarty_array['local_link'] = ($this->_nav_id = $nav_array['nav_id']);
+		
 		$this->_smarty_array['param']['nav_id'] = "nav_id";
 
 
-
+		/* Tabellen für Mysql-Abfragen bestimmen */
 		if ($this->_is_admin === true) {
 			$menu_table = 'admin_menu';
 			$mod_table = 'admin_modules';
@@ -343,12 +345,13 @@ class Core
 			$mod_table = 'modules';
 		}
 
-
+		/*Link-ID für das Image-Module ermitteln */
 		$this->_mysql->query("SELECT `$menu_table`.`menu_ID` as 'image_ID' FROM `$menu_table`, `$mod_table` WHERE `$mod_table`.`modules_file` = 'image_send.class.php' AND `$mod_table`.`modules_ID` = `$menu_table`.`menu_page` AND `$menu_table`.`menu_pagetyp` = 'mod' LIMIT 1");
 		$data = $this->_mysql->fetcharray('assoc');
 
 		$this->_smarty_array['img_link'] = $data['image_ID'];
 
+		/*Link-ID für das Captcha-Module ermitteln */
 		$this->_mysql->query("SELECT `$menu_table`.`menu_ID` as 'captcha_ID' FROM `$menu_table`, `$mod_table` WHERE `$mod_table`.`modules_file` = 'captcha_image.class.php' AND `$mod_table`.`modules_ID` = `$menu_table`.`menu_page` AND `$menu_table`.`menu_pagetyp` = 'mod' LIMIT 1");
 		$data = $this->_mysql->fetcharray('assoc');
 
