@@ -20,7 +20,7 @@
         {if $gbook.gbook_hp neq ""}<a href="$gbook.gbook_hp"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
         </td>
       </tr>
-      {* Innere Schlaufe für das Auslesen der Kommentare *}
+      {* Innere Schlaufe fï¿½r das Auslesen der Kommentare *}
       {foreach key=schluessel item=comment from=$gbook.comments}
       <tr>
         <td class="content_tab_content1">
@@ -41,7 +41,7 @@
     {************************************************************}
     {************************************************************}
     <form name="newentry" method="post" action="">
-      <input type="hidden" name="sessionscode" value="{$sessionscode}" />
+      <input type="hidden" name="sessioncode" value="{$sessioncode}" />
       <table cellpadding="0" cellspacing="0" align="center" class="content_tab">
         <tr>
           <td class="formailer_header" colspan="2">{$entry_title}

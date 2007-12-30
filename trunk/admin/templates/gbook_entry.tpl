@@ -1,5 +1,6 @@
       <div id="content">
 		<div id="content_txt">
+		<h2>Neuer Eintrag schreiben</h2>
     <table width = 100% class="content_tab">
     </table>
     {************************************************************}
@@ -11,18 +12,17 @@
 	{if $dump_errors}
 	<table class="content_tab" align="center">
 		<tr>
-			<td class="formailer_header" style="background-color: #EC6442">{$error_title|default:"Einige Daten sind ungueltig"}</td>
+			<td class="formailer_header" style="background-color: #EC6442">{$error_title|default:"Einige Daten sind ung&uuml;ltig"}</td>
 		</tr>
 		<tr>
-			<td class="formailer_txt" style="background-color: #ED4B23">{$error_content}</td>
+			<td class="formailer_txt" style="background-color: #ED4B23; color: #000000">{$error_content}</td>
 		</tr>
 	</table>
 	{/if}
-    <form name="newentry" method="post" action="?nav_id={$local_link}&action={$action}&{$SID}">
-	<input type="hidden" name="ID" value="{$entry_ID}" />
+    <form name="newentry" method="post" action="">
       <table cellpadding="0" cellspacing="0" align="center" class="content_tab">
         <tr>
-          <td class="formailer_header" colspan="2"><img src="templates/style/icons/pencil.gif" /><input class="formailer_header_input" name="title" type="text" onclick="select()" value="{$entry_title}" />{if $action == 'edit'}&nbsp;&nbsp;&nbsp;&nbsp;{$entry_time}{/if}</td>
+          <td class="formailer_header" colspan="2"><img src="templates/style/icons/pencil.gif" /><input class="formailer_header_input" name="title" type="text" onclick="select()" value="{$entry_title}" />{if isset($entry_time)}<img src="./templates/style/icons/date.gif" /> {$entry_time}{/if}</td>
         </tr>
         <tr>
           <td class="formailer_txt">

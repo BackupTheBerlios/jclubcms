@@ -18,7 +18,7 @@
 				{$gbook.gbook_content}
 				</td>
 				<td class="content_tab_content2">
-					<img src="templates/style/icons/date.gif" /> {$gbook.time}<br />
+					<img src="templates/style/icons/date.gif" /> {$gbook.gbook_time}<br />
 					<img src="templates/style/icons/user.gif" /> {$gbook.gbook_name}<br />
 					<a href="?nav_id={$local_link}&action=mail&entry_id={$gbook.ID}&amp;{$SID}"><img src="templates/style/icons/email.gif" /> E-mail</a>
 					{if $gbook.hp neq ""}<br /><a href="{$gbook.hp}" target="_blank"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
@@ -28,7 +28,7 @@
 	{if $dump_errors}
 	<table class="content_tab" align="center">
 		<tr>
-			<td class="formailer_header" style="background-color: #EC6442">{$error_title|default:"Einige Daten sind ungueltig"}</td>
+			<td class="formailer_header" style="background-color: #EC6442">{$error_title|default:"Einige Daten sind ung&uuml;ltig"}</td>
 		</tr>
 		<tr>
 			<td class="formailer_txt" style="background-color: #ED4B23; color:black">{$error_content}</td>

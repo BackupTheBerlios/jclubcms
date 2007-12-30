@@ -1,21 +1,19 @@
-<?php 
-
+<?php
 /**
  * @author Simon Däster
  * @package JClubCMS
- * gbook.class.php
+ * gbookadmin.class.php
  * 
- * Diese Klasse ist zuständig für das Editieren der Gästebucheinträge. Auch können neue Beiträge hinzugefügt oder gelöscht
- * werden
+ * Diese Klasse ist zuständig für das Anzeigen und Hinzufügen der Gästebucheinträge.
+ * 
  */
 
-require_once ADMIN_DIR.'lib/module.interface.php';
 require_once ADMIN_DIR.'lib/messageboxes.class.php';
 require_once ADMIN_DIR.'lib/smilies.class.php';
+require_once ADMIN_DIR.'lib/module.interface.php';
 require_once USER_DIR.'config/gbook_textes.inc.php';
 
-class Gbookadmin implements Module
-{
+class Gbookadmin implements Module {
 	/**
 	 * Templatefile
 	 *
@@ -38,11 +36,16 @@ class Gbookadmin implements Module
 	/**
 	 * Smilie-Klasse
 	 *
-	 * @var smilies
+	 * @var Smilies
 	 */
 	private $_smilie = null;
-	private $_post_arr = array();
-	private $_get_arr = array();
+
+	/**
+	 * GET, POST, COOKIE-Array
+	 *
+	 * @var array
+	 */
+	private $_gpc = array();
 	/**
 	 * Messagebox Klasse
 	 *
@@ -53,10 +56,24 @@ class Gbookadmin implements Module
 	private $_timeformat = '%e.%m.%Y %k:%i';
 
 	/**
+	 * Daten aus den Config-Dateien
+	 *
+	 * @var array
+	 */
+	private $_configvars = array();
+	
+	/**
+	 * Navigations-ID des Gästebuches
+	 *
+	 * @var string
+	 */
+	private $_nav_id = null;
+
+	/**
 	 * Aufbau der Klasse
 	 *
-	 * @param object $mysql Mysql-Objekt
-	 * @param object $smarty Smarty-Objekt
+	 * @param Mysql $mysql Mysql-Objekt
+	 * @param Smarty $smarty Smarty-Objekt
 	 */
 
 	public function __construct($mysql, $smarty)
@@ -69,46 +86,57 @@ class Gbookadmin implements Module
 	/**
 	 * Führt die einzelnen Methoden aus, abhängig vom Parameter
 	 *
-	 * @param array $parameters $_POST- und $_GET-Arrays
+	 * @param array $gpc $_POST- und $_GET-Arrays
+	 * @return boolean
 	 */
 	public function action($gpc)
 	{
 		global $dir_smilies;
-		$this->_post_arr = $gpc['POST'];
-		$this->_get_arr = $gpc['GET'];
 
-		$this->_msbox = new MessageBoxes($this->_mysql, 'gbook', array('ID' => 'gbook_ID', 'ref_ID' => 'gbook_ref_ID', 'content' => 'gbook_content', 'name' => 'gbook_name', 'time' => 'gbook_time', 'email' => 'gbook_email', 'hp' => 'gbook_hp', 'title' => 'gbook_title'));
+		//Daten laden
+		$this->_smarty->config_load('textes.de.conf', 'Gbook');
+		$this->_configvars['Gbook'] = $this->_smarty->get_config_vars();
+		$this->_smarty->config_load('textes.de.conf', 'Form_Error');
+		$this->_configvars['Error'] = $this->_smarty->get_config_vars();
 
-		$this->_smilie = new smilies($dir_smilies);
+		$this->_gpc = $gpc;
 
-		if (isset($this->_get_arr['action'])) {
-			switch ($this->_get_arr['action']) {
+		$this->_nav_id = $this->_smarty->get_template_vars('local_link');
+		
+		$this->_msbox = new MessageBoxes($this->_mysql, 'gbook', array('ID' => 'gbook_ID', 'ref_ID' => 'gbook_ref_ID',
+		'content' => 'gbook_content', 'name' => 'gbook_name', 'time' => 'gbook_time', 'email' => 'gbook_email',
+		'hp' => 'gbook_hp', 'title' => 'gbook_title'));
+
+		$this->_smilie = new Smilies($dir_smilies);
+
+		if (isset($this->_gpc['GET']['action'])) {
+			switch ($this->_gpc['GET']['action']) {
 				case 'new':
 					$this->_add();
-					return true;
+					break;
 				case 'comment':
 					$this->_comment();
-					return true;
+					break;
 				case 'edit':
 					$this->_edit();
-					return true;
+					break;
 				case 'del':
 					$this->_del();
-					return true;
+					break;
 				case 'view':
 					$this->_view(5);
-					return true;
+					break;
 				case '':
 					$this->_view(5);
-					return true;
+					break;
 				default:
 					throw new CMSException('Gewählte Option ist nicht möglich', EXCEPTION_MODULE_CODE);
 					return false;
 			}
 		} else {
 			$this->_view(5);
-			return true;
 		}
+		return true;
 	}
 
 	/**
@@ -122,7 +150,6 @@ class Gbookadmin implements Module
 		return $this->_tplfile;
 	}
 
-
 	/**
 	 * Zeigt die Einträge an
 	 *
@@ -134,46 +161,51 @@ class Gbookadmin implements Module
 		$this->_tplfile = 'gbook.tpl';
 		$gbook_array = array();
 
-		if (isset($this->_get_arr['page']) && is_numeric($this->_get_arr['page']) && $this->_get_arr['page'] > 0) {
-			$page = $this->_get_arr['page'];
+		if (isset($this->_gpc['GET']['page']) && is_numeric($this->_gpc['GET']['page']) && $this->_gpc['GET']['page'] > 0) {
+			$page = $this->_gpc['GET']['page'];
 		} else {
 			$page = 1;
 		}
 
 		$gbook_array = $this->_msbox->getEntries($max_entries_pp, $page, 'DESC', 'ASC', $this->_timeformat);
 		$this->_mysql->query('SELECT COUNT(*) as many FROM `gbook` WHERE `gbook_ref_ID` = \'0\'');
-		$data = $this->_mysql->fetcharray('assoc');
+		$entries = $this->_mysql->fetcharray('num');
+		$this->_mysql->query('SELECT COUNT(*) as many FROM `gbook` WHERE `gbook_ref_ID` != \'0\'');
+		$comments = $this->_mysql->fetcharray('num');
 
 
 
-		$pagesnav_array = Page::get_static_pagesnav_array($data['many'],$max_entries_pp, $this->_get_arr);
+		$pagesnav_array = Page::get_static_pagesnav_array($entries[0],$max_entries_pp, $this->_gpc['GET']);
 
-		$gbook_smarty_array = array();
 
 		//Inhalt parsen (Smilies) und an Smarty-Array übergeben
 		foreach ($gbook_array as $key => $value) {
 
-			//Nur gbook-Daten ohne $gbook_array['many'] abchecken
-			if ($key !== 'many') {
-				$value['gbook_content'] = $this->_smilie->show_smilie($value['gbook_content'], $this->_mysql);
+			$gbook_array[$key] = array('ID' => $value['gbook_ID'], 'title' => htmlentities($value['gbook_title']),
+			'content' => $this->_smilie->show_smilie(htmlentities($value['gbook_content']), $this->_mysql),
+			'name' => htmlentities($value['gbook_name']),
+			'time' => $value['gbook_time'], 'email' => htmlentities($value['gbook_email']),
+			'hp' => htmlentities($value['gbook_hp']), 'number_of_comments' => $value['number_of_comments']);
 
-				$gbook_smarty_array[$key] = array('ID' => $value['gbook_ID'], 'title' => $value['gbook_title'], 'content' => $value['gbook_content'], 'name' => $value['gbook_name'], 'time' => $value['time'], 'email' => $value['gbook_email'], 'hp' => $value['gbook_hp']);
+			$count = 0;
+			//Kommentare durchackern
+			foreach ($value['comments'] as $ckey => $cvalue) {
 
-				//Kommentare durchackern
-				foreach ($value['comments'] as $ckey => $cvalue) {
-					$value['comments'][$ckey]['gbook_content'] = $this->_smilie->show_smilie($cvalue['gbook_content'], $this->_mysql);
+				$gbook_array[$key]['comments'][$ckey] = array('ID' => $cvalue['gbook_ID'],
+				'title' => htmlentities($cvalue['gbook_title']),
+				'content' => $this->_smilie->show_smilie(htmlentities($cvalue['gbook_content']), $this->_mysql),
+				'name' => htmlentities($cvalue['gbook_name']), 'time' => $cvalue['gbook_time'],
+				'email' => htmlentities($cvalue['gbook_email']), 'hp' => htmlentities($cvalue['gbook_hp']));
 
-					$gbook_smarty_array[$key]['comments'][$ckey] = array('ID' => $cvalue['gbook_ID'], 'title' => $cvalue['gbook_title'], 'content' => $cvalue['gbook_content'], 'name' => $cvalue['gbook_name'], 'time' => $cvalue['time'], 'email' => $cvalue['gbook_email'], 'hp' => $cvalue['gbook_hp']);
+				$count++;
 
-				}
-
-				$gbook_array[$key] = $value;
 			}
 		}
 
-		$this->_smarty->assign('gbook', $gbook_smarty_array);
+		$this->_smarty->assign('gbook', $gbook_array);
 		$this->_smarty->assign('pages', $pagesnav_array);
-		$this->_smarty->assign('entrys', $data['many']);
+		$this->_smarty->assign('entries', $entries[0]);
+		$this->_smarty->assign('comments', $comments[0]);
 
 	}
 
@@ -184,61 +216,39 @@ class Gbookadmin implements Module
 
 	private function _add()
 	{
-		global $gbook_entry_name, $gbook_entry_content, $gbook_entry_email, $gbook_entry_hp, $gbook_entry_title;
-
-		//Eingetragen und überprüfen
-		if (isset($this->_post_arr['btn_send']) && $this->_post_arr['btn_send'] == 'Senden') {
-
-			$answer = "";
+		$gbook_vars = $this->_configvars['Gbook'];
 
 
-			$entry = $this->_getPostVars();
+		if (isset($this->_gpc['POST']['btn_send']) && $this->_gpc['POST']['btn_send'] == 'Senden') {
+			/*Formular wurde gesendet */
 
-			$check = $this->_exefcheck($entry);
-			$answer = $this->_fcheck2answer($check);
+			/* Formular kontrollieren */
+			$answer = array();
+			$success = $this->_check_form($answer);
 
-			if ($answer == "") {
-				$entry['hp'] = $check['hp'];
-				$entry['time'] = "NOW()";
-				$this->_msbox->addEntry($entry);
-				$answer = "Eintrag wurde erfolgreich erstellt";
-				$title = "Eintrag erstellt";
-				$link = Page::getUriStatic($this->_get_arr, array('action'));
-				$linktext = 'Angugcken';
+			if ($success == true) {
+				/*Eintrag machen*/
 
-				$this->_smarty->assign('feedback_title', $title);
-				$this->_smarty->assign("feedback_content", $answer);
-				$this->_smarty->assign("feedback_linktext", $linktext);
-				$this->_smarty->assign("feedback_link", 'http://'.$link);
-				$this->_tplfile ='feedback.tpl';
+				$answer['time'] = "NOW()";
+				$this->_msbox->addEntry($answer);
+
+
+				$this->_send_feedback($gbook_vars['allright_title'], $gbook_vars['allright_content'], "?nav_id=$this->_nav_id", $mail_vars['allright_link']);
+
+
 
 			} else {
-				$this->_tplfile ='gbook_entry.tpl';
-
-				$title = 'ungültige Angaben';
-
-				$this->_smarty->assign('dump_errors', true);
-				$this->_smarty->assign('error_title', $title);
-				$this->_smarty->assign('error_content', $answer);
-
-				$smarty_arr = $this->_getSmartyVars('std');
-
-				$this->_smarty->assign('action', $this->_get_arr['action']);
-				$this->_smarty->assign($smarty_arr);
-				$smilie_arr = $this->_smilie->create_smiliesarray($this->_mysql);
-				$this->_smarty->assign('smilies_list', $smilie_arr);
-
+				/* Fehler im Formular */
+				$this->_send_entryform(false, implode("<br />\n", $answer));
 			}
 
-		} else {
-			$smarty_arr = $this->_getSmartyVars('std');
 
-			$this->_tplfile = 'gbook_entry.tpl';
-			$this->_smarty->assign('action', $this->_get_arr['action']);
-			$this->_smarty->assign($smarty_arr);
-			$smilie_arr = $this->_smilie->create_smiliesarray($this->_mysql);
-			$this->_smarty->assign('smilies_list', $smilie_arr);
+		} else {
+			/* Kein Formular abgeschickt */
+
+			$this->_send_entryform(true);
 		}
+
 	}
 
 
@@ -249,75 +259,41 @@ class Gbookadmin implements Module
 
 	private function _comment()
 	{
-		
-		if (isset($this->_post_arr['btn_send']) && $this->_post_arr['btn_send'] == 'Senden') {
+		$gbook_vars = $this->_configvars['Gbook'];
 
-			$answer = "";
-			$entry = $this->_getPostVars();
-			unset($entry['title']);
-			$check = $this->_exefcheck($entry);
-			$answer = $this->_fcheck2answer($check);
 
-			if ($answer == "") {
-				$entry['hp'] = $check['hp'];
-				$entry['time'] = "NOW()";
-				$this->_msbox->commentEntry((int)$this->_get_arr['id'], $entry);
-				$answer = "Eintrag wurde erfolgreich erstellt";
-				$title = "Eintrag erstellt";
-				$link = Page::getUriStatic($this->_get_arr, array('action'));
-				$linktext = 'Angugcken';
+		if (isset($this->_gpc['POST']['btn_send']) && $this->_gpc['POST']['btn_send'] == 'Senden') {
+			/*Formular wurde gesendet */
 
-				$this->_smarty->assign('feedback_title', $title);
-				$this->_smarty->assign("feedback_content", $answer);
-				$this->_smarty->assign("feedback_linktext", $linktext);
-				$this->_smarty->assign("feedback_link", 'http://'.$link);
-				$this->_tplfile ='feedback.tpl';
+			/* Formular kontrollieren */
+			$answer = array();
+			$success = $this->_check_form($answer);
 
-				//Falsche Einträge
+			if ($success == true) {
+				/*Eintrag machen*/
+
+
+				$answer['time'] = "NOW()";
+				$this->_msbox->commentEntry((int)$this->_gpc['GET']['ref_ID'],$answer);
+
+
+				$this->_send_feedback($gbook_vars['allright_title'], $gbook_vars['allright_content'],
+				"?nav_id=$this->_nav_id", $mail_vars['allright_link']);
+
+
+
 			} else {
-
-				$gbook = $this->_msbox->getEntry($this->_get_arr['id'], $this->_timeformat);
-				$gbook['gbook_content'] = $this->_smilie->show_smilie($gbook['gbook_content'], $this->_mysql);
-				$gbook['ID'] = $this->_get_arr['id'];
-
-				$this->_tplfile ='gbook_comment.tpl';
-
-				$title = 'ungültige Angaben';
-
-				$this->_smarty->assign('gbook', $gbook);
-
-				$this->_smarty->assign('dump_errors', true);
-				$this->_smarty->assign('error_title', $title);
-				$this->_smarty->assign('error_content', $answer);
-
-				$smarty_arr = $this->_getSmartyVars('post');
-
-				$this->_smarty->assign('action', $this->_get_arr['action']);
-				$this->_smarty->assign($smarty_arr);
-				$smilie_arr = $this->_smilie->create_smiliesarray($this->_mysql);
-				$this->_smarty->assign('smilies_list', $smilie_arr);
+				/* Fehler im Formular */
+				$this->_send_entryform(false,implode("<br />\n", $answer),true);
 			}
 
-			//1. Aufruf des Formulars
+
 		} else {
-			$gbook = $this->_msbox->getEntry($this->_get_arr['id'], $this->_timeformat);
-			$gbook['gbook_content'] = $this->_smilie->show_smilie($gbook['gbook_content'], $this->_mysql);
-			$gbook['ID'] = $this->_get_arr['id'];
-
-			$this->_tplfile ='gbook_comment.tpl';
-
-			$this->_smarty->assign('gbook', $gbook);
-
-			$smarty_arr = $this->_getSmartyVars('std');
-
-			$this->_smarty->assign('action', $this->_get_arr['action']);
-			$this->_smarty->assign($smarty_arr);
-			$smilie_arr = $this->_smilie->create_smiliesarray($this->_mysql);
-			$this->_smarty->assign('smilies_list', $smilie_arr);
+			/* Kein Formular abgeschickt */
+			$this->_send_entryform(true,null,true);
 		}
+
 	}
-
-
 
 	/**
 	 * Editiert einen Eintrag im Mysql oder liefert das zugehörige Formular.
@@ -329,74 +305,57 @@ class Gbookadmin implements Module
 
 
 		//Eingetragen und überprüfen
-		if (isset($this->_post_arr['btn_send']) && $this->_post_arr['btn_send'] == 'Senden') {
+		if (isset($this->_gpc['POST']['btn_send']) && $this->_gpc['POST']['btn_send'] == 'Senden') {
 
-			$answer = "";
+			/* Formular kontrollieren */
+			$answer = array();
+			$success = $this->_check_form($answer);
 
-			$entry = $this->_getPostVars();
+			if ($success == true) {
+				/*Eintrag machen*/
 
-			$check = $this->_exefcheck($entry);
-			$answer = $this->_fcheck2answer($check);
+				$navigation_id = $this->_smarty->get_template_vars('local_link');
 
+				$answer['ID'] = $this->_gpc['GET']['id'];
 
-			if ($answer == "") {
-				$entry['hp'] = $check['hp'];
-
-				echo __METHOD__." ".var_export($entry, 1);
 				//In Datenbank einschreiben
-				$this->_msbox->editEntry($entry);
+				$this->_msbox->editEntry($answer);
 
-				//Angaben für Benutzer
-				$answer = "Eintrag wurde erfolgreich ver&auml;ndert";
-				$title = "Eintrag erstellt";
-				$link = Page::getUriStatic($this->_get_arr, array('action'));
-				$linktext = 'Angugcken';
 
-				//Smarty-Ausgabe
-				$this->_smarty->assign('feedback_title', $title);
-				$this->_smarty->assign("feedback_content", $answer);
-				$this->_smarty->assign("feedback_linktext", $linktext);
-				$this->_smarty->assign("feedback_link", 'http://'.$link);
-				$this->_tplfile ='feedback.tpl';
+				$this->_send_feedback($gbook_vars['allright_title'], $gbook_vars['allright_content'],
+				"?nav_id=$navigation_id", $mail_vars['allright_link']);
 
 			} else {
-				$this->_tplfile ='gbook_entry.tpl';
-
-				$title = 'ungültige Angaben';
-
-				$this->_smarty->assign('dump_errors', true);
-				$this->_smarty->assign('error_title', $title);
-				$this->_smarty->assign('error_content', $answer);
-
-				$this->_smarty->assign('action', $this->_get_arr['action']."&id={$entry['ID']}");
-
-				$smilie_arr = $this->_smilie->create_smiliesarray($this->_mysql);
-				$this->_smarty->assign('smilies_list', $smilie_arr);
+				$this->_send_entryform(false,implode("<br />\n", $answer),true);
 			}
 
 		} else {
 
-			$this->_tplfile = 'gbook_entry.tpl';
+			$this->_send_entryform(true, null, false, true);
+			
+			
+			/*$this->_tplfile = 'gbook_entry.tpl';
 
 			//Action an Template mitteilen, zur Anpassung des Formulars
-			$this->_smarty->assign('action', $this->_get_arr['action']."&id={$this->_get_arr['id']}");
+			$this->_smarty->assign('action', $this->_gpc['GET']['action']."&id={$this->_gpc['GET']['id']}");
 
 			//Daten aus dem msbox-Objekt holen
-			$gbook_arr = $this->_msbox->getEntry($this->_get_arr['id'], $this->_timeformat);
+			$gbook_arr = $this->_msbox->getEntry($this->_gpc['GET']['id'], $this->_timeformat);
 
-			$smarty_arr = array('entry_ID' => $this->_get_arr['id'], 'entry_name' => $gbook_arr['gbook_name'], 'entry_content' => $gbook_arr['gbook_content'],
-			'entry_email' => $gbook_arr['gbook_email'], 'entry_hp' => $gbook_arr['gbook_hp'], 'entry_title' => 									$gbook_arr['gbook_title'], 'entry_time' => $gbook_arr['time']);
+			$smarty_arr = array('entry_ID' => $this->_gpc['GET']['id'], 'entry_name' => $gbook_arr['gbook_name'], 'entry_content' => $gbook_arr['gbook_content'],
+			'entry_email' => $gbook_arr['gbook_email'], 'entry_hp' => $gbook_arr['gbook_hp'], 'entry_title' => 									$gbook_arr['gbook_title'], 'entry_time' => $gbook_arr['gbook_time']);
 
 			$this->_smarty->assign($smarty_arr);
 			$smilie_arr = $this->_smilie->create_smiliesarray($this->_mysql);
-			$this->_smarty->assign('smilies_list', $smilie_arr);
+			$this->_smarty->assign('smilies_list', $smilie_arr);*/
 
 
 		}
 	}
 
 	/**
-	 * Löscht einen Eintrag im Mysql oder liefert die Auswahlliste
+	 * Löscht einen Eintrag im Mysql oder das zugehörige Bestätigunsformular.
+	 * Der Löschlink befindet sich in der Anzeige (@see _view()).
 	 *
 	 */
 
@@ -404,181 +363,185 @@ class Gbookadmin implements Module
 	{
 		$linktext = "JA";
 		$linktext2 = "NEIN";
-		
-		//Bestätigung zum Löschen geklickt
-		if (isset($this->_post_arr['weiter']) && $this->_post_arr['weiter'] == $linktext && isset($this->_post_arr['del_ID'])) {
-			$this->_msbox->delEntry((int)$this->_post_arr['del_ID']);
-			$title = "Löschung erfolgreich";
-			$msg = "Nachricht wurde erfolgreich gelöscht";
-			$linktext = "Zum Gästebuch";
-			$link = Page::getUriStatic($this->_get_arr, array('action'));
-			
 
-		} elseif (isset($this->_post_arr['nein']) && $this->_post_arr['nein'] == $linktext2 && isset($this->_post_arr['del_ID'])) {
-			$title = "Löschung abgebrochen";
-			$msg = "Sie haben die Löschung der Nachricht abgebrochen";
-			$linktext = "Zum Gästebuch";
-			$link = Page::getUriStatic($this->_get_arr, array('action'));
+		/* Aufrum zum Löschen */
+		if (isset($this->_gpc['GET']['id']) && !isset($this->_gpc['POST']['weiter']) && !isset($this->_gpc['POST']['nein'])) {
 
-		} elseif (isset($this->_get_arr['id'])) {
-			$id = (int)$this->_get_arr['id'];
-			$title = "<b>Löschung</b> bestätigen";
-			$msg = "<form>\n\t<fieldset>\n\t<legend>Nachricht</legend>\n<br />\n";
+			$id = (int)$this->_gpc['GET']['id'];
+			$title = "<b>L&oouml;schung</b> best&auml;tigen";
 			$nr = $this->_msbox->getEntry($id);
-			$msg .= $this->_smilie->show_smilie($nr['gbook_content'], $this->_mysql);
-			$msg .= "\n\t</fieldset>\n</form>";
-			$msg .= "Wollen Sie die <b>Nachricht</b> mit der ID $id mit allen <b>Kommentaren(!) wirklich löschen</b>?<br />\nDie Löschung ist UNWIDERRUFLICH!<br />";
+			$content = $this->_smilie->show_smilie($nr['gbook_content'], $this->_mysql);
 
-			$this->_smarty->assign("SEND_FORMS", true);
-			$this->_smarty->assign("SE_SUB", true);
-			$this->_smarty->assign("feedback_linktext2", $linktext2);
-			$this->_smarty->assign("form_array", array('del_ID' => $id));
+			$data = array('title' => $title, 'content' => $content, 'del_ID' => $id, 'linktext' => $linktext,
+			'linktext2' => $linktext2);
+			
+			$this->_smarty->assign($data);
 
-			$link = Page::getUriStatic($this->_get_arr, array('id'));
+			$this->_tplfile = 'gbook_del.tpl';
+
+
 		} else {
-			$title = "Falscher Aufruf";
-			$msg = "Sie haben einen Link aufgerufen, der nicht gültig ist!!";
-			$linktext = "Zum Gästebuch";
-			$link = Page::getUriStatic($this->_get_arr, array('action'));
-		}
 
-		$this->_smarty->assign('feedback_title', $title);
-		$this->_smarty->assign("feedback_content", $msg);
-		$this->_smarty->assign("feedback_linktext", $linktext);
-		$this->_smarty->assign("feedback_link", 'http://'.$link);
-		$this->_tplfile ='feedback.tpl';
-	}
+				/*Löschung erfolgreich*/
+			if (isset($this->_gpc['POST']['weiter']) && $this->_gpc['POST']['weiter'] == $linktext && isset($this->_gpc['POST']['del_ID'])) {
+				$this->_msbox->delEntry((int)$this->_gpc['POST']['del_ID']);
+				$title = "Löschung erfolgreich";
+				$msg = "Nachricht wurde erfolgreich gelöscht";
 
-	/**
-	 * * * * * * * * * * * * * * * * * * * * * *
-	 * Einige nützliche Funktionen kommen jetzt
-	 * * * * * * * * * * * * * * * * * * * * * *
-	 */
-
-
-
-	/**
-	 * Führt msbox::formCheck aus. Der 1. Parameter enthält die Daten; ist er nicht angegeben, werden die Daten 
-	 * aus dem Post-Formular geholt. Der 2. Parameter enthält die Standartwerten; ist er nicht angegeben, werden die 
-	 * Daten aus der gbook_textes-Datei geholt
-	 *
-	 * @param array $data Daten
-	 * @param array $std Standardwerte
-	 * @return array $check Antwort von msbox::formcheck
-	 */
-
-	private function _exefcheck(array $data = null, array $std = null)
-	{
-		global $gbook_entry_name, $gbook_entry_content, $gbook_entry_email, $gbook_entry_hp, $gbook_entry_title;
-
-		if ($data == null) {
-			$data = $this->_getPostVars();
-			$data['ID'] = $this->_get_arr['id'];
-		}
-
-		if ($std == null) {
-			$std = array('content' => $gbook_entry_content, 'name' => $gbook_entry_name, 'email' => $gbook_entry_email, 'hp' => $gbook_entry_hp, 'title' => $gbook_entry_title);
-		}
-
-		$check = $this->_msbox->formCheck($data, $std);
-		return $check;
-	}
-
-
-	/**
-	 * Erstellt aus den Rückgabewerten von msbox::formcheck eine Antwort
-	 *
-	 * @param array $check Rückgabewerf von msbox::formcheck
-	 * @return string $answer Antwort
-	 */
-
-	private function _fcheck2answer(array $check)
-	{
-		$answer = "";
-		foreach ($check as $key => $value) {
-			if ($key != 'hp') {
-				switch ($value) {
-					case MSGBOX_FORMCHECK_NONE:
-						$answer .= ucfirst($key).": leer oder Standartwert - ".var_export($value, 1)."<br />\n";
-						break;
-					case MSGBOX_FORMCHECK_INVALID:
-						$answer .= ucfirst($key).": ung&uuml;ltig - ".var_export($value, 1)."<br />\n";
-						break;
-					case MSGBOX_FORMCHECK_OK:
-						break;
-					default:
-						throw new CMSException('Ungültiger Rückgabewert der msbox-Klasse', EXCEPTION_MODULE_CODE);
-
-				}
+				/*Löschung widerrufen */
+			} elseif (isset($this->_gpc['POST']['nein']) && $this->_gpc['POST']['nein'] == $linktext2) {
+				$title = "Löschung abgebrochen";
+				$msg = "Sie haben die Löschung der Nachricht abgebrochen";
+				
+				/*Falscher Link*/
+			} else {
+				$title = "Falscher Aufruf";
+				$msg = "Sie haben einen Link aufgerufen, der nicht g&uuml;ltig ist!!";
 			}
 
+			$this->_send_feedback($title, $msg, "?nav_id=$this->_nav_id", "Zum Gästebuch");
 		}
 
-		return $answer;
+	}
+
+
+
+	/**
+	 * Kontrolliert das Formular auf Standarteinträge und richtige Mailmuster.
+	 * Ist alles ordnungsgemäss, wird true zurückgegeben, sonst false. Bei false finden sich die Mängel
+	 * in $answer.
+	 *
+	 * @param array[reference] $answer Antwort
+	 * @return boolean Erfolg
+	 */
+	private function _check_form(&$answer)
+	{
+		$gbook_vars = $this->_configvars['Gbook'];
+		$error_vars =$this->_configvars['Error'];
+
+		/* Formularcheck vorbereiten */
+		$formcheck = new Formularcheck();
+
+		/*Formulardaten */
+		$val = array('title' => $this->_gpc['POST']['title'], 'content' => $this->_gpc['POST']['content'],
+		'name' =>  $this->_gpc['POST']['name'], 'email' => $this->_gpc['POST']['email']);
+		/* Standart-Strings*/
+		$std = array('title' => $gbook_vars['entry_title'], 'content' => $gbook_vars['entry_content'],
+		'name' => $gbook_vars['entry_name'],'email' => $gbook_vars['entry_email']);
+		/* Error-Strings */
+		$err = array('title' => $error_vars['title_error'], 'content' => $error_vars['content_error'],
+		'name' => $error_vars['name_error'],'email' => $error_vars['email_error']);
+
+
+		//$rtn_arr = $formcheck->field_check_arr($val, $std);
+		$rtn_arr = $this->_msbox->formCheck($val, $std);
+
+
+		//Fehlerarray durchgehen
+		foreach ($rtn_arr as $key => $value) {
+			if ($value == MSGBOX_FORMCHECK_NONE) {
+				$answer[] = $err[$key];
+			}
+
+			if ($value == MSGBOX_FORMCHECK_INVALID && $key = 'email') {
+				$answer[] = $error_vars['email_checkfailed'];
+			} elseif ($key = 'hp') {
+				$this->_gpc['POST'][$key] = $rtn_arr[$key];
+			}
+		}
+
+		if (empty($answer)) {
+			/*Wenn keine Fehler aufgetaucht sind, werden die Einträge zurückgegeben*/
+			$answer = array('content' => $this->_gpc['POST']['content'], 'name' => $this->_gpc['POST']['name'],
+			'time' => 'gbook_time', 'email' => $this->_gpc['POST']['email'], 'hp' => $this->_gpc['POST']['hp'],
+			'title' => $this->_gpc['POST']['title']);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 
 	/**
-	 * Gibt ein Array mit den Smarty-Entry-Variablen zurück. Die Werte werden je nach $mode
-	 * mit den Standartdaten belegt oder aus den Post-Formular-Daten geholt
-	 * Keys: entry_ID (höchstens bei post), entry_name, entry_content entry_email, entry_hp, entry_title;
+	 * Erstellt das Eintragsformular für Beiträge im Gästebuch. Wenn nötig werden der vorhergehende
+	 * Einträg (und die Kommentare dazu) ermittelt.
 	 *
-	 * @param string $mode 'std'|'post'
-	 * @return array Smarty-Array
+	 * @param boolean $first_form 1. Aufruf des Formulars?
+	 * @param string|null $error Errortexte
+	 * @param boolean $comment Ist der Beitrag ein Kommentar?
+	 * @param boolean $mysql_data Werden die Daten vom Mysql geholt.
 	 */
-
-	private function _getSmartyVars($mode = 'std')
+	private function _send_entryform($first_form = true, $error = null, $comment = false, $mysql_data = false)
 	{
-		global $gbook_entry_name, $gbook_entry_content, $gbook_entry_email, $gbook_entry_hp, $gbook_entry_title;
+		$data = array();
 
-		switch ($mode) {
-			//Standardwerte
-			case 'std':
-				$arr =  array('entry_name' => $gbook_entry_name, 'entry_content' => $gbook_entry_content,
-				'entry_email' => $gbook_entry_email, 'entry_hp' => $gbook_entry_hp, 'entry_title' => 									$gbook_entry_title);
-				break;
+		if ($comment == true) {
+			$this->_tplfile = "gbook_comment.tpl";
+			$data['gbook'] = $this->_msbox->getEntry($this->_gpc['GET']['id'], $this->_timeformat);
+			$data['gbook']['gbook_content'] = $this->_smilie->show_smilie($data['gbook']['gbook_content'], $this->_mysql);
 
-				//Post-Variablen
-			case 'post':
-
-				$entry = $this->_getPostVars();
-
-				if (array_key_exists('ID', $entry)) {
-					$arr['entry_ID'] = $entry['ID'];
-				}
-
-				$arr = array('entry_name' => $entry['name'], 'entry_content' => $entry['content'], 'entry_email' => $entry['email'], 'entry_hp' => $entry['hp'], 'entry_title' => $entry['title']);
-
-				break;
-
-			default:
-				throw new CMSException('Ungültiger Parameter', EXCEPTION_MODULE_CODE);
-				break;
+		} else {
+			$this->_tplfile = "gbook_entry.tpl";
 		}
 
-		return $arr;
-	}
+		/* Daten ermitteln */
+		if ($first_form == false) {
+			/* Daten aus Post-Array */
+			$data +=array('entry_title' => $this->_gpc['POST']['title'],
+			'entry_content' => $this->_gpc['POST']['content'], 'entry_name' => $this->_gpc['POST']['name'],
+			'entry_email' => $this->_gpc['POST']['email'], 'entry_hp' => $this->_gpc['POST']['hp']);
 
+		} elseif ($mysql_data == true) {
+			//Daten aus dem msbox-Objekt holen
+			$gbook_arr = $this->_msbox->getEntry($this->_gpc['GET']['id'], $this->_timeformat);
+
+			$data += array('entry_title' => $gbook_arr['gbook_title'], 'entry_name' => $gbook_arr['gbook_name'],
+			'entry_content' => $gbook_arr['gbook_content'], 'entry_email' => $gbook_arr['gbook_email'],
+			'entry_hp' => $gbook_arr['gbook_hp'], 'entry_time' => $gbook_arr['gbook_time']);
+
+		} else {
+			/* Standard-Einträge */
+			$gbook_vars = $this->_configvars['Gbook'];
+			$data += array('entry_title' => $gbook_vars['entry_title'],
+			'entry_content' => $gbook_vars['entry_content'], 'entry_name' => $gbook_vars['entry_name'],
+			'entry_email' => $gbook_vars['entry_email'],'entry_hp' => $gbook_vars['entry_hp']);
+		}
+
+		if ($comment == true) {
+			$data['entry_title'] = 'RE: '.$data['gbook']['gbook_title'];
+		}
+
+		/* Error-Einträge */
+		if (isset($error)) {
+			$data['dump_errors'] = true;
+			$data['error_title'] = 'Fehler im Formular';
+			$data['error_content'] = $error;
+		}
+
+		$data['smilies_list'] = $this->_smilie->create_smiliesarray($this->_mysql);
+
+		$this->_smarty->assign($data);
+
+	}
 
 	/**
-	 * Gibt die Post-Daten aus dem Formular zurück:
-	 * ID (wenn vorhanden), content, name, email, hp, title sind die Keys
+	 * Speichert die angegebenen Variablen in Smarty und speichert das Feedback-Template
 	 *
-	 * @return array $entry Daten
+	 * @param string $title Titel
+	 * @param string $content Inhalt
+	 * @param string $link Link
+	 * @param string $linktext Linktext
 	 */
-
-	private function _getPostVars()
+	private function _send_feedback($title, $content, $link, $linktext)
 	{
-		
-		$entry = array('content' => $this->_post_arr['content'], 'name' => $this->_post_arr['name'], 'email' => $this->_post_arr['email'], 'hp' => $this->_post_arr['hp'], 'title' => $this->_post_arr['title']);
-		
-		if (array_key_exists('ID', $this->_post_arr)) {
-			$entry['ID'] = $this->_post_arr['ID'];
-		}
+		$this->_smarty->assign("feedback_title", $title);
+		$this->_smarty->assign("feedback_content", $content);
+		$this->_smarty->assign("feedback_link", $link);
+		$this->_smarty->assign("feedback_linktext", $linktext);
 
-		return $entry;
+		$this->_tplfile = "feedback.tpl";
 	}
+
 
 }
-
 ?>

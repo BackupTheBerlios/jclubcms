@@ -15,6 +15,12 @@
 					<th>Kommentar</th>
 					<th>Erstellt</th>
 				</tr>
+				
+				<tr class="content_tab_content1">
+					<td colspan="3" style="text-align: center; font-size:17px; font-weight: bold">
+					{$cat_name}
+					</td>
+				</tr>
 				<!--Kategorien-->
 				<tr class="content_tab_content2">
 					<td colspan="3">Kategorien</td>

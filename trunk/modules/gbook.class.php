@@ -99,7 +99,7 @@ class Gbook implements Module {
 	public function action($gpc)
 	{
 		global $dir_smilies;
-
+		
 		//Daten laden
 		$this->_smarty->config_load('textes.de.conf', 'Gbook');
 		$this->_configvars['Gbook'] = $this->_smarty->get_config_vars();
@@ -110,7 +110,7 @@ class Gbook implements Module {
 
 		$this->_msbox = new MessageBoxes($this->_mysql, 'gbook', array('ID' => 'gbook_ID', 'ref_ID' => 'gbook_ref_ID',
 		'content' => 'gbook_content', 'name' => 'gbook_name', 'time' => 'gbook_time', 'email' => 'gbook_email',
-		/*'hp' => 'gbook_hp',*/ 'title' => 'gbook_title'));
+		'hp' => 'gbook_hp', 'title' => 'gbook_title'));
 
 		$this->_smilie = new Smilies($dir_smilies);
 
@@ -121,12 +121,6 @@ class Gbook implements Module {
 					break;
 				case 'comment':
 					$this->_comment();
-					break;
-				case 'edit':
-					$this->_edit();
-					break;
-				case 'del':
-					$this->_del();
 					break;
 				case 'view':
 					$this->_view(5);
@@ -141,6 +135,7 @@ class Gbook implements Module {
 		} else {
 			$this->_view(5);
 		}
+		
 		return true;
 	}
 
@@ -185,30 +180,26 @@ class Gbook implements Module {
 
 		//Inhalt parsen (Smilies) und an Smarty-Array übergeben
 		foreach ($gbook_array as $key => $value) {
-
-			//Nur gbook-Daten ohne $gbook_array['many'] abchecken
-			//if ($key !== 'many') {
-			
-			$value['gbook_content'] = $this->_smilie->show_smilie($value['gbook_content'], $this->_mysql);
-
-			$gbook_array[$key] = array('ID' => $value['gbook_ID'], 'title' => $value['gbook_title'],
-			'content' => $value['gbook_content'], 'name' => $value['gbook_name'], 'time' => $value['gbook_time'],
-			'email' => $value['gbook_email'], 'hp' => $value['gbook_hp'], 'number_of_comments' => $value['number_of_comments']);
+	
+			$gbook_array[$key] = array('ID' => $value['gbook_ID'], 'title' => htmlentities($value['gbook_title']),
+			'content' => $this->_smilie->show_smilie(htmlentities($value['gbook_content']), $this->_mysql), 
+			'name' => htmlentities($value['gbook_name']), 
+			'time' => $value['gbook_time'], 'email' => htmlentities($value['gbook_email']), 
+			'hp' => htmlentities($value['gbook_hp']), 'number_of_comments' => $value['number_of_comments']);
 
 			$count = 0;
 			//Kommentare durchackern
-			foreach ($value['comments'] as $ckey => $cvalue) {
+			foreach ($value['comments'] as $ckey => $cvalue) {			
 
-				$cvalue['gbook_content'] = $this->_smilie->show_smilie($cvalue['gbook_content'], $this->_mysql);
-
-				$gbook_array[$key]['comments'][$ckey] = array('ID' => $cvalue['gbook_ID'], 'title' => $cvalue['gbook_title'],
-				'content' => $cvalue['gbook_content'], 'name' => $cvalue['gbook_name'], 'time' => $cvalue['gbook_time'],
-				'email' => $cvalue['gbook_email'], 'hp' => $cvalue['gbook_hp']);
+				$gbook_array[$key]['comments'][$ckey] = array('ID' => $cvalue['gbook_ID'], 
+				'title' => htmlentities($cvalue['gbook_title']), 
+				'content' => $this->_smilie->show_smilie(htmlentities($cvalue['gbook_content']), $this->_mysql), 
+				'name' => htmlentities($cvalue['gbook_name']), 'time' => $cvalue['gbook_time'],
+				'email' => htmlentities($cvalue['gbook_email']), 'hp' => htmlentities($cvalue['gbook_hp']));
 
 				$count++;
 
 			}
-			//}
 		}
 		
 		$this->_smarty->assign('gbook', $gbook_array);
@@ -245,13 +236,13 @@ class Gbook implements Module {
 				$this->_msbox->addEntry($answer);
 
 
-				$this->_send_feedback($gbook_vars['allright_title'], $gbook_vars['allright_content'], "?nav_id=$navigation_id", $mail_vars['allright_link']);
+				$this->_send_feedback($gbook_vars['allright_title'], $gbook_vars['allright_content'], "?nav_id=$navigation_id", $gbook_vars['allright_link']);
 
 
 
 			} else {
 				/* Fehler im Formular */
-				$this->_send_entryform(false, $answer);
+				$this->_send_entryform(false, implode("<br />\n", $answer));
 			}
 
 
@@ -305,7 +296,7 @@ class Gbook implements Module {
 
 			} else {
 				/* Fehler im Formular */
-				$this->_send_entryform(false,$answer,true);
+				$this->_send_entryform(false,implode("<br />\n", $answer),true);
 			}
 
 
@@ -379,8 +370,8 @@ class Gbook implements Module {
 
 			if ($value == MSGBOX_FORMCHECK_INVALID && $key = 'email') {
 				$answer[] = $error_vars['email_checkfailed'];
-			} elseif ($value == MSGBOX_FORMCHECK_INVALID && $key = 'hp') {
-				;
+			} elseif ($key = 'hp') {
+				$this->_gpc['POST'][$key] = $rtn_arr[$key];
 			}
 		}
 
@@ -446,7 +437,7 @@ class Gbook implements Module {
 		if (isset($error)) {
 			$data['dump_errors'] = true;
 			$data['error_title'] = 'Fehler im Formular';
-			$data['error_contents'] = $error;
+			$data['error_content'] = $error;
 		}
 
 		$hash = $this->_captcha->get_pic(4);
@@ -471,8 +462,8 @@ class Gbook implements Module {
 	{
 		$this->_smarty->assign("feedback_title", $title);
 		$this->_smarty->assign("feedback_content", $content);
-		$this->_smarty->assign("link", $link);
-		$this->_smarty->assign("link_text", $linktext);
+		$this->_smarty->assign("feedback_link", $link);
+		$this->_smarty->assign("feedback_linktext", $linktext);
 
 		$this->_tplfile = "feedback.tpl";
 	}

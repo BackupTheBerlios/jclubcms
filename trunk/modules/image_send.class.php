@@ -177,11 +177,11 @@ class Image_send implements Module
 		$newWidth = $maxWidth;
 		$newHeight = floor($verhaeltnis * $newWidth);		//Abrunden
 
-		//Wenn die Hoehe noch zu gross ist, wird die max. H�he bestimmt und neue Breite berechnet
+		//Wenn die Hoehe noch zu gross ist, wird die max. Höhe bestimmt und neue Breite berechnet
 		if($newHeight > $maxHeight)
 		{
-			$newWidth = $image_maxheight;
-			$newHeight = floor((1/$verhaeltnis) * $newWidth);	//Abrunden
+			$newHeight = $maxHeight;
+			$newWidth = floor((1/$verhaeltnis) * $newHeight);	//Abrunden
 		}
 
 		return array('width' => $newWidth, 'height' => $newHeight );

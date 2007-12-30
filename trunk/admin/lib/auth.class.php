@@ -73,7 +73,7 @@ class Auth
 
 		
 		global $auth_error_noentry, $auth_error_failname, $auth_error_failpw, $auth_forward_linktext, $auth_forward_successlogin, $auth_forward_title;
-		
+
 		//Login-Formular gesendet?
 		if (isset($post_array['login']) && $post_array['login'] == "Anmelden") {
 			$login_data = $this->_getlogindata($post_array);

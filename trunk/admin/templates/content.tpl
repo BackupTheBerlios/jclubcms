@@ -5,6 +5,9 @@
 	{foreach item=content  from=$contents}
 		<a href="#{$content.content_ID}">{$content.content_title}</a>&nbsp;&nbsp;&nbsp;
 	{/foreach}
+	{foreach item=nav_item  from=$nav}
+		<a href="#{$nav_item._menu_page}" style="color:green">{$nav_item.menu_name}</a>&nbsp;&nbsp;&nbsp;
+	{/foreach}
 	{foreach item=content  from=$contents}
 	<a name="{$content.content_ID}"></a>
 		<table cellpadding="0" cellspacing="0" align="center" class="content_tab" style="max-width: 80%;min-width: 60%;font-size: 11px;">
@@ -13,7 +16,8 @@
 				{$content.content_title}
 				</td>
 				<td class="content_tab_header" colspan="1">
-				 <img src="templates/style/icons/date.gif" />{$content.content_time}
+				 <img src="templates/style/icons/date.gif" />
+				 {$content.content_time}
 				</td>
 				</td>
 			</tr>

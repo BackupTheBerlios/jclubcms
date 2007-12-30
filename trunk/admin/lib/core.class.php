@@ -237,6 +237,8 @@ class Core
 		unset($_POST);
 		unset($_COOKIE);
 		unset($_REQUEST);
+		
+		
 
 	}
 
@@ -277,6 +279,8 @@ class Core
 		//echo "\$start_time $start_time\n";
 		$this->_tplfile = 'index.tpl';
 
+		
+		
 		if ($this->_is_admin == true) {
 			$table = 'admin_menu';
 			$shortlink = true;
@@ -286,13 +290,17 @@ class Core
 		}
 
 		$this->_loadNav($shortlink);
-		$this->_check_spec_action();
+		//$this->_check_spec_action();
 
 		$this->_mysql->query("SELECT `menu_pagetyp`, `menu_page` FROM `$table` WHERE `menu_ID`= '{$this->_nav_id}'");
 		$data = $this->_mysql->fetcharray("assoc");
 
 		$page_id = (int)$data['menu_page'];
 
+		// erste Variablen abspeichern, damit sie in den Modulen aufgerufen werden können
+		$this->_smarty->assign($this->_smarty_array);
+		$this->_smarty_array = array();
+		
 		if ($data['menu_pagetyp'] == 'mod') {
 			$this->_loadModule($page_id);
 
@@ -452,7 +460,7 @@ class Core
 	/**
 	 * Prüft auf spezielle Aktionen durch
 	 *
-	 */
+	 
 	private function _check_spec_action()
 	{
 		//echo "\n".__METHOD__." nav_id $this->_nav_id\n";
@@ -471,7 +479,7 @@ class Core
 		$httpumlaut = array('&auml;', '&ouml;', '&uuml;', '&Auml;','&Ouml;', '&Uuml;');
 		str_replace($umlaut, $httpumlaut, $string);
 		return $string;
-	}
+	}*/
 
 
 	//	private function _exe_reserved_action()

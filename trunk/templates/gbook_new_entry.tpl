@@ -12,17 +12,17 @@
 	{if $dump_errors}
 	<table class="content_tab" align="center">
 		<tr>
-			<td class="formailer_header" style="background-color: #EC6442">{$error_title|default:"Einige Daten sind ungueltig"}</td>
+			<td class="formailer_header" style="background-color: #EC6442">{$error_title|default:"Einige Daten sind ung&uuml;ltig"}</td>
 		</tr>
 		<tr>
-			<td class="formailer_txt" style="background-color: #ED4B23">{$error_content}</td>
+			<td class="formailer_txt" style="background-color: #ED4B23; color: #000000">{$error_content}</td>
 		</tr>
 	</table>
 	{/if}
     <form name="newentry" method="post" action="">
-      <input type="hidden" name="sessionscode" value="{$sessionscode}" />
+	
       <table cellpadding="0" cellspacing="0" align="center" class="content_tab">
-        <tr>
+        <tr><input type="text" name="sessioncode" value="{$sessioncode}" />
           <td class="formailer_header" colspan="2"><img src="templates/style/icons/pencil.gif" /><input class="formailer_header_input" name="title" type="text" onclick="select()" value="{$entry_title}" /></td>
         </tr>
         <tr>

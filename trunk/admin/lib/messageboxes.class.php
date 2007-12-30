@@ -162,8 +162,6 @@ class Messageboxes {
 		$sql['val'] .= ")";
 		$query = join("", $sql);
 
-		/** MYSQL-ERROR noch abfragen!!! **/
-		//** Update: Nein, Exception regelt das **/
 		$this->_mysql->query($query);
 		return true;
 	}
@@ -246,8 +244,7 @@ class Messageboxes {
 		
 		$sql = "UPDATE `$this->_tablename` SET  ";
 		$num = count($tabledata);
-		echo __METHOD__." \$num $num<br />\n";
-
+		
 		$i = 1;
 		foreach ($tabledata as $key => $value) {
 			//ID wird in WHERE-Klausel verwendet
@@ -403,7 +400,7 @@ class Messageboxes {
 				if ($condition != "") {//ref_ID ist also gesetzt.
 					
 					foreach ($value['comments'] as $key2 => $cvalue) {
-						$value['comments'][$key2]['time'] = $this->_formatTime($cvalue[$this->_tablestruct['time']], $timeformat);
+						$value['comments'][$key2][$this->_tablestruct['time']] = $this->_formatTime($cvalue[$this->_tablestruct['time']], $timeformat);
 
 					}
 				}

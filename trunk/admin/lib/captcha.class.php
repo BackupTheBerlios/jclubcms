@@ -71,6 +71,7 @@ class Captcha
 	{
 		$this->_session_key = $session_key;
 		$this->_temp_dir    = $temp_dir;
+		
 		if(isset($data_dir) && !empty($data_dir)) {
 			$this->_data_dir = $data_dir;
 		} else {
@@ -130,7 +131,6 @@ class Captcha
 		imagejpeg( $img, $location, $this->_jpg_quality );
 		flush();
 		imagedestroy( $img );
-
 		return true;
 	}
 
@@ -181,13 +181,13 @@ class Captcha
 	{
 		$fh = fopen($this->_temp_dir.'/'.'cap_'.$this->_session_key.'.txt', "r" );
 		$hash = fgets( $fh );
-
+		fclose($fh);
+		
 		if (md5(strtolower($char_seq)) == $hash) {
-			/* Einmal richtig -> Datei löschen */
-			echo "unlink($this->_temp_dir.'/'.'cap_'.$this->_session_key.'.txt')";
-			if (!unlink($this->_temp_dir.'/'.'cap_'.$this->_session_key.'.txt')) {
-				throw new CMSException('Datei konnte nicht gelöscht werden', EXCEPTION_LIBARY_CODE, 'Sicherheits-Hinweis');
-			}
+			/* Damit das Passwort ungültig wird, überschreiben wir die Datei */
+			$fh = fopen($this->_temp_dir.'/'.'cap_'.$this->_session_key.'.txt', "r+" );
+			fputs($fh, "!!No more access!!");
+			fclose($fh);
 			return true;
 		} else {
 			return false;

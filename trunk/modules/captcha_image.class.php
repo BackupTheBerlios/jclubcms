@@ -111,7 +111,7 @@ class Captcha_image implements Module
 		{
 			if ( is_file( $this->_tmp_dir_path . $entry ) )
 			{
-				if ( mktime() - filemtime( $this->_tmp_dir_path . $entry ) > $this->_captcha_expires_after )
+				if ( time() - filemtime( $this->_tmp_dir_path . $entry ) > $this->_captcha_expires_after )
 				{
 					unlink( $this->_tmp_dir_path . $entry );
 				}

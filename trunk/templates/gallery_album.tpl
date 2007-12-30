@@ -11,7 +11,7 @@
 	<tr class="content_tab_header">
 		<td>{foreach item=root_item from=$root}
 		&gt; <a href="?nav_id=40&cat={$root_item.ID}">{$root_item.name}</a>
-		{/foreach}</td>
+		{/foreach} </td>
 		<td><a href="?nav_id={$local_link}&cat={$top_ID}" ><img src="templates/style/icons/gallery.gif" />zur Gallery-&Uuml;bersicht</a></td>
 		<td align="right">{$number} Bilder</td>
 	</tr>
@@ -23,7 +23,7 @@
       <tr class="content_tab_content1">
         <td colspan="3" align="center">
           {foreach item=page from=$pages}
-            <a href="{$page.link}&gallery={$gal_ID}">[{$page.page}]</a>
+            {if $page.link != ""}<a href="{$page.link}&gal={$gal_ID}">[{$page.page}]</a>{else}[{$page.page}]{/if}
           {/foreach}
         </td>
       </tr>
@@ -48,8 +48,8 @@
 	</tr>
 	<tr class="content_tab_content1">
         <td colspan="3" align="center">
-          {foreach item=page from=$pages}
-            <a href="{$page.link}&gallery={$gal_ID}">[{$page.page}]</a>
+         {foreach item=page from=$pages}
+            {if $page.link != ""}<a href="{$page.link}&gal={$gal_ID}">[{$page.page}]</a>{else}[{$page.page}]{/if}
           {/foreach}
         </td>
       </tr>
