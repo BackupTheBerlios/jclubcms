@@ -7,7 +7,10 @@
 	{/foreach}
 	{foreach item=nav_item  from=$nav}
 		<a href="#{$nav_item._menu_page}" style="color:green">{$nav_item.menu_name}</a>&nbsp;&nbsp;&nbsp;
-	{/foreach}
+	{/foreach}<br />
+	<div align="center">{foreach item=page from=$pages}
+			{if $page.link != ""}<a href="{$page.link}">[{$page.page}]</a>{else}[{$page.page}]{/if}
+	{/foreach}</div>
 	{foreach item=content  from=$contents}
 	<a name="{$content.content_ID}"></a>
 		<table cellpadding="0" cellspacing="0" align="center" class="content_tab" style="max-width: 80%;min-width: 60%;font-size: 11px;">

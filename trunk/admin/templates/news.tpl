@@ -36,11 +36,11 @@
 					{if $news.hp neq ""}<br /><a href="http://{$news.hp}" target="_blank"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
 				</td>
 				<td class="content_tab_content2" style="text-align:right">
-					<a href="?nav_id={$local_link}&amp;action=comment&amp;id={$news.news_ID}&amp;{$SID}"><img src="templates/style/icons/pencil.gif" />Kommentieren</a>
+					<a href="?nav_id={$local_link}&amp;action=comment&amp;ref_ID={$news.news_ID}&amp;{$SID}"><img src="templates/style/icons/pencil.gif" />Kommentieren</a>
 					<br />
-					<a href="?nav_id={$local_link}&amp;action=edit&amp;id={$news.news_ID}&amp;{$SID}"><img src="templates/style/icons/pencil.gif" />Editieren</a>
+					<a href="?nav_id={$local_link}&amp;action=edit&amp;ref_ID={$news.news_ID}&amp;{$SID}"><img src="templates/style/icons/pencil.gif" />Editieren</a>
 					<br />
-					<a href="?nav_id={$local_link}&amp;action=del&amp;id={$news.news_ID}&amp;{$SID}"><img src="templates/style/icons/del.gif" />L&ouml;schen</a>
+					<a href="?nav_id={$local_link}&amp;action=del&amp;ref_ID={$news.news_ID}&amp;{$SID}"><img src="templates/style/icons/del.gif" />L&ouml;schen</a>
 				</td>
 			</tr>
 			{* Innere Schlaufe für das Auslesen der Kommentare *}
@@ -59,9 +59,9 @@
 					{/if}
 				</td>
 				<td class="content_tab_content2" style="text-align:right">
-					<a href="?nav_id={$local_link}&amp;action=edit&amp;id={$comment.news_ID}&amp;{$SID}"><img src="templates/style/icons/pencil.gif" />Editieren</a>
+					<a href="?nav_id={$local_link}&amp;action=edit&amp;ref_ID={$comment.news_ID}&amp;{$SID}"><img src="templates/style/icons/pencil.gif" />Editieren</a>
 					<br />
-					<a href="?nav_id={$local_link}&amp;action=del&amp;id={$comment.news_ID}&amp;{$SID}"><img src="templates/style/icons/del.gif" />L&ouml;schen</a>
+					<a href="?nav_id={$local_link}&amp;action=del&amp;ref_ID={$comment.news_ID}&amp;{$SID}"><img src="templates/style/icons/del.gif" />L&ouml;schen</a>
 				</td>
 			</tr>
 			{/foreach}

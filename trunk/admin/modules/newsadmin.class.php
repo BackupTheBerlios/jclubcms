@@ -270,7 +270,7 @@ class Newsadmin implements Module
 			if ($answer == "") {
 				$entry['hp'] = $check['hp'];
 				$entry['time'] = "NOW()";
-				$this->_msbox->commentEntry((int)$this->_gpc['GET']['id'], $entry);
+				$this->_msbox->commentEntry((int)$this->_gpc['GET']['ref_ID'], $entry);
 				$answer = "Eintrag wurde erfolgreich erstellt";
 				$title = "Eintrag erstellt";
 				$link = Page::getUriStatic($this->_gpc['GET'], array('action'));
@@ -285,9 +285,9 @@ class Newsadmin implements Module
 				//Falsche Eintraege
 			} else {
 
-				$news = $this->_msbox->getEntry($this->_gpc['GET']['id'], $this->_timeformat);
+				$news = $this->_msbox->getEntry($this->_gpc['GET']['ref_ID'], $this->_timeformat);
 				$news['news_content'] = $this->_smilie->show_smilie($news['news_content'], $this->_mysql);
-				$news['ID'] = $this->_gpc['GET']['id'];
+				$news['ID'] = $this->_gpc['GET']['ref_ID'];
 
 				$this->_tplfile ='news_comment.tpl';
 
@@ -309,9 +309,9 @@ class Newsadmin implements Module
 
 			//1. Aufruf des Formulars
 		} else {
-			$news = $this->_msbox->getEntry($this->_gpc['GET']['id'], $this->_timeformat);
+			$news = $this->_msbox->getEntry($this->_gpc['GET']['ref_ID'], $this->_timeformat);
 			$news['news_content'] = $this->_smilie->show_smilie($news['news_content'], $this->_mysql);
-			$news['ID'] = $this->_gpc['GET']['id'];
+			$news['ID'] = $this->_gpc['GET']['ref_ID'];
 
 			$this->_tplfile ='news_comment.tpl';
 			
@@ -378,7 +378,7 @@ class Newsadmin implements Module
 				//Action an Template mitteilen, zur Anpassung des Formulars
 
 
-				$news_arr = $this->_msbox->getEntry($this->_gpc['GET']['id'], $this->_timeformat);
+				$news_arr = $this->_msbox->getEntry($this->_gpc['GET']['ref_ID'], $this->_timeformat);
 
 				$smarty_arr = $this->_getSmartyVars('post');
 				$smarty_arr['entry_time'] = $news_arr['time'];
@@ -407,10 +407,10 @@ class Newsadmin implements Module
 			$this->_smarty->assign('action', $this->_gpc['GET']['action']);
 
 			//Daten aus dem msbox-Objekt holen
-			$news_arr = $this->_msbox->getEntry($this->_gpc['GET']['id'], $this->_timeformat);
+			$news_arr = $this->_msbox->getEntry($this->_gpc['GET']['ref_ID'], $this->_timeformat);
 
 			//Template-Daten erstellen
-			$smarty_arr = array('entry_ID' => $this->_gpc['GET']['id'], 'entry_name' => $news_arr['news_name'],
+			$smarty_arr = array('entry_ID' => $this->_gpc['GET']['ref_ID'], 'entry_name' => $news_arr['news_name'],
 			'entry_content' => $news_arr['news_content'], 'entry_email' => $news_arr['news_email'],
 			'entry_hp' => $news_arr['news_hp'], 'entry_title' => $news_arr['news_title'], 'entry_time' => $news_arr['time']);
 
@@ -448,8 +448,8 @@ class Newsadmin implements Module
 			$link = Page::getUriStatic($this->_gpc['GET'], array('action'));
 
 			//Aufruf des Loeschvorgangs
-		} elseif (isset($this->_gpc['GET']['id'])) {
-			$id = (int)$this->_gpc['GET']['id'];
+		} elseif (isset($this->_gpc['GET']['ref_ID'])) {
+			$id = (int)$this->_gpc['GET']['ref_ID'];
 			$title = "<b>Loeschung</b> bestaetigen";
 			$msg = "<form>\n\t<fieldset>\n\t<legend>Nachricht</legend>\n<br />\n";
 			$nr = $this->_msbox->getEntry($id);
@@ -505,7 +505,7 @@ class Newsadmin implements Module
 
 		if ($data == null) {
 			$data = $this->_getPostVars();
-			$data['ID'] = $this->_gpc['GET']['id'];
+			$data['ID'] = $this->_gpc['GET']['ref_ID'];
 		}
 
 		if ($std == null) {
@@ -608,6 +608,162 @@ class Newsadmin implements Module
 		}
 
 		return $entry;
+	}
+	
+	/**
+	 * Kontrolliert das Formular auf Standarteinträge und richtige Mailmuster.
+	 * Ist alles ordnungsgemäss, wird true zurückgegeben, sonst false. Bei false finden sich die Mängel
+	 * in $answer.
+	 *
+	 * @param array[reference] $answer Antwort
+	 * @param array $blacklist Array der Schlüssel, die nicht geprüft werden sollen
+	 * @return boolean Erfolg
+	 */
+	private function _check_form(&$answer, $blacklist = null)
+	{
+		$gbook_vars = $this->_configvars['Gbook'];
+		$error_vars =$this->_configvars['Error'];
+
+		/* Formularcheck vorbereiten */
+		$formcheck = new Formularcheck();
+
+		/*Formulardaten */
+		$val = array('title' => $this->_gpc['POST']['title'], 'content' => $this->_gpc['POST']['content'],
+		'name' =>  $this->_gpc['POST']['name'], 'email' => $this->_gpc['POST']['email']);
+		/* Standart-Strings*/
+		$std = array('title' => $gbook_vars['entry_title'], 'content' => $gbook_vars['entry_content'],
+		'name' => $gbook_vars['entry_name'],'email' => $gbook_vars['entry_email']);
+		/* Error-Strings */
+		$err = array('title' => $error_vars['title_error'], 'content' => $error_vars['content_error'],
+		'name' => $error_vars['name_error'],'email' => $error_vars['email_error']);
+
+		/* Unerwünschte Schlüssel nicht kontrollieren und speichern */
+		if (!empty($blacklist) && is_array($blacklist)) {
+			foreach ($blacklist as $value) {
+				unset($val[$value], $std[$value], $err[$value]);
+			}
+		}
+		
+		
+		/*$rtn_arr = $formcheck->field_check_arr($val, $std)*/
+		$rtn_arr = $this->_msbox->formCheck($val, $std);
+
+
+		/* Fehlerarray durchgehen */
+		foreach ($rtn_arr as $key => $value) {
+			if ($value == MSGBOX_FORMCHECK_NONE) {
+				$answer[] = $err[$key];
+			}
+
+			if ($value == MSGBOX_FORMCHECK_INVALID && $key = 'email') {
+				$answer[] = $error_vars['email_checkfailed'];
+			} elseif ($key == 'hp') {
+				$this->_gpc['POST'][$key] = $rtn_arr[$key];
+			}
+		}
+
+		if (empty($answer)) {
+			/*Wenn keine Fehler aufgetaucht sind, werden die Einträge zurückgegeben*/
+			$answer = array('content' => $this->_gpc['POST']['content'], 'name' => $this->_gpc['POST']['name'],
+			'time' => 'gbook_time', 'email' => $this->_gpc['POST']['email'], 'hp' => $this->_gpc['POST']['hp'],
+			'title' => $this->_gpc['POST']['title']);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+
+	/**
+	 * Erstellt das Eintragsformular für Beiträge im Gästebuch. Wenn nötig werden der vorhergehende
+	 * Einträg (und die Kommentare dazu) ermittelt.
+	 *
+	 * @param boolean $first_form 1. Aufruf des Formulars?
+	 * @param string|null $error Errortexte
+	 * @param boolean $comment Ist der Beitrag ein Kommentar?
+	 * @param boolean $mysql_data Werden die Daten vom Mysql geholt.
+	 */
+	private function _send_entryform($first_form = true, $error = null, $comment = false)
+	{
+		$data = array();
+
+		/* Daten ermitteln */
+		if ($first_form == false) {
+			/* Daten aus Post-Array */
+			$data +=array('entry_title' => stripslashes($this->_gpc['POST']['title']),
+			'entry_content' => stripslashes($this->_gpc['POST']['content']), 'entry_name' => stripslashes($this->_gpc['POST']['name']),
+			'entry_email' => stripslashes($this->_gpc['POST']['email']), 'entry_hp' => stripslashes($this->_gpc['POST']['hp']),
+			'sessioncode' => $this->_sessioncode);
+		} else {
+			/* Standard-Einträge */
+			$gbook_vars = $this->_configvars['Gbook'];
+			$data += array('entry_title' => $gbook_vars['entry_title'],
+			'entry_content' => $gbook_vars['entry_content'], 'entry_name' => $gbook_vars['entry_name'],
+			'entry_email' => $gbook_vars['entry_email'],'entry_hp' => $gbook_vars['entry_hp'],
+			'sessioncode' => $this->_sessioncode);
+		}
+		
+		/* Bei Kommentaren ist der vorhergehende Eintrag zu ermitteln */
+		if ($comment == true) {		
+
+			$this->_tplfile = "gbook_new_comment.tpl";
+			
+			$data['gbook'] = $this->_msbox->getEntry($this->_gpc['GET']['ref_ID'], $this->_timeformat);
+			
+			$data['gbook']['gbook_title'] = htmlentities($data['gbook']['gbook_title']);
+			$data['gbook']['gbook_content'] = htmlentities($data['gbook']['gbook_content']);
+			$data['gbook']['gbook_email'] = htmlentities($data['gbook']['gbook_email']);
+			$data['gbook']['gbook_hp'] = htmlentities($data['gbook']['gbook_hp']);
+			
+			$data['gbook']['gbook_content'] = $this->_smilie->show_smilie($data['gbook']['gbook_content'], $this->_mysql);
+			
+			/* HTML-Zeichen umwandeln */
+			foreach($data['gbook']['comments'] as $key => $value) {
+				
+				$data['gbook']['comments'][$key]['gbook_content'] = htmlentities($value['gbook_content']);
+				$data['gbook']['comments'][$key]['gbook_email'] = htmlentities($value['gbook_email']);
+				$data['gbook']['comments'][$key]['gbook_hp'] = htmlentities($value['gbook_hp']);
+				
+				$data['gbook']['comments'][$key]['gbook_content'] =  $this->_smilie->show_smilie($data['gbook']['comments'][$key]['gbook_content'], $this->_mysql); 
+			}
+			
+			/*Anzeigetitle des Editors festlegen */
+			$data['entry_title'] = 'RE: '.$data['gbook']['gbook_title'];
+
+		} else {
+			/* Keine Kommentareintrag -> Normaler Editor */
+			$this->_tplfile = "gbook_new_entry.tpl";
+		}
+
+		/* Error-Einträge */
+		if (isset($error)) {
+			$data['dump_errors'] = true;
+			$data['error_title'] = 'Fehler im Formular';
+			$data['error_content'] = $error;
+		}
+
+		$data['smilies_list'] = $this->_smilie->create_smiliesarray($this->_mysql);
+
+		$this->_smarty->assign($data);
+
+
+	}
+	/**
+	 * Speichert die angegebenen Variablen in Smarty und speichert das Feedback-Template
+	 *
+	 * @param string $title Titel
+	 * @param string $content Inhalt
+	 * @param string $link Link
+	 * @param string $linktext Linktext
+	 */
+	private function _send_feedback($title, $content, $link, $linktext)
+	{
+		$this->_smarty->assign("feedback_title", $title);
+		$this->_smarty->assign("feedback_content", $content);
+		$this->_smarty->assign("feedback_link", $link);
+		$this->_smarty->assign("feedback_linktext", $linktext);
+
+		$this->_tplfile = "feedback.tpl";
 	}
 }
 

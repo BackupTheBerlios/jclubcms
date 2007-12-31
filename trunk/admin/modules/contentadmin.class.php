@@ -125,10 +125,8 @@ class Contentadmin implements Module
 		$start = ($page - 1)*$number;
 
 		$this->_mysql->query("SELECT `content_ID` , `content_title` , `content_text` , 
-		`content_time` , `content_archiv` , `menu_ID` 
-		FROM `content` , `menu` 
-		WHERE `menu`.`menu_pagetyp` = 'pag' AND `menu`.`menu_page` = `content`.`content_ID`
-		ORDER BY `menu`.`menu_topid` 
+		`content_time`
+		FROM `content` 
 		LIMIT $start, $number");
 		
 		$this->_mysql->saverecords('assoc');

@@ -298,7 +298,7 @@ class Messageboxes {
 		$msg_array = $this->_mysql->fetcharray('assoc');
 
 		/*Kommentare*/
-		$this->_mysql->query("SELECT * FROM {$this->_tablename} WHERE `{$this->_tablestruct['ref_ID']}` = '$id' ORDER BY `{$this->_tablestruct['time']}` DESC");
+		$this->_mysql->query("SELECT * FROM {$this->_tablename} WHERE `{$this->_tablestruct['ref_ID']}` = '$id' ORDER BY `{$this->_tablestruct['time']}` ASC");
 		$this->_mysql->saverecords('assoc');
 		$msg_array['comments'] = $this->_mysql->get_records();
 		
@@ -325,7 +325,8 @@ class Messageboxes {
 	 *
 	 * @param int $entries_pp Eintraege pro Seite
 	 * @param int $page Seite (startet bei 1)
-	 * @param string $order Reihenfolge DESC|ASC
+	 * @param string $order Reihenfolge der Haupteinträge DESC|ASC
+	 * @param string $corder Reihenfolge der Kommentare DESC|ASC
 	 * @param string $timeformat Zeitformat nach Mysql
 	 * @return array Eintraege, bei Fehler false
 	 */
@@ -360,17 +361,18 @@ class Messageboxes {
 
 		}
 
-
+		/* Startpunkt der Mysql-Einträge im Query */
 		$start = ($page-1)*$entries_pp;
 
-		//Bedingungen fuer top-news
+		/* Bedingungen für Haupteinträge */
 		if (isset($this->_tablestruct['ref_ID'])) {
 			$condition = "WHERE `{$this->_tablestruct['ref_ID']}` = '0'";
 		} else {
+			/* Keine Haupteinträge -> Keine Kommentare. Alle Einträge werden gleich behandelt*/
 			$condition = "";
 		}
 		
-		//top-nachrichten auslesen
+		/* Haupteinträge auslesen */
 		$sql = "SELECT * FROM `{$this->_tablename}` $condition {$strorder['norm']} LIMIT $start, $entries_pp";
 		$this->_mysql->query($sql);
 		$this->_mysql->saverecords('assoc');

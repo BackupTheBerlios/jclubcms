@@ -237,8 +237,8 @@ class Core
 		unset($_POST);
 		unset($_COOKIE);
 		unset($_REQUEST);
-		
-		
+
+
 
 	}
 
@@ -279,18 +279,17 @@ class Core
 		//echo "\$start_time $start_time\n";
 		$this->_tplfile = 'index.tpl';
 
-		
-		
+
+
 		if ($this->_is_admin == true) {
 			$table = 'admin_menu';
 			$shortlink = true;
 		} else {
 			$table = 'menu';
-			$shortlink = true;
+			$shortlink = false;
 		}
 
 		$this->_loadNav($shortlink);
-		//$this->_check_spec_action();
 
 		$this->_mysql->query("SELECT `menu_pagetyp`, `menu_page` FROM `$table` WHERE `menu_ID`= '{$this->_nav_id}'");
 		$data = $this->_mysql->fetcharray("assoc");
@@ -300,7 +299,7 @@ class Core
 		// erste Variablen abspeichern, damit sie in den Modulen aufgerufen werden können
 		$this->_smarty->assign($this->_smarty_array);
 		$this->_smarty_array = array();
-		
+
 		if ($data['menu_pagetyp'] == 'mod') {
 			$this->_loadModule($page_id);
 
@@ -334,13 +333,30 @@ class Core
 		} else {
 			$adminmenu = false;
 		}
-	
+
 		/*Menu-Array ermitteln und in Smarty-Array speichertn, um später zu assignen (@link initPage() ) */
 		$nav_array = $this->_page->get_menu_array($this->_gpc['GET'], $shortlinks, $adminmenu);
+
+		
+		/* Spezielle Zeichen zu HTML-Zeichen konvertieren */
+		if (!empty($nav_array['topnav']) && is_array($nav_array['topnav'])) {
+			foreach($nav_array['topnav'] as $key => $value) {
+				$nav_array['topnav'][$key]['menu_name'] = htmlentities($value['menu_name']);
+			}
+		}
+		
+		if (!empty($nav_array['subnav']) && is_array($nav_array['subnav'])) {
+			foreach($nav_array['subnav'] as $key => $value) {
+				$nav_array['subnav'][$key]['menu_name'] = htmlentities($value['menu_name']);
+			}
+		}
+
+
+
 		$this->_smarty_array['topnav'] = $nav_array['topnav'];
 		$this->_smarty_array['subnav'] = $nav_array['subnav'];
 		$this->_smarty_array['local_link'] = ($this->_nav_id = $nav_array['nav_id']);
-		
+
 		$this->_smarty_array['param']['nav_id'] = "nav_id";
 
 
@@ -430,7 +446,7 @@ class Core
 		//Wenn das Modul kein Template zurueckgibt -> Beenden
 		if ($data['modules_template_support'] == 'no') {
 			exit;
-		}		
+		}
 
 		$this->_smarty_array['file'] = $module->gettplfile();
 

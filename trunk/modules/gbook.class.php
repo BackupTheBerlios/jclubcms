@@ -278,7 +278,7 @@ class Gbook implements Module {
 
 			/* Formular kontrollieren */
 			$answer = array();
-			$success = $this->_check_form($answer);
+			$success = $this->_check_form($answer, array('title'));
 
 			if ($success == true) {
 				/*Eintrag machen*/
@@ -337,9 +337,10 @@ class Gbook implements Module {
 	 * in $answer.
 	 *
 	 * @param array[reference] $answer Antwort
+	 * @param array $blacklist Array der Schlüssel, die nicht geprüft werden sollen
 	 * @return boolean Erfolg
 	 */
-	private function _check_form(&$answer)
+	private function _check_form(&$answer, $blacklist = null)
 	{
 		$gbook_vars = $this->_configvars['Gbook'];
 		$error_vars =$this->_configvars['Error'];
@@ -357,12 +358,19 @@ class Gbook implements Module {
 		$err = array('title' => $error_vars['title_error'], 'content' => $error_vars['content_error'],
 		'name' => $error_vars['name_error'],'email' => $error_vars['email_error']);
 
-
-		//$rtn_arr = $formcheck->field_check_arr($val, $std);
+		/* Unerwünschte Schlüssel nicht kontrollieren und speichern */
+		if (!empty($blacklist) && is_array($blacklist)) {
+			foreach ($blacklist as $value) {
+				unset($val[$value], $std[$value], $err[$value]);
+			}
+		}
+		
+		
+		/*$rtn_arr = $formcheck->field_check_arr($val, $std)*/
 		$rtn_arr = $this->_msbox->formCheck($val, $std);
 
 
-		//Fehlerarray durchgehen
+		/* Fehlerarray durchgehen */
 		foreach ($rtn_arr as $key => $value) {
 			if ($value == MSGBOX_FORMCHECK_NONE) {
 				$answer[] = $err[$key];
@@ -370,12 +378,12 @@ class Gbook implements Module {
 
 			if ($value == MSGBOX_FORMCHECK_INVALID && $key = 'email') {
 				$answer[] = $error_vars['email_checkfailed'];
-			} elseif ($key = 'hp') {
+			} elseif ($key == 'hp') {
 				$this->_gpc['POST'][$key] = $rtn_arr[$key];
 			}
 		}
 
-		//Captcha-Image prüfen
+		/* Captcha-Image prüfen */
 		if(!$this->_captcha->verify($this->_gpc['POST']['captcha_word'])) {
 			$answer[] = $error_vars['captcha_error']."<br />";
 		}
@@ -398,27 +406,19 @@ class Gbook implements Module {
 	 *
 	 * @param boolean $first_form 1. Aufruf des Formulars?
 	 * @param string|null $error Errortexte
-	 * @param unknown_type $comment Ist der Beitrag ein Kommentar?
+	 * @param boolean $comment Ist der Beitrag ein Kommentar?
+	 * @param boolean $mysql_data Werden die Daten vom Mysql geholt.
 	 */
 	private function _send_entryform($first_form = true, $error = null, $comment = false)
 	{
 		$data = array();
 
-		if ($comment == true) {
-			$this->_tplfile = "gbook_new_comment.tpl";
-			$data['gbook'] = $this->_msbox->getEntry($this->_gpc['GET']['ref_ID'], $this->_timeformat);
-			$data['gbook']['gbook_content'] = $this->_smilie->show_smilie($data['gbook']['gbook_content'], $this->_mysql);
-
-		} else {
-			$this->_tplfile = "gbook_new_entry.tpl";
-		}
-
 		/* Daten ermitteln */
 		if ($first_form == false) {
 			/* Daten aus Post-Array */
-			$data +=array('entry_title' => $this->_gpc['POST']['title'],
-			'entry_content' => $this->_gpc['POST']['content'], 'entry_name' => $this->_gpc['POST']['name'],
-			'entry_email' => $this->_gpc['POST']['email'], 'entry_hp' => $this->_gpc['POST']['hp'],
+			$data +=array('entry_title' => stripslashes($this->_gpc['POST']['title']),
+			'entry_content' => stripslashes($this->_gpc['POST']['content']), 'entry_name' => stripslashes($this->_gpc['POST']['name']),
+			'entry_email' => stripslashes($this->_gpc['POST']['email']), 'entry_hp' => stripslashes($this->_gpc['POST']['hp']),
 			'sessioncode' => $this->_sessioncode);
 		} else {
 			/* Standard-Einträge */
@@ -428,9 +428,37 @@ class Gbook implements Module {
 			'entry_email' => $gbook_vars['entry_email'],'entry_hp' => $gbook_vars['entry_hp'],
 			'sessioncode' => $this->_sessioncode);
 		}
+		
+		/* Bei Kommentaren ist der vorhergehende Eintrag zu ermitteln */
+		if ($comment == true) {		
 
-		if ($comment == true) {
+			$this->_tplfile = "gbook_comment.tpl";
+			
+			$data['gbook'] = $this->_msbox->getEntry($this->_gpc['GET']['ref_ID'], $this->_timeformat);
+			
+			$data['gbook']['gbook_title'] = htmlentities($data['gbook']['gbook_title']);
+			$data['gbook']['gbook_content'] = htmlentities($data['gbook']['gbook_content']);
+			$data['gbook']['gbook_email'] = htmlentities($data['gbook']['gbook_email']);
+			$data['gbook']['gbook_hp'] = htmlentities($data['gbook']['gbook_hp']);
+			
+			$data['gbook']['gbook_content'] = $this->_smilie->show_smilie($data['gbook']['gbook_content'], $this->_mysql);
+			
+			/* HTML-Zeichen umwandeln */
+			foreach($data['gbook']['comments'] as $key => $value) {
+				
+				$data['gbook']['comments'][$key]['gbook_content'] = htmlentities($value['gbook_content']);
+				$data['gbook']['comments'][$key]['gbook_email'] = htmlentities($value['gbook_email']);
+				$data['gbook']['comments'][$key]['gbook_hp'] = htmlentities($value['gbook_hp']);
+				
+				$data['gbook']['comments'][$key]['gbook_content'] =  $this->_smilie->show_smilie($data['gbook']['comments'][$key]['gbook_content'], $this->_mysql); 
+			}
+			
+			/*Anzeigetitle des Editors festlegen */
 			$data['entry_title'] = 'RE: '.$data['gbook']['gbook_title'];
+
+		} else {
+			/* Keine Kommentareintrag -> Normaler Editor */
+			$this->_tplfile = "gbook_entry.tpl";
 		}
 
 		/* Error-Einträge */

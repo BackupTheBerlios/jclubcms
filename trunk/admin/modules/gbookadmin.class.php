@@ -316,7 +316,7 @@ class Gbookadmin implements Module {
 
 				$navigation_id = $this->_smarty->get_template_vars('local_link');
 
-				$answer['ID'] = $this->_gpc['GET']['id'];
+				$answer['ID'] = $this->_gpc['GET']['ref_ID'];
 
 				//In Datenbank einschreiben
 				$this->_msbox->editEntry($answer);
@@ -332,23 +332,6 @@ class Gbookadmin implements Module {
 		} else {
 
 			$this->_send_entryform(true, null, false, true);
-			
-			
-			/*$this->_tplfile = 'gbook_entry.tpl';
-
-			//Action an Template mitteilen, zur Anpassung des Formulars
-			$this->_smarty->assign('action', $this->_gpc['GET']['action']."&id={$this->_gpc['GET']['id']}");
-
-			//Daten aus dem msbox-Objekt holen
-			$gbook_arr = $this->_msbox->getEntry($this->_gpc['GET']['id'], $this->_timeformat);
-
-			$smarty_arr = array('entry_ID' => $this->_gpc['GET']['id'], 'entry_name' => $gbook_arr['gbook_name'], 'entry_content' => $gbook_arr['gbook_content'],
-			'entry_email' => $gbook_arr['gbook_email'], 'entry_hp' => $gbook_arr['gbook_hp'], 'entry_title' => 									$gbook_arr['gbook_title'], 'entry_time' => $gbook_arr['gbook_time']);
-
-			$this->_smarty->assign($smarty_arr);
-			$smilie_arr = $this->_smilie->create_smiliesarray($this->_mysql);
-			$this->_smarty->assign('smilies_list', $smilie_arr);*/
-
 
 		}
 	}
@@ -365,9 +348,9 @@ class Gbookadmin implements Module {
 		$linktext2 = "NEIN";
 
 		/* Aufrum zum Löschen */
-		if (isset($this->_gpc['GET']['id']) && !isset($this->_gpc['POST']['weiter']) && !isset($this->_gpc['POST']['nein'])) {
+		if (isset($this->_gpc['GET']['ref_ID']) && !isset($this->_gpc['POST']['weiter']) && !isset($this->_gpc['POST']['nein'])) {
 
-			$id = (int)$this->_gpc['GET']['id'];
+			$id = (int)$this->_gpc['GET']['ref_ID'];
 			$title = "<b>L&oouml;schung</b> best&auml;tigen";
 			$nr = $this->_msbox->getEntry($id);
 			$content = $this->_smilie->show_smilie($nr['gbook_content'], $this->_mysql);
@@ -412,9 +395,10 @@ class Gbookadmin implements Module {
 	 * in $answer.
 	 *
 	 * @param array[reference] $answer Antwort
+	 * @param array $blacklist Array der Schlüssel, die nicht geprüft werden sollen
 	 * @return boolean Erfolg
 	 */
-	private function _check_form(&$answer)
+	private function _check_form(&$answer, $blacklist = null)
 	{
 		$gbook_vars = $this->_configvars['Gbook'];
 		$error_vars =$this->_configvars['Error'];
@@ -432,12 +416,19 @@ class Gbookadmin implements Module {
 		$err = array('title' => $error_vars['title_error'], 'content' => $error_vars['content_error'],
 		'name' => $error_vars['name_error'],'email' => $error_vars['email_error']);
 
-
-		//$rtn_arr = $formcheck->field_check_arr($val, $std);
+		/* Unerwünschte Schlüssel nicht kontrollieren und speichern */
+		if (!empty($blacklist) && is_array($blacklist)) {
+			foreach ($blacklist as $value) {
+				unset($val[$value], $std[$value], $err[$value]);
+			}
+		}
+		
+		
+		/*$rtn_arr = $formcheck->field_check_arr($val, $std)*/
 		$rtn_arr = $this->_msbox->formCheck($val, $std);
 
 
-		//Fehlerarray durchgehen
+		/* Fehlerarray durchgehen */
 		foreach ($rtn_arr as $key => $value) {
 			if ($value == MSGBOX_FORMCHECK_NONE) {
 				$answer[] = $err[$key];
@@ -445,7 +436,7 @@ class Gbookadmin implements Module {
 
 			if ($value == MSGBOX_FORMCHECK_INVALID && $key = 'email') {
 				$answer[] = $error_vars['email_checkfailed'];
-			} elseif ($key = 'hp') {
+			} elseif ($key == 'hp') {
 				$this->_gpc['POST'][$key] = $rtn_arr[$key];
 			}
 		}
@@ -475,40 +466,56 @@ class Gbookadmin implements Module {
 	{
 		$data = array();
 
-		if ($comment == true) {
-			$this->_tplfile = "gbook_comment.tpl";
-			$data['gbook'] = $this->_msbox->getEntry($this->_gpc['GET']['id'], $this->_timeformat);
-			$data['gbook']['gbook_content'] = $this->_smilie->show_smilie($data['gbook']['gbook_content'], $this->_mysql);
-
-		} else {
-			$this->_tplfile = "gbook_entry.tpl";
-		}
-
 		/* Daten ermitteln */
 		if ($first_form == false) {
 			/* Daten aus Post-Array */
-			$data +=array('entry_title' => $this->_gpc['POST']['title'],
-			'entry_content' => $this->_gpc['POST']['content'], 'entry_name' => $this->_gpc['POST']['name'],
-			'entry_email' => $this->_gpc['POST']['email'], 'entry_hp' => $this->_gpc['POST']['hp']);
-
+			$data +=array('entry_title' => stripslashes($this->_gpc['POST']['title']),
+			'entry_content' => stripslashes($this->_gpc['POST']['content']), 'entry_name' => stripslashes($this->_gpc['POST']['name']),
+			'entry_email' => stripslashes($this->_gpc['POST']['email']), 'entry_hp' => stripslashes($this->_gpc['POST']['hp']),);
 		} elseif ($mysql_data == true) {
 			//Daten aus dem msbox-Objekt holen
-			$gbook_arr = $this->_msbox->getEntry($this->_gpc['GET']['id'], $this->_timeformat);
-
+			$gbook_arr = $this->_msbox->getEntry($this->_gpc['GET']['ref_ID'], $this->_timeformat);
 			$data += array('entry_title' => $gbook_arr['gbook_title'], 'entry_name' => $gbook_arr['gbook_name'],
 			'entry_content' => $gbook_arr['gbook_content'], 'entry_email' => $gbook_arr['gbook_email'],
 			'entry_hp' => $gbook_arr['gbook_hp'], 'entry_time' => $gbook_arr['gbook_time']);
-
 		} else {
 			/* Standard-Einträge */
 			$gbook_vars = $this->_configvars['Gbook'];
 			$data += array('entry_title' => $gbook_vars['entry_title'],
 			'entry_content' => $gbook_vars['entry_content'], 'entry_name' => $gbook_vars['entry_name'],
-			'entry_email' => $gbook_vars['entry_email'],'entry_hp' => $gbook_vars['entry_hp']);
+			'entry_email' => $gbook_vars['entry_email'],'entry_hp' => $gbook_vars['entry_hp'],);
 		}
+		
+		/* Bei Kommentaren ist der vorhergehende Eintrag zu ermitteln */
+		if ($comment == true) {		
 
-		if ($comment == true) {
+			$this->_tplfile = "gbook_comment.tpl";
+			
+			$data['gbook'] = $this->_msbox->getEntry($this->_gpc['GET']['ref_ID'], $this->_timeformat);
+			
+			$data['gbook']['gbook_title'] = htmlentities($data['gbook']['gbook_title']);
+			$data['gbook']['gbook_content'] = htmlentities($data['gbook']['gbook_content']);
+			$data['gbook']['gbook_email'] = htmlentities($data['gbook']['gbook_email']);
+			$data['gbook']['gbook_hp'] = htmlentities($data['gbook']['gbook_hp']);
+			
+			$data['gbook']['gbook_content'] = $this->_smilie->show_smilie($data['gbook']['gbook_content'], $this->_mysql);
+			
+			/* HTML-Zeichen umwandeln */
+			foreach($data['gbook']['comments'] as $key => $value) {
+				
+				$data['gbook']['comments'][$key]['gbook_content'] = htmlentities($value['gbook_content']);
+				$data['gbook']['comments'][$key]['gbook_email'] = htmlentities($value['gbook_email']);
+				$data['gbook']['comments'][$key]['gbook_hp'] = htmlentities($value['gbook_hp']);
+				
+				$data['gbook']['comments'][$key]['gbook_content'] =  $this->_smilie->show_smilie($data['gbook']['comments'][$key]['gbook_content'], $this->_mysql); 
+			}
+			
+			/*Anzeigetitle des Editors festlegen */
 			$data['entry_title'] = 'RE: '.$data['gbook']['gbook_title'];
+
+		} else {
+			/* Keine Kommentareintrag -> Normaler Editor */
+			$this->_tplfile = "gbook_entry.tpl";
 		}
 
 		/* Error-Einträge */
@@ -522,8 +529,8 @@ class Gbookadmin implements Module {
 
 		$this->_smarty->assign($data);
 
-	}
 
+	}
 	/**
 	 * Speichert die angegebenen Variablen in Smarty und speichert das Feedback-Template
 	 *

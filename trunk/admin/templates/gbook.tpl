@@ -37,11 +37,11 @@
 					{if $book.hp neq ""}<br /><a href="http://{$book.hp}" target="_blank"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
 				</td>
 				<td class="content_tab_content2" style="text-align:right">
-				<a href="?nav_id={$local_link}&amp;action=comment&amp;id={$book.ID}&amp;{$SID}"><img src="templates/style/icons/pencil.gif" />Kommentieren</a>
+				<a href="?nav_id={$local_link}&amp;action=comment&amp;ref_ID={$book.ID}&amp;{$SID}"><img src="templates/style/icons/pencil.gif" />Kommentieren</a>
 					<br />
-					<a href="?nav_id={$local_link}&amp;action=edit&amp;id={$book.ID}&amp;{$SID}"><img src="templates/style/icons/pencil.gif" />Editieren</a>
+					<a href="?nav_id={$local_link}&amp;action=edit&amp;ref_ID={$book.ID}&amp;{$SID}"><img src="templates/style/icons/pencil.gif" />Editieren</a>
 					<br />
-					<a href="?nav_id={$local_link}&amp;action=del&amp;id={$book.ID}&amp;{$SID}"><img src="templates/style/icons/del.gif" />L&ouml;schen</a>
+					<a href="?nav_id={$local_link}&amp;action=del&amp;ref_ID={$book.ID}&amp;{$SID}"><img src="templates/style/icons/del.gif" />L&ouml;schen</a>
 				</td>
 			</tr>
 			{* Innere Schlaufe für das Auslesen der Kommentare *}
@@ -57,14 +57,14 @@
 						{if $comment.hp neq ""}<br /><a href="http://{$comment.hp}" target="_blank"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
 					</td>
 					<td class="content_tab_content2" style="text-align:right">
-					<a href="?nav_id={$local_link}&amp;action=edit&amp;id={$comment.ID}&amp;{$SID}"><img src="templates/style/icons/pencil.gif" />Editieren</a>
+					<a href="?nav_id={$local_link}&amp;action=edit&amp;ref_ID={$comment.ID}&amp;{$SID}"><img src="templates/style/icons/pencil.gif" />Editieren</a>
 					<br />
-					<a href="?nav_id={$local_link}&amp;action=del&amp;id={$comment.ID}&amp;{$SID}"><img src="templates/style/icons/del.gif" />L&ouml;schen</a>
+					<a href="?nav_id={$local_link}&amp;action=del&amp;ref_ID={$comment.ID}&amp;{$SID}"><img src="templates/style/icons/del.gif" />L&ouml;schen</a>
 				</td>
 				</tr>
 			{/foreach}
 			<tr>
-				<td colspan="3" class="content_tab_content1" align="center"><a href="?nav_id={$local_link}&action=comment&id={$book.ID}&amp;{$SID}"><img src="templates/style/icons/comment.gif" />Neuer Kommentar</a></td>
+				<td colspan="3" class="content_tab_content1" align="center"><a href="?nav_id={$local_link}&action=comment&ref_ID={$book.ID}&amp;{$SID}"><img src="templates/style/icons/comment.gif" />Neuer Kommentar</a></td>
 			</tr>
 		</table>
 	{/foreach}

@@ -22,7 +22,7 @@
     <form name="newentry" method="post" action="">
       <table cellpadding="0" cellspacing="0" align="center" class="content_tab">
         <tr>
-          <td class="formailer_header" colspan="2"><img src="templates/style/icons/pencil.gif" /><input class="formailer_header_input" name="title" type="text" onclick="select()" value="{$entry_title}" />{if isset($entry_time)}<img src="./templates/style/icons/date.gif" /> {$entry_time}{/if}</td>
+          <td class="formailer_header" colspan="2"><img src="templates/style/icons/pencil.gif" /><input class="formailer_header_input" name="title" type="text" size="30" onclick="select()" value="{$entry_title}" />{if isset($entry_time)}&nbsp;&nbsp;<img src="./templates/style/icons/date.gif" /> {$entry_time}{/if}</td>
         </tr>
         <tr>
           <td class="formailer_txt">

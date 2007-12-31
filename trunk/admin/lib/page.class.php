@@ -405,7 +405,7 @@ class Page
 		//Baut den Navigationsbaum auf, indem bei jedem Treffer Topid -> menu_Id ein neuer Ast entsteht.
 		foreach ($mysql_array as $value) {
 
-			$value['menu_name'] = htmlentities($value['menu_name']);
+			$value['menu_name'] = $value['menu_name'];
 			$subnav_array[$i] = $value;
 			$subnav_array[$i]['level'] = $lc_level;
 			$i++;

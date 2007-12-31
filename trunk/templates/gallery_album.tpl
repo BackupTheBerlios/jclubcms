@@ -1,4 +1,4 @@
-﻿      <div id="content">
+      <div id="content">
 		<div id="content_txt">
 		<h1>Gallery</h1>
     <table width="700" align="center" class="content_tab">
