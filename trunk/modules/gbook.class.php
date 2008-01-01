@@ -290,7 +290,7 @@ class Gbook implements Module {
 
 
 				$this->_send_feedback($gbook_vars['allright_title'], $gbook_vars['allright_content'],
-				"?nav_id=$navigation_id", $mail_vars['allright_link']);
+				"?nav_id=$navigation_id", $gbook_vars['allright_link']);
 
 
 
@@ -349,7 +349,11 @@ class Gbook implements Module {
 		$formcheck = new Formularcheck();
 
 		/*Formulardaten */
-		$val = array('title' => $this->_gpc['POST']['title'], 'content' => $this->_gpc['POST']['content'],
+		if (!in_array('title', $blacklist)) {
+			/* Titel z.B. bei Kommentar nicht vorhanden */
+			$val['title'] = $this->_gpc['POST']['title'];
+		}
+		$val = array(							'content' => $this->_gpc['POST']['content'],
 		'name' =>  $this->_gpc['POST']['name'], 'email' => $this->_gpc['POST']['email']);
 		/* Standart-Strings*/
 		$std = array('title' => $gbook_vars['entry_title'], 'content' => $gbook_vars['entry_content'],
@@ -358,10 +362,20 @@ class Gbook implements Module {
 		$err = array('title' => $error_vars['title_error'], 'content' => $error_vars['content_error'],
 		'name' => $error_vars['name_error'],'email' => $error_vars['email_error']);
 
+		
 		/* Unerwünschte Schlüssel nicht kontrollieren und speichern */
 		if (!empty($blacklist) && is_array($blacklist)) {
 			foreach ($blacklist as $value) {
-				unset($val[$value], $std[$value], $err[$value]);
+				/* Nur löschen, wenn Variable existiert */
+				if (isset($val[$value])) {
+					unset($val[$value]);
+				}
+				if (isset($std[$value])) {
+					unset($std[$value]);
+				}
+				if (isset($err[$value])) {
+					unset($err[$value]);
+				}
 			}
 		}
 		
@@ -416,8 +430,11 @@ class Gbook implements Module {
 		/* Daten ermitteln */
 		if ($first_form == false) {
 			/* Daten aus Post-Array */
-			$data +=array('entry_title' => stripslashes($this->_gpc['POST']['title']),
-			'entry_content' => stripslashes($this->_gpc['POST']['content']), 'entry_name' => stripslashes($this->_gpc['POST']['name']),
+			if ($comment == false) {
+				$data['entry_title'] = stripslashes($this->_gpc['POST']['title']);
+			}
+				
+			$data +=array('entry_content' => stripslashes($this->_gpc['POST']['content']), 'entry_name' => stripslashes($this->_gpc['POST']['name']),
 			'entry_email' => stripslashes($this->_gpc['POST']['email']), 'entry_hp' => stripslashes($this->_gpc['POST']['hp']),
 			'sessioncode' => $this->_sessioncode);
 		} else {

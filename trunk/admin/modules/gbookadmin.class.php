@@ -278,7 +278,7 @@ class Gbookadmin implements Module {
 
 
 				$this->_send_feedback($gbook_vars['allright_title'], $gbook_vars['allright_content'],
-				"?nav_id=$this->_nav_id", $mail_vars['allright_link']);
+				"?nav_id=$this->_nav_id", $gbook_vars['allright_link']);
 
 
 
