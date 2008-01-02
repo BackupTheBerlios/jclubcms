@@ -1,5 +1,6 @@
       <div id="content">
 		<div id="content_txt">
+		<h2>Neuer Eintrag schreiben</h2>
     <table width = 100% class="content_tab">
     </table>
     {************************************************************}
@@ -7,54 +8,21 @@
 <script type="text/javascript" src="../javascript/smilies.js"></script>
     {************************************************************}
     {************************************************************}
-	<table cellpadding="0" cellspacing="0" align="center" class="content_tab">
-			<tr>
-				<td class="content_tab_header" colspan="2">
-				{$news.title}
-				</td>
-			</tr>
-			<tr>
-				<td class="content_tab_content1">
-				{$news.content}
-				</td>
-				<td class="content_tab_content2">
-					<img src="templates/style/icons/date.gif" /> {$news.time}<br />
-					<img src="templates/style/icons/user.gif" /> {$news.name}<br />
-					<a href="?mail&nav_id={$local_link}&entry_id={$news.ID}&amp;{$SID}"><img src="templates/style/icons/email.gif" /> E-mail</a>
-					{if $news.hp neq ""}<br /><a href="{$news.hp}" target="_blank"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
-				</td>
-			</tr>
-			{* Innere Schlaufe für das Auslesen der Kommentare *}
-		  {foreach key=schluessel item=comment from=$news.comments}
-		  <tr>
-			<td class="content_tab_content1">
-			  {$comment.content}
-			</td>
-			<td class="content_tab_content2">
-			  <img src="templates/style/icons/date.gif" /> {$comment.time}<br />
-			  <img src="templates/style/icons/user.gif" /> {$comment.name}<br />
-			  <a href="?mail&nav_id={$local_link}&entry_id={$comment.ID}"><img src="templates/style/icons/email.gif" /> E-mail</a><br />
-			  {if $comment.hp neq ""}<a href="http://{$comment.hp}"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
-			</td>
-		  </tr>
-		  {/foreach}
-	</table>
 	{*Fehlerausgabe wenn noetig*}
 	{if $dump_errors}
 	<table class="content_tab" align="center">
 		<tr>
-			<td class="formailer_header" style="background-color: #EC6442">{$error_title|default:"Einige Daten sind ungueltig"}</td>
+			<td class="formailer_header" style="background-color: #EC6442">{$error_title|default:"Einige Daten sind ung&uuml;ltig"}</td>
 		</tr>
 		<tr>
-			<td class="formailer_txt" style="background-color: #ED4B23; color:black">{$error_content}</td>
+			<td class="formailer_txt" style="background-color: #ED4B23; color: #000000">{$error_content}</td>
 		</tr>
 	</table>
 	{/if}
-	<!-- Eintrags-Formular -->
     <form name="newentry" method="post" action="">
-      <table cellpadding="0" cellspacing="0" align="center" class="content_tab">	  
+      <table cellpadding="0" cellspacing="0" align="center" class="content_tab">
         <tr>
-          <td class="formailer_header" colspan="2"></td>
+          <td class="formailer_header" colspan="2"><img src="templates/style/icons/pencil.gif" /><input class="formailer_header_input" name="title" type="text" size="30" onclick="select()" value="{$entry_title}" />{if isset($entry_time)}&nbsp;&nbsp;<img src="./templates/style/icons/date.gif" /> {$entry_time}{/if}</td>
         </tr>
         <tr>
           <td class="formailer_txt">

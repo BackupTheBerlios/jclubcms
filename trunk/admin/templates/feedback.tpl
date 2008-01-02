@@ -11,7 +11,7 @@
 				<td class="formailer_options" colspan="2">{$feedback_content}</td>
 			<tr>
 				<td class="formailer_options" colspan="2">               
-                     <a href="{$feedback_link|default:"?"}">{$feedback_linktext|default:"Weiter"}</a>
+                     <a href="{$feedback_link|default:"?"}&{$SID}">{$feedback_linktext|default:"Weiter"}</a>
 				</td>
 			</tr>
 		</table>

@@ -62,7 +62,6 @@ class Session {
     {
     	$mysql = $this->mysql;
     	$mysql->query("SELECT `session_id` FROM `admin_session` WHERE `ip_address` = '{$this->ip_adress}' AND `user_agent` = '{$this->user_agent}' LIMIT 1");
-    	//echo "session->checksession(): sql-string....  SELECT `session_id` FROM `admin_session` WHERE `ip_address` = '{$this->ip_adress}' AND `user_agent` = '{$this->user_agent}' LIMIT 1<br />\n";
     	$data = $mysql->fetcharray("num");
     	
     	if($data == false)
@@ -91,12 +90,9 @@ class Session {
     	$mysql = $this->mysql;
     	$mysql->query("Select last_activity from `admin_session`where `session_id` = '{$this->session_id}'");
     	$lasttime = $mysql->fetcharray();
-    	//echo "session->activ(): \$lasttime {$lasttime[0]}<br />\n";
+
     	$mysql->query("SELECT TIME_TO_SEC(TIMEDIFF(NOW(), '{$lasttime[0]}')) as Diff");
     	$diff = $mysql->fetcharray();
-    	    	
-    	//echo "session->activ(): \$diff {$diff[0]}<br />\n";
-    	//echo "session->activ(): \$maxtime $maxtime<br />\n";
     	
     	if($maxtime < $diff[0])
     	{
@@ -125,10 +121,7 @@ class Session {
     	
     	$return = true;
     	$mysql->query("INSERT INTO `admin_session` (`ID`, `session_id`, `user_agent`, `user_ref_ID`, `ip_address`, `login_time`, `last_activity`) VALUES (NULL, '{$this->session_id}', '{$this->user_agent}', $userID, '{$this->ip_adress}', NOW(), NOW())");
-    	
-    	
-    	//echo "session->create_session: mysql-query<br />\nINSERT INTO `jclubbeta`.`admin_session` (`ID`, `session_id`, `user_agent`, `user_ref_ID`, `ip_address`, `login_time`, `last_activity`) VALUES (NULL, '{$this->session_id}', '{$this->user_agent}', $userID, '{$this->ip_adress}', NOW(), NOW())<br />\n";
-    	
+    	  	
     	$num = $mysql->affected_rows();
     	
     	if($num < 1)
@@ -180,13 +173,11 @@ class Session {
 		
 		$mysql->query($sql);
 		
-		//echo "sesson->garbage_collector(): SQL $sql<br />\n";
 		
 		$com_mysql = clone $mysql;
 		
 		while($data = $mysql->fetcharray("num"))
 		{
-			//echo "session->garbage_collector(): while_ {$data[0]}<br />\n";
 			$com_mysql->query("DELETE FROM `admin_session` WHERE `session_id` = '{$data[0]}' LIMIT 1");
 			$i++;
 		}

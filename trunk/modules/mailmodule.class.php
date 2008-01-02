@@ -188,7 +188,7 @@ class Mailmodule implements Module
 					$this->_send_feedback($mail_vars['saved_title'], $mail_vars['saved_content'], "?nav_id=$navigation_id", $mail_vars['send_link']);
 				} else {
 					/* Fehler bei der Speicherung */
-					$this->_send_feedback($mail_vars['failer_title'], $mail_vars['failer_content'], "?nav_id=$navigation_id", $mail_vars['send_link']);
+					$this->_send_feedback($mail_vars['failer_save_title'], $mail_vars['failer_save_content'], "?nav_id=$navigation_id", $mail_vars['send_link']);
 				}
 
 
@@ -214,6 +214,11 @@ class Mailmodule implements Module
 
 	}
 
+	/**
+	 * Sendet das geschriebene Mail, welches in der Datenbank gespeichert war.
+	 *
+	 * @param string $hash Hash vom Link
+	 */
 	private function _truemail_send($hash)
 	{
 		$mail_vars = $this->_configvars['Mail'];
@@ -229,7 +234,7 @@ class Mailmodule implements Module
 		if ($controll == true) {
 			$this->_send_feedback($mail_vars['saved_title'], $mail_vars['saved_content'], "", $mail_vars['send_link']);
 		} else {
-			$this->_send_feedback($mail_vars['failer_title'], $mail_vars['failer_content'], "", $mail_vars['send_link']);
+			$this->_send_feedback($mail_vars['failer_send_title'], $mail_vars['failer_send_content'], "", $mail_vars['send_link']);
 		}
 	}
 
@@ -278,7 +283,7 @@ class Mailmodule implements Module
 		$table_infos = array();
 		$colums_names = array();
 		$columns_search = array($this->mail_tbl['column_ID'], $this->mail_tbl['column_name'], $this->mail_tbl['column_email']);
-
+		
 		$this->_mysql->query("SHOW COLUMNS FROM `{$this->mail_tbl['table']}`");
 		$this->_mysql->saverecords('assoc');
 		$table_infos = $this->_mysql->get_records();
@@ -287,10 +292,10 @@ class Mailmodule implements Module
 		foreach ($table_infos as $key => $value) {
 			$colums_names[$key] = $table_infos[$key]['Field'];
 		}
-
+		
 		//Sind die angebenen Spalten vorhanden?
 		foreach ($columns_search as $value) {
-			if (array_search($value, $colums_names) === false) {
+			if (in_array($value, $colums_names) === false) {
 				return false;
 			}
 		}
@@ -363,8 +368,15 @@ class Mailmodule implements Module
 		}
 	}
 
+	
 
-
+	/**
+	 * Sendet das Formular zum Eintragen der Nachricht. Je nach Parameter werden Standartwerte oder POST-Daten an
+	 * das Formular weitergegeben.
+	 *
+	 * @param boolean $first_form
+	 * @param string $error
+	 */
 	private function _send_entryform($first_form = true, $error = null)
 	{
 		$this->_tpl_file = "mailform.tpl";

@@ -3,15 +3,32 @@
 		<h1>Gallery</h1>
 		<table style="content_tab" align="center" width="700">
 			<tr class="content_tab_header">
-				<td colspan="3"><div style="float: left">{foreach item=root_item from=$root}
+				<!--<td colspan="3"><div style="float: left">{foreach item=root_item from=$root}
 					&gt; <a href="?nav_id=40&cat={$root_item.ID}">{$root_item.name}</a>
 					{/foreach}
 					&gt;  <a href="?nav_id=40&gal={$album.ID}">{$album.name}</a>
 					</div>
 					<div align="center">
 					<a href="?nav_id={$local_link}&gal={$album.ID}" ><img src="templates/style/icons/gallery.gif" />zur Bilder-&Uuml;bersicht</a>
-					</div>
-				</td>
+					</div>-->
+					<td colspan="3">
+						<table width="100%">
+							<tr>
+								<td>
+									<div style="float: left">{foreach item=root_item from=$root}
+									&gt; <a href="?nav_id=40&cat={$root_item.ID}">{$root_item.name}</a>
+									{/foreach}
+									&gt;  <a href="?nav_id=40&gal={$album.ID}">{$album.name}</a>
+									</div>
+								</td>
+								<td>
+									<div align="center">
+									<a href="?nav_id={$local_link}&gal={$album.ID}" ><img src="templates/style/icons/gallery.gif" />zur Bilder-&Uuml;bersicht</a>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</td>
 			</tr>
 			<tr class="content_tab_content1" align="center">
 				<td>

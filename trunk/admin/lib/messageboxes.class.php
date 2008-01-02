@@ -158,6 +158,12 @@ class Messageboxes {
 			}
 			$i++;
 		}
+		
+		
+		if (!key_exists('time', $tabledata)) {
+			$sql['def'] .= ", {$this->_tabbelstruct['time']}";
+			$sql['val'] .= ", NOW()";
+		}
 
 		$sql['val'] .= ")";
 		$query = join("", $sql);
@@ -165,13 +171,13 @@ class Messageboxes {
 		$this->_mysql->query($query);
 		return true;
 	}
-	
+
 	public function commentEntry($id, array $tabledata)
 	{
 		if (!is_int($id)) {
 			throw new CMSException('Falsche Parameterangaben. Angegeben ID ist kein Int-Wert', EXCEPTION_LIBARY_CODE);
 		}
-		
+
 		if ($tabledata['content'] == "") {
 			throw new CMSException('Falsche Parameterangaben. Kein Text angegeben', EXCEPTION_LIBARY_CODE);
 		}
@@ -210,6 +216,11 @@ class Messageboxes {
 			}
 			$i++;
 		}
+		
+		if (!key_exists('time', $tabledata)) {
+			$sql['def'] .= ", `{$this->_tablestruct['time']}`";
+			$sql['val'] .= ", NOW()";
+		}
 
 		$sql['val'] .= ")";
 		$query = join("", $sql);
@@ -241,14 +252,14 @@ class Messageboxes {
 		if ($tabledata['ID'] == ""  || !is_numeric($tabledata['ID'])) {
 			throw new CMSException('Falsche Parameterangaben. ID nicht angegeben', EXCEPTION_LIBARY_CODE);
 		}
-		
+
 		$sql = "UPDATE `$this->_tablename` SET  ";
 		$num = count($tabledata);
-		
+
 		$i = 1;
 		foreach ($tabledata as $key => $value) {
 			//ID wird in WHERE-Klausel verwendet
-			if ($key != 'ID') {
+			if ($key != 'ID' && $key != 'time') {
 				if ($i != 1) {
 					$sql .= ", ";
 				}
@@ -256,13 +267,13 @@ class Messageboxes {
 
 				//Zur Sicherheit escapen
 				$sql .= " = '".$this->_mysql->escapeString($value)."'";
-				
+
 				$i++;
 			}
-			
+
 		}
 
-		$sql .= " WHERE `{$this->_tablestruct['ID']}` = '{$tabledata['ID']}'";
+		$sql .= " WHERE `{$this->_tablestruct['ID']}` = '{$tabledata['ID']}' LIMIT 1";
 
 		$this->_mysql->query($sql);
 		return true;
@@ -276,10 +287,11 @@ class Messageboxes {
 	 *
 	 * @param int $id ID des Eintrags
 	 * @param string $timeformat Zeitformat nach Mysql
+	 * @param boolean $comments Kommentare auch senden
 	 * @return array Eintrag, bei Fehler false
 	 */
 
-	public function getEntry($id, $timeformat = "", $comments = false)
+	public function getEntry($id, $timeformat = "", $comments = true)
 	{
 		$msg_array = array();
 
@@ -298,19 +310,25 @@ class Messageboxes {
 		$msg_array = $this->_mysql->fetcharray('assoc');
 
 		/*Kommentare*/
-		$this->_mysql->query("SELECT * FROM {$this->_tablename} WHERE `{$this->_tablestruct['ref_ID']}` = '$id' ORDER BY `{$this->_tablestruct['time']}` ASC");
-		$this->_mysql->saverecords('assoc');
-		$msg_array['comments'] = $this->_mysql->get_records();
-		
+		if ($comments == true) {
+			$this->_mysql->query("SELECT * FROM {$this->_tablename} WHERE `{$this->_tablestruct['ref_ID']}` = '$id' ORDER BY `{$this->_tablestruct['time']}` ASC");
+			$this->_mysql->saverecords('assoc');
+			$msg_array['comments'] = $this->_mysql->get_records();
+		}
 
 
+		/* Wenn angegeben wird die Zeit formatiert */
 		if ($timeformat && is_string($timeformat) && isset($this->_tablestruct['time'])) {
 			$msg_array[$this->_tablestruct['time']] = $this->_formatTime($msg_array[$this->_tablestruct['time']], $timeformat);
+
+			if ($comments == true) {
+				foreach ($msg_array['comments'] as $key => $value) {
+					$msg_array['comments'][$key][$this->_tablestruct['time']] = $this->_formatTime($value[$this->_tablestruct['time']], $timeformat);
+				}
+			}
 		}
-		
-		foreach ($msg_array['comments'] as $key => $value) {
-			$msg_array['comments'][$key][$this->_tablestruct['time']] = $this->_formatTime($value[$this->_tablestruct['time']], $timeformat);
-		}
+
+
 
 
 		return $msg_array;
@@ -352,8 +370,8 @@ class Messageboxes {
 
 		} elseif (isset($this->_tablestruct['time']) && !empty($this->_tablestruct['time']) && $order != "" && $corder != "") {
 			//Ordnungsbedingungen-Strings in top-nachrichten und kommentaren
-			$strorder['norm'] = "ORDER BY {$this->_tablestruct['time']} $order";
-			$strorder['comm'] = "ORDER BY {$this->_tablestruct['time']} $corder";
+			$strorder['norm'] = "ORDER BY `{$this->_tablestruct['time']}` $order";
+			$strorder['comm'] = "ORDER BY `{$this->_tablestruct['time']}` $corder";
 
 		} else {
 			$strorder['norm'] = "";
@@ -371,13 +389,13 @@ class Messageboxes {
 			/* Keine Haupteinträge -> Keine Kommentare. Alle Einträge werden gleich behandelt*/
 			$condition = "";
 		}
-		
+
 		/* Haupteinträge auslesen */
 		$sql = "SELECT * FROM `{$this->_tablename}` $condition {$strorder['norm']} LIMIT $start, $entries_pp";
 		$this->_mysql->query($sql);
 		$this->_mysql->saverecords('assoc');
 		$msg_array = $this->_mysql->get_records();
-		
+
 		//Eintraege zahlen
 		$num += count($msg_array);
 
@@ -385,11 +403,11 @@ class Messageboxes {
 		foreach ($msg_array as $key => $value) {
 
 			if ($condition != "") {//ref_ID ist demnach gesetzt.
-				
+
 				$this->_mysql->query("SELECT * FROM {$this->_tablename} WHERE `{$this->_tablestruct['ref_ID']}` = '{$value[$this->_tablestruct['ID']]}' {$strorder['comm']}");
 				$this->_mysql->saverecords('assoc');
 				$value['comments'] = $this->_mysql->get_records();
-				
+
 				//Eintrage zaehlen
 				$num += count($value['comments']);
 
@@ -400,76 +418,77 @@ class Messageboxes {
 				$value[$this->_tablestruct['time']] = $this->_formatTime($value[$this->_tablestruct['time']], $timeformat);
 
 				if ($condition != "") {//ref_ID ist also gesetzt.
-					
+
 					foreach ($value['comments'] as $key2 => $cvalue) {
 						$value['comments'][$key2][$this->_tablestruct['time']] = $this->_formatTime($cvalue[$this->_tablestruct['time']], $timeformat);
 
 					}
 				}
 			}
-			
+
 			//Veraenderte Werte zuweisen
 			$msg_array[$key] = $value;
 			$msg_array[$key]['number_of_comments'] = count($value['comments']);
 		}
-
+		
 		return $msg_array;
 
 	}
-	
+
 	/**
 	 * Loescht einen Eintrag aus der Datenbank inkl. alle Kommentaren
 	 *
-	 * @param unknown_type $id
+	 * @param int $id
 	 */
-	
+
 	public function delEntry($id)
 	{
 		if (!is_int($id)) {
 			throw new CMSException('Falsche Parameterangaben. Parameter nicht zulaessig', EXCEPTION_LIBARY_CODE);
 		}
-		
+
 		if (array_key_exists('ref_ID', $this->_tablestruct)) {
 			$query = "SELECT `{$this->_tablestruct['ID']}` FROM `{$this->_tablename}` WHERE `{$this->_tablestruct['ref_ID']}` = '$id'";
 			$this->_mysql->query($query);
 			$this->_mysql->saverecords('assoc');
 			$id_arr = $this->_mysql->get_records();
-			
+
+			/* Kommentare löschen */
 			for ($i = 0; $i < count($id_arr); $i++) {
-				$query = "DELETE FROM `{$this->_tablename}` WHERE `{$this->_tablestruct['ID']}` = '{$id_arr[$i][$this->_tablestruct['ID']]}'";
-				$this->_mysql->query($query);
+				$query = "DELETE FROM `{$this->_tablename}` WHERE `{$this->_tablestruct['ID']}` = '{$id_arr[$i][$this->_tablestruct['ID']]}' LIMIT 1";
+				//$this->_mysql->query($query);
 			}
 		}
-			
-		
-		$query = "DELETE FROM `{$this->_tablename}` WHERE `{$this->_tablestruct['ID']}` = '$id'";
-	
+
+
+		$query = "DELETE FROM `{$this->_tablename}` WHERE `{$this->_tablestruct['ID']}` = '$id' LIMIT 1";
+
 		$this->_mysql->query($query);
 	}
-	
+
 	/**
 	 * Gibt an, ob die angegeben ID ein Kommentar ist oder nicht
 	 *
 	 * @param int $id
 	 * @return boolean
 	 */
-	
+
 	public function is_comment($id)
 	{
 		if (!is_numeric($id)) {
 			throw new CMSException('Parameter ungueltig', EXCEPTION_LIBARY_CODE);
 		}
-		
+
 		$this->_mysql->query("SELECT `{$this->_tablestruct['ref_ID']}` FROM `{$this->_tablename}` WHERE `{$this->_tablestruct['ID']}` = '$id' LIMIT 1");
 		$this->_mysql->saverecords('assoc');
 		$data = $this->_mysql->get_records();
-		
+
 		if ($data[$this->_tablestruct['ref_ID']] == 0) {
 			return false;	//Kein Kommentar, sondern Haupteintrag
 		} else {
 			return true;
 		}
-		
+
 	}
 
 	/**
@@ -495,7 +514,7 @@ class Messageboxes {
 		}
 
 		$check_arr = $this->_formCheck->field_check_arr($tabledata, $stddata);
-		
+
 		foreach ($check_arr as $key => $value) {
 
 			if ($value === true) {
@@ -506,7 +525,7 @@ class Messageboxes {
 
 			//Mail und Hp noch seperat testen
 			if ($key == 'email' && $value === true && $this->_formCheck->mailcheck($tabledata[$key]) > 0) {
-					$arr_rtn[$key] = MSGBOX_FORMCHECK_INVALID;
+				$arr_rtn[$key] = MSGBOX_FORMCHECK_INVALID;
 
 			} elseif ($key == 'hp' && $value === true) {
 
@@ -540,6 +559,7 @@ class Messageboxes {
 
 	private function _formatTime($time, $timeformat)
 	{
+
 		if (is_string($timeformat) && !empty($timeformat) && is_string($time)&& !empty($time)) {
 			$this->_mysql->query("SELECT DATE_FORMAT('$time', '$timeformat') as time");
 			$arr = $this->_mysql->fetcharray('assoc');
@@ -547,12 +567,14 @@ class Messageboxes {
 		} else {
 			throw new CMSException('Falsche Parameterangaben. Timeformat-String oder Time-String falsch', EXCEPTION_LIBARY_CODE);
 		}
+
+
 	}
 
 
 	/**
 	 * Fuellt die Eigenschaft _tablestruct mit den Werten, welche an den Konstruktor weitergegeben wurden.
-	 * Wichtige Angaben sind ID und content als Schluessel. $this->_tablestruct enthaelt danach ein Array, desen Werte
+	 * Wichtige Angaben sind ID, time und content als Schluessel. $this->_tablestruct enthaelt danach ein Array, desen Werte
 	 * die Indizes der Mysql-Tabelle sind.
 	 *
 	 * @param array $tablestruct Array vom Konstruktor
@@ -562,8 +584,8 @@ class Messageboxes {
 	private function _fillStruct($tablestruct)
 	{
 		//Mindest ID, content und time muessen vorhanden sein
-		if (array_key_exists("ID", $tablestruct) && array_key_exists("content", $tablestruct) && array_key_exists("time", $tablestruct)) {
-			
+		if (key_exists("ID", $tablestruct) && array_key_exists("content", $tablestruct) && array_key_exists("time", $tablestruct)) {
+
 			//So werden die unnoetig vordefinierten Schluesseln im $_tablestruct ueberschrieben,  z.B. time
 			$this->_tablestruct = $tablestruct;
 			return true;

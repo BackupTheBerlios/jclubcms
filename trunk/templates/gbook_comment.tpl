@@ -1,4 +1,6 @@
-      <div id="content">
+      {config_load file='textes.de.conf' section='Gbook'}
+	  
+	  <div id="content">
 		<div id="content_txt">
 			<h2>Neuer Kommentar schreiben</h2>
     <table width = 100% class="content_tab">
@@ -55,16 +57,16 @@
       <input type="hidden" name="sessioncode" value="{$sessioncode}" />
       <table cellpadding="0" cellspacing="0" align="center" class="content_tab">
         <tr>
-          <td class="formailer_header" colspan="2">{$entry_title}
+          <td class="formailer_header" colspan="2">{$entry_title|default:#entry_titlet#}
           </td>
         </tr>
         <tr>
           <td class="formailer_txt">
-          <textarea class="formailer_txt_textarea" name="content" cols="38" rows="5">{$entry_content}</textarea></td>
+          <textarea class="formailer_txt_textarea" name="content" cols="38" rows="5">{$entry_content|default:#entry_content#}</textarea></td>
           <td class="formailer_adress">
-            <img src="templates/style/icons/user.gif" /> <input class="formailer_adress_input" onclick="select()" name="name" type="text" value="{$entry_name}" /><br />
-            <img src="templates/style/icons/email.gif" /> <input class="formailer_adress_input" onclick="select()" name="email" type="text" value="{$entry_email}" /><br />
-            <img src="templates/style/icons/house.gif" /> <input class="formailer_adress_input" onclick="select()" name="hp" type="text" value="{$entry_hp}" /></a>
+            <img src="templates/style/icons/user.gif" /> <input class="formailer_adress_input" onclick="select()" name="name" type="text" value="{$entry_name|default:#entry_name#}" /><br />
+            <img src="templates/style/icons/email.gif" /> <input class="formailer_adress_input" onclick="select()" name="email" type="text" value="{$entry_email|default:#entry_email#}" /><br />
+            <img src="templates/style/icons/house.gif" /> <input class="formailer_adress_input" onclick="select()" name="hp" type="text" value="{$entry_hp|default:#entry_hp#}" /></a>
           </td>
         </tr>
         <tr>

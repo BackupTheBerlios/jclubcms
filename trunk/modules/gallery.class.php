@@ -267,8 +267,9 @@ class Gallery implements Module
 		$album_name = $shown_bild['name'];
 
 		/* Wurzel bestimmen */
-		$root = $this->_getRoot($shown_bild['ref_ID']);
+		$root = $this->_getRoot($shown_bild['ref_ID'], true);
 
+		
 		/* Zahlen ermitteln */
 		$this->_mysql->query("SELECT * FROM gallery_eintraege WHERE fid_album = '$album_ID'");
 		$count = $this->_mysql->num_rows();

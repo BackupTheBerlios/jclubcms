@@ -71,7 +71,6 @@ class Action
 	public function _exe_reserved_mail()
 	{
 		$mail = new Mailclient($this->_smarty, $this->_mysql);
-		echo "\nAufruf der Mailclient-Klasse<br />\n";
 	}
 }
 ?>

@@ -3,7 +3,7 @@
 	<h1>G&auml;stebuch</h1>
 	<table width="640" align="center" class="content_tab">
 		<tr>
-			<td><a href="?nav_id={$local_link}&action=new&amp;{$SID}"><img src="templates/style/icons/book_open.gif" />Neuer Eintrag</a></td><td align="right">{if $entrys lte 1}{$entrys} Eintrag{else}{$entrys} Eintr&auml;ge{/if}</td>
+			<td><a href="?nav_id={$local_link}&action=new&amp;{$SID}"><img src="templates/style/icons/book_open.gif" />Neuer Eintrag</a></td><td align="right">{if $entries lte 1}{$entries|default:"Kein"} Eintrag{else}{$entries} Eintr&auml;ge{/if}</td>
 		</tr>
 		<tr>
 			<td colspan="2" align="center">{foreach item=page from=$pages}
@@ -33,7 +33,7 @@
 				<td class="content_tab_content2">
 					<img src="templates/style/icons/date.gif" /> {$book.time}<br />
 					<img src="templates/style/icons/user.gif" /> {$book.name}<br />
-					<a href="?mail&nav_id={$local_link}&entry_id={$book.mail}"><img src="templates/style/icons/email.gif" /> E-mail</a>
+					<a href="?mail&nav_id={$local_link}&entry_id={$book.ID}&amp;{$SID}"><img src="templates/style/icons/email.gif" /> E-mail</a>
 					{if $book.hp neq ""}<br /><a href="http://{$book.hp}" target="_blank"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
 				</td>
 				<td class="content_tab_content2" style="text-align:right">
@@ -53,7 +53,7 @@
 					<td class="content_tab_content2">
 						<img src="templates/style/icons/date.gif" /> {$comment.time}<br />
 						<img src="templates/style/icons/user.gif" /> {$comment.name}<br />
-						<a href="?mail&nav_id={$local_link}&entry_id={$comment.email}"><img src="templates/style/icons/email.gif" /> E-mail</a>
+						<a href="?mail&nav_id={$local_link}&entry_id={$comment.ID}"><img src="templates/style/icons/email.gif" /> E-mail</a>
 						{if $comment.hp neq ""}<br /><a href="http://{$comment.hp}" target="_blank"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
 					</td>
 					<td class="content_tab_content2" style="text-align:right">

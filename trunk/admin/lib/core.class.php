@@ -209,28 +209,21 @@ class Core
 
 	private function _checkGpc()
 	{
-		$globals = array('GET' => $_GET, 'POST' => $_POST, 'COOKIE' => $_COOKIE);
+		$this->_gpc = array('GET' => $_GET, 'POST' => $_POST, 'COOKIE' => $_COOKIE);
 
+		/* Bei ausgeschalteten magic_quotes werden Slashes von Hand eingefügt */
 		if (get_magic_quotes_gpc() == 0) {
-			$activ = false;
-		} else {
-			$activ = true;
-		}
+			foreach ($this->_gpc as $gkey => $gvalue) {
 
-		foreach ($globals as $gkey => $gvalue) {
+				foreach ($gvalue as $key => $value) {
 
-			foreach ($gvalue as $key => $value) {
+					$this->_gpc[$gkey][$key] = addslashes($value);
 
-				//Bei inkativen magic_quotes_gpc addslashes anwenden
-				if ($activ == false) {
-					$value = addslashes($value);
 				}
 
-				$this->_gpc[$gkey][$key] = $value;
-
 			}
-
 		}
+		
 
 		/* Nur noch die Gespeicherten Werte nutzen */
 		unset($_GET);
@@ -276,7 +269,6 @@ class Core
 	private function _initPage()
 	{
 		global $start_time;
-		//echo "\$start_time $start_time\n";
 		$this->_tplfile = 'index.tpl';
 
 
@@ -290,6 +282,7 @@ class Core
 		}
 
 		$this->_loadNav($shortlink);
+		$this->_check_spec_action();
 
 		$this->_mysql->query("SELECT `menu_pagetyp`, `menu_page` FROM `$table` WHERE `menu_ID`= '{$this->_nav_id}'");
 		$data = $this->_mysql->fetcharray("assoc");
@@ -337,14 +330,14 @@ class Core
 		/*Menu-Array ermitteln und in Smarty-Array speichertn, um später zu assignen (@link initPage() ) */
 		$nav_array = $this->_page->get_menu_array($this->_gpc['GET'], $shortlinks, $adminmenu);
 
-		
+
 		/* Spezielle Zeichen zu HTML-Zeichen konvertieren */
 		if (!empty($nav_array['topnav']) && is_array($nav_array['topnav'])) {
 			foreach($nav_array['topnav'] as $key => $value) {
 				$nav_array['topnav'][$key]['menu_name'] = htmlentities($value['menu_name']);
 			}
 		}
-		
+
 		if (!empty($nav_array['subnav']) && is_array($nav_array['subnav'])) {
 			foreach($nav_array['subnav'] as $key => $value) {
 				$nav_array['subnav'][$key]['menu_name'] = htmlentities($value['menu_name']);
@@ -476,12 +469,10 @@ class Core
 	/**
 	 * Prüft auf spezielle Aktionen durch
 	 *
-	 
+	 */
 	private function _check_spec_action()
 	{
-		//echo "\n".__METHOD__." nav_id $this->_nav_id\n";
 		if (key_exists('mail', $this->_gpc['GET'])) {
-			//echo "\n".__METHOD__." mail ist ein get-parameter\n";
 			//Nav_id null oder 0 und get-parameter mail vorhanden?
 			$this->_mysql->query("SELECT `menu`.`menu_ID` FROM `menu`,`modules` WHERE `modules`.`modules_name` = 'mail' AND `modules`.`modules_ID` = `menu`.`menu_page` AND `menu`.`menu_pagetyp` = 'mod' LIMIT 1");
 			$data = $this->_mysql->fetcharray('num');
@@ -489,13 +480,14 @@ class Core
 		}
 	}
 	
-	private function _output_callback($string)
-	{
-		$umlaut = array('ä', 'ö', 'ü', 'Ä','Ö', 'Ü');
-		$httpumlaut = array('&auml;', '&ouml;', '&uuml;', '&Auml;','&Ouml;', '&Uuml;');
-		str_replace($umlaut, $httpumlaut, $string);
-		return $string;
-	}*/
+	
+//	private function _output_callback($string)
+//	{
+//		$umlaut = array('ä', 'ö', 'ü', 'Ä','Ö', 'Ü');
+//		$httpumlaut = array('&auml;', '&ouml;', '&uuml;', '&Auml;','&Ouml;', '&Uuml;');
+//		str_replace($umlaut, $httpumlaut, $string);
+//		return $string;
+//	}
 
 
 	//	private function _exe_reserved_action()

@@ -175,7 +175,8 @@ class Mysql {
 	 * @return true|false
 	 */
 
-	public function query($query) {
+	public function query($query) 
+	{
 		
 		//Query-Record loeschen, weil ein neuer Query gestartet wurde
 		$this->_queryrecords = array();
@@ -185,7 +186,12 @@ class Mysql {
 		if (!is_string($query)) {
 			throw new CMSException('Angegebener Mysql-Query ist kein String', EXCEPTION_MYSQL_CODE);
 		}
+		
 			
+		/* Entfernt alle Slashes, welche von PHP hinzugefügt wurden (siehe Core::_checkGpc) */
+		$query = stripslashes($query);
+		
+		
 		//Kontrolliert, ob der query SELECT, SHOW, EXPLAIN oder DESCRIBE enthaelt. Nur dann gibt mysql_query ein result zurück
 		$query_result_by = array('SELECT', 'SHOW', 'EXPLAIN', 'DESCRIBE');
 		

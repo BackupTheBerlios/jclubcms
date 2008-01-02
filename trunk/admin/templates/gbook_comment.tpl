@@ -10,20 +10,35 @@
 	<table cellpadding="0" cellspacing="0" align="center" class="content_tab">
 			<tr>
 				<td class="content_tab_header" colspan="2">
-				{$gbook.gbook_title}
+				{$gbook.title}
 				</td>
 			</tr>
 			<tr>
 				<td class="content_tab_content1">
-				{$gbook.gbook_content}
+				{$gbook.content}
 				</td>
 				<td class="content_tab_content2">
-					<img src="templates/style/icons/date.gif" /> {$gbook.gbook_time}<br />
-					<img src="templates/style/icons/user.gif" /> {$gbook.gbook_name}<br />
+					<img src="templates/style/icons/date.gif" /> {$gbook.time}<br />
+					<img src="templates/style/icons/user.gif" /> {$gbook.name}<br />
 					<a href="?nav_id={$local_link}&action=mail&entry_id={$gbook.ID}&amp;{$SID}"><img src="templates/style/icons/email.gif" /> E-mail</a>
 					{if $gbook.hp neq ""}<br /><a href="{$gbook.hp}" target="_blank"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
 				</td>
 			</tr>
+			{* Innere Schlaufe für das Auslesen der Kommentare *}
+		  {foreach key=schluessel item=comment from=$gbook.comments}
+		  <tr>
+			<td class="content_tab_content1">
+			  {$comment.content}
+			</td>
+			<td class="content_tab_content2">
+			  <img src="templates/style/icons/date.gif" /> {$comment.time}<br />
+			  <img src="templates/style/icons/user.gif" /> {$comment.name}<br />
+			  <a href="?mail&nav_id={$local_link}&entry_id={$comment.ID}"><img src="templates/style/icons/email.gif" /> E-mail</a><br />
+			  {if $comment.hp neq ""}<a href="http://{$comment.hp}"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
+			</td>
+		  </tr>
+		  {/foreach}
+	</table>
 	{*Fehlerausgabe wenn noetig*}
 	{if $dump_errors}
 	<table class="content_tab" align="center">
@@ -36,7 +51,7 @@
 	</table>
 	{/if}
 	<!-- Eintrags-Formular -->
-    <form name="newentry" method="post" action="?nav_id={$local_link}&id={$gbook.ID}&action={$action}&{$SID}">
+    <form name="newentry" method="post" action="">
       <table cellpadding="0" cellspacing="0" align="center" class="content_tab">	  
         <tr>
           <td class="formailer_header" colspan="2"></td>
