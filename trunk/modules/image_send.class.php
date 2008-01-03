@@ -4,8 +4,7 @@
  * @package JClubCMS
  * image_send.class.php
  * 
- * Diese Klasse ist zustaendig fuer das Editieren der Gaestebucheintraege. Auch koennen neue Beitraege hinzugefuegt oder geloescht
- * werden
+ * Diese Klasse ist zustaendig fuer das Anzeigen der Bilder.
  */
 require_once ADMIN_DIR.'lib/module.interface.php';
 require_once ADMIN_DIR.'lib/image.class.php';

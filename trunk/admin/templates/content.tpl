@@ -11,6 +11,7 @@
 	<div align="center">{foreach item=page from=$pages}
 			{if $page.link != ""}<a href="{$page.link}">[{$page.page}]</a>{else}[{$page.page}]{/if}
 	{/foreach}</div>
+	<div align="left"><a href="?nav_id={$local_link}&action=new&amp;{$SID}">Neuer Inhalt erstellen</a>
 	{foreach item=content  from=$contents}
 	<a name="{$content.content_ID}"></a>
 		<table cellpadding="0" cellspacing="0" align="center" class="content_tab" style="max-width: 80%;min-width: 60%;font-size: 11px;">
@@ -26,7 +27,8 @@
 			</tr>
 			<tr>
 				<td class="content_tab_content1">
-				{$content.content_text|truncate:500:"..."}
+					{*Bei Links für Bilder wird noch die Sessionid angehängt, das diese im Text nicht vorkommt. Denn der Text wird auch im Userbereich angezeigt*}
+					{$content.content_text|truncate:500:"..."|replace:"src=\"?image":"src=\"?image&$SID"}
 				</td>
 				<td class="content_tab_content2" style="text-align:right">
 				<img src="templates/style/icons/user.gif" />  {$content.content_author|default:"Unknkow User"}<br />

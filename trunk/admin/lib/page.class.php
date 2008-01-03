@@ -60,7 +60,8 @@ class Page
 
 		//Ist $nav_id kleiner gleich Null, wird ihr der erste Wert aus der MySQL-Tabelle zugewiesen.
 		if($nav_id <= 0) {
-			$this->mysql->query("SELECT `menu_ID` FROM `$table_name` ORDER BY `menu_position` ASC LIMIT 1");
+			$this->mysql->query("SELECT `menu_ID` FROM `$table_name` WHERE `menu_display` != '0' "
+			."ORDER BY `menu_position` ASC  LIMIT 1");
 			$nav_id = $this->mysql->fetcharray('num');
 			$nav_id = $nav_id[0];
 		}

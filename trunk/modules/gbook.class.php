@@ -401,11 +401,7 @@ class Gbook implements Module {
 				$answer[] = $error_vars['email_checkfailed'];
 			} elseif ($key == 'hp' ) {
 				/* Wenn die hp falsch ist, gibt es kein Fehler */
-					$val[$key] = $rtn_arr[$key];
-					echo __METHOD__." Return von $key\n";
-					var_dump($rtn_arr[$key]);
-				
-				
+					$val[$key] = $rtn_arr[$key];	
 			}
 		}
 

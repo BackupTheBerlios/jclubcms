@@ -96,12 +96,16 @@ class Contentadmin implements Module
 		//Je nach Get-Parameter die zugehörige Anweisung ausfuehren
 		if (key_exists('action', $this->_gpc['GET'])) {
 			switch ($this->_gpc['GET']['action']) {
+				case 'new':
+					$this->_create();
+					break;
+				
 				default:
-					$this->_view(30);
+					$this->_view(15);
 			}
 				
 		} else {
-			$this->_view(30);
+			$this->_view(15);
 			return true;
 		}
 	}
@@ -138,10 +142,11 @@ class Contentadmin implements Module
 	
 	private function _create()
 	{
+		
 		if ($this->_isformsend()) {
 			
 		} else {
-			
+			$this->_showeditor();
 		}
 	}
 	
@@ -173,6 +178,7 @@ class Contentadmin implements Module
 	
 	private function _showeditor($error_arr = null)
 	{
+		$this->_tplfile = 'content_new.tpl';
 		if($error_arr != null && is_array($error_arr) && !empty($error_arr)) {
 			;
 		}

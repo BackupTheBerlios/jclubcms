@@ -448,14 +448,16 @@ class Messageboxes {
 		}
 
 		if (array_key_exists('ref_ID', $this->_tablestruct)) {
-			$query = "SELECT `{$this->_tablestruct['ID']}` FROM `{$this->_tablename}` WHERE `{$this->_tablestruct['ref_ID']}` = '$id'";
+			$query = "SELECT `{$this->_tablestruct['ID']}` FROM `{$this->_tablename}` "
+			."WHERE `{$this->_tablestruct['ref_ID']}` = '$id'";
 			$this->_mysql->query($query);
 			$this->_mysql->saverecords('assoc');
 			$id_arr = $this->_mysql->get_records();
 
 			/* Kommentare löschen */
 			for ($i = 0; $i < count($id_arr); $i++) {
-				$query = "DELETE FROM `{$this->_tablename}` WHERE `{$this->_tablestruct['ID']}` = '{$id_arr[$i][$this->_tablestruct['ID']]}' LIMIT 1";
+				$query = "DELETE FROM `{$this->_tablename}` "
+				."WHERE `{$this->_tablestruct['ID']}` = '{$id_arr[$i][$this->_tablestruct['ID']]}' LIMIT 1";
 				//$this->_mysql->query($query);
 			}
 		}
@@ -479,7 +481,8 @@ class Messageboxes {
 			throw new CMSException('Parameter ungueltig', EXCEPTION_LIBARY_CODE);
 		}
 
-		$this->_mysql->query("SELECT `{$this->_tablestruct['ref_ID']}` FROM `{$this->_tablename}` WHERE `{$this->_tablestruct['ID']}` = '$id' LIMIT 1");
+		$this->_mysql->query("SELECT `{$this->_tablestruct['ref_ID']}` FROM `{$this->_tablename}` "
+		."WHERE `{$this->_tablestruct['ID']}` = '$id' LIMIT 1");
 		$this->_mysql->saverecords('assoc');
 		$data = $this->_mysql->get_records();
 

@@ -223,7 +223,7 @@ class Core
 
 			}
 		}
-		
+
 
 		/* Nur noch die Gespeicherten Werte nutzen */
 		unset($_GET);
@@ -461,8 +461,9 @@ class Core
 		}
 		$this->_mysql->query("SELECT `content_title`, `content_text` FROM `$cnt_table` WHERE `content_ID` = '$page_ID'");
 		$data = $this->_mysql->fetcharray("assoc");
-		$content_title = $data['content_title'];
+		$content_title = $data['content_title'];	
 		$content_text = $data['content_text'];
+		
 		$this->_smarty_array += array('content_title' => $content_title, 'content_text' => $content_text);
 	}
 
@@ -472,22 +473,41 @@ class Core
 	 */
 	private function _check_spec_action()
 	{
+		$modulname = '';
+		if ($this->_is_admin == true) {
+			$menu_tbl = 'admin_menu';
+			$mod_tbl = 'admin_modules';
+		} else {
+			$menu_tbl = 'menu';
+			$mod_tbl = 'modules';
+		}
+
 		if (key_exists('mail', $this->_gpc['GET'])) {
-			//Nav_id null oder 0 und get-parameter mail vorhanden?
-			$this->_mysql->query("SELECT `menu`.`menu_ID` FROM `menu`,`modules` WHERE `modules`.`modules_name` = 'mail' AND `modules`.`modules_ID` = `menu`.`menu_page` AND `menu`.`menu_pagetyp` = 'mod' LIMIT 1");
+			$modulname = 'mailmodule';
+		} elseif (key_exists('image', $this->_gpc['GET'])) {
+			$modulname = 'image_send';
+
+		}
+
+		if ($modulname != '') {
+			$query = "SELECT `$menu_tbl`.`menu_ID` FROM `$menu_tbl`,`$mod_tbl` "
+			."WHERE `$mod_tbl`.`modules_name` = '$modulname' AND `$mod_tbl`.`modules_ID` = `$menu_tbl`.`menu_page` "
+			."AND `$menu_tbl`.`menu_pagetyp` = 'mod' LIMIT 1";
+			$this->_mysql->query($query);
 			$data = $this->_mysql->fetcharray('num');
 			$this->_smarty_array['local_link'] = $this->_nav_id = (int)$data[0];
 		}
+
 	}
-	
-	
-//	private function _output_callback($string)
-//	{
-//		$umlaut = array('ä', 'ö', 'ü', 'Ä','Ö', 'Ü');
-//		$httpumlaut = array('&auml;', '&ouml;', '&uuml;', '&Auml;','&Ouml;', '&Uuml;');
-//		str_replace($umlaut, $httpumlaut, $string);
-//		return $string;
-//	}
+
+
+	//	private function _output_callback($string)
+	//	{
+	//		$umlaut = array('ä', 'ö', 'ü', 'Ä','Ö', 'Ü');
+	//		$httpumlaut = array('&auml;', '&ouml;', '&uuml;', '&Auml;','&Ouml;', '&Uuml;');
+	//		str_replace($umlaut, $httpumlaut, $string);
+	//		return $string;
+	//	}
 
 
 	//	private function _exe_reserved_action()
