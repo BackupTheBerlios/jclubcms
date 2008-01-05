@@ -54,7 +54,7 @@ class Formularcheck {
 
 		foreach ($fields as $key => $value) {
 
-			if (array_key_exists($key, $unalloweds) == true) {
+			if (key_exists($key, $unalloweds) == true) {
 				$arr_rtn[$key] = $this->field_check($value, $unalloweds[$key]);
 			} else {
 				$arr_rtn[$key] = $this->field_check($value);
@@ -159,7 +159,7 @@ class Formularcheck {
 	 */
 	private function is_country () {
 		if (!file_exists(USER_DIR."/config/country.txt")) {
-			throw new CMSException('Datei mit Laenderendungen nicht gefunden', EXCEPTION_LIBARY_CODE);
+			throw new CMSException('Datei mit Länderendungen nicht gefunden', EXCEPTION_LIBARY_CODE);
 		}
 		$handle = fopen(USER_DIR."/config/country.txt", "r");
 		$country_array = array();

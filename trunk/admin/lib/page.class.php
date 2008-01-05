@@ -60,7 +60,7 @@ class Page
 
 		//Ist $nav_id kleiner gleich Null, wird ihr der erste Wert aus der MySQL-Tabelle zugewiesen.
 		if($nav_id <= 0) {
-			$this->mysql->query("SELECT `menu_ID` FROM `$table_name` WHERE `menu_display` != '0' "
+			$this->mysql->query("SELECT `menu_ID` FROM `$table_name` WHERE `menu_display` != '0' AND  `menu_topid`= '0'"
 			."ORDER BY `menu_position` ASC  LIMIT 1");
 			$nav_id = $this->mysql->fetcharray('num');
 			$nav_id = $nav_id[0];
@@ -73,8 +73,8 @@ class Page
 		//Damit muss im index nicht nochmal die $nav_id kontroliert werden
 		$menu_array['nav_id'] = $nav_id;
 
-
 		return $menu_array;
+
 	}
 
 
@@ -121,10 +121,16 @@ class Page
 	{
 		//$main_url = $_SERVER['REQUEST_URI'];
 		$main_url = $_SERVER['PHP_SELF'];
-		$nav_id = $get_array['nav_id'];
+		if (key_exists('nav_id', $get_array)) {
+			$nav_id = $get_array['nav_id'];
+		} else {
+			$nav_id = '';
+		}
 		$apendices = "";
 
 		$page = self::get_current_page($get_array);
+		
+		
 
 
 		foreach ($get_array as $key => $value) {
@@ -216,7 +222,7 @@ class Page
 	/**
 	 * Baut ein Menu-Array auf. Das mitgelieferte Topid-Array wird durchgearbeitet, indem zuerst alle
 	 * Menu-Einträge der ersten TopID (1. Schlüssel des TopID-Arrays) aus der Datenbank gelesen werden.
-	 * Die Menu-Einträge werden durchgearbeitet als Array durchgearbeitet. Tritt ein Menu-Eintrag auf, welcher
+	 * Die Menu-Einträge werden als Array durchgearbeitet. Tritt ein Menu-Eintrag auf, welcher
 	 * die Menu-ID hat, welcher der Id des 2. Schlüssels des TopID-Arrays entspricht, werden alle Menu-Einträge
 	 * mit dieser TopID aufgerufen. Das ganze beginnt dann wieder von vorn mit dem durcharbeiten, menuID = topID usw.
 	 * Daher wird bei menuID = topID die Funktion rekursiv aufgerufen
@@ -375,17 +381,17 @@ class Page
 	 * @param string $table_name Name der MySQL-Tabelle
 	 * @param array $topid_array Array mit den Top-IDs
 	 * @param array[reference] &$subnav_array Array, wo die Navigation gespeichert wird
-	 * @param bool[optional] $show Nur die aktiven und übergeorndete Menues oder alle(!) Menues ausklappen
-	 * @param bool $reset Alle Variablen zurücksetzen (nötig wenn Funktion verschiedene Male aufgerufen wird)
+	 * @param bool[optional] $show_all topid_array nur der Reihe nach gelesen (true) oder alle Einträge berücksichtigen
+	 * @param bool $reset Alle Variablen zurücksetzen (nötig, wenn Funktion verschiedene Male aufgerufen wird)
 	 */
 
-	private function _build_subnav_array($table_name, &$topid_array, &$subnav_array, $show_all = false, $reset = false)
+	private function _build_subnav_array($table_name, &$topid_array, &$subnav_array, $jump_search = false, $reset = false)
 	{
 		$mysql_array = array();
-		//$j wird gebraucht, um $topid_array durchzugehen. $i brauchts fuer $subnav_array.
-		static $i = 0, $st_level = 0;
+		/* $i brauchts für die Indexierung des $subnav_array, $level für das Bestimmen des Menu-Levels */
+		static $i = 0, $static_level = 0;
 		if ($reset == true) {
-			$i = 0; $st_level = 0;
+			$i = 0; $static_level = 0;
 		}
 
 		$this->mysql->query("SELECT `menu_ID`,`menu_topid`, `menu_name`, `menu_modvar`, `menu_page`as '_menu_page' 
@@ -395,14 +401,15 @@ class Page
 
 		$mysql_array = $this->mysql->get_records();
 
-		//Durchlaeuft $mysql_array und baut so die Navigation auf.
-		//$j++;
 
-		//$level aendert sich nicht innerhalb der Funktion.
-		$st_level++;
+		//$level aendert sich nicht innerhalb der Funktion, nur bei einem neuen Funktionsaufruf
+		$static_level++;
+		/* Oberster Key entfernen, damit weniger verglichen werden muss und bei beachtung der 
+		Reihenfolge von $topid_array ($jump_search == false) dsd Vergleichen einfacher wird*/
 		array_shift($topid_array);
 
-		$lc_level = $st_level;
+		//Der Wert von $lc_level bleibt erhalten, auch wenn ein neuer Funktionsaufruf stattfindet
+		$lc_level = $static_level;
 		//Baut den Navigationsbaum auf, indem bei jedem Treffer Topid -> menu_Id ein neuer Ast entsteht.
 		foreach ($mysql_array as $value) {
 
@@ -412,17 +419,18 @@ class Page
 			$i++;
 			
 
-			/**if($j < count($topid_array) && $value['menu_ID'] == $topid_array[$j])
-			{
-			$this->_build_subnav_array($table_name, $topid_array, $subnav_array);
-			}*/
-			if ($show_all == true && count($topid_array) > 0 && in_array($value['menu_ID'], $topid_array)) {
+			/* Ist $jump_search == true, werden alle Einträge berücksichtig. D.h. es wird im ganzen $topid-Array
+				nach der topid von $value[menu_ID] gesucht, die Reihenfolge von topid_array spielt keine Rolle
+				Ist $jump_search == false, wird immer nur das vorderste Element von $topid_array mit der
+				topid von $value[menu_ID] verglichen.
+			*/
+			if ($jump_search == true && count($topid_array) > 0 && in_array($value['menu_ID'], $topid_array)) {
 				$key = array_search($value['menu_ID'], $topid_array);
 				if ($key != 0) {
 					$topid_array[0] = $topid_array[$key];
 					unset($topid_array[$key]);
 				}
-				$this->_build_subnav_array($table_name, &$topid_array, $subnav_array, $show_all);
+				$this->_build_subnav_array($table_name, &$topid_array, $subnav_array, $jump_search);
 
 			} elseif (count($topid_array) > 0 && $value['menu_ID'] == $topid_array[0]) {
 				$this->_build_subnav_array($table_name, $topid_array, $subnav_array);

@@ -125,7 +125,7 @@ class Messageboxes {
 		}
 
 		if ($this->_form_checked == false) {
-			throw  new CMSException('Eingaben wurde nicht auf Gueltigkeit ueberprueft', EXCEPTION_LIBARY_CODE);
+			throw  new CMSException('Eingaben wurde nicht auf Gültigkeit ueberprueft', EXCEPTION_LIBARY_CODE);
 		}
 
 		//Formular-Check durchfuehren
@@ -183,7 +183,7 @@ class Messageboxes {
 		}
 
 		if ($this->_form_checked == false) {
-			throw  new CMSException('Eingaben wurde nicht auf Gueltigkeit ueberprueft', EXCEPTION_LIBARY_CODE);
+			throw  new CMSException('Eingaben wurde nicht auf Gültigkeit ueberprueft', EXCEPTION_LIBARY_CODE);
 		}
 
 		//Formular-Check durchfuehren
@@ -240,7 +240,7 @@ class Messageboxes {
 	public function editEntry($tabledata)
 	{
 		if ($this->_form_checked == false) {
-			throw  new CMSException('Eingaben wurde nicht auf Gueltigkeit ueberprueft', EXCEPTION_LIBARY_CODE);
+			throw  new CMSException('Eingaben wurde nicht auf Gültigkeit ueberprueft', EXCEPTION_LIBARY_CODE);
 		}
 
 
@@ -363,10 +363,10 @@ class Messageboxes {
 
 		//Ordnungsbedingung fuer Mysql-Query
 		if ($order != 'ASC' && $order != 'DESC' && $order != "") {
-			throw new CMSException('Falsche Parameterangaben. 3. Parameter nicht zulaessig', EXCEPTION_LIBARY_CODE);
+			throw new CMSException('Falsche Parameterangaben. 3. Parameter nicht zulässig', EXCEPTION_LIBARY_CODE);
 
 		} elseif ($corder != 'ASC' && $corder != 'DESC' && $corder != "") {
-			throw new CMSException('Falsche Parameterangaben. 4. Parameter nicht zulaessig', EXCEPTION_LIBARY_CODE);
+			throw new CMSException('Falsche Parameterangaben. 4. Parameter nicht zulässig', EXCEPTION_LIBARY_CODE);
 
 		} elseif (isset($this->_tablestruct['time']) && !empty($this->_tablestruct['time']) && $order != "" && $corder != "") {
 			//Ordnungsbedingungen-Strings in top-nachrichten und kommentaren
@@ -444,7 +444,7 @@ class Messageboxes {
 	public function delEntry($id)
 	{
 		if (!is_int($id)) {
-			throw new CMSException('Falsche Parameterangaben. Parameter nicht zulaessig', EXCEPTION_LIBARY_CODE);
+			throw new CMSException('Falsche Parameterangaben. Parameter nicht zulässig', EXCEPTION_LIBARY_CODE);
 		}
 
 		if (array_key_exists('ref_ID', $this->_tablestruct)) {
@@ -478,7 +478,7 @@ class Messageboxes {
 	public function is_comment($id)
 	{
 		if (!is_numeric($id)) {
-			throw new CMSException('Parameter ungueltig', EXCEPTION_LIBARY_CODE);
+			throw new CMSException('Parameter ungültig', EXCEPTION_LIBARY_CODE);
 		}
 
 		$this->_mysql->query("SELECT `{$this->_tablestruct['ref_ID']}` FROM `{$this->_tablename}` "

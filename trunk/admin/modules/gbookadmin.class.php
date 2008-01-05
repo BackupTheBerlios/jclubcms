@@ -115,7 +115,7 @@ class Gbookadmin implements Module {
 
 		$this->_smilie = new Smilies($dir_smilies);
 
-		if (isset($this->_gpc['GET']['action'])) {
+		if (key_exists('action', $this->_gpc['GET'])) {
 			switch ($this->_gpc['GET']['action']) {
 				case 'new':
 					$this->_add();

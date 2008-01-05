@@ -8,10 +8,10 @@
  */
 
 //---Session-Einstellungen---
-$session_timeout = 1000; //Anzahl Sekunden, bis Session ungueltig ist;
+$session_timeout = 3600; //Anzahl Sekunden, bis Session ungueltig ist;
 
 /*---Admin-Menu---*/
-$admin_menu_shortlinks = false;
+$admin_menu_shortlinks = true;
 
 
 ?>

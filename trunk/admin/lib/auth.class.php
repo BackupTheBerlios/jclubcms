@@ -68,7 +68,7 @@ class Auth
 	 * @return boolean Antwort, ob sich jemand einloggt.
 	 */
 
-	public function check4login($post_array)
+	public function check4login(&$post_array)
 	{
 
 		
@@ -103,6 +103,11 @@ class Auth
 					} elseif ($data == false) {
 
 						$this->_smarty->assign('login_error', $auth_error_failpw);
+						$this->_smarty->display('login.tpl');
+						
+					} else {
+						/* Query zwar richtig, aber user_ID ungültig */
+						$this->_smarty->assign('login_error', $auth_error_userinvalid);
 						$this->_smarty->display('login.tpl');
 					}
 				}
@@ -187,7 +192,7 @@ class Auth
 	 * @return array|int
 	 */
 
-	private function _getlogindata($post_array)
+	private function _getlogindata(&$post_array)
 	{
 		$name = "";
 		$password_encrypted = "";
@@ -204,6 +209,7 @@ class Auth
 
 		if (isset($post_array['password'])&& !empty($post_array['password'])) {
 			$password_encrypted = md5($post_array['password']);
+			unset($post_array['password']);
 
 		} else {
 			$error += 2;

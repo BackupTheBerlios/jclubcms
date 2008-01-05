@@ -4,6 +4,9 @@
  * @author David Däster, Simon Däster
  */
 
+/*Menu-Einstellungen*/
+$user_menu_shortlinks = false;
+
 /*News-Einstellungen*/
 $news_entries_per_page = 5;
 

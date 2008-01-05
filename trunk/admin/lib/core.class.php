@@ -127,7 +127,7 @@ class Core
 
 	public static function singleton()
 	{
-		if (!isset(self::$_core) && !(self::$_core instanceof Core)) {
+		if (empty(self::$_core) && !(self::$_core instanceof Core)) {
 			self::$_core = new Core;
 		}
 	}
@@ -142,6 +142,7 @@ class Core
 	{
 		//Abfangen von Exceptions
 		try {
+			
 			/* Ausgabe-Pufferung aktivieren - wird bei initPage geleert*/
 			//ob_start(array(&$this, "_output_callback"));
 			$this->_initObjects();
@@ -154,11 +155,12 @@ class Core
 				$this->_checkAdmin();
 			}
 
+			
 			$this->_initPage();
 
 		} catch(CMSException $e) {
-
-			$strTrace = '#'.str_replace('#', "<br />\n#", substr($e->getTraceAsString(), 1));
+			
+			$strTrace = '#'.substr($e->getTraceAsString(), 1);
 			//Ist Smarty nicht vorhanden, wird eine Nachricht ueber den Exceptionhandler geschickt, der kein Smarty braucht.
 			if (!class_exists('Smarty') || !($this->_smarty instanceof Smarty)) {
 				CMSException::printException($e->getFilename(), $e->getLine(), $e->getMessage(), $strTrace);
@@ -166,9 +168,9 @@ class Core
 			} else {
 
 				$this->_smarty_array['file'] = 'error_include.tpl';
-				$this->_smarty_array['error_title'] = $e->getTitle();
-				$this->_smarty_array['error_text'] = $e->getMessage()."<br />\nFehler aufgetreten in der Datei ".$e->getFilename()." auf Zeilenummer ".$e->getLine();
-				$this->_smarty_array['error_text'] .= "<br />\n"."<div style=\"font-size: 11px\">".$strTrace."</div>";
+				$this->_smarty_array['error_title'] = CMSException::htmlencode($e->getTitle());
+				$this->_smarty_array['error_text'] = CMSException::htmlencode($e->getMessage())."<br />\nFehler aufgetreten in der Datei ".$e->getFilename()." auf Zeilenummer ".$e->getLine();
+				$this->_smarty_array['error_text'] .= "<br />\n"."<div style=\"font-size: 11px\">\n".nl2br(CMSException::htmlencode($strTrace))."\n</div>";
 				$this->_smarty->assign($this->_smarty_array);
 				$this->_smarty->display('index.tpl');
 			}
@@ -244,7 +246,7 @@ class Core
 	private function _checkAdmin()
 	{
 		if ($this->_is_admin != true) {
-			throw new CMSException('Interne Funktion nicht ausfuehrbar', EXCEPTION_CORE_CODE);
+			throw new CMSException('Interne Funktion nicht ausführbar', EXCEPTION_CORE_CODE);
 		}
 
 		//Testet auf Logout und fuehrt es durch
@@ -269,16 +271,20 @@ class Core
 	private function _initPage()
 	{
 		global $start_time;
+		
+		
 		$this->_tplfile = 'index.tpl';
 
 
 
 		if ($this->_is_admin == true) {
+			global $admin_menu_shortlinks;
 			$table = 'admin_menu';
-			$shortlink = true;
+			$shortlink = $admin_menu_shortlinks;
 		} else {
+			global $user_menu_shortlinks;
 			$table = 'menu';
-			$shortlink = false;
+			$shortlink = $user_menu_shortlinks;
 		}
 
 		$this->_loadNav($shortlink);
@@ -399,7 +405,7 @@ class Core
 		$data = $this->_mysql->fetcharray("assoc");
 
 		if (empty($data) && $data == false) {
-			throw new CMSException("F&uuml;r die angegebene Modul-ID ist kein Modul hinterlegt!!!", EXCEPTION_CORE_CODE, 'Modul nicht gefunden');
+			throw new CMSException("Für die angegebene Modul-ID ist kein Modul hinterlegt!!!", EXCEPTION_CORE_CODE, 'Modul nicht gefunden');
 			return;
 		}
 
@@ -544,7 +550,7 @@ class Core
 	//						}
 	//						break;
 	//					default:
-	//						throw new CMSException('Aufgrund ung&uuml;ltigen internen Daten wurde die Ausf&uuml;rung abgebrochen', EXCEPTION_CORE_CODE, 'Internes Datenproblem');
+	//						throw new CMSException('Aufgrund ungültigen internen Daten wurde die Ausf&uuml;rung abgebrochen', EXCEPTION_CORE_CODE, 'Internes Datenproblem');
 	//
 	//				}
 	//

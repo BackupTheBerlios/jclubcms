@@ -140,7 +140,7 @@ class Newsadmin implements Module
 					return true;
 				default:
 					//Falsche Angaben enden im Fehler
-					throw new CMSException("Sie haben falsche URL-Parameter weitergegeben. Daher konnte keine entsprechende Aktion ausgef&uuml;hrt werden", EXCEPTION_MODULE_CODE);
+					throw new CMSException("Sie haben falsche URL-Parameter weitergegeben. Daher konnte keine entsprechende Aktion ausgeführt werden", EXCEPTION_MODULE_CODE);
 			}
 		} else {
 			//Keine Angabe -> Ausgabe der News

@@ -123,7 +123,7 @@ class CMSException extends Exception
 
 	public function __toString()
 	{
-		return "<b>{$this->_title}</b><br />\nEs ist ein Fehler aufgetreten in der Datei ".basename($this->getFile())." auf  Zeile {$this->getLine()} mit folgendern Nachricht: {$this->getMessage()}";
+		return "<b>".htmlentities($this->_title)."</b><br />\nEs ist ein Fehler aufgetreten in der Datei ".basename($this->getFile())." auf  Zeile {$this->getLine()} mit folgendern Nachricht: ".htmlentities($this->getMessage());
 	}
 
 	/**
@@ -157,6 +157,10 @@ class CMSException extends Exception
 	{
 		//Style: padding in px
 		$pad = 5;
+		
+		$file = CMSException::htmlencode($file);
+		$msg = CMSException::htmlencode($msg);
+		$trace = nl2br(CMSException::htmlencode($trace));
 		echo <<<END
 		<html>
 			<head>
@@ -189,6 +193,20 @@ class CMSException extends Exception
 			</body>
 		</html>
 END;
+	}
+	
+	/**
+	 * Kodiert Zeichen mit einer HTML-Entsprechung in die HTML-Form. Die Kodierung
+	 * findet auf der Basis des Zeichensatzes UTF-8 statt, weswegen sie für interne Ausgaben 
+	 * (PHP-Datei ist im UTF-8-Format) verwendet werden muss.
+	 *
+	 * @param string $string Zu kodierender String
+	 * @return string Kodierter String
+	 */
+	
+	public static function htmlencode($string)
+	{
+		return htmlentities($string, ENT_COMPAT, 'UTF-8');
 	}
 	
 }

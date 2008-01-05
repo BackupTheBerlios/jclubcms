@@ -216,7 +216,7 @@ class Mysql {
 		}
 
 		if(($this->_noresult == true && $success == false) || ($this->_noresult == false && $this->_result === false)) {
-			throw new CMSException("Mysql-Query ist ung&uuml;ltig<br />\n".mysql_error($this->_serverlink), EXCEPTION_MYSQL_CODE);
+			throw new CMSException("Mysql-Query ist ungültig\n".mysql_error($this->_serverlink), EXCEPTION_MYSQL_CODE, "Query");
 			
 		} else {
 			return true;
@@ -329,6 +329,17 @@ class Mysql {
 		}
 		
 		return $number;
+	}
+	
+	/**
+	 * Liefert die ID, die bei der letzten INSERT-Operation für ein Feld vom Typ AUTO_INCREMENT vergeben wurde.
+	 *
+	 * @return int ID
+	 */
+	
+	public function insert_id()
+	{
+		return mysql_insert_id($this->_serverlink);
 	}
 	
 

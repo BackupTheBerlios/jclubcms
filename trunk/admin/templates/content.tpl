@@ -1,17 +1,15 @@
 <div id="content">
 	<div id="content_txt">
 	<h1>Inhalte</h1>
+	<div align="left"><a href="?nav_id={$local_link}&action=new&amp;{$SID}">Neuer Inhalt erstellen</a>
 	<h2>Übersicht</h2>
 	{foreach item=content  from=$contents}
 		<a href="#{$content.content_ID}">{$content.content_title}</a>&nbsp;&nbsp;&nbsp;
-	{/foreach}
-	{foreach item=nav_item  from=$nav}
-		<a href="#{$nav_item._menu_page}" style="color:green">{$nav_item.menu_name}</a>&nbsp;&nbsp;&nbsp;
 	{/foreach}<br />
 	<div align="center">{foreach item=page from=$pages}
 			{if $page.link != ""}<a href="{$page.link}">[{$page.page}]</a>{else}[{$page.page}]{/if}
 	{/foreach}</div>
-	<div align="left"><a href="?nav_id={$local_link}&action=new&amp;{$SID}">Neuer Inhalt erstellen</a>
+	
 	{foreach item=content  from=$contents}
 	<a name="{$content.content_ID}"></a>
 		<table cellpadding="0" cellspacing="0" align="center" class="content_tab" style="max-width: 80%;min-width: 60%;font-size: 11px;">
@@ -31,7 +29,7 @@
 					{$content.content_text|truncate:500:"..."|replace:"src=\"?image":"src=\"?image&$SID"}
 				</td>
 				<td class="content_tab_content2" style="text-align:right">
-				<img src="templates/style/icons/user.gif" />  {$content.content_author|default:"Unknkow User"}<br />
+				<!--<img src="templates/style/icons/user.gif" />  {$content.content_author|default:"Unknkow User"}<br />-->
 					<br />
 					<a href="?nav_id={$local_link}&amp;{$SID}"><img src="templates/style/icons/pencil.gif" />Editieren</a>
 					<br />

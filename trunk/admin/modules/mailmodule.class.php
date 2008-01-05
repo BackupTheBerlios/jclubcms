@@ -106,7 +106,7 @@ class Mailmodule implements Module
 		} elseif (key_exists('nav_id', $gpc['GET']) && is_numeric($gpc['GET']['nav_id'])) {
 			$this->_checkmail_send($gpc['GET']['nav_id']);
 		} else {
-			throw new CMSException('Die Parameternangaben sind ung&uuml;ltig. Bitte geben Sie richtige Parameter an oder lassen Sie es', EXCEPTION_MODULE_CODE);
+			throw new CMSException('Die Parameternangaben sind ungültig. Bitte geben Sie richtige Parameter an oder lassen Sie es', EXCEPTION_MODULE_CODE);
 		}
 
 	}
@@ -139,7 +139,7 @@ class Mailmodule implements Module
 
 		/* darf modul mit nav_id mail senden? */
 		if ($this->_get_tabledata($mod_navID) == false) {
-			throw new CMSException('Angegebenes Modul unterst&uuml;tzt kein Mailversand', EXCEPTION_MODULE_CODE, 'Keine Mailunterst&uuml;zung');
+			throw new CMSException('Angegebenes Modul unterstützt kein Mailversand', EXCEPTION_MODULE_CODE, 'Keine Mailunterstüzung');
 		}
 
 

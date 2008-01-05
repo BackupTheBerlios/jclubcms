@@ -15,6 +15,7 @@ $auth_error_nonactiv = "Sie waren zu lange inaktiv. Bitte loggen Sie sich neu ei
 $auth_error_noentry = "Sie m&uuml;ssen einen Benutzernamen und/oder ein Passwort eingeben";
 $auth_error_failname = "Benutzername nicht vorhanden. (Achte auf Gross-/Kleinschreibung!)";
 $auth_error_failpw = "Passwort wurde falsch eingegeben";
+$auth_error_userinvalid = "Benutzer ist nicht g&uuml;ltig";
 
 $auth_forward_successlogin = "Sie haben sich erfolgreich eingeloggt. Sie werden weitergeleitet.";
 $auth_forward_linktext = "Sollte die Weiterleitung nicht funktionieren, dr&uuml;cken Sie diesen Link";
