@@ -380,7 +380,7 @@ class Gbookadmin implements Module {
 				/*Löschung widerrufen */
 			} elseif (isset($this->_gpc['POST']['nein']) && $this->_gpc['POST']['nein'] == $linktext2) {
 				$title = $gbook_vars['del_abort_title'];
-				$msg = $gbook_vars['del_abort_conten'];
+				$msg = $gbook_vars['del_abort_content'];
 				
 				/*Falscher Link*/
 			} else {

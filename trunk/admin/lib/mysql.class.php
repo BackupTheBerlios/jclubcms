@@ -152,7 +152,11 @@ class Mysql {
 	}
 	
 	/**
-	 * Maskiert spezielle Zeichen im angegebenen String. Bei Binaerdaten zu verwenden
+	 * Maskiert spezielle Zeichen im angegebenen String. Es wird angenommen, dass der erhaltene String
+	 * schon slashes hat (entweder autom. von PHP hinzugefügt oder von der Core-Klasse). Diese werden 
+	 * erst entfernt, danach wird des String escaped und wieder Slashes hinzugefügt.
+	 * Die letzten Slashes werden in der Query-Methode dieser Klasse entfernt, so das nur noch
+	 * der mysql-escaped String zurückbleibt
 	 *
 	 * @param string $string
 	 * @return string maskierter String
@@ -160,10 +164,10 @@ class Mysql {
 	
 	public function escapeString($string)
 	{	
-		if (($string = mysql_real_escape_string($string, $this->_serverlink)) === false) {
+		if (($string = mysql_real_escape_string(stripslashes($string), $this->_serverlink)) === false) {
 			throw new CMSException('Mysql-Anfrage konnte nicht maskiert werden', EXCEPTION_MYSQL_CODE);
 		} else {
-			return $string;
+			return addslashes($string);
 		}
 	}
 	
@@ -214,7 +218,7 @@ class Mysql {
 			$this->_noresult = true;
 		
 		}
-
+		
 		if(($this->_noresult == true && $success == false) || ($this->_noresult == false && $this->_result === false)) {
 			throw new CMSException("Mysql-Query ist ungültig\n".mysql_error($this->_serverlink), EXCEPTION_MYSQL_CODE, "Query");
 			
@@ -317,7 +321,7 @@ class Mysql {
 	/**
 	 * Liefert die Anzahl betroffener Datensaetze einer vorhergehenden MySQL Operation
 	 *
-	 * @return int|false
+	 * @return int
 	 */
 
 	public function affected_rows() 

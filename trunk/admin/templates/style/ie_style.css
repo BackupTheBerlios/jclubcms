@@ -10,8 +10,14 @@ a:link, a:visited {
 	text-decoration: underline; 
 	color: #FF6600;
 }
+
 a:hover {
 	text-decoration: none;
+}
+
+h1 {
+	text-align: center;
+	font-size: 25px;
 }
 
 img {
@@ -19,13 +25,23 @@ img {
 	vertical-align: middle;
 }
 
+#main {
+	width: 90%;
+	height: 100%;
+	background-color: #FaFaFa;
+	left: 5%;
+	z-index: 1;
+	position: fixed;
+	border-left: 1px solid #CECEFF;
+	border-right: 1px solid #CECEFF;
+}
 
 #header {
 	width: 90%;
 	height: 120px;
 	top: 0px;
 	left: 5%;
-	background-image: url(./images/banner1.png);
+	background-image: url(./images/banner-admin.png);
 	background-repeat: no-repeat;
 	background-position: bottom left;
 	z-index: 3;
@@ -33,6 +49,76 @@ img {
 	border-right: 1px solid #505050;
 	border-bottom: 1px solid #505050;
 	border-left: 1px solid #505050;
+	
+}
+
+#forward {
+	background-color: #FFDD90;
+	color: #D2691E;
+	width: 90%;
+	margin: 10% 5% 10% 5%;
+	padding: 20px;
+	position: fixed;
+	z-index: 2;
+	text-align: center;
+	font-size: 15px;
+	font-family: sans-serif;
+}
+
+#forward_inc {
+	background-color: #FFDD90;
+	color: #D2691E;
+	width: 50%;
+	margin: 10% 5% 10% 5%;
+	padding: 20px;
+	position: fixed;
+	z-index: 2;
+	text-align: center;
+	font-size: 15px;
+	font-family: sans-serif;
+}
+
+.error {
+	top: 145px;
+	left: 5%;
+	right: 5%;
+	padding: 10px 10px 20px 10px;
+	border: 1px;
+	font-style: normal;
+	font: 15px;
+	text-align: center;
+	background-color: #F4A460;
+	z-index: 2;
+	position: absolute;
+}
+
+.error_tab {
+	width: 90%;
+	top: 145px;
+	left: 10%;
+	background-color: #FFDD90;
+	z-index: 2;
+	position: absolute;
+	border: thin;
+	border-style: 
+}
+
+.error_tab_header {
+	padding: 50px;
+	text-align: center;
+	font-weight: bold;
+	font-family: Arial;
+	background-color: #FFDD90;
+	border: 1px;
+}
+
+.error_tab_content {padding: 50px;
+	text-align: center;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 15px;
+	border: 1px;
+	
+	background-color: #FFDE6A;
 	
 }
 
@@ -45,6 +131,7 @@ img {
 	position: absolute;
 	background-color: #FAFAFA;
 }
+
 #content_txt {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -172,6 +259,7 @@ img {
 	right: 5%;
 	top: 5px;
 	position: absolute;
+	position: fixed;
 	z-index: 5;
 }
 
@@ -258,6 +346,7 @@ img {
 	border-left: 1px solid #BF8202;
 	line-height: 20px;
 	padding: 5px 5px 5px 5px;
+	color: #ED4B23;
 }
 .formailer_txt_textarea {
 	background-color: #FFFFFF;

@@ -6,12 +6,15 @@
 		<title>{$title|default:"JClub-Administration"}</title>
 		<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 		<link rel="stylesheet" type="text/css" href="./templates/style/style.css">
+		<script type="text/javascript" language="javascript">
+function focus(){ldelim}document.login.name.focus(); {rdelim}
+</script>
 	</head>
-	<body>
+	<body onload="focus()">
 		<div id="header">&nbsp;</div>
 		<div id="content" style="text-align: center">
 			
-			<form action="{$file}" method="post">
+			<form action="{$file}" name="login" method="post">
 				<table class="content_formailer">
 					{if isset($login_error)}
 					<tr>

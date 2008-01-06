@@ -26,14 +26,14 @@
 			<tr>
 				<td class="content_tab_content1">
 					{*Bei Links für Bilder wird noch die Sessionid angehängt, das diese im Text nicht vorkommt. Denn der Text wird auch im Userbereich angezeigt*}
-					{$content.content_text|truncate:500:"..."|replace:"src=\"?image":"src=\"?image&$SID"}
+					{$content.content_text|truncate:500:"..."|replace:"src=\"?image":"src=\"?image&amp;$SID"}
 				</td>
 				<td class="content_tab_content2" style="text-align:right">
 				<!--<img src="templates/style/icons/user.gif" />  {$content.content_author|default:"Unknkow User"}<br />-->
 					<br />
-					<a href="?nav_id={$local_link}&amp;{$SID}"><img src="templates/style/icons/pencil.gif" />Editieren</a>
+					<a href="?nav_id={$local_link}&amp;action=edit&amp;ref_ID={$content.content_ID}&amp;{$SID}"><img src="templates/style/icons/pencil.gif" />Editieren</a>
 					<br />
-					<a href="?nav_id={$local_link}&amp;{$SID}"><img src="templates/style/icons/del.gif" />L&ouml;schen</a>
+					<a href="?nav_id={$local_link}&amp;action=del&amp;ref_ID={$content.content_ID}&amp;{$SID}"><img src="templates/style/icons/del.gif" />L&ouml;schen</a>
 				</td>
 			</tr>
 		{/foreach}

@@ -7,7 +7,7 @@
 			<tr class="error_tab_content">
 				<td>
 				{$error_text}<br />
-				<a href="{$error_link|default:"index.php?$SID"}">{$error_linktext|default:"Home"}</a>
+				<a href="{$error_link|default:"?$SID"}">{$error_linktext|default:"Home"}</a>
 				</td>
 			</tr>
 		</table>

@@ -60,7 +60,7 @@ class Page
 
 		//Ist $nav_id kleiner gleich Null, wird ihr der erste Wert aus der MySQL-Tabelle zugewiesen.
 		if($nav_id <= 0) {
-			$this->mysql->query("SELECT `menu_ID` FROM `$table_name` WHERE `menu_display` != '0' AND  `menu_topid`= '0'"
+			$this->mysql->query("SELECT `menu_ID` FROM `$table_name` WHERE `menu_display` != '0' AND  `menu_topid` = '0'"
 			."ORDER BY `menu_position` ASC  LIMIT 1");
 			$nav_id = $this->mysql->fetcharray('num');
 			$nav_id = $nav_id[0];
@@ -389,9 +389,9 @@ class Page
 	{
 		$mysql_array = array();
 		/* $i brauchts für die Indexierung des $subnav_array, $level für das Bestimmen des Menu-Levels */
-		static $i = 0, $static_level = 0;
+		static $i = 0, $level = 0;
 		if ($reset == true) {
-			$i = 0; $static_level = 0;
+			$i = 0; $level = 0;
 		}
 
 		$this->mysql->query("SELECT `menu_ID`,`menu_topid`, `menu_name`, `menu_modvar`, `menu_page`as '_menu_page' 
@@ -403,21 +403,18 @@ class Page
 
 
 		//$level aendert sich nicht innerhalb der Funktion, nur bei einem neuen Funktionsaufruf
-		$static_level++;
+		$level++;
 		/* Oberster Key entfernen, damit weniger verglichen werden muss und bei beachtung der 
 		Reihenfolge von $topid_array ($jump_search == false) dsd Vergleichen einfacher wird*/
 		array_shift($topid_array);
 
-		//Der Wert von $lc_level bleibt erhalten, auch wenn ein neuer Funktionsaufruf stattfindet
-		$lc_level = $static_level;
+
 		//Baut den Navigationsbaum auf, indem bei jedem Treffer Topid -> menu_Id ein neuer Ast entsteht.
 		foreach ($mysql_array as $value) {
 
-			$value['menu_name'] = $value['menu_name'];
 			$subnav_array[$i] = $value;
-			$subnav_array[$i]['level'] = $lc_level;
+			$subnav_array[$i]['level'] = $level;
 			$i++;
-			
 
 			/* Ist $jump_search == true, werden alle Einträge berücksichtig. D.h. es wird im ganzen $topid-Array
 				nach der topid von $value[menu_ID] gesucht, die Reihenfolge von topid_array spielt keine Rolle
@@ -431,10 +428,15 @@ class Page
 					unset($topid_array[$key]);
 				}
 				$this->_build_subnav_array($table_name, &$topid_array, $subnav_array, $jump_search);
+				$level--;
 
 			} elseif (count($topid_array) > 0 && $value['menu_ID'] == $topid_array[0]) {
 				$this->_build_subnav_array($table_name, $topid_array, $subnav_array);
+				$level--;
 			}
+
+				
+			
 
 		}
 	}

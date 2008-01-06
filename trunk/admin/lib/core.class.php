@@ -142,7 +142,7 @@ class Core
 	{
 		//Abfangen von Exceptions
 		try {
-			
+
 			/* Ausgabe-Pufferung aktivieren - wird bei initPage geleert*/
 			//ob_start(array(&$this, "_output_callback"));
 			$this->_initObjects();
@@ -155,22 +155,23 @@ class Core
 				$this->_checkAdmin();
 			}
 
-			
+
 			$this->_initPage();
 
 		} catch(CMSException $e) {
-			
+
 			$strTrace = '#'.substr($e->getTraceAsString(), 1);
 			//Ist Smarty nicht vorhanden, wird eine Nachricht ueber den Exceptionhandler geschickt, der kein Smarty braucht.
 			if (!class_exists('Smarty') || !($this->_smarty instanceof Smarty)) {
+				CMSException::logException($e,null,'Instance of Smarty does not exists');
 				CMSException::printException($e->getFilename(), $e->getLine(), $e->getMessage(), $strTrace);
-
 			} else {
-
+				CMSException::logException($e);
 				$this->_smarty_array['file'] = 'error_include.tpl';
 				$this->_smarty_array['error_title'] = CMSException::htmlencode($e->getTitle());
 				$this->_smarty_array['error_text'] = CMSException::htmlencode($e->getMessage())."<br />\nFehler aufgetreten in der Datei ".$e->getFilename()." auf Zeilenummer ".$e->getLine();
 				$this->_smarty_array['error_text'] .= "<br />\n"."<div style=\"font-size: 11px\">\n".nl2br(CMSException::htmlencode($strTrace))."\n</div>";
+				$this->_smarty_array['error_text'] .= "<br /><div style=\"font-size: 13px; font-weight: bold\">Sollte dieser Fehler &ouml;fters auftreten, benachrichtigen Sie bitte den Administrator</div>";
 				$this->_smarty->assign($this->_smarty_array);
 				$this->_smarty->display('index.tpl');
 			}
@@ -233,8 +234,6 @@ class Core
 		unset($_COOKIE);
 		unset($_REQUEST);
 
-
-
 	}
 
 
@@ -271,8 +270,8 @@ class Core
 	private function _initPage()
 	{
 		global $start_time;
-		
-		
+
+
 		$this->_tplfile = 'index.tpl';
 
 
@@ -401,7 +400,7 @@ class Core
 		}
 
 		//Modul aus Datenbank lesen
-		$this->_mysql->query("SELECT `modules_file`,`modules_template_support` FROM `$mod_table` WHERE `modules_ID`= '$module_ID' LIMIT 1");
+		$this->_mysql->query("SELECT `modules_file`,`modules_template_support`, `modules_status` FROM `$mod_table` WHERE `modules_ID`= '$module_ID' LIMIT 1");
 		$data = $this->_mysql->fetcharray("assoc");
 
 		if (empty($data) && $data == false) {
@@ -409,45 +408,55 @@ class Core
 			return;
 		}
 
-		//Modul-Path ermittelnt
-		if ($this->_is_admin == true) {
-			$path = ADMIN_DIR.'modules/'.$data['modules_file'];
+		if ($data['modules_status'] == 'on') {
+			/*Modul ist online*/
+
+			//Modul-Path ermittelnt
+			if ($this->_is_admin == true) {
+				$path = ADMIN_DIR.'modules/'.$data['modules_file'];
+			} else {
+				$path = USER_DIR.'modules/'.$data['modules_file'];
+			}
+
+			/**Sicherheitscheck noch machen, ob Datei im richtigen Ordner!**/
+
+			//File pruefen
+			if(!file_exists($path)) {
+				throw new CMSException("Datei $path konnte nicht included werden!!!", EXCEPTION_CORE_CODE, 'Fehler beim Modulladen');
+				return;
+			}
+
+			//Modul einbinden
+			include_once($path);
+
+			//Klassennamen herausfinden
+			$split = explode(".", $data['modules_file']);
+			$class = ucfirst($split[0]);	//Klassen sind "first-character-uppercase"
+
+			//Existenz der Klasse pruefen
+			if(!class_exists($class)) {
+				throw new CMSException("Klasse $class nicht vorhanden!!!", EXCEPTION_CORE_CODE, 'Klasse fehlt');
+				return;
+			}
+
+			//Modul ausfuehren
+			$module = new $class($this->_mysql, $this->_smarty);
+			$module->action($this->_gpc);
+
+
+			//Wenn das Modul kein Template zurueckgibt -> Beenden
+			if ($data['modules_template_support'] == 'no') {
+				exit;
+			}
+
+			$this->_smarty_array['file'] = $module->gettplfile();
+			
 		} else {
-			$path = USER_DIR.'modules/'.$data['modules_file'];
+			/*Modul ist offline*/
+			$this->_smarty_array['error_title'] = "Nicht erreichbar";
+			$this->_smarty_array['error_text'] = "Angegebene Seite ist nicht erreichbar";
+			$this->_smarty_array['file'] = 'error_include.tpl';
 		}
-
-		/**Sicherheitscheck noch machen, ob Datei im richtigen Ordner!**/
-
-		//File pruefen
-		if(!file_exists($path)) {
-			throw new CMSException("Datei $path konnte nicht included werden!!!", EXCEPTION_CORE_CODE, 'Fehler beim Modulladen');
-			return;
-		}
-
-		//Modul einbinden
-		include_once($path);
-
-		//Klassennamen herausfinden
-		$split = explode(".", $data['modules_file']);
-		$class = ucfirst($split[0]);	//Klassen sind "first-character-uppercase"
-
-		//Existenz der Klasse pruefen
-		if(!class_exists($class)) {
-			throw new CMSException("Klasse $class nicht vorhanden!!!", EXCEPTION_CORE_CODE, 'Klasse fehlt');
-			return;
-		}
-
-		//Modul ausfuehren
-		$module = new $class($this->_mysql, $this->_smarty);
-		$module->action($this->_gpc);
-
-
-		//Wenn das Modul kein Template zurueckgibt -> Beenden
-		if ($data['modules_template_support'] == 'no') {
-			exit;
-		}
-
-		$this->_smarty_array['file'] = $module->gettplfile();
 
 	}
 
@@ -465,12 +474,22 @@ class Core
 		} else {
 			$cnt_table = 'content';
 		}
-		$this->_mysql->query("SELECT `content_title`, `content_text` FROM `$cnt_table` WHERE `content_ID` = '$page_ID'");
+
+		$this->_mysql->query("SELECT `content_title`, `content_text`, `content_archiv` FROM `$cnt_table` WHERE `content_ID` = '$page_ID' LIMIT 1");
 		$data = $this->_mysql->fetcharray("assoc");
-		$content_title = $data['content_title'];	
-		$content_text = $data['content_text'];
-		
-		$this->_smarty_array += array('content_title' => $content_title, 'content_text' => $content_text);
+
+		if ($data['archiv'] == 'no') {
+			$content_title = $data['content_title'];
+			$content_text = $data['content_text'];
+			$this->_smarty_array += array('content_title' => $content_title, 'content_text' => $content_text);
+		} else {
+			$this->_smarty_array['error_title'] = "Nicht erreichbar";
+			$this->_smarty_array['error_text'] = "Angegebene Seite ist nicht erreichbar";
+			$this->_smarty_array['file'] = 'error_include.tpl';
+		}
+
+
+
 	}
 
 	/**

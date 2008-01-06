@@ -85,7 +85,7 @@ class Messageboxes {
 		}
 
 		if (is_string($tablename)) {
-			$this->_tablename = $tablename;
+			$this->_tablename = $this->_mysql->escapeString($tablename);
 		} elseif (!$this->_errorexists) {
 			throw new CMSException('Falsche Parameterangaben. 2. Parameter ist kein String', EXCEPTION_LIBARY_CODE);
 		}
@@ -587,8 +587,13 @@ class Messageboxes {
 	private function _fillStruct($tablestruct)
 	{
 		//Mindest ID, content und time muessen vorhanden sein
-		if (key_exists("ID", $tablestruct) && array_key_exists("content", $tablestruct) && array_key_exists("time", $tablestruct)) {
+		if (key_exists("ID", $tablestruct) && key_exists("content", $tablestruct) && key_exists("time", $tablestruct)) {
 
+			foreach ($tablestruct as $key => $value) {
+				$tablestruct[$key] = $this->_mysql->escapeString($value);
+			}
+			
+			
 			//So werden die unnoetig vordefinierten Schluesseln im $_tablestruct ueberschrieben,  z.B. time
 			$this->_tablestruct = $tablestruct;
 			return true;

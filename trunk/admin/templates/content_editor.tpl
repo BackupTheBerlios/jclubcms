@@ -45,13 +45,13 @@ tinyMCE_GZ.init({ldelim}
 						<table cellpadding="0" cellspacing="0" align="center" class="content_tab" style="width: 95%">
 							<tr>
 							  <td class="formailer_header">
-								Titel: <input class="formailer_header_input" name="content_title" type="text" onclick="select()" value="{$editor.content_title|default:#content_title#}" />
+								Titel: <input class="formailer_header_input" name="content_title" type="text" value="{$editor.content_title|default:#content_title#}" />
 							  </td>
 							</tr>
 							<tr>
 							  <td class="formailer_txt">
 							  Inhalt:<br />
-							  <textarea class="formailer_txt_textarea" name="content_text" cols="38" rows="20">{$editor.content_text|default:#content_text#}</textarea></td>
+							  <textarea class="formailer_txt_textarea" name="content_text" cols="75" rows="20">{$editor.content_text|replace:"src=\"?image":"src=\"?image&amp;$SID"|default:#content_text#}</textarea></td>
 							</tr>	
 							<tr>
 								<td class="formailer_txt">
@@ -67,6 +67,9 @@ tinyMCE_GZ.init({ldelim}
 				<td  class="formailer_txt">
 					<fieldset style="border: 1px solid #FE7000;">
 					  <legend style="color: #FF8000; font-weight: bolder">Menu</legend>
+					  {if $editor.info}<div align="left" style="background-color: yellow">Info: {$editor.info}</div>{/if}
+					  {if $editor.menu_ID}<input type="hidden" name="menu_ID" value="{$editor.menu_ID}" />{/if}
+					  {if $editor.menu_new}<input type="hidden" name="menu_new" value="{$editor.menu_new}" />{/if}
 						<table cellpadding="0" cellspacing="0" align="center" class="content_tab" style="width: 95%">
 							<tr>
 							  <td class="formailer_header" colspan="2">
@@ -83,7 +86,7 @@ tinyMCE_GZ.init({ldelim}
 								<select id="menu_topid" name="menu_topid" size="1">
 									<option value="0" selected="selected">=Haupteintrag=</option>
 									{foreach item=menu from=$editor.menues}
-									<option value="{$menu.menu_ID}" {if $menu.menu_ID == $editor.menu_topid}selected="selected"{/if}>{$menu.menu_name}</option>
+<option value="{$menu.menu_ID}" {if $menu.menu_ID == $editor.menu_topid}selected="selected"{/if}>{$menu.menu_name}</option>
 									{/foreach}
 								</select>
 							  </td>
@@ -93,7 +96,7 @@ tinyMCE_GZ.init({ldelim}
 							  <td class="formailer_txt">
 								<select id="menu_position" name="menu_position" size="1">
 								{foreach item=position from=$editor.positions}
-									<option value="{$position.pos_name}" {if $position.pos_name == $editor.menu_position}selected="selected"{/if}>{$position.pos_name}</option>
+<option value="{$position.pos_name}" {if $position.pos_name == $editor.menu_position}selected="selected"{/if}>{$position.pos_name}</option>
 								{/foreach}
 								</select>
 							  </td>

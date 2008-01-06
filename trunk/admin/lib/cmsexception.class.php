@@ -89,7 +89,7 @@ class CMSException extends Exception
 		
 		if (!empty($title)) {
 			$this->_title .= " - $title";
-		}		
+		}
 	}
 
 	/**
@@ -140,10 +140,58 @@ class CMSException extends Exception
 		$strTrace = '#'.str_replace('#', "<br />\n#", substr($exception->getTraceAsString(), 1));
 		
 		self::printException($file, $exception->getLine(), $exception->getMessage(), $strTrace);
-		
+		self::logException($exception, "Uncaught Exception");
+
 
 	}
-	
+
+	/**
+	 * Schreibt die Exception in eine Log-Datei
+	 *
+	 * @param Exception $e Exceptionklasse 
+	 */
+
+	public static function logException($e, $title = null, $comment = null)
+	{
+		$time = date("Y-m-d H:i");
+		if (empty($title)) {
+			$title = $e->getTitle();
+		}
+		
+		$rpcl_arr = array("\t" => " ", "\n" => " ", "\r" => " ", "\xOB" => " ");
+		$file = $e->getFile();
+		$code = $e->getCode();
+		$msg = strtr($e->getMessage(), $rpcl_arr);
+		$line = $e->getLine();
+		$trace =  strtr($e->getTraceAsString(), $rpcl_arr);
+
+		if (!empty($comment)) {
+			$comment = strtr($comment, $rpcl_arr);
+		}
+		
+		if (key_exists('HTTP_POST_VARS', $GLOBALS)) {
+			$post = strtr(print_r($GLOBALS['HTTP_POST_VARS'],1), $rpcl_arr);
+		} else {
+			$post = "POST_VARS ARE NOT AVAILABLE";
+		}
+		
+		if (key_exists('HTTP_GET_VARS', $GLOBALS)) {
+			$get = strtr(print_r($GLOBALS['HTTP_GET_VARS'],1), $rpcl_arr);
+		} else {
+			$get = "GET_VARS ARE NOT AVAILABLE";
+		}
+
+		/* Log schreiben */
+		$fh = fopen(ADMIN_DIR."log/.exception.log", "a");
+
+		$log_line = "#LOG-ENTRY\nTITLE: $title\nCODE: $code\nTIME: $time\nFILE: $file\nLINE: $line\nMESSAGE: $msg\n"
+		."TRACE: $trace\nPOST: $post\nGET: $get\nCOMMENT: $comment\n#END\n\n";
+		fputs($fh, $log_line);
+		fclose($fh);
+
+	}
+
+
 	/**
 	 * Gibt eine Exception-Fehlermeldung heraus
 	 *
@@ -209,5 +257,7 @@ END;
 		return htmlentities($string, ENT_COMPAT, 'UTF-8');
 	}
 	
+}
+
 }
 ?>
