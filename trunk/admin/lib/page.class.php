@@ -30,9 +30,9 @@ class Page
 
 	public function __construct($smarty, $mysql)
 	{
-		$this->smarty = $smarty;
-		$this->mysql = $mysql;
-		$this->auth = new Auth($this, $mysql);
+		$this->_smarty = $smarty;
+		$this->_mysql = $mysql;
+		$this->_auth = new Auth($this, $mysql);
 	}
 
 
@@ -60,9 +60,9 @@ class Page
 
 		//Ist $nav_id kleiner gleich Null, wird ihr der erste Wert aus der MySQL-Tabelle zugewiesen.
 		if($nav_id <= 0) {
-			$this->mysql->query("SELECT `menu_ID` FROM `$table_name` WHERE `menu_display` != '0' AND  `menu_topid` = '0'"
+			$this->_mysql->query("SELECT `menu_ID` FROM `$table_name` WHERE `menu_display` != '0' AND  `menu_topid` = '0'"
 			."ORDER BY `menu_position` ASC  LIMIT 1");
-			$nav_id = $this->mysql->fetcharray('num');
+			$nav_id = $this->_mysql->fetcharray('num');
 			$nav_id = $nav_id[0];
 		}
 
@@ -231,13 +231,14 @@ class Page
 	 * @param array[reference] &$subnav_array Array, wo die Navigation gespeichert wird
 	 * @param bool Admin-Menu oder User-Menu
 	 * @param bool[optional] $show Nur die aktiven und übergeorndete Menues oder alle(!) Menues ausklappen
+	 * @param array[optional] $rows Zusätzliche Spalten anzeigen
 	 */
 
-	public function let_build_menu_array($topid_array, &$menu_array, $admin_menu = false, $show_all = false)
+	public function let_build_menu_array($topid_array, &$menu_array, $admin_menu = false, $show_all = false, $rows = array())
 	{
 		//Ob es das Admin- oder User-Menu ist, aendert sich der Tabellen-Name im MySQL.
 		$table_name = ($admin_menu === true)?"admin_menu":"menu";
-		return $this->_build_subnav_array($table_name, $topid_array, &$menu_array, $show_all, true);
+		return $this->_build_subnav_array($table_name, $topid_array, &$menu_array, $show_all, true, $rows);
 	}
 
 	/**
@@ -247,9 +248,9 @@ class Page
 
 	public function __destruct()
 	{
-		$this->smarty = null;
-		$this->mysql = null;
-		$this->auth = null;
+		$this->_smarty = null;
+		$this->_mysql = null;
+		$this->_auth = null;
 	}
 
 
@@ -274,9 +275,9 @@ class Page
 
 		//Top-IDs herauslesen, damit die rekursive Funktion richtig arbeiten kann, um subnav-Array zu erstellen
 		do {
-			$this->mysql->query("SELECT `menu_topid` FROM `$table_name` WHERE `menu_ID` = $id
+			$this->_mysql->query("SELECT `menu_topid` FROM `$table_name` WHERE `menu_ID` = $id
 								ORDER BY `menu_position`ASC LIMIT 1");
-			$top_id = $this->mysql->fetcharray("num");
+			$top_id = $this->_mysql->fetcharray("num");
 			$topid_array[$i] = $top_id[0];
 			$id = $top_id[0];
 
@@ -299,12 +300,12 @@ class Page
 
 
 		//topnav-Array erstellen
-		$this->mysql->query("SELECT `menu_ID`, `menu_name`, `menu_image`, `menu_modvar` FROM `$table_name`
+		$this->_mysql->query("SELECT `menu_ID`, `menu_name`, `menu_image`, `menu_modvar` FROM `$table_name`
 							WHERE `menu_topid` = '0' AND `menu_display` != '0' AND menu_shortlink = '1' 
 							ORDER BY `menu_position` ASC");
 		$i = 0;
-		$this->mysql->saverecords('assoc');
-		$menu_array['topnav'] = $this->mysql->get_records();
+		$this->_mysql->saverecords('assoc');
+		$menu_array['topnav'] = $this->_mysql->get_records();
 
 		return $menu_array;
 	}
@@ -332,9 +333,9 @@ class Page
 
 		//Top-IDs herauslesen, damit die rekursive Funktion richtig arbeiten kann, um subnav-Array zu erstellen
 		do {
-			$this->mysql->query("SELECT `menu_topid` FROM `$table_name` WHERE `menu_ID` = $id
+			$this->_mysql->query("SELECT `menu_topid` FROM `$table_name` WHERE `menu_ID` = $id
 								ORDER BY `menu_position` ASC LIMIT 1");
-			$top_id = $this->mysql->fetcharray("num");
+			$top_id = $this->_mysql->fetcharray("num");
 
 			if($top_id[0] == 0) {
 				//Die Eintraege mit der top_Id 0 befinden sich in der topnav, daher wird hier abgebrochen!
@@ -358,12 +359,12 @@ class Page
 		$this->_build_subnav_array($table_name, $topid_array, $menu_array['subnav']);
 
 		//topnav-Array erstellen
-		$this->mysql->query("SELECT `menu_ID`, `menu_name`, `menu_modvar` FROM `$table_name`
+		$this->_mysql->query("SELECT `menu_ID`, `menu_name`, `menu_modvar` FROM `$table_name`
 							WHERE `menu_topid` = '0' AND `menu_display` != '0' ORDER BY `menu_position` ASC");
 		$i = 0;
 
-		$this->mysql->saverecords('assoc');
-		$menu_array['topnav'] = $this->mysql->get_records();
+		$this->_mysql->saverecords('assoc');
+		$menu_array['topnav'] = $this->_mysql->get_records();
 
 
 		return $menu_array;
@@ -385,7 +386,7 @@ class Page
 	 * @param bool $reset Alle Variablen zurücksetzen (nötig, wenn Funktion verschiedene Male aufgerufen wird)
 	 */
 
-	private function _build_subnav_array($table_name, &$topid_array, &$subnav_array, $jump_search = false, $reset = false)
+	private function _build_subnav_array($table_name, &$topid_array, &$subnav_array, $jump_search = false, $reset = false, $rows = array())
 	{
 		$mysql_array = array();
 		/* $i brauchts für die Indexierung des $subnav_array, $level für das Bestimmen des Menu-Levels */
@@ -393,13 +394,21 @@ class Page
 		if ($reset == true) {
 			$i = 0; $level = 0;
 		}
+		
+		$str = "";
+		
+		if (!empty($rows)) {
+			foreach($rows as $key => $value) {
+				$str .= ", `{$this->_mysql->escapeString($value)}`";
+			}
+		}
 
-		$this->mysql->query("SELECT `menu_ID`,`menu_topid`, `menu_name`, `menu_modvar`, `menu_page`as '_menu_page' 
+		$this->_mysql->query("SELECT `menu_ID`,`menu_topid`, `menu_name`, `menu_modvar`, `menu_page`as '_menu_page' $str 
 							FROM `$table_name`
 							WHERE `menu_topid` = '{$topid_array[0]}' AND `menu_display` != '0' 
 							AND `menu_shortlink` != '1' ORDER BY `menu_position` ASC");
 
-		$mysql_array = $this->mysql->get_records();
+		$mysql_array = $this->_mysql->get_records();
 
 
 		//$level aendert sich nicht innerhalb der Funktion, nur bei einem neuen Funktionsaufruf
@@ -427,7 +436,7 @@ class Page
 					$topid_array[0] = $topid_array[$key];
 					unset($topid_array[$key]);
 				}
-				$this->_build_subnav_array($table_name, &$topid_array, $subnav_array, $jump_search);
+				$this->_build_subnav_array($table_name, &$topid_array, $subnav_array, $jump_search, false, $rows);
 				$level--;
 
 			} elseif (count($topid_array) > 0 && $value['menu_ID'] == $topid_array[0]) {

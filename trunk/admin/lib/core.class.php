@@ -478,7 +478,7 @@ class Core
 		$this->_mysql->query("SELECT `content_title`, `content_text`, `content_archiv` FROM `$cnt_table` WHERE `content_ID` = '$page_ID' LIMIT 1");
 		$data = $this->_mysql->fetcharray("assoc");
 
-		if ($data['archiv'] == 'no') {
+		if ($data['content_archiv'] == 'no') {
 			$content_title = $data['content_title'];
 			$content_text = $data['content_text'];
 			$this->_smarty_array += array('content_title' => $content_title, 'content_text' => $content_text);

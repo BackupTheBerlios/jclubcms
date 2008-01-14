@@ -35,18 +35,6 @@ class Contentadmin implements Module
 	 * @var Smarty
 	 */
 	private $_smarty = null;
-	/**
-	 * Smilie-Klasse
-	 *
-	 * @var Smilies
-	 */
-	private $_smilie = null;
-	/**
-	 * Messagebox Klass
-	 *
-	 * @var Messageboxes
-	 */
-	private $_msbox = null;
 
 	/**
 	 * POST, GET, COOKIE-Array
@@ -132,7 +120,7 @@ class Contentadmin implements Module
 				case 'del':
 					$this->_del($id);
 					break;
-
+					
 				default:
 					$this->_view();
 			}
@@ -162,8 +150,7 @@ class Contentadmin implements Module
 	{
 		$this->_tplfile = 'content.tpl';
 
-		$this->_mysql->query("SELECT COUNT(*) as 'count' FROM `content` , `menu`
-		WHERE `menu`.`menu_pagetyp` = 'pag' AND `menu`.`menu_page` = `content`.`content_ID");
+		$this->_mysql->query("SELECT COUNT(*) as 'count' FROM `content`");
 		$count = $this->_mysql->fetcharray('assoc');
 		$count = $count['count'];
 
@@ -172,7 +159,7 @@ class Contentadmin implements Module
 		$start = ($page - 1)*$number;
 
 		$this->_mysql->query("SELECT `content_ID` , `content_title` , `content_text` ,
-		`content_time`
+		DATE_FORMAT(`content_time`, '$this->_timeformat') as 'content_time'
 		FROM `content` 
 		LIMIT $start, $number");
 
@@ -183,6 +170,7 @@ class Contentadmin implements Module
 		$this->_smarty->assign('pages', $pages_nav);
 
 	}
+	
 
 	/**
 	 * Diese Funktion ist für das Erstellen neuer Inhalt verantwortlich.
@@ -258,7 +246,9 @@ class Contentadmin implements Module
 
 		if (key_exists('weiter', $post) && $post['weiter'] == $linktext) {
 			
-			$this->_mysql->query("SELECt");
+			//$this->_mysql->query("DELETE FROM  `content` WHERE `content_ID` = '$ID' LIMIT 1");
+			
+			//$this->_mysql->query("DELETE FROM  `menu` WHERE `menu_page` = '$ID'  AND `menu_pagetyp` = 'pag' ");
 			
 			
 			$this->_send_feedback($lang_vars['del_title'], $lang_vars['del_content'],

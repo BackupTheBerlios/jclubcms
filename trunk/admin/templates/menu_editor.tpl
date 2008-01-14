@@ -3,28 +3,6 @@
 		<div id="content_txt">
 		<h2>{$editor.title|default:"Neues Menu verfassen"}</h2>
     <table width = 100% class="content_tab">
-    </table>
-	<!-- tinyMCE -->
-	<script type="text/javascript" src="../javascript/tinymce/tiny_mce_gzip.js"></script>
-<script type="text/javascript">
-tinyMCE_GZ.init({ldelim}
-	plugins : 'style,layer,table,save,advhr,advimage,advlink,emotions,iespell,insertdatetime,preview,media,'+ 
-	'searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras',
-	themes : 'simple,advanced',
-	languages : 'de',
-	disk_cache : true,
-	debug : false
-{rdelim});
-</script>
-<script language="javascript" type="text/javascript">
-	// Notice: The simple theme does not use all options some of them are limited to the advanced theme
-	tinyMCE.init({ldelim}
-		mode : "textareas",
-		theme : "advanced",
-		language : "de"
-	{rdelim});
-</script>
-<!-- /tinyMCE -->
 {*Fehlerausgabe wenn noetig*}
 	{if $editor.dump_errors}
 	<table class="content_tab" align="center">
@@ -41,31 +19,6 @@ tinyMCE_GZ.init({ldelim}
 			<tr>
 				<td  class="formailer_txt">
 					<fieldset style="border: 1px solid #FE7000;">
-					  <legend style="color: #FF8000; font-weight: bolder">Inhalt verfassen</legend>
-						<table cellpadding="0" cellspacing="0" align="center" class="content_tab" style="width: 95%">
-							<tr>
-							  <td class="formailer_header">
-								Titel: <input class="formailer_header_input" name="content_title" type="text" value="{$editor.content_title|default:#content_title#}" />
-							  </td>
-							</tr>
-							<tr>
-							  <td class="formailer_txt">
-							  Inhalt:<br />
-							  <textarea class="formailer_txt_textarea" name="content_text" cols="75" rows="20">{$editor.content_text|replace:"src=\"?image":"src=\"?image&amp;$SID"|default:#content_text#}</textarea></td>
-							</tr>	
-							<tr>
-								<td class="formailer_txt">
-								<label for="content_hide">Inhalt unerreichbar machen</label>
-								<input type="checkbox" id="content_hide" name="content_hide" {if $editor.content_hide == true}checked="checked"{/if} />
-								</td>
-							</tr>
-						</table>
-					</fieldset>
-				</td>
-			</tr>
-			<tr>
-				<td  class="formailer_txt">
-					<fieldset style="border: 1px solid #FE7000;">
 					  <legend style="color: #FF8000; font-weight: bolder">Menu</legend>
 					  {if $editor.info}<div align="left" style="background-color: yellow">Info: {$editor.info}</div>{/if}
 					  {if $editor.menu_ID}<input type="hidden" name="menu_ID" value="{$editor.menu_ID}" />{/if}
@@ -73,7 +26,7 @@ tinyMCE_GZ.init({ldelim}
 						<table cellpadding="0" cellspacing="0" align="center" class="content_tab" style="width: 95%">
 							<tr>
 							  <td class="formailer_header" colspan="2">
-								Menu ignorieren<input class="formailer_header_input" type="checkbox" name="menu_ignore" {if $editor.menu_ignore == true}checked="checked"{/if}/>
+								Menu - Eintrag
 							  </td>
 							</tr>
 							<tr>
