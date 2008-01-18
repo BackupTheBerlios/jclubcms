@@ -22,7 +22,6 @@
 					  <legend style="color: #FF8000; font-weight: bolder">Menu</legend>
 					  {if $editor.info}<div align="left" style="background-color: yellow">Info: {$editor.info}</div>{/if}
 					  {if $editor.menu_ID}<input type="hidden" name="menu_ID" value="{$editor.menu_ID}" />{/if}
-					  {if $editor.menu_new}<input type="hidden" name="menu_new" value="{$editor.menu_new}" />{/if}
 						<table cellpadding="0" cellspacing="0" align="center" class="content_tab" style="width: 95%">
 							<tr>
 							  <td class="formailer_header" colspan="2">
@@ -34,7 +33,7 @@
 							  <td class="formailer_txt"><input type="text" id="menu_name" name="menu_name" value="{$editor.menu_name|default:#menu_name#}"/></td>
 							</tr>
 							<tr>
-							  <td class="formailer_txt"><label for="menu_topid">Übergeordnete Id des Menus: </label></td>
+							  <td class="formailer_txt"><label for="menu_topid">Übergeordnete Id des Menus</label></td>
 							  <td class="formailer_txt">
 								<select id="menu_topid" name="menu_topid" size="1">
 									<option value="0" selected="selected">=Haupteintrag=</option>
@@ -55,9 +54,17 @@
 							  </td>
 							</tr>
 							<tr>
+							  <td class="formailer_txt"><label for="menu_modus">Modus des Menus: </label></td>
+							  <td class="formailer_txt"><input type="radio" id="menu_modus" name="menu_modus" value="pag" {if $editor.menu_modus != "mod"}checked="checked"{/if}/> Seiten-Modus &nbsp;<input type="radio" id="menu_modus" name="menu_modus" value="mod" {if $editor.menu_modus == "mod"}checked="checked"{/if}/> Modul-Modus</td>
+							</tr>
+							<tr>
+							  <td class="formailer_txt"><label for="menu_page">Id der verlinkten Seite/Moduls: </label></td>
+							  <td class="formailer_txt"><input type="text" id="menu_page" name="menu_page" value="{$editor.menu_page}" size="2"></td>
+							</tr>
+							<tr>
 							  <td class="formailer_txt"><label for="menu_display">Menu anzeigen: </label></td>
 							  <td class="formailer_txt">
-								<input class="formailer_header_input" type="checkbox" id="menu_display" name="menu_display" {if $editor.menu_display == true}checked="checked"{/if}/>
+								<input class="formailer_header_input" type="checkbox" id="menu_display" name="menu_display" value="show" {if $editor.menu_display == true}checked="checked"{/if}/>
 							  </td>
 							</tr>
 						</table>
@@ -71,27 +78,6 @@
 			</tr>
 		</table>
     </form>
-	<!--  <form name="newentry" method="post" action="">
-		  <table cellpadding="0" cellspacing="0" align="center" class="content_tab" border="2">
-			<fieldset>
-			  <legend>Inhalt verfassen</legend>
-				<tr>
-				  <td class="formailer_header">Titel: <img src="templates/style/icons/pencil.gif" /><input class="formailer_header_input" name="title" type="text" onclick="select()" value="{$entry_title}" /></td>
-				</tr>
-				<tr>
-				  <td class="formailer_txt">
-				  Inhalt:<br />
-				  <textarea class="formailer_txt_textarea" name="content" cols="38" rows="20">{$entry_content}</textarea></td>
-				</tr>
-				<tr>
-				<tr>
-				  <td class="formailer_options" colspan="2">
-				  <input type="submit" name="btn_send" value="Senden">
-				  <input name="Clear" type="reset" id="Clear" value="Zur&uuml;cksetzen"></td>
-				</tr>
-			</fieldset>
-		  </table>
-    </form>-->
   </div>
 </div>
 

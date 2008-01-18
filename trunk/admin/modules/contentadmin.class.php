@@ -120,7 +120,7 @@ class Contentadmin implements Module
 				case 'del':
 					$this->_del($id);
 					break;
-					
+
 				default:
 					$this->_view();
 			}
@@ -170,7 +170,7 @@ class Contentadmin implements Module
 		$this->_smarty->assign('pages', $pages_nav);
 
 	}
-	
+
 
 	/**
 	 * Diese Funktion ist für das Erstellen neuer Inhalt verantwortlich.
@@ -245,12 +245,12 @@ class Contentadmin implements Module
 		}
 
 		if (key_exists('weiter', $post) && $post['weiter'] == $linktext) {
-			
-			//$this->_mysql->query("DELETE FROM  `content` WHERE `content_ID` = '$ID' LIMIT 1");
-			
-			//$this->_mysql->query("DELETE FROM  `menu` WHERE `menu_page` = '$ID'  AND `menu_pagetyp` = 'pag' ");
-			
-			
+
+			$this->_mysql->query("DELETE FROM `content` WHERE `content_ID` = '$ID' LIMIT 1");
+
+			$this->_mysql->query("DELETE FROM `menu` WHERE `menu_page` = '$ID'  AND `menu_pagetyp` = 'pag'");
+
+
 			$this->_send_feedback($lang_vars['del_title'], $lang_vars['del_content'],
 			"?nav_id=$this->_nav_id", $lang_vars['link_text']);
 		} elseif (key_exists('nein', $post) && $post['nein'] == $linktext2) {
@@ -378,7 +378,7 @@ class Contentadmin implements Module
 
 			$sql .= ")";
 
-			echo "\nNeues Menu\n";
+
 			$this->_mysql->query($sql);
 		}
 
@@ -431,6 +431,19 @@ class Contentadmin implements Module
 			$err += array('m_name' => $error_vars['menu_name_error'], 'm_pos' => $error_vars['menu_position_error'],
 			'm_topid' => $error_vars['menu_topid_error']);
 
+
+			if (key_exists('menu_ID', $post_vars)) {
+				$tmp['m_ID'] = (int)$post_vars['menu_ID'];
+				
+				if ($val['m_topid'] == $tmp['m_ID']) {
+					$answer[] = $error_vars['menu_topideqid_error'];
+				}
+			}
+
+			if (key_exists('menu_new', $post_vars)) {
+				$tmp['m_new'] = $post_vars['menu_new'];
+			}
+
 			if (!is_numeric($val['m_pos'])) {
 				$answer[] = $err['m_pos'];
 			}
@@ -439,13 +452,7 @@ class Contentadmin implements Module
 				$answer[] = $err['m_topid'];
 			}
 
-			if (key_exists('menu_ID', $post_vars)) {
-				$tmp['m_ID'] = (int)$post_vars['menu_ID'];
-			}
 
-			if (key_exists('menu_new', $post_vars)) {
-				$tmp['m_new'] = $post_vars['menu_new'];
-			}
 
 		} else {
 			$tmp['m_ignore'] = true;
@@ -672,7 +679,7 @@ class Contentadmin implements Module
 		$sess_id = $this->_smarty->get_template_vars('SID');
 		return str_replace($sess_id, "", $text);
 	}
-	
+
 	/**
 	 * Versucht, Menu-Probleme zu finden. U.a. wären dies folgende
 	 * - Seite/Modul, auf die die Startseite verweisst, ist nicht erreichbar. 
@@ -684,7 +691,7 @@ class Contentadmin implements Module
 	 * 
 	 *
 	 */
-	
+
 	private function _checkMenuProbs()
 	{
 		;

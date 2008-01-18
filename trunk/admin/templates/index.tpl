@@ -3,7 +3,7 @@
 <html>
   <head>
     <title>{$content_title}</title>
-
+	<link rel="shortcut icon" type="image/x-icon" href="templates/style/icons/favicon.ico">
     <style type="text/css">@import url(./templates/style/style.css) all;</style>
 	<!--[if IE]>
 	<style type="text/css">@import url(./templates/style/ie_style.css);</style>

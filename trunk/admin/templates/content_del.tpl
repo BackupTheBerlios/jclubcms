@@ -15,7 +15,7 @@
 						<br />
 						{$text|replace:"src=\"?image":"src=\"?image&amp;$SID"}
 						</fieldset>
-						Wollen Sie die <b>Nachricht</b> mit der ID {$del_ID} mit allen <b>Kommentaren(!) wirklich löschen</b>?<br />
+						Wollen Sie den <b>Inhaltstext</b> mit der ID {$del_ID} mit allen <b>daraufverweisenden Menues(!) wirklich löschen</b>?<br />
 						Die Löschung ist UNWIDERRUFLICH!<br />
 					</td>
 				<tr>

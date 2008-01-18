@@ -129,8 +129,8 @@ class Page
 		$apendices = "";
 
 		$page = self::get_current_page($get_array);
-		
-		
+
+
 
 
 		foreach ($get_array as $key => $value) {
@@ -230,15 +230,17 @@ class Page
 	 * @param array $topid_array Array mit den Top-IDs
 	 * @param array[reference] &$subnav_array Array, wo die Navigation gespeichert wird
 	 * @param bool Admin-Menu oder User-Menu
-	 * @param bool[optional] $show Nur die aktiven und übergeorndete Menues oder alle(!) Menues ausklappen
-	 * @param array[optional] $rows Zusätzliche Spalten anzeigen
+	 * @param bool[optional] $klapp_all Nur die übergeorndete Menues oder alle(aktiven, siehe unten) Menues ausklappen
+	 * @param bool[optional] $show_all Nur die aktiven oder auch inaktive Menus anzeigen.
+	 * @param array[optional] $fields Zusätzliche Felder anzeigen
 	 */
 
-	public function let_build_menu_array($topid_array, &$menu_array, $admin_menu = false, $show_all = false, $rows = array())
+	public function let_build_menu_array($topid_array, &$menu_array, $admin_menu = false, $klapp_all = false, $show_all = false, $fields = array())
 	{
 		//Ob es das Admin- oder User-Menu ist, aendert sich der Tabellen-Name im MySQL.
 		$table_name = ($admin_menu === true)?"admin_menu":"menu";
-		return $this->_build_subnav_array($table_name, $topid_array, &$menu_array, $show_all, true, $rows);
+		$options = array('jump_search' => $klapp_all, 'reset' => true, 'show_inactiv' => $show_all, 'fields' => $fields);
+		$this->_build_subnav_array($table_name, $topid_array, &$menu_array, $options);
 	}
 
 	/**
@@ -382,38 +384,53 @@ class Page
 	 * @param string $table_name Name der MySQL-Tabelle
 	 * @param array $topid_array Array mit den Top-IDs
 	 * @param array[reference] &$subnav_array Array, wo die Navigation gespeichert wird
-	 * @param bool[optional] $show_all topid_array nur der Reihe nach gelesen (true) oder alle Einträge berücksichtigen
-	 * @param bool $reset Alle Variablen zurücksetzen (nötig, wenn Funktion verschiedene Male aufgerufen wird)
+	 * @param array $options[optional] Optionen für die Funktion wie 'Jump_search', 'reset' und 'rows' (für zusätzliche Felder
 	 */
 
-	private function _build_subnav_array($table_name, &$topid_array, &$subnav_array, $jump_search = false, $reset = false, $rows = array())
+	private function _build_subnav_array($table_name, &$topid_array, &$subnav_array, $options = array())
 	{
 		$mysql_array = array();
 		/* $i brauchts für die Indexierung des $subnav_array, $level für das Bestimmen des Menu-Levels */
 		static $i = 0, $level = 0;
-		if ($reset == true) {
+
+		/*Optionen durchchecken*/	
+		
+		if (key_exists('reset', $options) && $options['reset'] == true) {
 			$i = 0; $level = 0;
+			/*Reset-Option wird nicht an rekursive Funktionen weitergegeben*/
+			unset($options['reset']);
 		}
 		
 		$str = "";
-		
-		if (!empty($rows)) {
-			foreach($rows as $key => $value) {
+		if (key_exists('fields', $options) && is_array($options) && !empty($options['fields'])) {
+			foreach($options['fields'] as $key => $value) {
 				$str .= ", `{$this->_mysql->escapeString($value)}`";
 			}
 		}
+		
+		if (key_exists('jump_search', $options) && $options['jump_search'] == true) {
+			$jump_search = true;
+		} else {
+			$jump_search = false;
+		}
+		
+		if (key_exists('show_inactiv', $options) && $options['show_inactiv'] == true) {
+			$cond_display = "";
+		} else {
+			$cond_display = " AND `menu_display` != '0'";
+		}
+		/*Ende des Durchcheckens*/
 
-		$this->_mysql->query("SELECT `menu_ID`,`menu_topid`, `menu_name`, `menu_modvar`, `menu_page`as '_menu_page' $str 
-							FROM `$table_name`
-							WHERE `menu_topid` = '{$topid_array[0]}' AND `menu_display` != '0' 
-							AND `menu_shortlink` != '1' ORDER BY `menu_position` ASC");
+		$this->_mysql->query("SELECT `menu_ID`,`menu_topid`, `menu_name`, `menu_modvar`, `menu_page`as '_menu_page' $str "
+		."FROM `$table_name`"
+		."WHERE `menu_topid` = '{$topid_array[0]}' $cond_display"
+		."AND `menu_shortlink` != '1' ORDER BY `menu_position` ASC");
 
 		$mysql_array = $this->_mysql->get_records();
 
-
 		//$level aendert sich nicht innerhalb der Funktion, nur bei einem neuen Funktionsaufruf
 		$level++;
-		/* Oberster Key entfernen, damit weniger verglichen werden muss und bei beachtung der 
+		/* Oberster Key entfernen, damit weniger verglichen werden muss und bei beachtung der
 		Reihenfolge von $topid_array ($jump_search == false) dsd Vergleichen einfacher wird*/
 		array_shift($topid_array);
 
@@ -426,26 +443,25 @@ class Page
 			$i++;
 
 			/* Ist $jump_search == true, werden alle Einträge berücksichtig. D.h. es wird im ganzen $topid-Array
-				nach der topid von $value[menu_ID] gesucht, die Reihenfolge von topid_array spielt keine Rolle
-				Ist $jump_search == false, wird immer nur das vorderste Element von $topid_array mit der
-				topid von $value[menu_ID] verglichen.
+			nach der topid von $value[menu_ID] gesucht, die Reihenfolge von topid_array spielt keine Rolle
+			Ist $jump_search == false, wird immer nur das vorderste Element von $topid_array mit der
+			topid von $value[menu_ID] verglichen.
 			*/
 			if ($jump_search == true && count($topid_array) > 0 && in_array($value['menu_ID'], $topid_array)) {
 				$key = array_search($value['menu_ID'], $topid_array);
 				if ($key != 0) {
+					$temp = $topid_array[0];
 					$topid_array[0] = $topid_array[$key];
-					unset($topid_array[$key]);
+					$topid_array[$key] = $temp;
+
 				}
-				$this->_build_subnav_array($table_name, &$topid_array, $subnav_array, $jump_search, false, $rows);
+				$this->_build_subnav_array($table_name, &$topid_array, $subnav_array, $options);
 				$level--;
 
 			} elseif (count($topid_array) > 0 && $value['menu_ID'] == $topid_array[0]) {
 				$this->_build_subnav_array($table_name, $topid_array, $subnav_array);
 				$level--;
 			}
-
-				
-			
 
 		}
 	}
