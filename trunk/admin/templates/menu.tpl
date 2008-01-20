@@ -14,6 +14,11 @@
 		{rdelim}
 	</script>
 	{assign var="pad" value="2"}
+	<p>Hier l&auml;sst sich das Menu anpassen. Mit einem Klick auf den Menu-Namen gelangst du zum Menu-Editor, wo sich das Menu &auml;ndern l&auml;sst.<br />
+	Doch mal zu dieser Seite. Mittels Angabe der Position kann man bestimmen, wo der Menu-Eintrag erscheinen soll. Die Eintr&auml;ge werden zuerst nach ihrer Tiefe 
+	und dann nach ihrer Position sortiert. <br />Falls du eine Position anpassen willst, w&auml;hlst du die neue Position im entsprechenden Eintrag aus. Danach vergewissere dich, dass das H&auml;ckchen am Rande
+	gesetz ist. Zum Schluss muss noch der Senden-Knopf gedr&uuml;ckt werden.<br />Die Seite wird neu geladen und du siehst das Resultat.<br />
+	Auf die gleiche Weise verl&auml;uft das Aktivieren/deaktivieren des Menu-Eintrages. Ist ein Eintrag deaktiviert, erscheint er nicht auf der Seite, ist aber weiterhin erreichbar, wenn auch versteckt.</p>
 	<form name="menues" method="post" action="">
 		<table cellpadding="0" cellspacing="0" align="center" class="content_tab" style="max-width: 80%;min-width: 60%;font-size: 11px;">
 			<tr  class="content_tab_header" >	
