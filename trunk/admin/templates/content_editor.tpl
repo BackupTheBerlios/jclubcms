@@ -1,7 +1,7 @@
 	 {config_load file='textes.de.conf' section='Editor-Entry'}
 	 <div id="content">
 		<div id="content_txt">
-		<h2>{$editor.title|default:"Neues Menu verfassen"}</h2>
+		<h2>{$editor.title|default:"Neuer Inhalt verfassen"}</h2>
     <table width = 100% class="content_tab">
     </table>
 	<!-- tinyMCE -->
@@ -45,7 +45,7 @@ tinyMCE_GZ.init({ldelim}
 						<table cellpadding="0" cellspacing="0" align="center" class="content_tab" style="width: 95%">
 							<tr>
 							  <td class="formailer_header">
-								Titel: <input class="formailer_header_input" name="content_title" type="text" value="{$editor.content_title|default:#content_title#}" />
+								Titel: <input class="formailer_header_input" name="content_title" type="text" value="{$editor.content_title|default:#content_title#}" size="40"/>
 							  </td>
 							</tr>
 							<tr>

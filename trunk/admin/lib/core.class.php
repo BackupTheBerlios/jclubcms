@@ -289,20 +289,20 @@ class Core
 		$this->_loadNav($shortlink);
 		$this->_check_spec_action();
 
-		$this->_mysql->query("SELECT `menu_pagetyp`, `menu_page` FROM `$table` WHERE `menu_ID`= '{$this->_nav_id}'");
-		$data = $this->_mysql->fetcharray("assoc");
+		$this->_mysql->query("SELECT `menu_pagetyp`, `menu_page`,  `menu_name` FROM `$table` WHERE `menu_ID`= '{$this->_nav_id}'");
+		$page_data = $this->_mysql->fetcharray("assoc");
 
-		$page_id = (int)$data['menu_page'];
+		$page_id = (int)$page_data['menu_page'];
 
 		// erste Variablen abspeichern, damit sie in den Modulen aufgerufen werden können
 		$this->_smarty->assign($this->_smarty_array);
 		$this->_smarty_array = array();
 
-		if ($data['menu_pagetyp'] == 'mod') {
-			$this->_loadModule($page_id);
+		if ($page_data['menu_pagetyp'] == 'mod') {
+			$this->_loadModule($page_id, $page_data);
 
-		} elseif ($data['menu_pagetyp'] == 'pag') {
-			$this->_loadContent($page_id);
+		} elseif ($page_data['menu_pagetyp'] == 'pag') {
+			$this->_loadContent($page_id, $page_data);
 
 		} else {
 			throw new CMSException("Das angegebene Modul konnte nicht gefunden werden", null, 'Modul nicht vorhanden');
@@ -388,7 +388,7 @@ class Core
 	 */
 
 
-	private function _loadModule($module_ID)
+	private function _loadModule($module_ID, $page_data)
 	{
 		//Kann ueberschrieben, aber damit sicher etwas steht -> speichern
 		$this->_smarty->assign('content_title', 'JClub');
@@ -400,7 +400,7 @@ class Core
 		}
 
 		//Modul aus Datenbank lesen
-		$this->_mysql->query("SELECT `modules_file`,`modules_template_support`, `modules_status` FROM `$mod_table` WHERE `modules_ID`= '$module_ID' LIMIT 1");
+		$this->_mysql->query("SELECT `modules_name`, `modules_file`,`modules_template_support`, `modules_status` FROM `$mod_table` WHERE `modules_ID`= '$module_ID' LIMIT 1");
 		$data = $this->_mysql->fetcharray("assoc");
 
 		if (empty($data) && $data == false) {
@@ -454,7 +454,7 @@ class Core
 		} else {
 			/*Modul ist offline*/
 			$this->_smarty_array['error_title'] = "Nicht erreichbar";
-			$this->_smarty_array['error_text'] = "Angegebene Seite ist nicht erreichbar";
+			$this->_smarty_array['error_text'] = "{$page_data['menu_name']} ist zur Zeit nicht erreichbar";
 			$this->_smarty_array['file'] = 'error_include.tpl';
 		}
 
@@ -467,7 +467,7 @@ class Core
 	 * @param int $page_ID
 	 */
 
-	private function _loadContent($page_ID)
+	private function _loadContent($page_ID, $page_data)
 	{
 		if ($this->_is_admin == true) {
 			$cnt_table = 'admin_content';
@@ -479,12 +479,12 @@ class Core
 		$data = $this->_mysql->fetcharray("assoc");
 
 		if ($data['content_archiv'] == 'no') {
-			$content_title = $data['content_title'];
-			$content_text = $data['content_text'];
+			$content_title = htmlspecialchars_decode(htmlentities($data['content_title']));
+			$content_text = htmlspecialchars_decode(htmlentities($data['content_text']));
 			$this->_smarty_array += array('content_title' => $content_title, 'content_text' => $content_text);
 		} else {
 			$this->_smarty_array['error_title'] = "Nicht erreichbar";
-			$this->_smarty_array['error_text'] = "Angegebene Seite ist nicht erreichbar";
+			$this->_smarty_array['error_text'] = "{$page_data['menu_name']} ist zur Zeit nicht erreichbar";
 			$this->_smarty_array['file'] = 'error_include.tpl';
 		}
 

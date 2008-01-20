@@ -116,6 +116,10 @@ class Newsadmin implements Module
 		$this->_msbox = new Messageboxes($this->_mysql, 'news', array('ID' => 'news_ID', 'ref_ID' => 'news_ref_ID', 'content' => 'news_content', 'name' => 'news_name', 'time' => 'news_time', 'email' => 'news_email', 'hp' => 'news_hp', 'title' => 'news_title'));
 
 		$this->_smilie = new Smilies($dir_smilies);
+		
+		if ($this->_getStatus() == 'off') {
+			$this->_smarty->assign('info', 'Das Modul News ist deaktiviert. Benutzer k&ouml;nnen keine News anschauen');
+		}
 
 		//Je nach Get-Parameter die zugehörige Anweisung ausfuehren
 		if (key_exists('action', $this->_gpc['GET'])) {
@@ -161,10 +165,16 @@ class Newsadmin implements Module
 	}
 
 	/**
-	 * Zeigt die Einträge an
+	 * Gibt den Status des Moduls zurück, für dessen Verwaltung diese Klasse zuständig ist
 	 *
-	 * @param int $max_entries_pp Anzahl Einträge pro Seite
+	 * @return string Status (on|off);
 	 */
+	private function _getStatus()
+	{
+		$this->_mysql->query("SELECT `modules_status` FROM `modules` WHERE  `modules_name` = 'news'");
+		$data = $this->_mysql->fetcharray('num');
+		return $data[0];
+	}
 
 	/**
 	 * Zeigt die Einträge an

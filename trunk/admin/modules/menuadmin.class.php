@@ -148,7 +148,7 @@ class Menuadmin implements Module
 		$this->_tplfile = 'menu.tpl';
 
 		if ($this->_isformsend()) {
-			$this->_updPos();
+			$this->_updView();
 		}
 		$this->_mysql->query("SELECT COUNT(*) as 'count' FROM `menu`");
 		$count = $this->_mysql->fetcharray('assoc');
@@ -171,6 +171,7 @@ class Menuadmin implements Module
 			}
 
 			$menu_data[$key]['menu_space'] = $str;
+			$menu_data[$key]['menu_name'] = htmlentities($value['menu_name']);
 		}
 
 		$this->_smarty->assign('menus', $menu_data);
@@ -279,18 +280,61 @@ class Menuadmin implements Module
 			}
 
 			$this->_smarty->assign($data);
-			$this->_smarty->assign(array('menu_pagename' => $m_linkname, 'del_ID' => $ID, 
+			$this->_smarty->assign(array('menu_pagename' => $m_linkname, 'del_ID' => $ID,
 			'linktext' => $linktext, 'linktext2' => $linktext2));
 
 		}
 
 
 	}
-	
-	/* Macht ein Update der Positionen, die auf der Menu-Seite angegeben wurden */
-	private function _updPos()
+
+	/**
+	 *  Macht ein Update der Positionen, die auf der Menu-Seite angegeben wurden
+	 * 
+	 */
+	private function _updView()
 	{
-		;
+		$post = $this->_gpc['POST'];
+		$pos_arr = array();
+		$disp_arr = array();
+
+		$break = false;
+
+		if (key_exists('menu_check', $post)) {
+			foreach ($post['menu_check'] as $key => $value) {
+				$pos_value = $post['menu_position'][$key];
+				if (!is_numeric($pos_value)) {
+					$this->_smarty->assign('info', "Erlaubte Werte f&uuml;r Positionen sind nur Zahlenwerte, keine anderen.");
+					$break = true;
+					break;
+				} else {
+					$pos_arr[] = array('ID' => $this->_mysql->escapeString($key), 'value' => $this->_mysql->escapeString($pos_value));
+				}
+				
+				$disp_value = $post['menu_display'][$key];
+				if ($disp_value != '0' && $disp_value != '1') {
+					$this->_smarty->assign('info', "Erlaubte Werte f&uuml;r Annzeige sind nur 0 und 1, keine anderen.");
+					$break = true;
+					break;
+				} else {
+					$disp_arr[] = array('ID' => $this->_mysql->escapeString($key), 'value' => $this->_mysql->escapeString($disp_value));
+				}
+
+			}
+		}
+
+		if ($break != true && !empty($pos_arr)) {
+			
+			foreach ($pos_arr as $value) {
+				$this->_mysql->query("UPDATE `menu` SET `menu_position` = '{$value['value']}' WHERE `menu_ID` = '{$value['ID']}' LIMIT 1");
+			}
+			
+			foreach ($pos_arr as $value) {
+				$this->_mysql->query("UPDATE `menu` SET `menu_display` = '{$value['value']}' WHERE `menu_ID` = '{$value['ID']}' LIMIT 1");
+			}
+
+
+		}
 	}
 
 	/**
@@ -322,7 +366,6 @@ class Menuadmin implements Module
 
 		$sql .= ")";
 
-		echo __METHOD__." \$sql $sql\n";
 		$this->_mysql->query($sql);
 
 		if ($this->_mysql->insert_id() == $data['m_topid']) {
@@ -367,7 +410,6 @@ class Menuadmin implements Module
 
 		$sql .= " WHERE `menu_ID` = '".$this->_mysql->escapeString($data['m_ID'])."' LIMIT 1";
 
-		echo __METHOD__." \$sql $sql\n";
 		$this->_mysql->query($sql);
 
 	}
@@ -507,7 +549,6 @@ class Menuadmin implements Module
 		} elseif ($tk_std_values == false) {
 			/* Daten vom POST-Formular nehmen */
 			$post = $this->_gpc['POST'];
-			print_r($post);
 
 			$smarty_array += array('menu_name' => stripslashes($post['menu_name']), 'menu_position' => stripslashes($post['menu_position']),
 			'menu_topid' => stripslashes($post['menu_topid']), 'menu_modus' => stripslashes($post['menu_modus']),

@@ -1,6 +1,7 @@
 <div id="content">
 	<div id="content_txt">
 	<h1>G&auml;stebuch</h1>
+	<p style="background-color:#FF8822; text-align: center">{$info}</p>
 	<table width="640" align="center" class="content_tab">
 		<tr>
 			<td><a href="?nav_id={$local_link}&action=new&amp;{$SID}"><img src="templates/style/icons/book_open.gif" />Neuer Eintrag</a></td><td align="right">{if $entries lte 1}{$entries|default:"Kein"} Eintrag{else}{$entries} Eintr&auml;ge{/if}</td>

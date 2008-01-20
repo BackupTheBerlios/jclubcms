@@ -78,7 +78,7 @@ class Moduladmin implements Module
 		$this->_gpc = $gpc;
 
 		$this->_nav_id = $this->_smarty->get_template_vars('local_link');
-		
+
 		$this->_view();
 		return true;
 
@@ -113,8 +113,6 @@ class Moduladmin implements Module
 		$count = $this->_mysql->fetcharray('assoc');
 		$count = $count['count'];
 
-		echo "$count, $number,\n";
-
 		$page = Page::get_current_page($this->_gpc['GET']);
 		$pages_nav = Page::get_static_pagesnav_array($count, $number, $this->_gpc['GET']);
 		$start = ($page - 1)*$number;
@@ -126,6 +124,7 @@ class Moduladmin implements Module
 
 		$this->_smarty->assign('modules', $modules_data);
 		$this->_smarty->assign('pages', $pages_nav);
+		$this->_smarty->assign('info', $this->_getinfo(true));
 
 	}
 
@@ -137,7 +136,29 @@ class Moduladmin implements Module
 	 */
 	private function _updmods()
 	{
-		print_r($this->_gpc['POST']);
+		$post = $this->_gpc['POST'];
+		$status_arr = array();
+
+		if (key_exists('modules_check', $post)) {
+			foreach ($post['modules_check'] as $key => $value) {
+				$st_value = $post['modules_status'][$key];
+				if ($st_value != 'on' && $st_value != 'off') {
+					$this->setinfo("Erlaubte Werte für Status sind nur on und off, keine anderen.");
+					break;
+				} else {
+					$status_arr[] = array('ID' => $this->_mysql->escapeString($key), 'value' => $this->_mysql->escapeString($st_value));
+				}
+
+			}
+		}
+
+		if (!empty($status_arr)) {
+			$query = "";
+			foreach ($status_arr as $value) {
+				$this->_mysql->query("UPDATE `modules` SET `modules_status` = '{$value['value']}' WHERE `modules_ID` = '{$value['ID']}' LIMIT 1");
+			}
+
+		}
 
 	}
 
@@ -150,6 +171,36 @@ class Moduladmin implements Module
 	{
 
 		return (key_exists('btn_senden', $this->_gpc['POST']) && $this->_gpc['POST']['btn_senden'] == "Senden");
+	}
+
+	/**
+	 * Speichert Strings in einem Array ab, das jederzeit verfügbar ist.
+	 *
+	 * @param string $string Zeichenkette, die gespeichert werden soll
+	 * @return array Aktuelles Array
+	 */
+	private function _setinfo($string = null)
+	{
+		static $info = array();
+		if ($string != null &&!empty($string)) {
+			$info[] = $string;
+		}
+		return $info;
+	}
+
+	/**
+	 * Speichert Strings in einem Array ab, das jederzeit verfügbar ist.
+	 *
+	 * @param boolean $as_string Daten in Array oder als String zurückgeben
+	 * @return array|string Aktuelles Array (im Format String, wenn gewählt)
+	 */
+	private function _getinfo($as_string = true)
+	{
+		if ($as_string == true) {
+			return implode('<br />\n', $this->_setinfo());
+		} else {
+			return setinfo();
+		}
 	}
 
 }

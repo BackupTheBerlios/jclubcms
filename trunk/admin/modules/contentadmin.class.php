@@ -203,7 +203,7 @@ class Contentadmin implements Module
 	 */
 	private function _edit($ID)
 	{
-		print_r($this->_gpc['POST']);
+
 		/*Parameter kontrollieren */
 		if (!is_int($ID) || $ID < 1) {
 			throw new CMSException('1. Parameter ist nicht gültig. Typ Int ist verlangt.', EXCEPTION_MODULE_CODE, 'Laufzeit-Fehler');
@@ -442,6 +442,8 @@ class Contentadmin implements Module
 
 			if (key_exists('menu_new', $post_vars)) {
 				$tmp['m_new'] = $post_vars['menu_new'];
+			} else {
+				$tmp['m_new'] = false;
 			}
 
 			if (!is_numeric($val['m_pos'])) {

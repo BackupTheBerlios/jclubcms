@@ -86,12 +86,12 @@ class Captcha_image implements Module
 			$img = $this->_gpc['GET']['img'];
 
 		} else {
-			echo 'no image file specified via &img=...';
+			throw new CMSException('kein Bild über &img=... angegeben', EXCEPTION_MODULE_CODE, 'Parameterfehler');
 			exit;
 		}
 
 		if (!$fh = fopen( $this->_tmp_dir_path.'cap_'.$img.'.jpg', 'rb')) {
-			echo 'could not open image file!';
+			throw new CMSException('Die Bilddatei konnte nicht geöffnet werten!', EXCEPTION_MODULE_CODE, 'Fehler beim Öffnen');
 		} else {
 			fpassthru( $fh );
 			fclose( $fh );

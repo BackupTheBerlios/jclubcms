@@ -114,6 +114,10 @@ class Gbookadmin implements Module {
 		'hp' => 'gbook_hp', 'title' => 'gbook_title'));
 
 		$this->_smilie = new Smilies($dir_smilies);
+		
+		if ($this->_getStatus() == 'off') {
+			$this->_smarty->assign('info', 'Das Modul G&auml;stebuch ist deaktiviert. Benutzer k&ouml;nnen keine G&auml;stebucheintr&auml;ge anschauen');
+		}
 
 		if (key_exists('action', $this->_gpc['GET'])) {
 			switch ($this->_gpc['GET']['action']) {
@@ -154,6 +158,18 @@ class Gbookadmin implements Module {
 	public function gettplfile()
 	{
 		return $this->_tplfile;
+	}
+	
+		/**
+	 * Gibt den Status des Moduls zurück, für dessen Verwaltung diese Klasse zuständig ist
+	 *
+	 * @return string Status (on|off);
+	 */
+	private function _getStatus()
+	{
+		$this->_mysql->query("SELECT `modules_status` FROM `modules` WHERE  `modules_name` = 'gbook'");
+		$data = $this->_mysql->fetcharray('num');
+		return $data[0];
 	}
 
 	/**

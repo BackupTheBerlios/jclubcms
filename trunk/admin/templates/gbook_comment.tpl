@@ -1,5 +1,6 @@
       <div id="content">
 		<div id="content_txt">
+		<p style="background-color:#FF8822; text-align: center">{$info}</p>
     <table width = 100% class="content_tab">
     </table>
     {************************************************************}
