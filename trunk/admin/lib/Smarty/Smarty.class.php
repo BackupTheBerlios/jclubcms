@@ -27,10 +27,10 @@
  * @author Monte Ohrt <monte at ohrt dot com>
  * @author Andrei Zmievski <andrei@php.net>
  * @package Smarty
- * @version 2.6.18
+ * @version 2.6.20
  */
 
-/* $Id: Smarty.class.php,v 1.528 2007/03/06 10:40:06 messju Exp $ */
+/* $Id: Smarty.class.php 2722 2007-06-18 14:29:00Z danilo $ */
 
 /**
  * DIR_SEP isn't used anymore, but third party apps might
@@ -57,12 +57,6 @@ define('SMARTY_PHP_PASSTHRU',   0);
 define('SMARTY_PHP_QUOTE',      1);
 define('SMARTY_PHP_REMOVE',     2);
 define('SMARTY_PHP_ALLOW',      3);
-
-/**
- * sets the default timezone. Without this an E_STRICT-Error occurs
- */
-
-date_default_timezone_set('Europe/Zurich');
 
 /**
  * @package Smarty
@@ -393,7 +387,7 @@ class Smarty
     /**
      * The class used for compiling templates.
      *
-     * @public string
+     * @var string
      */
     public $compiler_class        =   'Smarty_Compiler';
 
@@ -414,126 +408,126 @@ class Smarty
      *
      * @var array
      */
-    public $_tpl_vars             = array();
+    private $_tpl_vars             = array();
 
     /**
      * stores run-time $smarty.* vars
      *
      * @var null|array
      */
-    public $_smarty_vars          = null;
+    private $_smarty_vars          = null;
 
     /**
      * keeps track of sections
      *
      * @var array
      */
-    public $_sections             = array();
+    private $_sections             = array();
 
     /**
      * keeps track of foreach blocks
      *
      * @var array
      */
-    public $_foreach              = array();
+    private $_foreach              = array();
 
     /**
      * keeps track of tag hierarchy
      *
      * @var array
      */
-    public $_tag_stack            = array();
+    private $_tag_stack            = array();
 
     /**
      * configuration object
      *
      * @var Config_file
      */
-    public $_conf_obj             = null;
+    private $_conf_obj             = null;
 
     /**
      * loaded configuration settings
      *
      * @var array
      */
-    public $_config               = array(array('vars'  => array(), 'files' => array()));
+    private $_config               = array(array('vars'  => array(), 'files' => array()));
 
     /**
      * md5 checksum of the string 'Smarty'
      *
      * @var string
      */
-    public $_smarty_md5           = 'f8d698aea36fcbead2b9d5359ffca76f';
+    private $_smarty_md5           = 'f8d698aea36fcbead2b9d5359ffca76f';
 
     /**
      * Smarty version number
      *
      * @var string
      */
-    public $_version              = '2.6.18';
+    private $_version              = '2.6.20';
 
     /**
      * current template inclusion depth
      *
      * @var integer
      */
-    public $_inclusion_depth      = 0;
+    private $_inclusion_depth      = 0;
 
     /**
      * for different compiled templates
      *
      * @var string
      */
-    public $_compile_id           = null;
+    private $_compile_id           = null;
 
     /**
      * text in URL to enable debug mode
      *
      * @var string
      */
-    public $_smarty_debug_id      = 'SMARTY_DEBUG';
+    private $_smarty_debug_id      = 'SMARTY_DEBUG';
 
     /**
      * debugging information for debug console
      *
      * @var array
      */
-    public $_smarty_debug_info    = array();
+    private $_smarty_debug_info    = array();
 
     /**
      * info that makes up a cache file
      *
      * @var array
      */
-    public $_cache_info           = array();
+    private $_cache_info           = array();
 
     /**
      * default file permissions
      *
      * @var integer
      */
-    public $_file_perms           = 0644;
+    private $_file_perms           = 0644;
 
     /**
      * default dir permissions
      *
      * @var integer
      */
-    public $_dir_perms               = 0771;
+    private $_dir_perms               = 0771;
 
     /**
      * registered objects
      *
      * @var array
      */
-    public $_reg_objects           = array();
+    private $_reg_objects           = array();
 
     /**
      * table keeping track of plugins
      *
      * @var array
      */
-    public $_plugins              = array(
+    private $_plugins              = array(
                                        'modifier'      => array(),
                                        'function'      => array(),
                                        'block'         => array(),
@@ -550,14 +544,14 @@ class Smarty
      *
      * @var array
      */
-    public $_cache_serials = array();
+    private $_cache_serials = array();
 
     /**
      * name of optional cache include file
      *
      * @var string
      */
-    public $_cache_include = null;
+    private $_cache_include = null;
 
     /**
      * indicate if the current code is used in a compiled
@@ -565,7 +559,7 @@ class Smarty
      *
      * @var string
      */
-    public $_cache_including = false;
+    private $_cache_including = false;
 
     /**#@-*/
     /**
@@ -844,69 +838,66 @@ class Smarty
      * Registers a prefilter function to apply
      * to a template before compiling
      *
-     * @param string $function name of PHP function to register
+     * @param callback $function
      */
     function register_prefilter($function)
     {
-    $_name = (is_array($function)) ? $function[1] : $function;
-        $this->_plugins['prefilter'][$_name]
+        $this->_plugins['prefilter'][$this->_get_filter_name($function)]
             = array($function, null, null, false);
     }
 
     /**
      * Unregisters a prefilter function
      *
-     * @param string $function name of PHP function
+     * @param callback $function
      */
     function unregister_prefilter($function)
     {
-        unset($this->_plugins['prefilter'][$function]);
+        unset($this->_plugins['prefilter'][$this->_get_filter_name($function)]);
     }
 
     /**
      * Registers a postfilter function to apply
      * to a compiled template after compilation
      *
-     * @param string $function name of PHP function to register
+     * @param callback $function
      */
     function register_postfilter($function)
     {
-    $_name = (is_array($function)) ? $function[1] : $function;
-        $this->_plugins['postfilter'][$_name]
+        $this->_plugins['postfilter'][$this->_get_filter_name($function)]
             = array($function, null, null, false);
     }
 
     /**
      * Unregisters a postfilter function
      *
-     * @param string $function name of PHP function
+     * @param callback $function
      */
     function unregister_postfilter($function)
     {
-        unset($this->_plugins['postfilter'][$function]);
+        unset($this->_plugins['postfilter'][$this->_get_filter_name($function)]);
     }
 
     /**
      * Registers an output filter function to apply
      * to a template output
      *
-     * @param string $function name of PHP function
+     * @param callback $function
      */
     function register_outputfilter($function)
     {
-    $_name = (is_array($function)) ? $function[1] : $function;
-        $this->_plugins['outputfilter'][$_name]
+        $this->_plugins['outputfilter'][$this->_get_filter_name($function)]
             = array($function, null, null, false);
     }
 
     /**
      * Unregisters an outputfilter function
      *
-     * @param string $function name of PHP function
+     * @param callback $function
      */
     function unregister_outputfilter($function)
     {
-        unset($this->_plugins['outputfilter'][$function]);
+        unset($this->_plugins['outputfilter'][$this->_get_filter_name($function)]);
     }
 
     /**
@@ -1941,6 +1932,25 @@ class Smarty
     {
         return eval($code);
     }
+    
+    /**
+     * Extracts the filter name from the given callback
+     * 
+     * @param callback $function
+     * @return string
+     */
+	function _get_filter_name($function)
+	{
+		if (is_array($function)) {
+			$_class_name = (is_object($function[0]) ?
+				get_class($function[0]) : $function[0]);
+			return $_class_name . '_' . $function[1];
+		}
+		else {
+			return $function;
+		}
+	}
+    
     /**#@-*/
 
 }
