@@ -7,9 +7,9 @@
 
 /*DB-Einstellungen*/
 $db_server = "localhost";
-$db_name = "jclubbeta";
-$db_user = "jclubbeta";
-$db_pw ="jclubbeta";
+$db_name = "jclubch_jclubcms";
+$db_user = "jclubch_jclubcms";
+$db_pw ="4pw4jclubcms";
 
 //**Bild und Thumb
 

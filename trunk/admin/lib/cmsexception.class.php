@@ -153,6 +153,7 @@ class CMSException extends Exception
 
 	public static function logException($e, $title = null, $comment = null)
 	{
+		date_default_timezone_set("Europe/Zurich");
 		$time = date("Y-m-d H:i");
 		if (empty($title)) {
 			$title = $e->getTitle();
