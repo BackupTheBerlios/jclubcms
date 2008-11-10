@@ -18,7 +18,8 @@
 		&nbsp;
 	</div>
 	<div id="navigation">
-		<div class="navigation_links"{if $shortlink} style="text-align:right" {/if} >
+		{if $shortlink} <div class="navigation_links" style="text-align:right">{else}
+ <div class="navigation_links">{/if}
       
         {*Hier kommt die Navigation, ausgelesen aus der DB*}
         {foreach item=topnav from=$topnav}
