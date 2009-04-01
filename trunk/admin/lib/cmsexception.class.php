@@ -51,6 +51,14 @@ if (!defined('EXCEPTION_LIBARY_CODE')) {
 	define('EXCEPTION_LIBARY_CODE', 4);
 }
 
+/**
+ * Sammlung der Exception, mit denen die Fehlerbehandlung des CMS funktioniert
+ * @author Simon Däster
+ * @package JClubCMS
+ * File: exceptions.class.php
+ * Classes: coreexception, mysqlexception, moduleexception, stdexception
+ * @requieres PHP5
+ */
 
 class CMSException extends Exception
 {

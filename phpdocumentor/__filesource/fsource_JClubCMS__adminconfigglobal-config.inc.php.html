@@ -1,0 +1,85 @@
+<html>
+<head>
+<title>File Source for global-config.inc.php</title>
+<link rel="stylesheet" type="text/css" href="../media/style.css">
+</head>
+<body>
+
+<table border="0" cellspacing="0" cellpadding="0" height="48" width="100%">
+  <tr>
+    <td class="header_top">JClubCMS</td>
+  </tr>
+  <tr><td class="header_line"><img src="../media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
+  <tr>
+    <td class="header_menu">
+        
+                                    
+                                                  		  [ <a href="../classtrees_JClubCMS.html" class="menu">class tree: JClubCMS</a> ]
+		  [ <a href="../elementindex_JClubCMS.html" class="menu">index: JClubCMS</a> ]
+		  	    [ <a href="../elementindex.html" class="menu">all elements</a> ]
+    </td>
+  </tr>
+  <tr><td class="header_line"><img src="../media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
+</table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="200" class="menu">
+	<div id="todolist">
+			<p><a href="../todolist.html">Todo List</a></p>
+	</div>
+      <b>Packages:</b><br />
+              <a href="../li_JClubCMS.html">JClubCMS</a><br />
+              <a href="../li_Smarty.html">Smarty</a><br />
+            <br /><br />
+                  
+      
+                </td>
+    <td>
+      <table cellpadding="10" cellspacing="0" width="100%" border="0"><tr><td valign="top">
+
+<h1 align="center">Source for file global-config.inc.php</h1>
+<p>Documentation is available at <a href="../JClubCMS/_admin---config---global-config.inc.php.html">global-config.inc.php</a></p>
+<div class="src-code">
+<ol><li><div class="src-line"><a name="a1"></a><span class="src-php">&lt;?php</span></div></li>
+<li><div class="src-line"><a name="a2"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a3"></a><span class="src-doc">/**</span></div></li>
+<li><div class="src-line"><a name="a4"></a><span class="src-doc">&nbsp;*&nbsp;</span><span class="src-doc-coretag">@package</span><span class="src-doc">&nbsp;JClubCMS</span></div></li>
+<li><div class="src-line"><a name="a5"></a><span class="src-doc">&nbsp;*&nbsp;</span><span class="src-doc-coretag">@author</span><span class="src-doc">&nbsp;David&nbsp;Daester,&nbsp;Simon&nbsp;D�ster</span></div></li>
+<li><div class="src-line"><a name="a6"></a><span class="src-doc">&nbsp;*/</span></div></li>
+<li><div class="src-line"><a name="a7"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a8"></a><span class="src-comm">/*DB-Einstellungen*/</span></div></li>
+<li><div class="src-line"><a name="a9"></a><span class="src-var">$db_server&nbsp;</span>=&nbsp;<span class="src-str">&quot;localhost&quot;</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a10"></a><span class="src-var">$db_name&nbsp;</span>=&nbsp;<span class="src-str">&quot;jclubch_jclubcms&quot;</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a11"></a><span class="src-var">$db_user&nbsp;</span>=&nbsp;<span class="src-str">&quot;jclubch_jclubcms&quot;</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a12"></a><span class="src-var">$db_pw&nbsp;</span>=<span class="src-str">&quot;4pw4jclubcms&quot;</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a13"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a14"></a><span class="src-comm">//**Bild&nbsp;und&nbsp;Thumb</span></div></li>
+<li><div class="src-line"><a name="a15"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a16"></a><span class="src-comm">//!!!&nbsp;Bilder&nbsp;sind&nbsp;stdmaessig&nbsp;in&nbsp;originals&nbsp;abgespeichert,&nbsp;aber&nbsp;wenn&nbsp;sie&nbsp;zu&nbsp;gross&nbsp;sind,&nbsp;in&nbsp;gallery</span></div></li>
+<li><div class="src-line"><a name="a17"></a><span class="src-var">$dir_orgImage&nbsp;</span>=&nbsp;<span class="src-id"><a href="../JClubCMS/_index.php.html#defineUSER_DIR">USER_DIR</a></span>.<span class="src-str">&quot;graphics/originals/&quot;</span><span class="src-sym">;&nbsp;</span><span class="src-comm">//Relativ&nbsp;zur&nbsp;Index-Datei</span></div></li>
+<li><div class="src-line"><a name="a18"></a><span class="src-var">$dir_galImage&nbsp;</span>=&nbsp;<span class="src-id"><a href="../JClubCMS/_index.php.html#defineUSER_DIR">USER_DIR</a></span>.<span class="src-str">&quot;graphics/gallery/&quot;</span><span class="src-sym">;&nbsp;&nbsp;</span><span class="src-comm">//Relativ&nbsp;zur&nbsp;Index-Datei</span></div></li>
+<li><div class="src-line"><a name="a19"></a><span class="src-var">$image_maxheight&nbsp;</span>=&nbsp;<span class="src-num">600</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a20"></a><span class="src-var">$image_maxwidth&nbsp;</span>=&nbsp;<span class="src-num">600</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a21"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a22"></a><span class="src-var">$dir_thumb&nbsp;</span>=&nbsp;<span class="src-id"><a href="../JClubCMS/_index.php.html#defineUSER_DIR">USER_DIR</a></span>.<span class="src-str">&quot;graphics/gallery/thumbs/&quot;</span><span class="src-sym">;&nbsp;&nbsp;</span><span class="src-comm">//Relativ&nbsp;zur&nbsp;Index-Datei</span></div></li>
+<li><div class="src-line"><a name="a23"></a><span class="src-var">$thumb_maxheight&nbsp;</span>=&nbsp;<span class="src-num">150</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a24"></a><span class="src-var">$thumb_maxwidth&nbsp;</span>=&nbsp;<span class="src-num">150</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a25"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a26"></a><span class="src-comm">//**Smilies</span></div></li>
+<li><div class="src-line"><a name="a27"></a><span class="src-var">$dir_smilies&nbsp;</span>=&nbsp;<span class="src-id"><a href="../JClubCMS/_index.php.html#defineUSER_DIR">USER_DIR</a></span>.<span class="src-str">&quot;graphics/smilies/&quot;</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a28"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a29"></a><span class="src-php">?&gt;</span></div></li>
+</ol>
+</div>
+        <div class="credit">
+		    <hr />
+		    Documentation generated on Wed, 01 Apr 2009 15:08:04 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.2</a>
+	      </div>
+      </td></tr></table>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

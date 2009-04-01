@@ -1,16 +1,7 @@
 <?php
 /**
- * @author David Daester
- * @package JClubCMS
- * File: bbcodes.class.php
- * Classes: bbcodes
- * Reuqires: PHP5
- */
-
-/**
  * Die Klasse soll die Texte aus den Inhalten der Seite, sowie aus den Gaestebuecher und News uebersetzen.
  * Die BBCodes sind in der MySQL-Tabelle bbcodes abgelegt, sowie das HTML-Pendant.
- * 
  * Das HTML-Pendant enthaelt jeweils ein oder mehrere %s welche den Standort des einzufuegenden Textes enthaelt.
  * 
  * Zudem muss noch ueberprueft werden:
@@ -18,6 +9,11 @@
  * 
  * Beachtet werden sollte spaeter auch noch:
  * -> Nicht jeder BBCode sollte ueberall verwendet werden koennen (URL und IMG nicht im Gaestebuch)
+ * 
+ * @requires PHP5
+ * @author David Däster
+ * @package JClubCMS
+
  */
 
 class Bbcodes {
@@ -56,6 +52,9 @@ class Bbcodes {
 		return $found;
 	}
 
+	/**
+	 * Liefert die bbcodes zurück. Arbeitet mit {@link _check_type()} zusammen.
+	 */
 	public function get_bbcodes() {
 		if ($this->_check_type()== 1) {
 			//$mysql_link = $this->_mysql_link;
@@ -74,6 +73,9 @@ class Bbcodes {
 		}
 	}
 
+	/**
+	 * TODO PHP Documentation
+	 */
 	public function replace_bbcodes($text) {
 		if ($this->_check_type()== 1) {
 			//$this->_mysql_link = $this->_mysql_link;

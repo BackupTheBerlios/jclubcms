@@ -1,0 +1,172 @@
+<html>
+<head>
+<title>File Source for action_mail.class.php</title>
+<link rel="stylesheet" type="text/css" href="../media/style.css">
+</head>
+<body>
+
+<table border="0" cellspacing="0" cellpadding="0" height="48" width="100%">
+  <tr>
+    <td class="header_top">JClubCMS</td>
+  </tr>
+  <tr><td class="header_line"><img src="../media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
+  <tr>
+    <td class="header_menu">
+        
+                                    
+                                                  		  [ <a href="../classtrees_JClubCMS.html" class="menu">class tree: JClubCMS</a> ]
+		  [ <a href="../elementindex_JClubCMS.html" class="menu">index: JClubCMS</a> ]
+		  	    [ <a href="../elementindex.html" class="menu">all elements</a> ]
+    </td>
+  </tr>
+  <tr><td class="header_line"><img src="../media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
+</table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="200" class="menu">
+	<div id="todolist">
+			<p><a href="../todolist.html">Todo List</a></p>
+	</div>
+      <b>Packages:</b><br />
+              <a href="../li_JClubCMS.html">JClubCMS</a><br />
+              <a href="../li_Smarty.html">Smarty</a><br />
+            <br /><br />
+                  
+      
+                </td>
+    <td>
+      <table cellpadding="10" cellspacing="0" width="100%" border="0"><tr><td valign="top">
+
+<h1 align="center">Source for file action_mail.class.php</h1>
+<p>Documentation is available at <a href="../JClubCMS/_admin---lib---action---action_mail.class.php.html">action_mail.class.php</a></p>
+<div class="src-code">
+<ol><li><div class="src-line"><a name="a1"></a><span class="src-php">&lt;?php</span></div></li>
+<li><div class="src-line"><a name="a2"></a><span class="src-doc">/**</span></div></li>
+<li><div class="src-line"><a name="a3"></a><span class="src-doc">&nbsp;*&nbsp;</span><span class="src-doc-coretag">@package</span><span class="src-doc">&nbsp;JClubCMS</span></div></li>
+<li><div class="src-line"><a name="a4"></a><span class="src-doc">&nbsp;*&nbsp;</span><span class="src-doc-coretag">@author</span><span class="src-doc">&nbsp;Simon&nbsp;Däster</span></div></li>
+<li><div class="src-line"><a name="a5"></a><span class="src-doc">&nbsp;*&nbsp;&nbsp;File:&nbsp;mail.class.php</span></div></li>
+<li><div class="src-line"><a name="a6"></a><span class="src-doc">&nbsp;*&nbsp;&nbsp;Classes:&nbsp;Mail</span></div></li>
+<li><div class="src-line"><a name="a7"></a><span class="src-doc">&nbsp;*&nbsp;&nbsp;Requieres:&nbsp;PHP5</span></div></li>
+<li><div class="src-line"><a name="a8"></a><span class="src-doc">&nbsp;*</span></div></li>
+<li><div class="src-line"><a name="a9"></a><span class="src-doc">&nbsp;*&nbsp;&nbsp;Dieses&nbsp;Modul&nbsp;ist&nbsp;für&nbsp;das&nbsp;Mailforumular&nbsp;zum&nbsp;Versenden&nbsp;des&nbsp;Bestätigungsmail&nbsp;verantwortlich&nbsp;sowie</span></div></li>
+<li><div class="src-line"><a name="a10"></a><span class="src-doc">&nbsp;*&nbsp;&nbsp;für&nbsp;das&nbsp;Versenden&nbsp;des&nbsp;angegebenen&nbsp;Mails&nbsp;nach&nbsp;der&nbsp;erfolgreichen&nbsp;Bestätigung.</span></div></li>
+<li><div class="src-line"><a name="a11"></a><span class="src-doc">&nbsp;*</span></div></li>
+<li><div class="src-line"><a name="a12"></a><span class="src-doc">&nbsp;*/</span></div></li>
+<li><div class="src-line"><a name="a13"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a14"></a><span class="src-comm">//require_once&nbsp;ADMIN_DIR.'lib/module.interface.php';</span></div></li>
+<li><div class="src-line"><a name="a15"></a><span class="src-comm">//</span></div></li>
+<li><div class="src-line"><a name="a16"></a><span class="src-comm">//class&nbsp;Mailclient&nbsp;implements&nbsp;Module</span></div></li>
+<li><div class="src-line"><a name="a17"></a><span class="src-comm">//{</span></div></li>
+<li><div class="src-line"><a name="a18"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;/**</span></div></li>
+<li><div class="src-line"><a name="a19"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Smarty-Objekt</span></div></li>
+<li><div class="src-line"><a name="a20"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span></div></li>
+<li><div class="src-line"><a name="a21"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@var&nbsp;Smarty</span></div></li>
+<li><div class="src-line"><a name="a22"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span></div></li>
+<li><div class="src-line"><a name="a23"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;$_smarty;</span></div></li>
+<li><div class="src-line"><a name="a24"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a25"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;/**</span></div></li>
+<li><div class="src-line"><a name="a26"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Mysql-Objekt</span></div></li>
+<li><div class="src-line"><a name="a27"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span></div></li>
+<li><div class="src-line"><a name="a28"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@var&nbsp;Mysql</span></div></li>
+<li><div class="src-line"><a name="a29"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span></div></li>
+<li><div class="src-line"><a name="a30"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;$_mysql;</span></div></li>
+<li><div class="src-line"><a name="a31"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;/**</span></div></li>
+<li><div class="src-line"><a name="a32"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Templatefile</span></div></li>
+<li><div class="src-line"><a name="a33"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span></div></li>
+<li><div class="src-line"><a name="a34"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@var&nbsp;string</span></div></li>
+<li><div class="src-line"><a name="a35"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span></div></li>
+<li><div class="src-line"><a name="a36"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;$_tplfile&nbsp;=&nbsp;'mailform.tpl';</span></div></li>
+<li><div class="src-line"><a name="a37"></a><span class="src-comm">//</span></div></li>
+<li><div class="src-line"><a name="a38"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a39"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;/**</span></div></li>
+<li><div class="src-line"><a name="a40"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;GET,&nbsp;POST,&nbsp;COOKIE-Daten</span></div></li>
+<li><div class="src-line"><a name="a41"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span></div></li>
+<li><div class="src-line"><a name="a42"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@var&nbsp;array</span></div></li>
+<li><div class="src-line"><a name="a43"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span></div></li>
+<li><div class="src-line"><a name="a44"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;$_gpc&nbsp;=&nbsp;array();</span></div></li>
+<li><div class="src-line"><a name="a45"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a46"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;/**</span></div></li>
+<li><div class="src-line"><a name="a47"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Aufbau&nbsp;der&nbsp;Klasse</span></div></li>
+<li><div class="src-line"><a name="a48"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span></div></li>
+<li><div class="src-line"><a name="a49"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;Smarty&nbsp;$smarty</span></div></li>
+<li><div class="src-line"><a name="a50"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;Mysql&nbsp;$mysql</span></div></li>
+<li><div class="src-line"><a name="a51"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span></div></li>
+<li><div class="src-line"><a name="a52"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;__construct($smarty,&nbsp;$mysql)</span></div></li>
+<li><div class="src-line"><a name="a53"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;{</span></div></li>
+<li><div class="src-line"><a name="a54"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$this-&gt;_smarty&nbsp;=&nbsp;$smarty;</span></div></li>
+<li><div class="src-line"><a name="a55"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$this-&gt;_mysql&nbsp;=&nbsp;$mysql;</span></div></li>
+<li><div class="src-line"><a name="a56"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;}</span></div></li>
+<li><div class="src-line"><a name="a57"></a><span class="src-comm">//</span></div></li>
+<li><div class="src-line"><a name="a58"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;/**</span></div></li>
+<li><div class="src-line"><a name="a59"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Start&nbsp;des&nbsp;Moduls</span></div></li>
+<li><div class="src-line"><a name="a60"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span></div></li>
+<li><div class="src-line"><a name="a61"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@param&nbsp;array&nbsp;$gpc</span></div></li>
+<li><div class="src-line"><a name="a62"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span></div></li>
+<li><div class="src-line"><a name="a63"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;action($gpc)</span></div></li>
+<li><div class="src-line"><a name="a64"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;{</span></div></li>
+<li><div class="src-line"><a name="a65"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$this-&gt;_gpc&nbsp;=&nbsp;$gpc;</span></div></li>
+<li><div class="src-line"><a name="a66"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(key_exists('hash',&nbsp;$gpc['GET'])&nbsp;&amp;&amp;&nbsp;is_string($gpc['GET']['hash']))&nbsp;{</span></div></li>
+<li><div class="src-line"><a name="a67"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$this-&gt;_truemail_send($gpc['GET']['hash']);</span></div></li>
+<li><div class="src-line"><a name="a68"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;elseif&nbsp;(key_exists('id',&nbsp;$gpc['GET'])&nbsp;&amp;&amp;&nbsp;is_numeric($gpc['GET']['id']))&nbsp;{</span></div></li>
+<li><div class="src-line"><a name="a69"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$this-&gt;_checkmail_send($gpc['GET']['id']);</span></div></li>
+<li><div class="src-line"><a name="a70"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;else&nbsp;{</span></div></li>
+<li><div class="src-line"><a name="a71"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw&nbsp;new&nbsp;CMSException('Die&nbsp;Parameternangaben&nbsp;sind&nbsp;ungültig.&nbsp;Bitte&nbsp;geben&nbsp;Sie&nbsp;richtige&nbsp;Parameter&nbsp;an&nbsp;oder&nbsp;lassen&nbsp;Sie&nbsp;es',&nbsp;EXCEPTION_MODULE_CODE);</span></div></li>
+<li><div class="src-line"><a name="a72"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</span></div></li>
+<li><div class="src-line"><a name="a73"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a74"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;}</span></div></li>
+<li><div class="src-line"><a name="a75"></a><span class="src-comm">//</span></div></li>
+<li><div class="src-line"><a name="a76"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;/**</span></div></li>
+<li><div class="src-line"><a name="a77"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Rückgabe&nbsp;derm&nbsp;Templatedatei</span></div></li>
+<li><div class="src-line"><a name="a78"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</span></div></li>
+<li><div class="src-line"><a name="a79"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;string&nbsp;Templatedatei</span></div></li>
+<li><div class="src-line"><a name="a80"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span></div></li>
+<li><div class="src-line"><a name="a81"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;gettplfile()</span></div></li>
+<li><div class="src-line"><a name="a82"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;{</span></div></li>
+<li><div class="src-line"><a name="a83"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;$this-&gt;_tplfile;</span></div></li>
+<li><div class="src-line"><a name="a84"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;}</span></div></li>
+<li><div class="src-line"><a name="a85"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a86"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;function&nbsp;_checkmail_send($mod_navID)</span></div></li>
+<li><div class="src-line"><a name="a87"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;{</span></div></li>
+<li><div class="src-line"><a name="a88"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$this-&gt;_smarty-&gt;config_load('textes.de.conf',&nbsp;'Mail');</span></div></li>
+<li><div class="src-line"><a name="a89"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$mail_vars&nbsp;=&nbsp;$this-&gt;_smarty-&gt;get_config_vars();</span></div></li>
+<li><div class="src-line"><a name="a90"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$this-&gt;_smarty-&gt;config_load('textes.de.conf',&nbsp;'Form_Error');</span></div></li>
+<li><div class="src-line"><a name="a91"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$error_vars&nbsp;=&nbsp;$this-&gt;_smarty-&gt;get_config_vars();</span></div></li>
+<li><div class="src-line"><a name="a92"></a><span class="src-comm">//</span></div></li>
+<li><div class="src-line"><a name="a93"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$sessioncode&nbsp;=&nbsp;null;</span></div></li>
+<li><div class="src-line"><a name="a94"></a><span class="src-comm">//</span></div></li>
+<li><div class="src-line"><a name="a95"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//Captcha&nbsp;zurücksetzen</span></div></li>
+<li><div class="src-line"><a name="a96"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(key_exists('captcha_revoke',&nbsp;$this-&gt;_gpc['POST']))&nbsp;{</span></div></li>
+<li><div class="src-line"><a name="a97"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$new_code&nbsp;=&nbsp;true;</span></div></li>
+<li><div class="src-line"><a name="a98"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;else&nbsp;{</span></div></li>
+<li><div class="src-line"><a name="a99"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$new_code&nbsp;=&nbsp;false;</span></div></li>
+<li><div class="src-line"><a name="a100"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</span></div></li>
+<li><div class="src-line"><a name="a101"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a102"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;}</span></div></li>
+<li><div class="src-line"><a name="a103"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a104"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;function&nbsp;_truemail_send($hash)</span></div></li>
+<li><div class="src-line"><a name="a105"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;{</span></div></li>
+<li><div class="src-line"><a name="a106"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;</span></div></li>
+<li><div class="src-line"><a name="a107"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;}</span></div></li>
+<li><div class="src-line"><a name="a108"></a><span class="src-comm">//</span></div></li>
+<li><div class="src-line"><a name="a109"></a><span class="src-comm">//&nbsp;&nbsp;&nbsp;&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a110"></a><span class="src-comm">//}</span></div></li>
+<li><div class="src-line"><a name="a111"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a112"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a113"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a114"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a115"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a116"></a><span class="src-php">?&gt;</span></div></li>
+</ol>
+</div>
+        <div class="credit">
+		    <hr />
+		    Documentation generated on Wed, 01 Apr 2009 15:07:48 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.2</a>
+	      </div>
+      </td></tr></table>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

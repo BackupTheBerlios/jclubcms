@@ -12,9 +12,11 @@
   <tr><td class="header_line"><img src="media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
   <tr>
     <td class="header_menu">
-  		  [ <a href="classtrees_JClubCMS.html" class="menu">class tree: JClubCMS</a> ]
+        
+                                    
+                                                  		  [ <a href="classtrees_JClubCMS.html" class="menu">class tree: JClubCMS</a> ]
 		  [ <a href="elementindex_JClubCMS.html" class="menu">index: JClubCMS</a> ]
-		  [ <a href="elementindex.html" class="menu">all elements</a> ]
+		  	    [ <a href="elementindex.html" class="menu">all elements</a> ]
     </td>
   </tr>
   <tr><td class="header_line"><img src="media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
@@ -23,86 +25,212 @@
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr valign="top">
     <td width="200" class="menu">
+	<div id="todolist">
+			<p><a href="todolist.html">Todo List</a></p>
+	</div>
       <b>Packages:</b><br />
               <a href="li_JClubCMS.html">JClubCMS</a><br />
+              <a href="li_Smarty.html">Smarty</a><br />
             <br /><br />
                 </td>
     <td>
       <table cellpadding="10" cellspacing="0" width="100%" border="0"><tr><td valign="top">
 
 <a href="#Post-parsing">Post-parsing</a><br>
-<a href="#content.php">content.php</a><br>
-<a href="#formular_check.class.php">formular_check.class.php</a><br>
-<a href="#gallery.php">gallery.php</a><br>
-<a href="#globals.php">globals.php</a><br>
+<a href="#auth.class.php">auth.class.php</a><br>
+<a href="#bbcodes.class.php">bbcodes.class.php</a><br>
+<a href="#captcha.class.php">captcha.class.php</a><br>
+<a href="#captcha_image.class.php">captcha_image.class.php</a><br>
+<a href="#cmsexception.class.php">cmsexception.class.php</a><br>
+<a href="#contentadmin.class.php">contentadmin.class.php</a><br>
+<a href="#core.class.php">core.class.php</a><br>
+<a href="#formularcheck.class.php">formularcheck.class.php</a><br>
+<a href="#function.html_select_time.php">function.html_select_time.php</a><br>
+<a href="#functions.inc.php">functions.inc.php</a><br>
+<a href="#gallery.class.php">gallery.class.php</a><br>
+<a href="#gbook.class.php">gbook.class.php</a><br>
+<a href="#gbookadmin.class.php">gbookadmin.class.php</a><br>
 <a href="#image.class.php">image.class.php</a><br>
-<a href="#image.php">image.php</a><br>
+<a href="#image_send.class.php">image_send.class.php</a><br>
+<a href="#index.php">index.php</a><br>
+<a href="#mailmodule.class.php">mailmodule.class.php</a><br>
 <a href="#mailsend.class.php">mailsend.class.php</a><br>
-<a href="#members.php">members.php</a><br>
+<a href="#members.class.php">members.class.php</a><br>
+<a href="#menuadmin.class.php">menuadmin.class.php</a><br>
+<a href="#messageboxes.class.php">messageboxes.class.php</a><br>
+<a href="#moduladmin.class.php">moduladmin.class.php</a><br>
+<a href="#module.interface.php">module.interface.php</a><br>
 <a href="#mysql.class.php">mysql.class.php</a><br>
-<a href="#news.php">news.php</a><br>
-<a href="#pagesnav.class.php">pagesnav.class.php</a><br>
+<a href="#news.class.php">news.class.php</a><br>
+<a href="#newsadmin.class.php">newsadmin.class.php</a><br>
+<a href="#page.class.php">page.class.php</a><br>
+<a href="#session.class.php">session.class.php</a><br>
 <a href="#smilies.class.php">smilies.class.php</a><br>
 <a href="#timeparser.class.php">timeparser.class.php</a><br>
+<a href="#tiny_mce_gzip.php">tiny_mce_gzip.php</a><br>
+<a name="Post-parsing"></a>
+<h1>Post-parsing</h1>
+<h2>Warnings:</h2><br>
+<b>Warning</b> - 
+duplicate define element "ADMIN_DIR" in file /home/david/jclubcms/trunk/admin/index.php will be ignored.
+Use an @ignore tag on the original if you want this case to be documented.<br>
+<b>Warning</b> - 
+duplicate class element "Mailmodule" in file /home/david/jclubcms/trunk/admin/modules/mailmodule.class.php will be ignored.
+Use an @ignore tag on the original if you want this case to be documented.<br>
+<b>Warning</b> - @todo on an include element is ignored (line 16, file /home/david/jclubcms/trunk/admin/modules/contentadmin.class.php)<br>
+<b>Warning</b> - 
+duplicate define element "USER_DIR" in file /home/david/jclubcms/trunk/admin/index.php will be ignored.
+Use an @ignore tag on the original if you want this case to be documented.<br>
+<b>Warning</b> - @todo on an include element is ignored (line 16, file /home/david/jclubcms/trunk/admin/modules/contentadmin.class.php)<br>
+<b>Warning</b> - class CMSException in package JClubCMS parent not found in @see parent::__construct()<br>
+<b>Warning</b> - class CMSException in package JClubCMS parent not found in @see parent::__construct()<br>
+<a name="action.class.php"></a>
+<h1>action.class.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 11</b> - DocBlock would be page-level, but precedes class "Action", use another DocBlock to document the file<br>
+<a name="auth.class.php"></a>
+<h1>auth.class.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 236</b> - File "/home/david/jclubcms/trunk/admin/lib/auth.class.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<a name="bbcodes.class.php"></a>
+<h1>bbcodes.class.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 18</b> - DocBlock would be page-level, but precedes class "Bbcodes", use another DocBlock to document the file<br>
 <a name="captcha.class.php"></a>
 <h1>captcha.class.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 14</b> - DocBlock would be page-level, but precedes class "captcha", use another DocBlock to document the file<br>
-<a name="content.php"></a>
-<h1>content.php</h1>
+<b>Warning on line 18</b> - DocBlock would be page-level, but precedes class "Captcha", use another DocBlock to document the file<br>
+<a name="captcha_image.class.php"></a>
+<h1>captcha_image.class.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 19</b> - Page-level DocBlock precedes "function showContent", use another DocBlock to document the source element<br>
-<a name="formular_check.class.php"></a>
-<h1>formular_check.class.php</h1>
+<b>Warning on line 15</b> - Page-level DocBlock precedes "require_once ADMIN_DIR.'lib/module.interface.php'", use another DocBlock to document the source element<br>
+<b>Warning on line 18</b> - no @package tag was used in a DocBlock for class Captcha_image<br>
+<a name="cmsexception.class.php"></a>
+<h1>cmsexception.class.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 9</b> - DocBlock would be page-level, but precedes class "formular_check", use another DocBlock to document the file<br>
-<a name="gallery.php"></a>
-<h1>gallery.php</h1>
+<b>Warning on line 62</b> - Unknown tag "@requieres" used<br>
+<a name="contentadmin.class.php"></a>
+<h1>contentadmin.class.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 19</b> - Page-level DocBlock precedes "require_once gallery.php", use another DocBlock to document the source element<br>
-<a name="globals.php"></a>
-<h1>globals.php</h1>
+<b>Warning on line 19</b> - no @package tag was used in a DocBlock for class Contentadmin<br>
+<b>Warning on line 705</b> - File "/home/david/jclubcms/trunk/admin/modules/contentadmin.class.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<h2>Errors:</h2><br>
+<b>Error on line 15</b> - DocBlock has multiple @package tags, illegal. ignoring additional tag "@package JClubCMS"<br>
+<a name="core.class.php"></a>
+<h1>core.class.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 5</b> - Page-level DocBlock precedes "require_once globals.php", use another DocBlock to document the source element<br>
+<b>Warning on line 318</b> - Unknown tag "@parambooleane" used<br>
+<b>Warning on line 575</b> - File "/home/david/jclubcms/trunk/admin/lib/core.class.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<a name="formularcheck.class.php"></a>
+<h1>formularcheck.class.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 13</b> - DocBlock would be page-level, but precedes class "Formularcheck", use another DocBlock to document the file<br>
+<a name="function.html_select_time.php"></a>
+<h1>function.html_select_time.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 23</b> - Unknown tag "@credits" used<br>
+<a name="functions.inc.php"></a>
+<h1>functions.inc.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 52</b> - Page-level DocBlock precedes "function __autoload", use another DocBlock to document the source element<br>
+<a name="gallery.class.php"></a>
+<h1>gallery.class.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 350</b> - File "/home/david/jclubcms/trunk/modules/gallery.class.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<a name="gbook.class.php"></a>
+<h1>gbook.class.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 534</b> - File "/home/david/jclubcms/trunk/modules/gbook.class.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<a name="gbookadmin.class.php"></a>
+<h1>gbookadmin.class.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 10</b> - Page-level DocBlock precedes "require_once ADMIN_DIR.'lib/messageboxes.class.php'", use another DocBlock to document the source element<br>
+<b>Warning on line 15</b> - no @package tag was used in a DocBlock for class Gbookadmin<br>
 <a name="image.class.php"></a>
 <h1>image.class.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 25</b> - DocBlock would be page-level, but precedes class "image", use another DocBlock to document the file<br>
-<a name="image.php"></a>
-<h1>image.php</h1>
+<b>Warning on line 24</b> - DocBlock would be page-level, but precedes class "Image", use another DocBlock to document the file<br>
+<a name="image_send.class.php"></a>
+<h1>image_send.class.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 26</b> - Page-level DocBlock precedes "require_once image.php", use another DocBlock to document the source element<br>
+<b>Warning on line 9</b> - Page-level DocBlock precedes "require_once USER_DIR.'modules/image_send.class.php'", use another DocBlock to document the source element<br>
+<b>Warning on line 191</b> - File "/home/david/jclubcms/trunk/modules/image_send.class.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<a name="index.php"></a>
+<h1>index.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 10</b> - File "/home/david/jclubcms/trunk/admin/index.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<a name="mailmodule.class.php"></a>
+<h1>mailmodule.class.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 13</b> - Page-level DocBlock precedes "require_once ADMIN_DIR.'lib/module.interface.php'", use another DocBlock to document the source element<br>
+<b>Warning on line 13</b> - Page-level DocBlock precedes "require_once ADMIN_DIR.'lib/module.interface.php'", use another DocBlock to document the source element<br>
+<b>Warning on line 19</b> - no @package tag was used in a DocBlock for class Mailmodule<br>
+<b>Warning on line 19</b> - no @package tag was used in a DocBlock for class Mailmodule<br>
 <a name="mailsend.class.php"></a>
 <h1>mailsend.class.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 21</b> - no @package tag was used in a DocBlock for class mailsend<br>
-<a name="members.php"></a>
-<h1>members.php</h1>
+<b>Warning on line 21</b> - no @package tag was used in a DocBlock for class Mailsend<br>
+<a name="members.class.php"></a>
+<h1>members.class.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 14</b> - Page-level DocBlock precedes "require_once members.php", use another DocBlock to document the source element<br>
+<b>Warning on line 12</b> - Page-level DocBlock precedes "require_once ADMIN_DIR.'lib/module.interface.php'", use another DocBlock to document the source element<br>
+<b>Warning on line 23</b> - no @package tag was used in a DocBlock for class Members<br>
+<a name="menuadmin.class.php"></a>
+<h1>menuadmin.class.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 14</b> - Page-level DocBlock precedes "require_once ADMIN_DIR.'lib/module.interface.php'", use another DocBlock to document the source element<br>
+<b>Warning on line 18</b> - no @package tag was used in a DocBlock for class Menuadmin<br>
+<a name="messageboxes.class.php"></a>
+<h1>messageboxes.class.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 18</b> - Page-level DocBlock precedes "require_once ADMIN_DIR.'lib/captcha.class.php'", use another DocBlock to document the source element<br>
+<b>Warning on line 48</b> - no @package tag was used in a DocBlock for class Messageboxes<br>
+<a name="moduladmin.class.php"></a>
+<h1>moduladmin.class.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 14</b> - Page-level DocBlock precedes "require_once ADMIN_DIR.'lib/module.interface.php'", use another DocBlock to document the source element<br>
+<b>Warning on line 18</b> - no @package tag was used in a DocBlock for class Moduladmin<br>
+<a name="module.interface.php"></a>
+<h1>module.interface.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 12</b> - DocBlock would be page-level, but precedes class "Module", use another DocBlock to document the file<br>
 <a name="mysql.class.php"></a>
 <h1>mysql.class.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 41</b> - DocBlock would be page-level, but precedes class "mysql", use another DocBlock to document the file<br>
-<a name="news.php"></a>
-<h1>news.php</h1>
+<b>Warning on line 19</b> - DocBlock would be page-level, but precedes class "Mysql", use another DocBlock to document the file<br>
+<a name="news.class.php"></a>
+<h1>news.class.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 13</b> - Page-level DocBlock precedes "require_once news.php", use another DocBlock to document the source element<br>
-<a name="pagesnav.class.php"></a>
-<h1>pagesnav.class.php</h1>
+<b>Warning on line 11</b> - Page-level DocBlock precedes "require_once ADMIN_DIR.'lib/module.interface.php'", use another DocBlock to document the source element<br>
+<b>Warning on line 17</b> - no @package tag was used in a DocBlock for class News<br>
+<a name="newsadmin.class.php"></a>
+<h1>newsadmin.class.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 16</b> - no @package tag was used in a DocBlock for class pagesnav<br>
+<b>Warning on line 11</b> - Page-level DocBlock precedes "require_once ADMIN_DIR.'lib/module.interface.php'", use another DocBlock to document the source element<br>
+<b>Warning on line 17</b> - no @package tag was used in a DocBlock for class Newsadmin<br>
+<a name="page.class.php"></a>
+<h1>page.class.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 18</b> - DocBlock would be page-level, but precedes class "Page", use another DocBlock to document the file<br>
+<a name="session.class.php"></a>
+<h1>session.class.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 11</b> - DocBlock would be page-level, but precedes class "Session", use another DocBlock to document the file<br>
 <a name="smilies.class.php"></a>
 <h1>smilies.class.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 17</b> - no @package tag was used in a DocBlock for class smilies<br>
+<b>Warning on line 19</b> - no @package tag was used in a DocBlock for class Smilies<br>
 <a name="timeparser.class.php"></a>
 <h1>timeparser.class.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 76</b> - no @package tag was used in a DocBlock for class timeparser<br>
+<b>Warning on line 74</b> - no @package tag was used in a DocBlock for class Timeparser<br>
+<a name="tiny_mce_gzip.php"></a>
+<h1>tiny_mce_gzip.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 182</b> - File "/home/david/jclubcms/trunk/javascript/tinymce/tiny_mce_gzip.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
         <div class="credit">
 		    <hr />
-		    Documentation generated on Sat, 14 Jul 2007 15:30:23 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.3.0RC3</a>
+		    Documentation generated on Wed, 01 Apr 2009 15:08:25 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.2</a>
 	      </div>
       </td></tr></table>
     </td>

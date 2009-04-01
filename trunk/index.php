@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author Simon Däster
+ * @package JClubCMS
+ */
 /**Konstanten definieren**/
 define("ADMIN_DIR", "./admin/");
 define("USER_DIR", "./");

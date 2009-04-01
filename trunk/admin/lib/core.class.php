@@ -1,32 +1,5 @@
 <?php
-
-/**
- * @package JClubCMS
- * @author Simon Däster
- * File: core.class.php
- * Classes: core
- * Requires: PHP5
- * 
- * 
- * Die core-Datei erledigt:
- * -laedt notweindige Libaries
- * -registriert den Exception-Handler
- * 
- * Die core-Klasse erledigt folgendes:
- * -Erstellten der notwendigen Objekte (smarty, mysql)
- * -Initialiesieren der Rechteverwaltung und testen auf erfolgreiches login
- * -Erstellen der Navigation
- * -Ueberpruefen der Benutzerangaben ueber $_GET / $_POST / $_COOKIE
- * -Aufrufen des geladenen Moduls
- * -Aufrufen der geladenen Seite
- * 
- * 
- */
-
-
-
 error_reporting(E_ALL | E_STRICT); //Zu Debug-Zwecken
-
 $start_time = microtime(true);
 
 //Config laden
@@ -45,8 +18,27 @@ require_once ADMIN_DIR.'lib/page.class.php';
 require_once ADMIN_DIR.'lib/cmsexception.class.php';
 
 set_exception_handler(array('CMSException', 'stdExceptionHandler'));
-
-
+/**
+ * Die core-Datei erledigt:
+ * -laedt notweindige Libaries
+ * -registriert den Exception-Handler
+ * 
+ * Die core-Klasse erledigt folgendes:
+ * -Erstellten der notwendigen Objekte (smarty, mysql)
+ * -Initialiesieren der Rechteverwaltung und testen auf erfolgreiches login
+ * -Erstellen der Navigation
+ * -Ueberpruefen der Benutzerangaben ueber $_GET / $_POST / $_COOKIE
+ * -Aufrufen des geladenen Moduls
+ * -Aufrufen der geladenen Seite
+ * 
+ * 
+ * 
+ * @package JClubCMS
+ * @author Simon Däster
+ * File: core.class.php
+ * Classes: core
+ * @requires PHP5
+ */
 class Core
 {
 	/**

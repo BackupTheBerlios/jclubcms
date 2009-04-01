@@ -1,0 +1,268 @@
+<html>
+<head>
+<title>Docs for page compiler.assign.php</title>
+<link rel="stylesheet" type="text/css" href="../../media/style.css">
+</head>
+<body>
+
+<table border="0" cellspacing="0" cellpadding="0" height="48" width="100%">
+  <tr>
+    <td class="header_top">Smarty</td>
+  </tr>
+  <tr><td class="header_line"><img src="../../media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
+  <tr>
+    <td class="header_menu">
+        
+                                                        
+                              		  [ <a href="../../classtrees_Smarty.html" class="menu">class tree: Smarty</a> ]
+		  [ <a href="../../elementindex_Smarty.html" class="menu">index: Smarty</a> ]
+		  	    [ <a href="../../elementindex.html" class="menu">all elements</a> ]
+    </td>
+  </tr>
+  <tr><td class="header_line"><img src="../../media/empty.png" width="1" height="1" border="0" alt=""  /></td></tr>
+</table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="200" class="menu">
+	<div id="todolist">
+			<p><a href="../../todolist.html">Todo List</a></p>
+	</div>
+      <b>Packages:</b><br />
+              <a href="../../li_JClubCMS.html">JClubCMS</a><br />
+              <a href="../../li_Smarty.html">Smarty</a><br />
+            <br /><br />
+                        <b>Files:</b><br />
+      	  <div class="package">
+			<a href="../../Smarty/_admin---lib---Smarty---Config_File.class.php.html">		Config_File.class.php
+		</a><br>
+			<a href="../../Smarty/_admin---lib---Smarty---Smarty.class.php.html">		Smarty.class.php
+		</a><br>
+			<a href="../../Smarty/_admin---lib---Smarty---Smarty_Compiler.class.php.html">		Smarty_Compiler.class.php
+		</a><br>
+	  </div><br />
+	subpackage <b>plugins</b><br>  <div class="package">
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---block.textformat.php.html">		block.textformat.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---compiler.assign.php.html">		compiler.assign.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---internals---core.assemble_plugin_filepath.php.html">		core.assemble_plugin_filepath.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---internals---core.assign_smarty_interface.php.html">		core.assign_smarty_interface.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---internals---core.create_dir_structure.php.html">		core.create_dir_structure.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---internals---core.display_debug_console.php.html">		core.display_debug_console.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---internals---core.get_include_path.php.html">		core.get_include_path.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---internals---core.get_microtime.php.html">		core.get_microtime.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---internals---core.get_php_resource.php.html">		core.get_php_resource.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---internals---core.is_secure.php.html">		core.is_secure.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---internals---core.is_trusted.php.html">		core.is_trusted.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---internals---core.load_plugins.php.html">		core.load_plugins.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---internals---core.load_resource_plugin.php.html">		core.load_resource_plugin.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---internals---core.process_cached_inserts.php.html">		core.process_cached_inserts.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---internals---core.process_compiled_include.php.html">		core.process_compiled_include.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---internals---core.read_cache_file.php.html">		core.read_cache_file.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---internals---core.rmdir.php.html">		core.rmdir.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---internals---core.rm_auto.php.html">		core.rm_auto.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---internals---core.run_insert_handler.php.html">		core.run_insert_handler.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---internals---core.smarty_include_php.php.html">		core.smarty_include_php.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---internals---core.write_cache_file.php.html">		core.write_cache_file.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---internals---core.write_compiled_include.php.html">		core.write_compiled_include.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---internals---core.write_compiled_resource.php.html">		core.write_compiled_resource.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---internals---core.write_file.php.html">		core.write_file.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---function.assign_debug_info.php.html">		function.assign_debug_info.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---function.config_load.php.html">		function.config_load.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---function.counter.php.html">		function.counter.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---function.cycle.php.html">		function.cycle.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---function.debug.php.html">		function.debug.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---function.eval.php.html">		function.eval.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---function.fetch.php.html">		function.fetch.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---function.html_checkboxes.php.html">		function.html_checkboxes.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---function.html_image.php.html">		function.html_image.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---function.html_options.php.html">		function.html_options.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---function.html_radios.php.html">		function.html_radios.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---function.html_select_date.php.html">		function.html_select_date.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---function.html_select_time.php.html">		function.html_select_time.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---function.html_table.php.html">		function.html_table.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---function.mailto.php.html">		function.mailto.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---function.math.php.html">		function.math.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---function.popup.php.html">		function.popup.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---function.popup_init.php.html">		function.popup_init.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---modifier.capitalize.php.html">		modifier.capitalize.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---modifier.cat.php.html">		modifier.cat.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---modifier.count_characters.php.html">		modifier.count_characters.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---modifier.count_paragraphs.php.html">		modifier.count_paragraphs.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---modifier.count_sentences.php.html">		modifier.count_sentences.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---modifier.count_words.php.html">		modifier.count_words.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---modifier.date_format.php.html">		modifier.date_format.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---modifier.debug_print_var.php.html">		modifier.debug_print_var.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---modifier.default.php.html">		modifier.default.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---modifier.escape.php.html">		modifier.escape.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---modifier.indent.php.html">		modifier.indent.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---modifier.lower.php.html">		modifier.lower.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---modifier.nl2br.php.html">		modifier.nl2br.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---modifier.regex_replace.php.html">		modifier.regex_replace.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---modifier.replace.php.html">		modifier.replace.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---modifier.spacify.php.html">		modifier.spacify.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---modifier.string_format.php.html">		modifier.string_format.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---modifier.strip.php.html">		modifier.strip.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---modifier.strip_tags.php.html">		modifier.strip_tags.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---modifier.truncate.php.html">		modifier.truncate.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---modifier.upper.php.html">		modifier.upper.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---modifier.wordwrap.php.html">		modifier.wordwrap.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---outputfilter.trimwhitespace.php.html">		outputfilter.trimwhitespace.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---shared.escape_special_chars.php.html">		shared.escape_special_chars.php
+		</a><br>
+			<a href="../../Smarty/plugins/_admin---lib---Smarty---plugins---shared.make_timestamp.php.html">		shared.make_timestamp.php
+		</a><br>
+	  </div><br />
+      
+      
+            <b>Classes:</b><br />
+        <div class="package">
+		    		<a href="../../Smarty/Config_File.html">Config_File</a><br />
+	    		<a href="../../Smarty/Smarty.html">Smarty</a><br />
+	    		<a href="../../Smarty/Smarty_Compiler.html">Smarty_Compiler</a><br />
+	  </div>
+                </td>
+    <td>
+      <table cellpadding="10" cellspacing="0" width="100%" border="0"><tr><td valign="top">
+
+<h1>Procedural File: compiler.assign.php</h1>
+Source Location: /admin/lib/Smarty/plugins/compiler.assign.php<br /><br />
+
+<br>
+<br>
+
+
+<h2>Page Details:</h2>
+Smarty plugin<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>filesource:</b>&nbsp;&nbsp;</td><td><a href="../../__filesource/fsource_Smarty_plugins_adminlibSmartypluginscompiler.assign.php.html">Source Code for this file</a></td>
+  </tr>
+</table>
+</div>
+<br /><br />
+<br /><br />
+<br /><br />
+<br />
+  <hr />
+	<a name="functionsmarty_compiler_assign"></a>
+	<h3>smarty_compiler_assign <span class="smalllinenumber">[line <a href="../../__filesource/fsource_Smarty_plugins_adminlibSmartypluginscompiler.assign.php.html#a21">21</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void smarty_compiler_assign(
+string $tag_attrs, <a href="../../Smarty/Smarty_Compiler.html">Smarty_Compiler</a> &$compiler)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+
+		Smarty {assign} compiler function plugin<br /><br /><p>Type:     compiler function<br />  Name:     assign<br />  Purpose:  assign a value to a template variable</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>author:</b>&nbsp;&nbsp;</td><td>Monte Ohrt &lt;<a href="mailto:monte">at ohrt dot com monte at ohrt dot com</a>&gt; (initial author)</td>
+  </tr>
+  <tr>
+    <td><b>author:</b>&nbsp;&nbsp;</td><td>messju mohr &lt;<a href="mailto:messju">at lammfellpuschen dot de messju at lammfellpuschen dot de</a>&gt; (conversion to compiler function)</td>
+  </tr>
+  <tr>
+    <td><b>link:</b>&nbsp;&nbsp;</td><td><a href="http://smarty.php.net/manual/en/language.custom.functions.php#LANGUAGE.FUNCTION.ASSIGN">http://smarty.php.net/manual/en/language.custom.functions.php#LANGUAGE.FUNCTION.ASSIGN {assign}
+       (Smarty online manual)</a></td>
+  </tr>
+</table>
+</div>
+    <br /><br />
+	
+    		<h4>Parameters</h4>
+    <table border="0" cellspacing="0" cellpadding="0">
+		      <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$tag_attrs</b>&nbsp;&nbsp;</td>
+        <td>containing var-attribute and value-attribute</td>
+      </tr>
+		      <tr>
+        <td class="type"><a href="../../Smarty/Smarty_Compiler.html">Smarty_Compiler</a>&nbsp;&nbsp;</td>
+        <td><b>&$compiler</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+				</table>
+    	<div class="top">[ <a href="#top">Top</a> ]</div><br /><br />
+	</div>
+
+        <div class="credit">
+		    <hr />
+		    Documentation generated on Wed, 01 Apr 2009 15:07:50 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.2</a>
+	      </div>
+      </td></tr></table>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

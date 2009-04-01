@@ -1,25 +1,24 @@
 <?php
 
 /**
- * @author Simon D�ster
- * @package JClubCMS
- * File: image.class.php
- * Classes: image
- * Requieres: PHP5
- *
  * Die Klasse image ist zustaendig fuer Grafikfunktionen
  * Sie speichert die Informationen ueber ein Bild ab, kann diese Informationen senden
  * und das Bild selber ausgeben
  * Wenn keine Bilddatei vorhanden ist, dann wird automatisch ein Fehlerbild erstellt
  * Um Thumbs zu erstellen, kann die Funktion "copy" verwendet werden.
- * "copy" kann auch verwendet werden, um das Bild selber zu ver�ndern.
- * Dazu kann man einfach die Gr�ssen belassen
- * !Achtung: Vorhandene Dateien werden ohne Abfrage �berschrieben!!!
+ * "copy" kann auch verwendet werden, um das Bild selber zu verändern.
+ * Dazu kann man einfach die Grössen belassen
+ * !Achtung: Vorhandene Dateien werden ohne Abfrage überschrieben!!!
  *
  * Diese Klasse ist nicht fuer die Administration der Bilder zustaendig
  * Die Klasse wird fuer jedes Bild gebraucht, um es darzustellen und noetige
  * Informationen zum jeweiligen Bild zu erhalten
  *
+ * @author Simon Däster
+ * @package JClubCMS
+ * File: image.class.php
+ * Classes: image
+ * Requieres: PHP5
  */
 
 

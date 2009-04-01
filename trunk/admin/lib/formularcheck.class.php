@@ -1,5 +1,9 @@
 <?php
 /**
+ * Überprüft Formulare, ob alle nötigen Werte eingefüllt und plausibel sind.
+ * Diese Klasse ist noch sehr monolitisch, und sollte evnt. durch ein interface
+ * oder eine final-class ersetzt werden.
+ * 
  * @author David Daester
  * @package JClubCMS
  * File: formular_check.class.php

@@ -1,13 +1,13 @@
 <?php
-/**
- * @author Simon Daester
- * @package JClubCMS
- * image_send.class.php
- * 
- * Diese Klasse ist zustaendig fuer das Anzeigen der Bilder.
- */
 require_once ADMIN_DIR.'lib/module.interface.php';
 require_once ADMIN_DIR.'lib/image.class.php';
+/**
+ * Diese Klasse ist zustaendig fuer das Anzeigen der Bilder.
+ * 
+ * @author Simon Däster
+ * @package JClubCMS
+ * image_send.class.php
+ */
 
 class Image_send implements Module
 {
@@ -49,7 +49,10 @@ class Image_send implements Module
 		}
 	}
 
-	//Gibt kein Template zurueck
+	/**
+	 * Gibt kein template zurück
+	 * @deprecated
+	 */ 
 	public function gettplfile()
 	{
 		return false;

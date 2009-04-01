@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Simon D�ster
+ * @author Simon Däster
  * @package JClubCMS
  * File: module.interface.php
  * interace: Modules
