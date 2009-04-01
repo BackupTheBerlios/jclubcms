@@ -1,13 +1,5 @@
 <?php
-/**
- * @author David Daester
- * @package JClubCMS
- * @copyright JClub
- * @link http://www.jclub.ch
- * File: smilies.class.php
- * Classes: smilies
- * Reuqires: PHP5
- */
+
 
 /**
  * Klasse fuer das Aulsenen der Smilies aus der DB, 
@@ -15,6 +7,12 @@
  * und Retourgabe der Daten als Array.
  * 
  * Evnt. noch Administration der Smilies.
+ * @author David Däster
+ * @package JClubCMS
+ * @copyright JClub
+ * File: smilies.class.php
+ * Classes: smilies
+ * @requires PHP5
  */
 
 class Smilies {

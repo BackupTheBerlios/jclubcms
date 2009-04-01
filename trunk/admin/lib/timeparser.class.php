@@ -1,11 +1,6 @@
 <?php
 /**
- * @author David Däster
- * @version 0.1
- * @package JClubCMS
-  * @link http://www.jclub.ch
- * @copyright JClub
- * Die Klasse timeparser ist zuständig für das Parsen der Zeiten die
+ * Die Klasse timeparser ist zuständig für das Parsen der Zeiten die 
  * in den MySQL-Tabellen angelegt sind (Gästebuch, News, uä) und dessen
  * Werte die im Y-m-d H:i:s Format sind.
  * Geparst wird _OHNE_ den Weg über time() um "Zukunftssicher" zu sein.
@@ -60,8 +55,7 @@
  * - W	ISO-8601 Wochennummer des Jahres, die Woche beginnt am Montag
  * - z	Der Tag eines Jahres
  * - Z	 Offset der Zeitzone in Sekunden.
- */
-/**
+ *
  * The Timeparser Class- Parst eine MySQL-Zeit in ein gewünschtes Format.
  * Die Daten aus der DB wird eingelesen und anschliessend über explode in die einzelnen
  * Blöcken (Jahr, Tag, Monat, Stunde, Minute und Sekunde) aufgeteilt und in das time_array
@@ -70,6 +64,11 @@
  * Anschliessend wird über die Funktion time_output via den Vorlagestring (zum grösten Teil 
  * date()-ähnlich) ausgegeben.
  * Die date()-Funktion wird bewusst ausgelassen, damit auch nach 2038 noch funktionsfähig ist.
+ * 
+ * @author David Däster
+ * @version 0.1
+ * @package JClubCMS
+ * @copyright JClub
  */
 
 class Timeparser {

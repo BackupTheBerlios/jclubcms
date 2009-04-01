@@ -1,24 +1,10 @@
 <?php
-
-/**
- * @author Simon Däster
- * @package JClubCMS
- * File: messageboxes.class.php
- * Classes: messageboxes
- * Requieres: PHP5
- * 
- * 
- * Beschrieb:
- * Dem Konstruktor wird der Aufbau der Tabelle mit einem Array weitergegeben. WerteIn diesem Array unbeding vorkommen muss ID
- * und content. Weiter nueztliche Dine sind ref_ID, name, time, hp, mail. So koennen die Daten nach time geordenet werden 
- * oder hp/mail verifiziert werden. Sie sind nicht absolut noetig, aber hilfreich. Damit diese richtig behandelt werden,
- * muessen sie mit den richtigen Array-keys uebermittelt werden. Natuerlich koennen weitere Daten angegeben werden,
- * die werden aber nicht besonders behandelt. Diese koennen mit nummerierten keys weitergegeben werden.
- */
-
 require_once ADMIN_DIR.'lib/captcha.class.php';
 require_once ADMIN_DIR.'lib/mysql.class.php';
 require_once ADMIN_DIR.'lib/formularcheck.class.php';
+
+
+
 
 if (!defined('MSGBOX_FORMCHECK_OK')) {
 	/**
@@ -45,7 +31,19 @@ if (!defined('MSGBOX_FORMCHECK_INVALID')) {
 	 */
 	define('MSGBOX_FORMCHECK_INVALID', 4);
 }
-
+/**
+ * Dem Konstruktor wird der Aufbau der Tabelle mit einem Array weitergegeben. WerteIn diesem Array unbeding vorkommen muss ID
+ * und content. Weiter nueztliche Dine sind ref_ID, name, time, hp, mail. So koennen die Daten nach time geordenet werden 
+ * oder hp/mail verifiziert werden. Sie sind nicht absolut noetig, aber hilfreich. Damit diese richtig behandelt werden,
+ * muessen sie mit den richtigen Array-keys uebermittelt werden. Natuerlich koennen weitere Daten angegeben werden,
+ * die werden aber nicht besonders behandelt. Diese koennen mit nummerierten keys weitergegeben werden.
+ * @author Simon Däster
+ * @package JClubCMS
+ * File: messageboxes.class.php
+ * Classes: messageboxes
+ * @requieres PHP5
+ * @TODO Abstract bzw. Idee der Klasse beschreiben
+ */
 class Messageboxes {
 
 	/**

@@ -1,23 +1,28 @@
 <?php
-/** 
- * @author David D�ster
- * @package JClubCMS
- * File: mailsend.class.php
- * Classes: mailsend
- * Requieres: PHP5
- *
- * 
- */
+
 
 /**
  * Klasse fuer den den ganzen Mail-Ablauf
+ * 
  * 1. Phase
+ * 
  * - Hash-Berechnung 
+ * 
  * - Ablage in Datenbank
+ * 
  * - Versand Kontrollmail
+ * 
  * 2. Phase
+ * 
  * - Auslese aus Datenbank
+ * 
  * - Versand des Mails
+
+ * @author David Däster
+ * @package JClubCMS
+ * File: mailsend.class.php
+ * Classes: mailsend
+ * @requieres PHP5
  */
 class Mailsend {
 	private $_mail_reciver_name;

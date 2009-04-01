@@ -1,21 +1,23 @@
 <?php
 
 /**
+ * Die Klasse mysql ist zustaendig fuer das ganze Datenbankhandling von mysql.
+ * 
+ * Ueber sie gehen alle Verbindungen, Queries und MySQL-Spezifische
+ * Funktionen (z.B. mysql_fetch_array)
+ * 
+ * Die Daten werden in der Klasse gespeichert und nur die Enddaten
+ * ausgegeben.
+ * 
  * @package JClubCMS
- * @author David Daester, Simon Daester
-* File: mysql.class.php
-* Classes: mysql
-* Requieres: PHP5, MySQL 4.x
-* 
-* Die Klasse mysql ist zustaendig fuer das ganze Datenbankhandling
-* von mysql.
-* Ueber sie gehen alle Verbindungen, Queries und MySQL-Spezifische
-* Funktionen (z.B. mysql_fetch_array)
-* Die Daten werden in der Klasse gespeichert und nur die Enddaten
-* ausgegeben.
-*
-*
-*-----------------------------------------------------------------*/
+ * @author David Däster
+ * @author Simon Däster
+ * @requieres PHP5
+ * @requieres MySQL 4.x
+ * 
+ * File: mysql.class.php
+ * Classes: mysql
+ */
 
 class Mysql {
 

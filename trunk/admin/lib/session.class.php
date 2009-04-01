@@ -1,9 +1,8 @@
 <?php
 /**
  * Die Session-Klasse handelt mit den Session-Daten, welche in der Datenbank abgespitz sind.
- * @author Simon Daester
+ * @author Simon Däster
  * @package JClubCMS
- * @link www.jclub.ch
  * 
  * file: session.class.php
  * classes: session

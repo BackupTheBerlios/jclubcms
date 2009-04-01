@@ -1,19 +1,19 @@
 <?php
 
+require_once ADMIN_DIR.'lib/module.interface.php';
+require_once ADMIN_DIR.'lib/smilies.class.php';
+
 /**
+ * Diese Datei ist für die Administration der Contents zuständig. 
+ * Über dieses Modul wird das Hinzufügen von neuen Inhalten (Contents), 
+ * das Bearbeiten von bestehenden und das Archivieren (verstecken) 
+ * von vergangenen und Löschen zuständig.
+
  * @package JClubCMS
  * @author Simon Däster
  * contentadmin.class.php
- * 
- * Diese Datei ist für die Administration der Contents zuständig. Über dieses Modul
- * wird das Hinzufügen von neuen Inhalten (Contents), das Bearbeiten von bestehenden und 
- * das Archivieren (verstecken) von vergangenen und Löschen zuständig.
- * 
  * @todo Klasse aufbauen und Funktionen integrieren
  */
-
-require_once ADMIN_DIR.'lib/module.interface.php';
-require_once ADMIN_DIR.'lib/smilies.class.php';
 
 class Moduladmin implements Module
 {

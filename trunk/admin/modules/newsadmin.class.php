@@ -1,18 +1,16 @@
 <?php 
-
-/**
- * @author Simon Daester
- * @package JClubCMS
- * news.class.php
- * 
- * Diese Klasse ist zustaendig fuer das Editieren der Newseintraege. Auch koennen neue Beitraege hinzugefuegt oder geloescht
- * werden
- */
-
 require_once ADMIN_DIR.'lib/module.interface.php';
 require_once ADMIN_DIR.'lib/messageboxes.class.php';
 require_once ADMIN_DIR.'lib/smilies.class.php';
 require_once USER_DIR.'config/gbook_textes.inc.php';
+/**
+ * Diese Klasse ist zustaendig fuer das Editieren der Newseintraege. 
+ * Auch koennen neue Beitraege hinzugefuegt oder geloescht werden.
+ * 
+ * @author Simon Däster
+ * @package JClubCMS
+ * news.class.php
+ */
 
 class Newsadmin implements Module
 {

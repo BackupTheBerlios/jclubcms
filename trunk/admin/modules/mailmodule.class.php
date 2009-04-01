@@ -1,20 +1,20 @@
 <?php
-/**
- * @package JClubCMS
- * @author Simon Däster
- * File: mailmodule.class.php
- * Classes: Mailmodule
- * Requieres: PHP5
- *
- * Dieses Modul ist für das Mailforumular zum Versenden des Bestätigungsmail verantwortlich sowie 
- * für das Versenden des angegebenen Mails nach der erfolgreichen Bestätigung.
- *
- */
-
 require_once ADMIN_DIR.'lib/module.interface.php';
 require_once ADMIN_DIR.'lib/captcha.class.php';
 require_once ADMIN_DIR.'lib/formularcheck.class.php';
 require_once ADMIN_DIR.'lib/mailsend.class.php';
+
+/**
+ *
+ * Dieses Modul ist für das Mailforumular zum Versenden des Bestätigungsmail verantwortlich sowie 
+ * für das Versenden des angegebenen Mails nach der erfolgreichen Bestätigung.
+ * 
+ * @package JClubCMS
+ * @author Simon Däster
+ * File: mailmodule.class.php
+ * Classes: Mailmodule
+ * @requieres PHP5
+ */
 
 class Mailmodule implements Module
 {

@@ -1,13 +1,13 @@
 <?php
 /**
+ *
+ * Dieses Modul gibt die Mitglieder aus, welche im Mysql gespeichert sind.
+ *
  * @package JClubCMS
  * @author Simon Däster
  * File: members.class.php
  * Classes: Members
- * Requieres: PHP5
- *
- * Dieses Modul gibt die Mitglieder aus, welche im Mysql gespeichert sind.
- *
+ * @requieres PHP5
  */
 
 require_once ADMIN_DIR.'lib/module.interface.php';
