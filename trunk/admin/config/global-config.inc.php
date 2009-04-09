@@ -26,4 +26,6 @@ $thumb_maxwidth = 150;
 //**Smilies
 $dir_smilies = USER_DIR."graphics/smilies/";
 
+date_default_timezone_set('Europe/Zurich')
+
 ?>

@@ -499,6 +499,8 @@ class Core
 			$mod_tbl = 'modules';
 		}
 
+		
+		//Wird noch gar nicht eingesetzt????
 		if (key_exists('mail', $this->_gpc['GET'])) {
 			$modulname = 'mailmodule';
 		} elseif (key_exists('image', $this->_gpc['GET'])) {
