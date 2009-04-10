@@ -143,10 +143,11 @@ class News implements Module
 
 			//Nur news-Daten ohne $news_array['many'] abchecken
 
-			$value['news_content'] = $this->_smilie->show_smilie(htmlentities($value['news_content']), $this->_mysql);
+			$value['news_content'] = $this->_smilie->show_smilie(nl2br(htmlentities($value['news_content'])), $this->_mysql);
 
 			foreach ($value['comments'] as $ckey => $cvalue) {
-				$news_array[$key]['comments'][$ckey]['news_content'] = $this->_smilie->show_smilie(htmlentities($cvalue['news_content']), $this->_mysql);
+				$news_array[$key]['comments'][$ckey]['news_content'] = $this->_smilie->show_smilie(nl2br(htmlentities($cvalue['news_content'])), $this->_mysql);
+
 			}
 
 
