@@ -24,7 +24,7 @@ $gallery_menuview = 2; //Wieviele Bilder Links und Rechts des aktuellen Bildes g
 * I Fuellt ein Datum in die Sommerzeit
 * l Ausgeschriebener Tag der Woche
 * L	Schaltjahr oder nicht
-* S	Anhang der englischen Aufz�hlung f�r einen Monatstag, zwei Zeichen
+* S	Anhang der englischen Aufzählung für einen Monatstag, zwei Zeichen
 * t	Anzahl der Tage des angegebenen Monats
 * T	Zeitzoneneinstellung des Rechners
 * U	Sekunden seit Beginn der UNIX-Epoche
