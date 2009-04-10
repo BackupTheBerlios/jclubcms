@@ -137,6 +137,11 @@ class Core
 
 			/* Ausgabe-Pufferung aktivieren - wird bei initPage geleert*/
 			//ob_start(array(&$this, "_output_callback"));
+			if (ADMIN_DIR == './') {
+				global $TEMPLATESET_DIR;
+				$TEMPLATESET_DIR = 'templates';
+			}
+
 			$this->_initObjects();
 			$this->_checkGpc();
 
@@ -181,14 +186,13 @@ class Core
 
 	private function _initObjects()
 	{
-		global $db_server, $db_name, $db_user, $db_pw;
+		global $db_server, $db_name, $db_user, $db_pw, $TEMPLATESET_DIR;
 		//Smarty-Objekt
 		$this->_smarty = new Smarty();
 		$this->_smarty->compile_check = true;
 		$this->_smarty->debugging = false;
 		$this->_smarty->config_dir = 'config';
-		$this->_smarty->templates_dir = $TEMPLATESET_DIR;
-
+		$this->_smarty->template_dir = $TEMPLATESET_DIR;
 		$this->_mysql = new Mysql($db_server, $db_name, $db_user, $db_pw);
 
 
