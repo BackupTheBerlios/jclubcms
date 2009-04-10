@@ -36,7 +36,7 @@
      <div id="subnavigation">
     
       {foreach item=subnav from=$subnav}    
-      {*Für alle Level grösser gleich 3 ist die CSS-Klasse subnav3, sonst eine andere*}
+      {*FÃ¼r alle Level grÃ¶sser gleich 3 ist die CSS-Klasse subnav3, sonst eine andere*}
       {if $subnav.level == 1}
       <div class="subnavigation_links">
       {elseif $subnav.level <= 3}
