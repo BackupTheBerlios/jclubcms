@@ -75,7 +75,7 @@ class Gallery implements Module
 
 
 	/**
-	 * Fuehrt die einzelnen Methoden aus, abhaengig vom parameter
+	 * Führt die einzelnen Methoden aus, abhaengig vom parameter
 	 *
 	 * @param array $parameters POST, GET und COOKIE-Variablen
 	 */
@@ -162,8 +162,15 @@ class Gallery implements Module
 		$entries['cat'] = $this->_mysql->get_records();
 
 		/* Untergeordnete Gallerien auslesen */
+		/* Wenn die oberste Kategorie ($cat_id = 0 ) ausgelesen wird, werden alle Gallerien angezeigt */
+		
+		if(SHOW_ALL_GALLERIES_ON_TOP == true && $cat_ID == 0) {
+			$this->_mysql->query("SELECT `ID`,`name`,`comment`,DATE_FORMAT(`time`, '%d.%m.%Y') as 'time' FROM `gallery_alben`");
+		} else {
+		
 		$this->_mysql->query("SELECT `ID`,`name`,`comment`,DATE_FORMAT(`time`, '%d.%m.%Y') as 'time' FROM `gallery_alben`
 							WHERE `gallery_alben`.`ref_ID` = '$cat_ID'");
+		}
 		$this->_mysql->saverecords('assoc');
 		$entries['gal'] = $this->_mysql->get_records();
 

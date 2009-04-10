@@ -29,4 +29,7 @@ $dir_smilies = USER_DIR."graphics/smilies/";
 //**Date TimeZone
 date_default_timezone_set('Europe/Zurich');
 
+//**Bei der Gallerie: Alle Gallerien in der obersten Kategorie anzeigen, nicht nur die direkt untergeordneten
+define('SHOW_ALL_GALLERIES_ON_TOP',true);
+
 ?>
