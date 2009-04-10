@@ -1,0 +1,294 @@
+body {
+	margin: 0px;
+	padding: 0px;
+	color: #000000;
+	font-family: Arial;
+	font-size: 14px;
+	background-repeat: repeat-x; 
+	background-attachment: fixed;
+}
+
+img {
+	border: 0px;
+}
+
+a {
+	color: #4f4f4f;
+	text-decoration: none;
+}
+	
+.box a, #terminuebersicht a {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+.box a:hover, #terminuebersicht a:hover {
+	color: #c9c9c9;
+	text-decoration: none;
+}
+	
+a:hover {
+	color: #707070;
+	text-decoration: none;
+}
+
+h2 {
+	margin-top: 0px;
+	font-size: 14px;
+}
+
+#center {
+	width: 996px; 
+	position: relative; 
+	margin-left: -500px; 
+	left: 50%;
+}
+
+#flashposition {
+	margin-left: 753px; 
+	margin-top: 35px;
+}
+
+#flashposition2 {
+	margin-left: 453px; 
+	margin-top: 27px;
+}
+
+#header {
+	width: 995px; 
+	height: 346px; 
+	float: left; 
+	background-image: url('images/jclubdesign_01.png');
+}
+
+#middle {
+	width: 996px;
+	float: left; 
+	background-image: url('images/middle_bg.png');
+}
+
+#naviposition {
+	margin-left: 33px;
+}
+
+#navi {
+	width: 200px;
+	color: #b6b6b6;
+	float: left; 
+}
+
+#navi a {
+	color: #b6b6b6;
+	text-decoration: none;
+	font-size: 12px;
+} 
+
+#navi a:hover {
+	color: #FFFFFF;
+	text-decoration: none;
+	font-size: 12px;
+}
+
+#content {
+	width: 795px; 
+	float: left;
+}
+
+#contenttext {
+	width: 778px; 
+	text-align: justify;
+}
+
+.commentposition {
+	width: 98%; 
+	float: left; 
+	padding: 5px; 
+	margin-left: 11px;
+}
+
+.commentname {
+	font-weight: bold; 
+	font-size: 11px; 
+	background-image: url('images/guestbookbg.gif'); 
+	background-position: right;
+	background-repeat: repeat-y;
+	padding: 3px;
+}
+
+#terminuebersicht {
+	width: 256px;
+	height: 236px;
+	float: left;
+	background-image: url('images/newsundtermine_02.gif');
+	color: #FFFFFF;
+}
+
+#footer {
+	width: 995px; 
+	height: 196px; 
+	float: left; 
+	background-image: url('images/jclubdesign_03.png');
+}
+
+.formposition {
+	float: left; 
+	margin-left: 11px; 
+	width: 500px;
+}
+
+fieldset {
+	border: none;
+}
+
+label, select, textarea { 
+  	display: block;
+  	float: left;
+  	width: 100px; 
+ }
+
+textarea {
+	width: 350px;
+}
+
+form br { 
+  	clear: left; 
+}
+
+
+label {
+ 	text-align: right; 
+ 	padding-right: 1em; 
+}
+
+form {
+  	margin:0;
+  	padding:.5em;
+}
+
+.captchabild {
+	float: right; 
+	margin-right: 21px; 
+	width: 220px;
+}
+
+.content_tab {
+	margin-top:10px;
+	margin-bottom:10px;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+.content_tab_header {
+	background-image: url('images/tb_bg.jpg');
+	border: 1px solid #FFFFFF;
+	color: #ffffff;
+	font-weight: bolder;
+	padding: 5px 10px 5px 10px;
+}
+
+.content_tab_header a {
+	color: #ffffff;
+}
+
+.content_tab_content1 {
+	background-image: url('images/tb_bg2.jpg');
+	width: 450px;
+	border-right: 1px solid #FFFFFF;
+	border-bottom: 1px solid #FFFFFF;
+	border-left: 1px solid #FFFFFF;
+	line-height: 20px;
+	padding: 5px 5px 5px 5px;
+	text-align: left;
+}
+.content_tab_content2 {
+	width: 150px;
+	background-image: url('images/tb_bg2.jpg');
+	border-right: 1px solid #BF8202;
+	border-bottom: 1px solid #BF8202;
+	line-height: 20px;
+	vertical-align: top;
+	font-weight: bolder;
+	padding: 5px 10px 5px 10px;
+	text-align: left;
+}
+
+
+
+/* NEWS */
+
+.news {
+	width: 782px;
+}
+
+.newsheadline {
+	width: 781px; 
+	height: 53px; 
+	background-image: url('images/news_04.jpg'); 
+	float: left;
+	color: #FFFFFF;
+}
+
+.newsdesign1 {
+	width: 26px; 
+	height: 53px; 
+	background-image: url('images/news_01.jpg'); 
+	float: left;
+}
+
+.newsdesign2 {
+	height: 53px; 
+	background-image: url('images/news_02.jpg'); 
+	float: left;
+}
+
+.newsdesign3 {
+	width: 74px; 
+	height: 53px; 
+	background-image: url('images/news_03.jpg'); 
+	float: left;
+}
+
+.newsdesign4 {
+	height: 53px; 
+	float: left;
+}
+
+.newsdesign5 {
+	width: 92px; 
+	height: 53px; 
+	background-image: url('images/news_05.jpg'); 
+	float: right;
+}
+
+.newsautor {
+	width: 753px;
+	font-size: 11px; 
+	color: #000000; 
+	float:left; 
+	margin-top: -12px;
+}
+
+.newsinhalt {
+	width: 781px; 
+	float: left; 
+	font-size: 14px; 
+	text-align: justify;
+	background-image: url('images/news_06.jpg'); 
+}
+
+.newsende {
+	width: 781px;
+	height: 29px; 
+	float: left; 
+	background-image: url('images/news_07.jpg'); 
+}
+	
+.newskommentare {
+	height: 20px; 
+	float: right;
+}
+
+.newsinhaltposition {
+	margin-left: 20px; 
+	margin-right: 30px;
+}

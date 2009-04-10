@@ -187,6 +187,7 @@ class Core
 		$this->_smarty->compile_check = true;
 		$this->_smarty->debugging = false;
 		$this->_smarty->config_dir = 'config';
+		$this->_smarty->templates_dir = $TEMPLATESET_DIR;
 
 		$this->_mysql = new Mysql($db_server, $db_name, $db_user, $db_pw);
 

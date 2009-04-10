@@ -25,5 +25,6 @@ $thumb_maxwidth = 150;
 
 //**Smilies
 $dir_smilies = USER_DIR."graphics/smilies/";
-
+//**Templates Set
+$TEMPLATESET_DIR='templates/malte';
 ?>
