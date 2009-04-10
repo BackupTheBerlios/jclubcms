@@ -99,7 +99,7 @@ class Gbook implements Module {
 	 */
 	public function action($gpc)
 	{
-		global $dir_smilies;
+		global $dir_smilies, $gbook_entries_per_page;
 
 		//Daten laden
 		$this->_smarty->config_load('textes.de.conf', 'Gbook');
@@ -124,17 +124,17 @@ class Gbook implements Module {
 					$this->_comment();
 					break;
 				case 'view':
-					$this->_view(5);
+					$this->_view($gbook_entries_per_page);
 					break;
 				case '':
-					$this->_view(5);
+					$this->_view($gbook_entries_per_page);
 					break;
 				default:
 					throw new CMSException('Gewählte Option ist nicht möglich', EXCEPTION_MODULE_CODE);
 					return false;
 			}
 		} else {
-			$this->_view(5);
+			$this->_view($gbook_entries_per_page);
 		}
 
 		return true;
@@ -183,7 +183,7 @@ class Gbook implements Module {
 		foreach ($gbook_array as $key => $value) {
 
 			$gbook_array[$key] = array('ID' => $value['gbook_ID'], 'title' => htmlentities($value['gbook_title']),
-			'content' => $this->_smilie->show_smilie(htmlentities($value['gbook_content']), $this->_mysql),
+			'content' => $this->_smilie->show_smilie(nl2br(htmlentities($value['gbook_content'])), $this->_mysql),
 			'name' => htmlentities($value['gbook_name']),
 			'time' => $value['gbook_time'], 'email' => htmlentities($value['gbook_email']),
 			'hp' => htmlentities($value['gbook_hp']), 'number_of_comments' => $value['number_of_comments']);
@@ -194,7 +194,7 @@ class Gbook implements Module {
 
 				$gbook_array[$key]['comments'][$ckey] = array('ID' => $cvalue['gbook_ID'],
 				'title' => htmlentities($cvalue['gbook_title']),
-				'content' => $this->_smilie->show_smilie(htmlentities($cvalue['gbook_content']), $this->_mysql),
+				'content' => $this->_smilie->show_smilie(nl2br(htmlentities($cvalue['gbook_content'])), $this->_mysql),
 				'name' => htmlentities($cvalue['gbook_name']), 'time' => $cvalue['gbook_time'],
 				'email' => htmlentities($cvalue['gbook_email']), 'hp' => htmlentities($cvalue['gbook_hp']));
 
