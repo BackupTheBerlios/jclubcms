@@ -240,7 +240,7 @@ class Page
 		//Ob es das Admin- oder User-Menu ist, aendert sich der Tabellen-Name im MySQL.
 		$table_name = ($admin_menu === true)?"admin_menu":"menu";
 		$options = array('jump_search' => $klapp_all, 'reset' => true, 'show_inactiv' => $show_all, 'fields' => $fields);
-		$this->_build_subnav_array($table_name, $topid_array, &$menu_array, $options);
+		$this->_build_subnav_array($table_name, $topid_array, $menu_array, $options);
 	}
 
 	/**
@@ -455,7 +455,7 @@ class Page
 					$topid_array[$key] = $temp;
 
 				}
-				$this->_build_subnav_array($table_name, &$topid_array, $subnav_array, $options);
+				$this->_build_subnav_array($table_name, $topid_array, $subnav_array, $options);
 				$level--;
 
 			} elseif (count($topid_array) > 0 && $value['menu_ID'] == $topid_array[0]) {
