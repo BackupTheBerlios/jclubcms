@@ -26,6 +26,10 @@ $thumb_maxwidth = 150;
 //**Smilies
 $dir_smilies = USER_DIR."graphics/smilies/";
 
+//**Date TimeZone
 date_default_timezone_set('Europe/Zurich')
+
+//**Templates Set
+$TEMPLATESET_DIR='templates/malte';
 
 ?>
