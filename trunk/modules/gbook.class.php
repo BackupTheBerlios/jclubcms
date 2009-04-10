@@ -99,6 +99,7 @@ class Gbook implements Module {
 	 */
 	public function action($gpc)
 	{
+
 		global $dir_smilies, $gbook_entries_per_page;
 
 		//Daten laden
@@ -195,6 +196,7 @@ class Gbook implements Module {
 				$gbook_array[$key]['comments'][$ckey] = array('ID' => $cvalue['gbook_ID'],
 				'title' => htmlentities($cvalue['gbook_title']),
 				'content' => $this->_smilie->show_smilie(nl2br(htmlentities($cvalue['gbook_content'])), $this->_mysql),
+
 				'name' => htmlentities($cvalue['gbook_name']), 'time' => $cvalue['gbook_time'],
 				'email' => htmlentities($cvalue['gbook_email']), 'hp' => htmlentities($cvalue['gbook_hp']));
 

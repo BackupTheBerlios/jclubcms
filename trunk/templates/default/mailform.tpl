@@ -30,8 +30,8 @@
 			<td class="formailer_txt">
 			<textarea class="formailer_txt_textarea" name="content" cols="38" rows="5">{$entry_content|default:#entry_content#}</textarea></td>
 			<td class="formailer_adress">
-			<img src="templates/style/icons/user.gif" /> <input class="formailer_adress_input" onclick="select()" name="name" type="text" value="{$entry_name|default:#entry_name#}" /><br />
-			<img src="templates/style/icons/email.gif" /> <input class="formailer_adress_input" onclick="select()" name="email" type="text" value="{$entry_email|default:#entry_email#}" /><br />
+			<img src="{$TEMPLATESET_DIR}/style/icons/user.gif" /> <input class="formailer_adress_input" onclick="select()" name="name" type="text" value="{$entry_name|default:#entry_name#}" /><br />
+			<img src="{$TEMPLATESET_DIR}/style/icons/email.gif" /> <input class="formailer_adress_input" onclick="select()" name="email" type="text" value="{$entry_email|default:#entry_email#}" /><br />
 			</td>
 			</tr>
                         <tr>
@@ -41,8 +41,8 @@
                                 <td rowspan="2"><img src="?nav_id={$captcha_link}&img={$captcha_img}" /></td>
                                 <td><div style="font-size: 10px">Bitte den Text eingeben,<br /> der im Bild steht</div></td>
                                 
-                                <td><div style="font-size: 10px">Sollte der Text nicht erkennbar sein, neues Bild wählen</div></td>
-                              </tr>
+                                <td><div style="font-size: 10px">Sollte der Text nicht erkennbar sein, neues Bild w&auml;hlen</div></td>
+                             </tr>
                               <tr>
                                 <td><input type="text" size="15" name="captcha_word" value="" /></td>
                                 <td><input type="submit" name="captcha_revoke" value="Anderes Bild bitte!" /></td>

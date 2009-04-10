@@ -1,7 +1,7 @@
 	<div id="content">
 		<div id="contenttext">
 			<h2>G&auml;stebuch</h2>
-			<a href="?nav_id={$local_link}&action=new"><img src="templates/style/icons/book_open.gif" /><strong>Neuer Eintrag</strong></a><br /><br />
+			<a href="?nav_id={$local_link}&action=new"><img src="{$TEMPLATESET_DIR}/style/icons/book_open.gif" /><strong>Neuer Eintrag</strong></a><br /><br />
 			{if $entries == 1}{$entries} Eintrag{else}{$entries} Eintr&auml;ge{/if} (+{if $comments == 1}{$comments} Kommentar{else}{$comments} Kommentare{/if})
 			<br /><br />
 
@@ -17,9 +17,9 @@
 				<div class="newsinhalt"> 
 					<div class="newsinhaltposition">
 					{$book.content}<br /<br />
-					<a href="?mail&nav_id={$local_link}&entry_id={$book.ID}"><img src="templates/style/icons/email.gif" /> E-mail</a>
-					{if $book.hp neq ""} | <a href="http://{$book.hp}" target="_blank"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
-					<br /><a href="?nav_id={$local_link}&action=comment&ref_ID={$book.ID}"><img src="templates/style/icons/comment.gif" />Neuer Kommentar</a>
+					<a href="?mail&nav_id={$local_link}&entry_id={$book.ID}"><img src="{$TEMPLATESET_DIR}/style/icons/email.gif" /> E-mail</a>
+					{if $book.hp neq ""} | <a href="http://{$book.hp}" target="_blank"><img src="{$TEMPLATESET_DIR}/style/icons/house.gif" /> Website</a>{/if}
+					<br /><a href="?nav_id={$local_link}&action=comment&ref_ID={$book.ID}"><img src="{$TEMPLATESET_DIR}/style/icons/comment.gif" />Neuer Kommentar</a>
 					
 					{foreach key=schluessel item=comment from=$book.comments}
 					

@@ -328,7 +328,7 @@ class Menuadmin implements Module
 				$this->_mysql->query("UPDATE `menu` SET `menu_position` = '{$value['value']}' WHERE `menu_ID` = '{$value['ID']}' LIMIT 1");
 			}
 			
-			foreach ($pos_arr as $value) {
+			foreach ($disp_arr as $value) {
 				$this->_mysql->query("UPDATE `menu` SET `menu_display` = '{$value['value']}' WHERE `menu_ID` = '{$value['ID']}' LIMIT 1");
 			}
 

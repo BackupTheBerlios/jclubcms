@@ -1,14 +1,17 @@
 <?php
 /**
- * @author Simon Daester
+ * @author Simon Däster
  * @package JClubCMS
  * config.inc.php
  * 
  * Diese Seite speichert Konfigurations-Einstellungen fuer den Admin-Bereich bereit
  */
 
+//**Templates Set tempates/default
+define('TEMPLATESET_DIR', 'templates');
+
 //---Session-Einstellungen---
-$session_timeout = 3600; //Anzahl Sekunden, bis Session ungueltig ist;
+$session_timeout = 3600; //Anzahl Sekunden, bis Session ungültig ist;
 
 /*---Admin-Menu---*/
 $admin_menu_shortlinks = true;

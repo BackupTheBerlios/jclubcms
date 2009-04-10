@@ -12,7 +12,7 @@
 		<td>{foreach item=root_item from=$root}
 		&gt; <a href="?nav_id=40&cat={$root_item.ID}">{$root_item.name}</a>
 		{/foreach} </td>
-		<td><a href="?nav_id={$local_link}&cat={$top_ID}" ><img src="templates/style/icons/gallery.gif" />zur Gallery-&Uuml;bersicht</a></td>
+		<td><a href="?nav_id={$local_link}&cat={$top_ID}" ><img src="{$TEMPLATESET_DIR}/style/icons/gallery.gif" />zur Gallery-&Uuml;bersicht</a></td>
 		<td align="right">{$number} Bilder</td>
 	</tr>
 	<tr class="content_tab_content1" style="text-align:center; font-size:14px; font-weight: bold">
@@ -62,7 +62,7 @@
 		<td>{foreach item=root_item from=$root}
 		&gt; <a href="?nav_id=40&cat={$root_item.ID}">{$root_item.name}</a>
 		{/foreach}</td>
-		<td><a href="?nav_id={$local_link}" ><img src="templates/style/icons/gallery.gif" />zur Gallery-&Uuml;bersicht</a></td>
+		<td><a href="?nav_id={$local_link}" ><img src="{$TEMPLATESET_DIR}/style/icons/gallery.gif" />zur Gallery-&Uuml;bersicht</a></td>
 		<td align="right">{$number} Bilder</td>
 	</tr>
     </table>

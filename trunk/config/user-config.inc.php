@@ -4,6 +4,9 @@
  * @author David Däster, Simon Däster
  */
 
+//**Templates Set
+define('TEMPLATESET_DIR', 'templates/malte');
+
 /*Menu-Einstellungen*/
 $user_menu_shortlinks = false;
 

@@ -4,13 +4,11 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<title>{$content_title}</title>
-	<link rel="stylesheet" type="text/css" href="templates/style/style.css"></link>
+	<link rel="stylesheet" type="text/css" href="{$TEMPLATESET_DIR}/style/style.css"></link>
 	<style>
-	{literal}
-	body {
-		background-image: url('templates/style/images/bg.jpg');
-	}
-	{/literal}
+	body {ldelim}
+		background-image: url('{$TEMPLATESET_DIR}/style/images/bg.jpg');
+	{rdelim}
 	</style>
 </head>
 
@@ -21,8 +19,8 @@
 		<div id="header">
 
 			<div id="flashposition">
-				<object width="224" height="300" type="application/x-shockwave-Flash" data="templates/style/head.swf">
-				<param name="movie" value="templates/style/head.swf" />
+				<object width="224" height="300" type="application/x-shockwave-Flash" data="{$TEMPLATESET_DIR}/style/head.swf">
+				<param name="movie" value="{$TEMPLATESET_DIR}/style/head.swf" />
 				</object>
 			</div>
 		
@@ -66,8 +64,8 @@
 		
 			<div id="flashposition2">
 
-				<object width="294" height="144" type="application/x-shockwave-Flash" data="templates/style/plane.swf">
-				<param name="movie" value="templates/style/plane.swf" />
+				<object width="294" height="144" type="application/x-shockwave-Flash" data="{$TEMPLATESET_DIR}/style/plane.swf">
+				<param name="movie" value="{$TEMPLATESET_DIR}/style/plane.swf" />
 				</object>
 				
 			</div>

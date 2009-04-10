@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @author Simon D�ster
+ * @author Simon Däster
  * @package JClubCMS
  * auth_textes.inc.php
  * 
