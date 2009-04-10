@@ -2,7 +2,7 @@
 
 
 /**
- * @author Simon Daester
+ * @author Simon Däster
  * @package JClubCMS
  * File: functions.inc.ph
  * 

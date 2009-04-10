@@ -15,8 +15,8 @@
 				<div class="newsinhalt"> 
 					<div class="newsinhaltposition">
 					{$gbook.gbook_content}<br />
-					<a href="?mail&nav_id={$local_link}&entry_id={$gbook.gbook_email}"><img src="templates/style/icons/email.gif" /> E-mail</a>
-					{if $gbook.gbook_hp neq ""} | <a href="http://{$gbook.gbook_hp}" target="_blank"><img src="templates/style/icons/house.gif" /> Website</a>{/if}<br />
+					<a href="?mail&nav_id={$local_link}&entry_id={$gbook.gbook_email}"><img src="{$TEMPLATESET_DIR}/style/icons/email.gif" /> E-mail</a>
+					{if $gbook.gbook_hp neq ""} | <a href="http://{$gbook.gbook_hp}" target="_blank"><img src="{$TEMPLATESET_DIR}/style/icons/house.gif" /> Website</a>{/if}<br />
 					<br />
 					
 					{foreach key=schluessel item=comment from=$gbook.comments}

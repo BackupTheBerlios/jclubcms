@@ -2,7 +2,7 @@
 
 /**
  * @package JClubCMS
- * @author David Daester, Simon D�ster
+ * @author David Däter, Simon Däster
  */
 
 /*DB-Einstellungen*/
@@ -28,8 +28,5 @@ $dir_smilies = USER_DIR."graphics/smilies/";
 
 //**Date TimeZone
 date_default_timezone_set('Europe/Zurich');
-
-//**Templates Set
-$TEMPLATESET_DIR='templates/malte';
 
 ?>

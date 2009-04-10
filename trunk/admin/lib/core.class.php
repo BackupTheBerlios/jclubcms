@@ -192,7 +192,6 @@ class Core
 		$this->_smarty->compile_check = true;
 		$this->_smarty->debugging = false;
 		$this->_smarty->config_dir = 'config';
-		$this->_smarty->template_dir = $TEMPLATESET_DIR;
 		$this->_mysql = new Mysql($db_server, $db_name, $db_user, $db_pw);
 
 
@@ -268,6 +267,9 @@ class Core
 	{
 		global $start_time;
 
+		//**Template-Set einstellen und für die Templates als Variable zugägnlich machen
+		$this->_smarty->template_dir = TEMPLATESET_DIR;
+		$this->_smarty_array['TEMPLATESET_DIR'] = TEMPLATESET_DIR;
 
 		$this->_tplfile = 'index.tpl';
 
@@ -309,9 +311,10 @@ class Core
 
 		$this->_smarty_array['generated_time'] = round(((float)(microtime(true) - $start_time)),5);
 
-
+		
 		$this->_smarty->assign($this->_smarty_array);
 		$this->_smarty->display($this->_tplfile);
+
 
 	}
 
@@ -521,58 +524,6 @@ class Core
 		}
 
 	}
-
-
-	//	private function _output_callback($string)
-	//	{
-	//		$umlaut = array('ä', 'ö', 'ü', 'Ä','Ö', 'Ü');
-	//		$httpumlaut = array('&auml;', '&ouml;', '&uuml;', '&Auml;','&Ouml;', '&Uuml;');
-	//		str_replace($umlaut, $httpumlaut, $string);
-	//		return $string;
-	//	}
-
-
-	//	private function _exe_reserved_action()
-	//	{
-	//		$reserved_action = Action::get_reserved_action();
-	//
-	//		foreach ($reserved_action as $key => $value) {
-	//			/* Durchlaufen der reservierten Aktionen */
-	//
-	//			if (key_exists('action', $this->_gpc['GET']) && $this->_gpc['GET']['action'] == $key) {
-	//				/* Testen auf GET-Parameter */
-	//
-	//				$action = new Action($this->_smarty, $this->_mysql, $this);
-	//
-	//				if (method_exists($action, "_exe_reserved_$key") == false) {
-	//					throw new CMSException('Interne Funktion nicht vorhanden', EXCEPTION_CORE_CODE, 'Funktion fehlt');
-	//				}
-	//
-	//				switch ($value) {
-	//					case 'both':
-	//						/* Egal ob Admin- oder Usermodus */
-	//						call_user_method("_exe_reserved_$key", $action);
-	//						break;
-	//					case 'admin':
-	//						/* Nur Adminmodues */
-	//						if ($this->_is_admin === true) {
-	//							call_user_method("_exe_reserved_$key", $action);
-	//						}
-	//						break;
-	//					case 'user':
-	//						/* Nur Usermodues */
-	//						if ($this->_is_admin === false) {
-	//							call_user_method("_exe_reserved_$key", $action);
-	//						}
-	//						break;
-	//					default:
-	//						throw new CMSException('Aufgrund ungültigen internen Daten wurde die Ausf&uuml;rung abgebrochen', EXCEPTION_CORE_CODE, 'Internes Datenproblem');
-	//
-	//				}
-	//
-	//			}
-	//		}
-	//	}
 
 }
 
