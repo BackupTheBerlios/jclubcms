@@ -25,7 +25,7 @@
 			{if $news.news_hp neq ""}<br /><a href="http://{$news.news_hp}" target="_blank"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
 			</td>
 			</tr>
-			{* Innere Schlaufe für das Auslesen der Kommentare *}
+			{* Innere Schlaufe fÃ¼r das Auslesen der Kommentare *}
 			{foreach key=schluessel item=comment from=$news.comments}
 			</tr>
 			<tr>
