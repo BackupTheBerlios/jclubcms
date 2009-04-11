@@ -8,7 +8,7 @@
  */
 
 //**Templates Set tempates/default
-define('TEMPLATESET_DIR', 'templates');
+define('TEMPLATESET_DIR', 'templates/default');
 
 //---Session-Einstellungen---
 $session_timeout = 3600; //Anzahl Sekunden, bis Session ungültig ist;
