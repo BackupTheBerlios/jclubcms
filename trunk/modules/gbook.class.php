@@ -355,7 +355,7 @@ class Gbook implements Module {
 		$error_vars =$this->_configvars['Error'];
 
 		/* Formularcheck vorbereiten */
-		$formcheck = new Formularcheck();
+		//$formcheck = new Formularcheck();
 
 		/*Formulardaten */
 		if (!in_array('title', $blacklist)) {
