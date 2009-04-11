@@ -36,8 +36,6 @@
       	  <div class="package">
 			<a href="../JClubCMS/_admin---lib---action.class.php.html">		action.class.php
 		</a><br>
-			<a href="../JClubCMS/_admin---lib---action---action_mail.class.php.html">		action_mail.class.php
-		</a><br>
 			<a href="../JClubCMS/_admin---config---admin-config.inc.php.html">		admin-config.inc.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---auth.class.php.html">		auth.class.php
@@ -170,12 +168,12 @@ Source Location: /admin/lib/messageboxes.class.php<br /><br />
 <h4>Author(s):</h4>
 <ul>
           <li>Simon Däster</li>
-            </ul>
+      </ul>
 
 
 
 
-        
+    
 
         
 </td>
@@ -221,9 +219,6 @@ Dem Konstruktor wird der Aufbau der Tabelle mit einem Array weitergegeben. Werte
   <tr>
     <td><b>author:</b>&nbsp;&nbsp;</td><td>Simon Däster</td>
   </tr>
-  <tr>
-    <td><b>TODO:</b>&nbsp;&nbsp;</td><td>Abstract bzw. Idee der Klasse beschreiben</td>
-  </tr>
 </table>
 </div>
 </div><br /><br />
@@ -237,7 +232,7 @@ Dem Konstruktor wird der Aufbau der Tabelle mit einem Array weitergegeben. Werte
 
   <hr />
 	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a76">76</a>]</span></h3>
+	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a90">90</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -285,11 +280,11 @@ $tablestruct)</code>
   </div>
   <hr />
 	<a name="methodaddEntry"></a>
-	<h3>method addEntry <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a119">119</a>]</span></h3>
+	<h3>method addEntry <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a134">134</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void addEntry(
+		<code>boolean addEntry(
 array
 $tabledata)</code>
     </td></tr></table>
@@ -299,6 +294,9 @@ $tabledata)</code>
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Liefert bei Erfolg true, sonst Exception</td>
+  </tr>
   <tr>
     <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
   </tr>
@@ -321,21 +319,24 @@ $tabledata)</code>
   </div>
   <hr />
 	<a name="methodcommentEntry"></a>
-	<h3>method commentEntry <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a173">173</a>]</span></h3>
+	<h3>method commentEntry <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a198">198</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void commentEntry(
-
+		<code>boolean commentEntry(
+num
 $id, 
 $tabledata)</code>
     </td></tr></table>
     </td></tr></table><br />
 	
-		<br /><br />
+		Ueberprueft die Eintraege und fuegt dann einen Eintrag in die MySQL-Tabele mit den angegebenen Daten.<br /><br /><p>Der Eintrag wird so in der Mysql-Tabelle erstellt, dass er zum vorherigen Beitrag refernziert und so einen Kommentar darstellt</p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Liefert bei Erfolg true, sonst Exception</td>
+  </tr>
   <tr>
     <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
   </tr>
@@ -348,14 +349,14 @@ $tabledata)</code>
     <div class="tags">
     <table border="0" cellspacing="0" cellpadding="0">
           <tr>
-        <td class="type">&nbsp;&nbsp;</td>
+        <td class="type">num&nbsp;&nbsp;</td>
         <td><b>$id</b>&nbsp;&nbsp;</td>
-        <td></td>
+        <td>ID der referenzierenden Beitrags</td>
       </tr>
           <tr>
         <td class="type">array&nbsp;&nbsp;</td>
         <td><b>$tabledata</b>&nbsp;&nbsp;</td>
-        <td></td>
+        <td>einzugebende Daten</td>
       </tr>
         </table>
     </div><br />
@@ -363,7 +364,7 @@ $tabledata)</code>
   </div>
   <hr />
 	<a name="methoddelEntry"></a>
-	<h3>method delEntry <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a442">442</a>]</span></h3>
+	<h3>method delEntry <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a467">467</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -399,7 +400,7 @@ $id)</code>
   </div>
   <hr />
 	<a name="methodeditEntry"></a>
-	<h3>method editEntry <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a238">238</a>]</span></h3>
+	<h3>method editEntry <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a263">263</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -441,7 +442,7 @@ $tablestddata)</code>
   </div>
   <hr />
 	<a name="methodformCheck"></a>
-	<h3>method formCheck <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a508">508</a>]</span></h3>
+	<h3>method formCheck <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a533">533</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -486,7 +487,7 @@ $stddata)</code>
   </div>
   <hr />
 	<a name="methodgetEntries"></a>
-	<h3>method getEntries <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a350">350</a>]</span></h3>
+	<h3>method getEntries <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a375">375</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -549,7 +550,7 @@ $timeformat = &quot;&quot;])</code>
   </div>
   <hr />
 	<a name="methodgetEntry"></a>
-	<h3>method getEntry <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a292">292</a>]</span></h3>
+	<h3>method getEntry <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a317">317</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -600,7 +601,7 @@ $comments = true])</code>
   </div>
   <hr />
 	<a name="methodis_comment"></a>
-	<h3>method is_comment <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a476">476</a>]</span></h3>
+	<h3>method is_comment <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a501">501</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -639,7 +640,7 @@ $id)</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Wed, 01 Apr 2009 17:35:33 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.2</a>
+		    Documentation generated on Sat, 11 Apr 2009 04:47:19 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>
