@@ -228,7 +228,7 @@ class Mailmodule implements Module
 		$controll = $mail_send->mail_send_hash($this->_mysql, $mail_hash);
 
 		if ($controll == true) {
-			$this->_send_feedback($mail_vars['saved_title'], $mail_vars['saved_content'], "", $mail_vars['send_link']);
+			$this->_send_feedback($mail_vars['$mail_send_title'], $mail_vars['$mail_send_content'], "", $mail_vars['send_link']);
 		} else {
 			$this->_send_feedback($mail_vars['failer_send_title'], $mail_vars['failer_send_content'], "", $mail_vars['send_link']);
 		}
@@ -428,12 +428,5 @@ class Mailmodule implements Module
 
 		$this->_tplfile = "feedback.tpl";
 	}
-
-
 }
-
-
-
-
-
 ?>
