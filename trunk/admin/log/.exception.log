@@ -102,3 +102,16 @@ GET: Array (     [mail] =>      [nav_id] => 33     [entry_id] => 140 )
 COMMENT: 
 #END
 
+#LOG-ENTRY
+TITLE: Mysql-Fehler - Query
+CODE: 2
+TIME: 2009-04-11 14:54
+FILE: H:\www\htdocs\JClubCMS\trunk\admin\lib\mysql.class.php
+LINE: 225
+MESSAGE: Mysql-Query ist ungültig Unknown column 'conent_archiv' in 'order clause'
+TRACE: #0 H:\www\htdocs\JClubCMS\trunk\admin\modules\contentadmin.class.php(165): Mysql->query('SELECT `content...') #1 H:\www\htdocs\JClubCMS\trunk\admin\modules\contentadmin.class.php(130): Contentadmin->_view() #2 H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php(439): Contentadmin->action(Array) #3 H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php(296): Core->_loadModule(5, Array) #4 H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php(149): Core->_initPage() #5 H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php(123): Core->__construct() #6 H:\www\htdocs\JClubCMS\trunk\admin\index.php(10): Core::singleton() #7 {main}
+POST: Array ( ) 
+GET: Array (     [nav_id] => 2     [page] => 3     [s] => dd9af3dc2ae3bcd3ca41a290bb1c165b ) 
+COMMENT: 
+#END
+

@@ -55,7 +55,7 @@ tinyMCE_GZ.init({ldelim}
 							</tr>	
 							<tr>
 								<td class="formailer_txt">
-								<label for="content_hide">Inhalt unerreichbar machen</label>
+								<label for="content_hide">Inhalt archivieren</label>
 								<input type="checkbox" id="content_hide" name="content_hide" {if $editor.content_hide == true}checked="checked"{/if} />
 								</td>
 							</tr>
@@ -81,7 +81,7 @@ tinyMCE_GZ.init({ldelim}
 							  <td class="formailer_txt"><input type="text" id="menu_name" name="menu_name" value="{$editor.menu_name|default:#menu_name#}"/></td>
 							</tr>
 							<tr>
-							  <td class="formailer_txt"><label for="menu_topid">�bergeordnete Id des Menus: </label></td>
+							  <td class="formailer_txt"><label for="menu_topid">&Uuml;bergeordnete Id des Menus: </label></td>
 							  <td class="formailer_txt">
 								<select id="menu_topid" name="menu_topid" size="1">
 									<option value="0" selected="selected">=Haupteintrag=</option>

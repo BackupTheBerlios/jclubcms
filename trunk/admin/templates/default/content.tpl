@@ -14,8 +14,8 @@
 	<a name="{$content.content_ID}"></a>
 		<table cellpadding="0" cellspacing="0" align="center" class="content_tab" style="max-width: 80%;min-width: 60%;font-size: 11px;">
 			<tr>	
-				<td class="content_tab_header">
-				{$content.content_title}
+				<td class="content_tab_header" {if $content.content_archiv == 'yes'}style="color:red"{/if}>
+				{$content.content_title} {if $content.content_archiv == 'yes'}- Inhalt archiviert{/if}
 				</td>
 				<td class="content_tab_header" colspan="1">
 				 <img src="{$TEMPLATESET_DIR}/style/icons/date.gif" />

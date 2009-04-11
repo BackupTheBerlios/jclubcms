@@ -160,9 +160,9 @@ class Contentadmin implements Module
 		$start = ($page - 1)*$number;
 
 		$this->_mysql->query("SELECT `content_ID` , `content_title` , `content_text` ,
-		DATE_FORMAT(`content_time`, '$this->_timeformat') as 'content_time'
+		DATE_FORMAT(`content_time`, '$this->_timeformat') as 'content_time', `content_archiv`
 		FROM `content` 
-		LIMIT $start, $number");
+		ORDER BY `content_archiv` ASC, `content_time`,`content_changed_time` LIMIT $start, $number");
 
 		$this->_mysql->saverecords('assoc');
 		$content_data = $this->_mysql->get_records();
@@ -325,15 +325,18 @@ class Contentadmin implements Module
 	private function _upd2mysql($data)
 	{
 		/*Parameter kontrollieren */
+		//** Es werden nur gefüllte Array akzeptiert
 		if (!is_array($data) || empty($data)) {
 			throw new CMSException('1. Parameter ist nicht gültig. Typ Array ist verlangt.', EXCEPTION_MODULE_CODE, 'Laufzeit-Fehler');
 		}
 
+		//**Content-ID darf nur numerisch sein, weil sonst kein gültiger Abruf im Mysql stattfindet
 		if (!key_exists('c_ID', $data) || !is_numeric($data['c_ID'])) {
 			throw new CMSException('Daten ungültig. Content-ID verlangt.', EXCEPTION_MODULE_CODE, 'Laufzeit-Fehler');
 		}
 
-		if ((!key_exists('m_ignore', $data) || $data['m_ignore'] != true) && !(key_exists('m_new', $data) && $data['m_new'] ="NEW_MEN_ID") && (!key_exists('m_ID', $data) || !is_numeric($data['m_ID']))) {
+		//Wird das Menu nicht ignoriert, ein Schlüssel m_new nicht existiert und keine richtige Menu-ID vorliegt, wird hier abgebrochen
+		if ((!key_exists('m_ignore', $data) || $data['m_ignore'] != true) && !(key_exists('m_new', $data) && $data['m_new'] = "NEW_MEN_ID") && (!key_exists('m_ID', $data) || !is_numeric($data['m_ID']))) {
 			throw new CMSException('Daten ungültig. Menu-ID verlangt.', EXCEPTION_MODULE_CODE, 'Laufzeit-Fehler');
 		}
 
@@ -366,7 +369,7 @@ class Contentadmin implements Module
 
 			$this->_mysql->query($sql);
 
-		} elseif ($data['m_new'] == "NEW_MEN_ID") {
+		} elseif ($data['m_ignore'] != true && $data['m_new'] == "NEW_MEN_ID") {
 			/*Neues Menu hinzufügen */
 			$sql = "INSERT INTO `menu` (`menu_ID`, `menu_topid`, `menu_name`, `menu_position`, `menu_page`, `menu_pagetyp`, `menu_display`) VALUES (";
 			$sql .= "'', '".$this->_mysql->escapeString($data['m_topid'])."', '".$this->_mysql->escapeString($data['m_name'])."', '".$this->_mysql->escapeString($data['m_pos'])."', '".$this->_mysql->escapeString($data['c_ID'])."', 'pag',";
@@ -524,7 +527,7 @@ class Contentadmin implements Module
 
 			$smarty_array += array('content_title' => $data['content_title'], 'content_text' => $data['content_text']);
 
-			if ($data['content_archiv'] == '1') {
+			if ($data['content_archiv'] == 'yes') {
 				$smarty_array['content_hide'] = true;
 			}
 
