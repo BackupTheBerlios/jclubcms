@@ -96,7 +96,7 @@ class Auth
 						$this->_user_id = $data[0];
 						$this->_session->create_session($data[0]);
 
-						$this->_smarty->assign(array('forward_title' => $auth_forward_title, 'forward_text' => $auth_forward_successlogin, 'forward_linktext' => $auth_forward_linktext, 'forward_link' => $_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']."?".$this->_session->get_sessionstring()));
+						$this->_smarty->assign(array('forward_title' => $auth_forward_title, 'forward_text' => $auth_forward_successlogin, 'forward_linktext' => $auth_forward_linktext, 'forward_link' => "?".$this->_session->get_sessionstring()));
 						$this->_smarty->display('forward.tpl');
 
 
@@ -140,7 +140,7 @@ class Auth
 		global $auth_error_nonactiv, $auth_error_sessioncorupt;
 
 		if ($this->_session->watch4session($get_array) == false) {
-			$this->_smarty->assign('file', 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']);
+			$this->_smarty->assign('file', "");
 			$this->_smarty->display('login.tpl');
 			return false;
 		}
@@ -179,7 +179,7 @@ class Auth
 
 		$this->_smarty->assign('forward_text', "Sie haben sich erfolgreich ausgeloggt");
 		$this->_smarty->assign('forward_linktext', "Zum Login");
-		$this->_smarty->assign('forward_link', $_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF']);
+		$this->_smarty->assign('forward_link', "?");
 		$this->_smarty->display('forward.tpl');
 	}
 

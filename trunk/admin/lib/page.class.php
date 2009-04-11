@@ -17,9 +17,19 @@
 
 class Page
 {
+	/**
+	 * Smarty-Objekt
+	 *
+	 * @var Smarty
+	 */
 	private $smarty;
+	/**
+	 * Mysql-Objekt
+	 *
+	 * @var Mysql
+	 */
 	private $mysql;
-	private $auth;
+
 
 	/**
 	 * Initialisiert die Klasse
@@ -32,7 +42,6 @@ class Page
 	{
 		$this->_smarty = $smarty;
 		$this->_mysql = $mysql;
-		$this->_auth = new Auth($smarty, $mysql);
 	}
 
 
@@ -252,7 +261,6 @@ class Page
 	{
 		$this->_smarty = null;
 		$this->_mysql = null;
-		$this->_auth = null;
 	}
 
 

@@ -1,0 +1,104 @@
+#LOG-ENTRY
+TITLE: Modul-Fehler - Fehler beim Öffnen
+CODE: 3
+TIME: 2009-04-11 13:27
+FILE: H:\www\htdocs\JClubCMS\trunk\modules\captcha_image.class.php
+LINE: 94
+MESSAGE: Die Bilddatei konnte nicht geöffnet werten!
+TRACE: #0 H:\www\htdocs\JClubCMS\trunk\modules\captcha_image.class.php(62): Captcha_image->_initCaptcha() #1 H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php(437): Captcha_image->action(Array) #2 H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php(294): Core->_loadModule(7, Array) #3 H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php(149): Core->_initPage() #4 H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php(123): Core->__construct() #5 H:\www\htdocs\JClubCMS\trunk\index.php(14): Core::singleton() #6 {main}
+POST: Array ( ) 
+GET: Array (     [nav_id] => 78     [img] => 2c274874629fb42bb6876b9e64440dd2 ) 
+COMMENT: 
+#END
+
+#LOG-ENTRY
+TITLE: Modul-Fehler - Fehler beim Öffnen
+CODE: 3
+TIME: 2009-04-11 13:27
+FILE: H:\www\htdocs\JClubCMS\trunk\modules\captcha_image.class.php
+LINE: 94
+MESSAGE: Die Bilddatei konnte nicht geöffnet werten!
+TRACE: #0 H:\www\htdocs\JClubCMS\trunk\modules\captcha_image.class.php(62): Captcha_image->_initCaptcha() #1 H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php(437): Captcha_image->action(Array) #2 H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php(294): Core->_loadModule(7, Array) #3 H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php(149): Core->_initPage() #4 H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php(123): Core->__construct() #5 H:\www\htdocs\JClubCMS\trunk\index.php(14): Core::singleton() #6 {main}
+POST: Array ( ) 
+GET: Array (     [nav_id] => 78     [img] => e235d6f65f1ae9b637a606ee8e296a50 ) 
+COMMENT: 
+#END
+
+#LOG-ENTRY
+TITLE: Fehler - Modul nicht vorhanden
+CODE: 0
+TIME: 2009-04-11 13:44
+FILE: H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php
+LINE: 300
+MESSAGE: Das angegebene Modul konnte nicht gefunden werden
+TRACE: #0 H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php(149): Core->_initPage() #1 H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php(123): Core->__construct() #2 H:\www\htdocs\JClubCMS\trunk\index.php(14): Core::singleton() #3 {main}
+POST: Array ( ) 
+GET: Array (     [mail] =>      [nav_id] => 33     [entry_id] => 140 ) 
+COMMENT: 
+#END
+
+#LOG-ENTRY
+TITLE: Fehler - Modul nicht vorhanden
+CODE: 0
+TIME: 2009-04-11 13:46
+FILE: H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php
+LINE: 302
+MESSAGE: Das angegebene Modul konnte nicht gefunden werden
+TRACE: #0 H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php(149): Core->_initPage() #1 H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php(123): Core->__construct() #2 H:\www\htdocs\JClubCMS\trunk\index.php(14): Core::singleton() #3 {main}
+POST: Array ( ) 
+GET: Array (     [mail] =>      [nav_id] => 33     [entry_id] => 140 ) 
+COMMENT: 
+#END
+
+#LOG-ENTRY
+TITLE: Fehler - Modul nicht vorhanden
+CODE: 0
+TIME: 2009-04-11 13:47
+FILE: H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php
+LINE: 303
+MESSAGE: Das angegebene Modul konnte nicht gefunden werden
+TRACE: #0 H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php(149): Core->_initPage() #1 H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php(123): Core->__construct() #2 H:\www\htdocs\JClubCMS\trunk\index.php(14): Core::singleton() #3 {main}
+POST: Array ( ) 
+GET: Array (     [mail] =>      [nav_id] => 33     [entry_id] => 140 ) 
+COMMENT: 
+#END
+
+#LOG-ENTRY
+TITLE: Fehler - Modul nicht vorhanden
+CODE: 0
+TIME: 2009-04-11 13:47
+FILE: H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php
+LINE: 304
+MESSAGE: Das angegebene Modul konnte nicht gefunden werden
+TRACE: #0 H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php(149): Core->_initPage() #1 H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php(123): Core->__construct() #2 H:\www\htdocs\JClubCMS\trunk\index.php(14): Core::singleton() #3 {main}
+POST: Array ( ) 
+GET: Array (     [mail] =>      [nav_id] => 33     [entry_id] => 140 ) 
+COMMENT: 
+#END
+
+#LOG-ENTRY
+TITLE: Fehler - Modul nicht vorhanden
+CODE: 0
+TIME: 2009-04-11 13:48
+FILE: H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php
+LINE: 304
+MESSAGE: Das angegebene Modul konnte nicht gefunden werden
+TRACE: #0 H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php(149): Core->_initPage() #1 H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php(123): Core->__construct() #2 H:\www\htdocs\JClubCMS\trunk\index.php(14): Core::singleton() #3 {main}
+POST: Array ( ) 
+GET: Array (     [mail] =>      [nav_id] => 33     [entry_id] => 140 ) 
+COMMENT: 
+#END
+
+#LOG-ENTRY
+TITLE: Fehler - Modul nicht vorhanden
+CODE: 0
+TIME: 2009-04-11 13:50
+FILE: H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php
+LINE: 302
+MESSAGE: Das angegebene Modul konnte nicht gefunden werden
+TRACE: #0 H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php(149): Core->_initPage() #1 H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php(123): Core->__construct() #2 H:\www\htdocs\JClubCMS\trunk\index.php(14): Core::singleton() #3 {main}
+POST: Array ( ) 
+GET: Array (     [mail] =>      [nav_id] => 33     [entry_id] => 140 ) 
+COMMENT: 
+#END
+

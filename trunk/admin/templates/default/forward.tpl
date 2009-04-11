@@ -5,14 +5,14 @@
 	<head>
 		<title>{$forward_title}</title>
 		<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
-		<meta http-equiv="refresh" content="3; URL=http://{$forward_link}">
+		<meta http-equiv="refresh" content="3; URL={$forward_link}">
 		<link rel="stylesheet" type="text/css" href="./{$TEMPLATESET_DIR}/style/style.css">
 	</head>
 	<body>
 		<div id="header">&nbsp;</div>
 		<div id="forward">
 			{$forward_text}<br />
-			<a href="http://{$forward_link}">{$forward_linktext}</a>
+			<a href="{$forward_link}">{$forward_linktext}</a>
 		</div>
 	</body>
 </html>

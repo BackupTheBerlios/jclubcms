@@ -135,13 +135,6 @@ class Core
 		//Abfangen von Exceptions
 		try {
 
-			/* Ausgabe-Pufferung aktivieren - wird bei initPage geleert*/
-			//ob_start(array(&$this, "_output_callback"));
-			if (ADMIN_DIR == './') {
-				global $TEMPLATESET_DIR;
-				$TEMPLATESET_DIR = 'templates';
-			}
-
 			$this->_initObjects();
 			$this->_checkGpc();
 
@@ -287,7 +280,7 @@ class Core
 
 		$this->_loadNav($shortlink);
 		$this->_check_spec_action();
-
+		
 		$this->_mysql->query("SELECT `menu_pagetyp`, `menu_page`,  `menu_name` FROM `$table` WHERE `menu_ID`= '{$this->_nav_id}'");
 		$page_data = $this->_mysql->fetcharray("assoc");
 
@@ -296,7 +289,9 @@ class Core
 		// erste Variablen abspeichern, damit sie in den Modulen aufgerufen werden können
 		$this->_smarty->assign($this->_smarty_array);
 		$this->_smarty_array = array();
-
+		
+		
+			
 		if ($page_data['menu_pagetyp'] == 'mod') {
 			$this->_loadModule($page_id, $page_data);
 
