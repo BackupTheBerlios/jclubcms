@@ -3,9 +3,6 @@ require_once ADMIN_DIR.'lib/captcha.class.php';
 require_once ADMIN_DIR.'lib/mysql.class.php';
 require_once ADMIN_DIR.'lib/formularcheck.class.php';
 
-
-
-
 if (!defined('MSGBOX_FORMCHECK_OK')) {
 	/**
 	 * Forumlarwert ist sauber
@@ -277,7 +274,7 @@ class Messageboxes {
 		}
 
 		$sql = "UPDATE `$this->_tablename` SET  ";
-		$num = count($tabledata);
+		//$num = count($tabledata);
 
 		$i = 1;
 		foreach ($tabledata as $key => $value) {
@@ -533,7 +530,7 @@ class Messageboxes {
 	public function formCheck($tabledata, $stddata)
 	{
 		$arr_rtn = array();
-		$ok = true;
+		//$ok = true;
 
 		if (!is_array($tabledata)) {
 			throw  new CMSException('Falsche Parameterangaben in Funktion '.__FUNCTION__.'. 1. Parameter kein Array', EXCEPTION_LIBARY_CODE);

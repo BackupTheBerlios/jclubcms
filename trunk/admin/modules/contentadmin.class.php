@@ -128,7 +128,7 @@ class Contentadmin implements Module
 
 		} else {
 			$this->_view();
-			return true;
+			//return true;
 		}
 	}
 

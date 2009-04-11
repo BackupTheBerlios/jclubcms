@@ -64,8 +64,7 @@ class Smilies {
 			if (is_file($this->dir_smilies.$smilies_data["smilies_file"])) {
 				$smiliearray[$i] = array('file'=>$this->dir_smilies.$smilies_data["smilies_file"], 'sign'=>$smilies_data["smilies_sign"]);
 				$i++;
-				
-			} else {}
+			}
 		}
 		return $smiliearray;
 	}
@@ -90,7 +89,7 @@ class Smilies {
 		while ($smilies_data = $mysql_link->fetcharray()) {
 			if (is_file($this->dir_smilies.$smilies_data["smilies_file"])) {
 				$return_text = str_replace($smilies_data["smilies_sign"], '<img src="'.$this->dir_smilies.$smilies_data["smilies_file"].'" alt="'.$smilies_data["smilies_file"].'"></img>', $return_text);				
-			} else {}
+			}
 		}		
 		return $return_text;
 	}

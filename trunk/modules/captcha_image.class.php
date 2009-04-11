@@ -87,7 +87,6 @@ class Captcha_image implements Module
 
 		} else {
 			throw new CMSException('kein Bild über &img=... angegeben', EXCEPTION_MODULE_CODE, 'Parameterfehler');
-			exit;
 		}
 
 		if (!$fh = fopen( $this->_tmp_dir_path.'cap_'.$img.'.jpg', 'rb')) {
