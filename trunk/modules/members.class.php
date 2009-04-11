@@ -1,4 +1,13 @@
 <?php
+
+require_once ADMIN_DIR.'lib/module.interface.php';
+
+require_once ADMIN_DIR.'lib/captcha.class.php';
+
+require_once ADMIN_DIR.'lib/mailsend.class.php';  //Für das versenden vom senden des Mails
+require_once ADMIN_DIR.'lib/formularcheck.class.php'; //Überprüfen der Formularfelder
+require_once USER_DIR.'config/gbook_textes.inc.php';
+
 /**
  *
  * Dieses Modul gibt die Mitglieder aus, welche im Mysql gespeichert sind.
@@ -9,17 +18,6 @@
  * Classes: Members
  * @requieres PHP5
  */
-
-require_once ADMIN_DIR.'lib/module.interface.php';
-
-require_once ADMIN_DIR.'lib/captcha.class.php';
-
-require_once ADMIN_DIR.'lib/mailsend.class.php';  //Für das versenden vom senden des Mails
-require_once ADMIN_DIR.'lib/formularcheck.class.php'; //Überprüfen der Formularfelder
-require_once USER_DIR.'config/mail_textes.inc.php'; //Standard-Texte für Mailformular und -fehler
-require_once USER_DIR.'config/gbook_textes.inc.php';
-
-
 class Members implements Module
 {
 	/**
@@ -74,9 +72,10 @@ class Members implements Module
 		$this->_smarty->debugging = false;
 		if (key_exists('action', $this->_gpc['GET'])) {
 			switch ($this->_gpc['GET']['action']) {
-				case 'mail':
+				//Deprecated
+				/*case 'mail':
 					$this->_mail();
-					break;
+					break;*/
 				default:
 					$this->_view();
 			}
@@ -112,11 +111,4 @@ class Members implements Module
 	}
 
 }
-
-
-
-
-
-
-
 ?>
