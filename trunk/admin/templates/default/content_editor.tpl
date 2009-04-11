@@ -81,7 +81,7 @@ tinyMCE_GZ.init({ldelim}
 							  <td class="formailer_txt"><input type="text" id="menu_name" name="menu_name" value="{$editor.menu_name|default:#menu_name#}"/></td>
 							</tr>
 							<tr>
-							  <td class="formailer_txt"><label for="menu_topid">Übergeordnete Id des Menus: </label></td>
+							  <td class="formailer_txt"><label for="menu_topid">ï¿½bergeordnete Id des Menus: </label></td>
 							  <td class="formailer_txt">
 								<select id="menu_topid" name="menu_topid" size="1">
 									<option value="0" selected="selected">=Haupteintrag=</option>
@@ -123,7 +123,7 @@ tinyMCE_GZ.init({ldelim}
 			<fieldset>
 			  <legend>Inhalt verfassen</legend>
 				<tr>
-				  <td class="formailer_header">Titel: <img src="templates/style/icons/pencil.gif" /><input class="formailer_header_input" name="title" type="text" onclick="select()" value="{$entry_title}" /></td>
+				  <td class="formailer_header">Titel: <img src="{$TEMPLATESET_DIR}/style/icons/pencil.gif" /><input class="formailer_header_input" name="title" type="text" onclick="select()" value="{$entry_title}" /></td>
 				</tr>
 				<tr>
 				  <td class="formailer_txt">

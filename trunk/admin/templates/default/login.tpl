@@ -5,7 +5,7 @@
 	<head>
 		<title>{$title|default:"JClub-Administration"}</title>
 		<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
-		<link rel="stylesheet" type="text/css" href="./templates/style/style.css">
+		<link rel="stylesheet" type="text/css" href="./{$TEMPLATESET_DIR}/style/style.css">
 		<script type="text/javascript" language="javascript">
 function focus(){ldelim}document.login.name.focus(); {rdelim}
 </script>

@@ -192,8 +192,9 @@ class Core
 		$this->_smarty->compile_check = true;
 		$this->_smarty->debugging = false;
 		$this->_smarty->config_dir = 'config';
+		//**Template-Set einstellen und für die Templates als Variable zugänglich machen
+		$this->_smarty->template_dir = TEMPLATESET_DIR;
 		$this->_mysql = new Mysql($db_server, $db_name, $db_user, $db_pw);
-
 
 		$this->_page = new Page($this->_smarty, $this->_mysql);
 		$this->_auth = new Auth($this->_smarty, $this->_mysql);
@@ -267,8 +268,7 @@ class Core
 	{
 		global $start_time;
 
-		//**Template-Set einstellen und für die Templates als Variable zugägnlich machen
-		$this->_smarty->template_dir = TEMPLATESET_DIR;
+		//**Template-Set einstellen und für die Templates als Variable zugänglich machen
 		$this->_smarty_array['TEMPLATESET_DIR'] = TEMPLATESET_DIR;
 
 		$this->_tplfile = 'index.tpl';

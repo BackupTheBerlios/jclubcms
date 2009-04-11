@@ -53,8 +53,8 @@
 				</td>
 				<td style="padding: {$pad}px">
 					<input type="checkbox" name="menu_check[{$menu.menu_ID}]" value="{$menu.menu_ID}"/>&nbsp;
-					<a href="?nav_id={$local_link}&amp;action=edit&amp;ref_ID={$menu.menu_ID}&amp;{$SID}"><img src="templates/style/icons/pencil.gif" alt="Pencil" title="&Auml;ndern"/></a>
-					&nbsp;<a href="?nav_id={$local_link}&amp;action=del&amp;ref_ID={$menu.menu_ID}&amp;{$SID}"><img src="templates/style/icons/del.gif" alt="Kreuz" title="L&ouml;schen"/></a>
+					<a href="?nav_id={$local_link}&amp;action=edit&amp;ref_ID={$menu.menu_ID}&amp;{$SID}"><img src="{$TEMPLATESET_DIR}/style/icons/pencil.gif" alt="Pencil" title="&Auml;ndern"/></a>
+					&nbsp;<a href="?nav_id={$local_link}&amp;action=del&amp;ref_ID={$menu.menu_ID}&amp;{$SID}"><img src="{$TEMPLATESET_DIR}/style/icons/del.gif" alt="Kreuz" title="L&ouml;schen"/></a>
 				</td>
 			</tr>
 				{/foreach}

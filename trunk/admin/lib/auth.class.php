@@ -57,6 +57,7 @@ class Auth
 		$this->_smarty = $smarty;
 		$this->_mysql = $mysql;
 		$this->_session = new Session('s', $mysql);
+		$this->_smarty->assign('TEMPLATESET_DIR', TEMPLATESET_DIR);
 
 	}
 
@@ -71,7 +72,7 @@ class Auth
 	{
 
 		
-		global $auth_error_noentry, $auth_error_failname, $auth_error_failpw, $auth_forward_linktext, $auth_forward_successlogin, $auth_forward_title;
+		global $auth_error_noentry, $auth_error_failname, $auth_error_failpw, $auth_error_userinvalid, $auth_forward_linktext, $auth_forward_successlogin, $auth_forward_title;
 
 		//Login-Formular gesendet?
 		if (isset($post_array['login']) && $post_array['login'] == "Anmelden") {

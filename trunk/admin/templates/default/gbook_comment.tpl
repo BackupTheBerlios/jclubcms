@@ -19,23 +19,23 @@
 				{$gbook.content}
 				</td>
 				<td class="content_tab_content2">
-					<img src="templates/style/icons/date.gif" /> {$gbook.time}<br />
-					<img src="templates/style/icons/user.gif" /> {$gbook.name}<br />
-					<a href="?nav_id={$local_link}&action=mail&entry_id={$gbook.ID}&amp;{$SID}"><img src="templates/style/icons/email.gif" /> E-mail</a>
-					{if $gbook.hp neq ""}<br /><a href="{$gbook.hp}" target="_blank"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
+					<img src="{$TEMPLATESET_DIR}/style/icons/date.gif" /> {$gbook.time}<br />
+					<img src="{$TEMPLATESET_DIR}/style/icons/user.gif" /> {$gbook.name}<br />
+					<a href="?nav_id={$local_link}&action=mail&entry_id={$gbook.ID}&amp;{$SID}"><img src="{$TEMPLATESET_DIR}/style/icons/email.gif" /> E-mail</a>
+					{if $gbook.hp neq ""}<br /><a href="{$gbook.hp}" target="_blank"><img src="{$TEMPLATESET_DIR}/style/icons/house.gif" /> Website</a>{/if}
 				</td>
 			</tr>
-			{* Innere Schlaufe für das Auslesen der Kommentare *}
+			{* Innere Schlaufe fï¿½r das Auslesen der Kommentare *}
 		  {foreach key=schluessel item=comment from=$gbook.comments}
 		  <tr>
 			<td class="content_tab_content1">
 			  {$comment.content}
 			</td>
 			<td class="content_tab_content2">
-			  <img src="templates/style/icons/date.gif" /> {$comment.time}<br />
-			  <img src="templates/style/icons/user.gif" /> {$comment.name}<br />
-			  <a href="?mail&nav_id={$local_link}&entry_id={$comment.ID}"><img src="templates/style/icons/email.gif" /> E-mail</a><br />
-			  {if $comment.hp neq ""}<a href="http://{$comment.hp}"><img src="templates/style/icons/house.gif" /> Website</a>{/if}
+			  <img src="{$TEMPLATESET_DIR}/style/icons/date.gif" /> {$comment.time}<br />
+			  <img src="{$TEMPLATESET_DIR}/style/icons/user.gif" /> {$comment.name}<br />
+			  <a href="?mail&nav_id={$local_link}&entry_id={$comment.ID}"><img src="{$TEMPLATESET_DIR}/style/icons/email.gif" /> E-mail</a><br />
+			  {if $comment.hp neq ""}<a href="http://{$comment.hp}"><img src="{$TEMPLATESET_DIR}/style/icons/house.gif" /> Website</a>{/if}
 			</td>
 		  </tr>
 		  {/foreach}
@@ -61,9 +61,9 @@
           <td class="formailer_txt">
           <textarea class="formailer_txt_textarea" name="content" cols="38" rows="5">{$entry_content}</textarea></td>
           <td class="formailer_adress">
-          <img src="templates/style/icons/user.gif" /> <input class="formailer_adress_input" onclick="select()" name="name" type="text" value="{$entry_name}" /><br />
-          <img src="templates/style/icons/email.gif" /> <input class="formailer_adress_input" onclick="select()" name="email" type="text" value="{$entry_email}" /><br />
-          <img src="templates/style/icons/house.gif" /> <input class="formailer_adress_input" onclick="select()" name="hp" type="text" value="{$entry_hp}" /></a>
+          <img src="{$TEMPLATESET_DIR}/style/icons/user.gif" /> <input class="formailer_adress_input" onclick="select()" name="name" type="text" value="{$entry_name}" /><br />
+          <img src="{$TEMPLATESET_DIR}/style/icons/email.gif" /> <input class="formailer_adress_input" onclick="select()" name="email" type="text" value="{$entry_email}" /><br />
+          <img src="{$TEMPLATESET_DIR}/style/icons/house.gif" /> <input class="formailer_adress_input" onclick="select()" name="hp" type="text" value="{$entry_hp}" /></a>
           </td>
         </tr>
         <tr>

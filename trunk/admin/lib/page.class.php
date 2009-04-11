@@ -32,7 +32,7 @@ class Page
 	{
 		$this->_smarty = $smarty;
 		$this->_mysql = $mysql;
-		$this->_auth = new Auth($this, $mysql);
+		$this->_auth = new Auth($smarty, $mysql);
 	}
 
 
