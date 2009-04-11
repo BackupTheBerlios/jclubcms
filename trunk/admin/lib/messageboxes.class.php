@@ -17,7 +17,7 @@ if (!defined('MSGBOX_FORMCHECK_OK')) {
 
 if (!defined('MSGBOX_FORMCHECK_NONE')) {
 	/**
-	 * Formularwert enthaelt Std-Wert oder ist leer
+	 * Formularwert enthält Standard-Wert oder ist leer
 	 *
 	 */
 	define('MSGBOX_FORMCHECK_NONE', 2);
@@ -42,7 +42,7 @@ if (!defined('MSGBOX_FORMCHECK_INVALID')) {
  * File: messageboxes.class.php
  * Classes: messageboxes
  * @requieres PHP5
- * @TODO Abstract bzw. Idee der Klasse beschreiben
+ * 
  */
 class Messageboxes {
 
@@ -58,9 +58,23 @@ class Messageboxes {
 	 * @var FormularCheck
 	 */
 	private $_formCheck = null;
+	/**
+	 * Gibt an, ob ein Check des Forumlars durch die Methode Messageboxes::formcheck
+	 *
+	 * @var boolean
+	 */
 	private $_form_checked = false;
-
+	/**
+	 * Name der Mysql-Tabelle, in welche die Message eingefügt wird
+	 *
+	 * @var string
+	 */
 	private $_tablename = null;
+	/**
+	 * FAufbau der Tabelle $_tablename, welche im Array gespeichert wird
+	 *
+	 * @var array
+	 */
 	private $_tablestruct = array('ID' => null, 'content' => null, 'ref_ID' => null, 'name' => null, 'time' => null);
 
 
@@ -114,6 +128,7 @@ class Messageboxes {
 	 * Ueberprueft die Eintraege und fuegt dann einen Eintrag in die MySQL-Tabele mit den angegebenen Daten
 	 *
 	 * @param array $tabledata einzugebende Daten
+	 * @return boolean Liefert bei Erfolg true, sonst Exception
 	 */
 
 	public function addEntry($tabledata)
@@ -126,7 +141,7 @@ class Messageboxes {
 			throw  new CMSException('Eingaben wurde nicht auf Gültigkeit ueberprueft', EXCEPTION_LIBARY_CODE);
 		}
 
-		//Formular-Check durchfuehren
+		//Formular-Check durchführen
 
 		//ID darf nicht angegeben werden, Gefahr der Ueberschreibung
 		$tabledata['ID'] = "";
@@ -169,6 +184,16 @@ class Messageboxes {
 		$this->_mysql->query($query);
 		return true;
 	}
+	
+	/**
+	 * Ueberprueft die Eintraege und fuegt dann einen Eintrag in die MySQL-Tabele mit den angegebenen Daten. 
+	 * 
+	 * Der Eintrag wird so in der Mysql-Tabelle erstellt, dass er zum vorherigen Beitrag refernziert und so einen Kommentar darstellt
+	 *
+	 * @param num $id ID der referenzierenden Beitrags
+	 * @param array $tabledata einzugebende Daten
+	 * @return boolean Liefert bei Erfolg true, sonst Exception
+	 */	
 
 	public function commentEntry($id, array $tabledata)
 	{
