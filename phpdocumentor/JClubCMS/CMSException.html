@@ -116,10 +116,6 @@
 		</a><br>
 	  </div><br />
       
-            <b>Interfaces:</b><br />
-        <div class="package">
-		    		<a href="../JClubCMS/Module.html">Module</a><br />
-	  </div>
       
             <b>Classes:</b><br />
         <div class="package">
@@ -318,7 +314,7 @@ Source Location: /admin/lib/cmsexception.class.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line <a href="../__filesource/fsource_JClubCMS__adminlibcmsexception.class.php.html#a63">63</a>]<br />
+[line 62]<br />
 Sammlung der Exception, mit denen die Fehlerbehandlung des CMS funktioniert<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
@@ -336,27 +332,114 @@ Sammlung der Exception, mit denen die Fehlerbehandlung des CMS funktioniert<br /
 <a name="class_methods"></a>
 <h3>Class Methods</h3>
 <div class="tags">
+
   <hr />
-	<a name="methodhtmlencode"></a>
-	<h3>static method htmlencode <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibcmsexception.class.php.html#a263">263</a>]</span></h3>
+	<a name="method__construct"></a>
+	<h3>constructor __construct <span class="smalllinenumber">[line 74]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>static string htmlencode(
+		<code>CMSException __construct(
+string
+$message, [int
+$code = 0], [string
+$title = ])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Aufbau der Exception-Klasse<br /><br /><br /><br />
+
+	Overrides Exception::constructor __construct ( [$message = ], [$code = ] ) (parent method not documented)<br /><br />
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$message</b>&nbsp;&nbsp;</td>
+        <td>Nachricht</td>
+      </tr>
+          <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$code</b>&nbsp;&nbsp;</td>
+        <td>Benutzercode</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$title</b>&nbsp;&nbsp;</td>
+        <td>Fehlertitel</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodgetFilename"></a>
+	<h3>method getFilename <span class="smalllinenumber">[line 119]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string getFilename(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Gibt den Dateinamen ohne Ordnerangaben zurück.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Dateiname</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodgetTitle"></a>
+	<h3>method getTitle <span class="smalllinenumber">[line 108]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string getTitle(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Liefert den Titel zurück<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Fehlertitel</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodhtmlencode"></a>
+	<h3>method htmlencode <span class="smalllinenumber">[line 263]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string htmlencode(
 string
 $string)</code>
     </td></tr></table>
     </td></tr></table><br />
 	
-		Kodiert Zeichen mit einer HTML-Entsprechung in die HTML-Form. Die Kodierung  findet auf der Basis des Zeichensatzes UTF-8 statt, weswegen sie für interne Ausgaben  (PHP-Datei ist im UTF-8-Format) verwendet werden muss.<br /><br /><br /><br />
+		Kodiert Zeichen mit einer HTML-Entsprechung in die HTML-Form.<br /><br /><p>Die Kodierung findet auf der Basis des Zeichensatzes UTF-8 statt, weswegen sie für interne Ausgaben  (PHP-Datei ist im UTF-8-Format) verwendet werden muss.</p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td><b>return:</b>&nbsp;&nbsp;</td><td>Kodierter String</td>
-  </tr>
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
   </tr>
 </table>
 </div>
@@ -377,11 +460,11 @@ $string)</code>
   </div>
   <hr />
 	<a name="methodlogException"></a>
-	<h3>static method logException <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibcmsexception.class.php.html#a162">162</a>]</span></h3>
+	<h3>method logException <span class="smalllinenumber">[line 161]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>static void logException(
+		<code>void logException(
 Exception
 $e, [
 $title = null], [
@@ -390,15 +473,6 @@ $comment = null])</code>
     </td></tr></table><br />
 	
 		Schreibt die Exception in eine Log-Datei<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
-  </tr>
-</table>
-</div>
-<br /><br />
 
 	
         <h4>Parameters:</h4>
@@ -425,11 +499,11 @@ $comment = null])</code>
   </div>
   <hr />
 	<a name="methodprintException"></a>
-	<h3>static method printException <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibcmsexception.class.php.html#a213">213</a>]</span></h3>
+	<h3>method printException <span class="smalllinenumber">[line 212]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>static void printException(
+		<code>void printException(
 string
 $file, string
 $line, string
@@ -439,15 +513,6 @@ $trace)</code>
     </td></tr></table><br />
 	
 		Gibt eine Exception-Fehlermeldung heraus<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
-  </tr>
-</table>
-</div>
-<br /><br />
 
 	
         <h4>Parameters:</h4>
@@ -479,26 +544,17 @@ $trace)</code>
   </div>
   <hr />
 	<a name="methodstdExceptionHandler"></a>
-	<h3>static method stdExceptionHandler <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibcmsexception.class.php.html#a143">143</a>]</span></h3>
+	<h3>method stdExceptionHandler <span class="smalllinenumber">[line 142]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>static void stdExceptionHandler(
+		<code>void stdExceptionHandler(
 Exception
 $exception)</code>
     </td></tr></table>
     </td></tr></table><br />
 	
 		Exceptionhandler für nicht aufgefangene Exceptions, nicht nur für CMS-Exception.<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
-  </tr>
-</table>
-</div>
-<br /><br />
 
 	
         <h4>Parameters:</h4>
@@ -513,114 +569,9 @@ $exception)</code>
     </div><br />
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
-
-  <hr />
-	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibcmsexception.class.php.html#a75">75</a>]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>CMSException __construct(
-string
-$message, [int
-$code = 0], [string
-$title = &quot;&quot;])</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Aufbau der Exception-Klasse<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
-  </tr>
-</table>
-</div>
-<br /><br />
-
-	Overrides Exception::constructor __construct ( [$message = ], [$code = ] ) (parent method not documented)<br /><br />
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$message</b>&nbsp;&nbsp;</td>
-        <td>Nachricht</td>
-      </tr>
-          <tr>
-        <td class="type">int&nbsp;&nbsp;</td>
-        <td><b>$code</b>&nbsp;&nbsp;</td>
-        <td>Benutzercode</td>
-      </tr>
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$title</b>&nbsp;&nbsp;</td>
-        <td>Fehlertitel</td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="methodgetFilename"></a>
-	<h3>method getFilename <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibcmsexception.class.php.html#a120">120</a>]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>string getFilename(
-)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Gibt den Dateinamen ohne Ordnerangaben zurück.<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>return:</b>&nbsp;&nbsp;</td><td>Dateiname</td>
-  </tr>
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
-  </tr>
-</table>
-</div>
-<br /><br />
-
-	
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="methodgetTitle"></a>
-	<h3>method getTitle <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibcmsexception.class.php.html#a109">109</a>]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>string getTitle(
-)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Liefert den Titel zurück<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>return:</b>&nbsp;&nbsp;</td><td>Fehlertitel</td>
-  </tr>
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
-  </tr>
-</table>
-</div>
-<br /><br />
-
-	
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
   <hr />
 	<a name="method__toString"></a>
-	<h3>method __toString <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibcmsexception.class.php.html#a132">132</a>]</span></h3>
+	<h3>method __toString <span class="smalllinenumber">[line 131]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -629,15 +580,12 @@ $title = &quot;&quot;])</code>
     </td></tr></table>
     </td></tr></table><br />
 	
-		Ausgabe der Excpetion bei Verwendung als String. Magische Funktion.<br /><br /><br /><br />
+		Ausgabe der Excpetion bei Verwendung als String.<br /><br /><p>Magische Funktion.</p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td><b>return:</b>&nbsp;&nbsp;</td><td>Exceptionstring.</td>
-  </tr>
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
   </tr>
 </table>
 </div>
@@ -651,7 +599,7 @@ $title = &quot;&quot;])</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Sat, 11 Apr 2009 04:47:05 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Sat, 11 Apr 2009 12:39:11 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

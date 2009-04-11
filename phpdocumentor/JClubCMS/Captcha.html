@@ -116,10 +116,6 @@
 		</a><br>
 	  </div><br />
       
-            <b>Interfaces:</b><br />
-        <div class="package">
-		    		<a href="../JClubCMS/Module.html">Module</a><br />
-	  </div>
       
             <b>Classes:</b><br />
         <div class="package">
@@ -167,7 +163,7 @@ Source Location: /admin/lib/captcha.class.php<br /><br />
 <div class="description"></div><br /><br />
 <h4>Author(s):</h4>
 <ul>
-          <li><p>Andreas John</p><p>Jax Captcha Class v1.o1 - Copyright (c) 2005, Andreas John aka Jack (tR)  This program and it's moduls are Open Source in terms of General Public License (GPL) v2.0</p><p>Modified through Simon Däster aka Redox for propper use in PHP 5</p><p>class.captcha.php         (captcha class module)</p><p>Last modification through Jack (tR): 2005-09-05  Last modification through Redox: 2007-11-18</p></li>
+          <li>Andreas John       Jax Captcha Class v1.o1 - Copyright (c) 2005, Andreas John aka Jack (tR)  This program and it's moduls are Open Source in terms of General Public License (GPL) v2.0    Modified through Simon Däster aka Redox for propper use in PHP 5    class.captcha.php 		(captcha class module)    Last modification through Jack (tR): 2005-09-05  Last modification through Redox: 2007-11-18</li>
       </ul>
 
 
@@ -186,6 +182,7 @@ Source Location: /admin/lib/captcha.class.php<br /><br />
     <li><a href="../JClubCMS/Captcha.html#method__construct">__construct</a></li>
     <li><a href="../JClubCMS/Captcha.html#methodget_pic">get_pic</a></li>
     <li><a href="../JClubCMS/Captcha.html#methodverify">verify</a></li>
+    <li><a href="../JClubCMS/Captcha.html#method_generate_image">_generate_image</a></li>
   </ul>
 </td>
 
@@ -205,13 +202,13 @@ Source Location: /admin/lib/captcha.class.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line <a href="../__filesource/fsource_JClubCMS__adminlibcaptcha.class.php.html#a18">18</a>]<br />
+[line 17]<br />
 <br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>author:</b>&nbsp;&nbsp;</td><td><p>Andreas John</p><p>Jax Captcha Class v1.o1 - Copyright (c) 2005, Andreas John aka Jack (tR)  This program and it's moduls are Open Source in terms of General Public License (GPL) v2.0</p><p>Modified through Simon Däster aka Redox for propper use in PHP 5</p><p>class.captcha.php         (captcha class module)</p><p>Last modification through Jack (tR): 2005-09-05  Last modification through Redox: 2007-11-18</p></td>
+    <td><b>author:</b>&nbsp;&nbsp;</td><td>Andreas John       Jax Captcha Class v1.o1 - Copyright (c) 2005, Andreas John aka Jack (tR)  This program and it's moduls are Open Source in terms of General Public License (GPL) v2.0    Modified through Simon Däster aka Redox for propper use in PHP 5    class.captcha.php 		(captcha class module)    Last modification through Jack (tR): 2005-09-05  Last modification through Redox: 2007-11-18</td>
   </tr>
 </table>
 </div>
@@ -226,7 +223,7 @@ Source Location: /admin/lib/captcha.class.php<br /><br />
 
   <hr />
 	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibcaptcha.class.php.html#a70">70</a>]</span></h3>
+	<h3>constructor __construct <span class="smalllinenumber">[line 69]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -239,15 +236,6 @@ $data_dir = null])</code>
     </td></tr></table><br />
 	
 		Constructor - Initializes Captcha class!<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
-  </tr>
-</table>
-</div>
-<br /><br />
 
 	
         <h4>Parameters:</h4>
@@ -274,7 +262,7 @@ $data_dir = null])</code>
   </div>
   <hr />
 	<a name="methodget_pic"></a>
-	<h3>method get_pic <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibcaptcha.class.php.html#a144">144</a>]</span></h3>
+	<h3>method get_pic <span class="smalllinenumber">[line 143]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -290,9 +278,6 @@ $num_chars = 8])</code>
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td><b>return:</b>&nbsp;&nbsp;</td><td>encrypted string or false when an error occured</td>
-  </tr>
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
   </tr>
 </table>
 </div>
@@ -313,7 +298,7 @@ $num_chars = 8])</code>
   </div>
   <hr />
 	<a name="methodverify"></a>
-	<h3>method verify <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibcaptcha.class.php.html#a180">180</a>]</span></h3>
+	<h3>method verify <span class="smalllinenumber">[line 179]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -324,15 +309,6 @@ $char_seq)</code>
     </td></tr></table><br />
 	
 		check hash of password against hash of searched characters<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
-  </tr>
-</table>
-</div>
-<br /><br />
 
 	
         <h4>Parameters:</h4>
@@ -347,12 +323,45 @@ $char_seq)</code>
     </div><br />
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
+  <hr />
+	<a name="method_generate_image"></a>
+	<h3>method _generate_image <span class="smalllinenumber">[line 89]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>true _generate_image(
+string
+$location, string
+$char_seq)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Generates Image file for captcha<br /><br /><br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$location</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$char_seq</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
 </div><br />
 
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Sat, 11 Apr 2009 04:47:05 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Sat, 11 Apr 2009 12:39:11 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

@@ -202,12 +202,12 @@ Source Location: /admin/lib/Smarty/Smarty.class.php<br /><br />
 </div><br /><br />
 
 <h2>Page Details:</h2>
-Project:     Smarty: the PHP compiling template engine  File:        Smarty.class.php<br /><br /><p>This library is free software; you can redistribute it and/or  modify it under the terms of the GNU Lesser General Public  License as published by the Free Software Foundation; either  version 2.1 of the License, or (at your option) any later version.</p><p>This library is distributed in the hope that it will be useful,  but WITHOUT ANY WARRANTY; without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU  Lesser General var License for more details.</p><p>You should have received a copy of the GNU Lesser General Public  License along with this library; if not, write to the Free Software  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA</p><p>For questions, help, comments, discussion, etc., please join the  Smarty mailing list. Send a blank e-mail to  smarty-discussion-subscribe@googlegroups.com</p><br /><br /><br />
+Project:     Smarty: the PHP compiling template engine File:        Smarty.class.php<br /><br /><p>This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 2.1 of the License, or (at your option) any later version.</p><p>This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General var License for more details.</p><p>You should have received a copy of the GNU Lesser General Public License along with this library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA</p><p>For questions, help, comments, discussion, etc., please join the Smarty mailing list. Send a blank e-mail to smarty-discussion-subscribe@googlegroups.com</p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>author:</b>&nbsp;&nbsp;</td><td>Monte Ohrt &lt;<a href="mailto:monte">at ohrt dot com monte at ohrt dot com</a>&gt;</td>
+    <td><b>author:</b>&nbsp;&nbsp;</td><td>Monte Ohrt &lt;monte at ohrt dot com&gt;</td>
   </tr>
   <tr>
     <td><b>author:</b>&nbsp;&nbsp;</td><td>Andrei Zmievski &lt;<a href="mailto:andrei@php.net">andrei@php.net</a>&gt;</td>
@@ -221,9 +221,6 @@ Project:     Smarty: the PHP compiling template engine  File:        Smarty.clas
   <tr>
     <td><b>link:</b>&nbsp;&nbsp;</td><td><a href="http://www.smarty.net/">http://www.smarty.net/</a></td>
   </tr>
-  <tr>
-    <td><b>filesource:</b>&nbsp;&nbsp;</td><td><a href="../__filesource/fsource_Smarty__adminlibSmartySmarty.class.php.html">Source Code for this file</a></td>
-  </tr>
 </table>
 </div>
 <br /><br />
@@ -231,7 +228,7 @@ Project:     Smarty: the PHP compiling template engine  File:        Smarty.clas
 <br /><br />
   <hr />
 	<a name="defineDIR_SEP"></a>
-	<h3>DIR_SEP <span class="smalllinenumber">[line <a href="../__filesource/fsource_Smarty__adminlibSmartySmarty.class.php.html#a39">39</a>]</span></h3>
+	<h3>DIR_SEP <span class="smalllinenumber">[line 38]</span></h3>
 	<div class="tags">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -244,11 +241,11 @@ Project:     Smarty: the PHP compiling template engine  File:        Smarty.clas
 	<div class="top">[ <a href="#top">Top</a> ]</div><br /><br />
   <hr />
 	<a name="defineSMARTY_CORE_DIR"></a>
-	<h3>SMARTY_CORE_DIR <span class="smalllinenumber">[line <a href="../__filesource/fsource_Smarty__adminlibSmartySmarty.class.php.html#a53">53</a>]</span></h3>
+	<h3>SMARTY_CORE_DIR <span class="smalllinenumber">[line 52]</span></h3>
 	<div class="tags">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>SMARTY_CORE_DIR = SMARTY_DIR.'internals'.DIRECTORY_SEPARATOR</code>
+		<code>SMARTY_CORE_DIR = SMARTY_DIR.&quot;internals&quot;.DIRECTORY_SEPARATOR</code>
     </td></tr></table>
     </td></tr></table>
 
@@ -257,7 +254,7 @@ Project:     Smarty: the PHP compiling template engine  File:        Smarty.clas
 	<div class="top">[ <a href="#top">Top</a> ]</div><br /><br />
   <hr />
 	<a name="defineSMARTY_DIR"></a>
-	<h3>SMARTY_DIR <span class="smalllinenumber">[line <a href="../__filesource/fsource_Smarty__adminlibSmartySmarty.class.php.html#a49">49</a>]</span></h3>
+	<h3>SMARTY_DIR <span class="smalllinenumber">[line 48]</span></h3>
 	<div class="tags">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -265,12 +262,12 @@ Project:     Smarty: the PHP compiling template engine  File:        Smarty.clas
     </td></tr></table>
     </td></tr></table>
 
-    set SMARTY_DIR to absolute path to Smarty library files.<br /><br /><p>if not defined, include_path will be used. Sets SMARTY_DIR only if user  application has not already defined it.</p><br />    <br />
+    set SMARTY_DIR to absolute path to Smarty library files. if not defined, include_path will be used.<br /><br /><p>Sets SMARTY_DIR only if user application has not already defined it.</p><br />    <br />
 		</div>
 	<div class="top">[ <a href="#top">Top</a> ]</div><br /><br />
   <hr />
 	<a name="defineSMARTY_PHP_ALLOW"></a>
-	<h3>SMARTY_PHP_ALLOW <span class="smalllinenumber">[line <a href="../__filesource/fsource_Smarty__adminlibSmartySmarty.class.php.html#a59">59</a>]</span></h3>
+	<h3>SMARTY_PHP_ALLOW <span class="smalllinenumber">[line 58]</span></h3>
 	<div class="tags">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -283,7 +280,7 @@ Project:     Smarty: the PHP compiling template engine  File:        Smarty.clas
 	<div class="top">[ <a href="#top">Top</a> ]</div><br /><br />
   <hr />
 	<a name="defineSMARTY_PHP_PASSTHRU"></a>
-	<h3>SMARTY_PHP_PASSTHRU <span class="smalllinenumber">[line <a href="../__filesource/fsource_Smarty__adminlibSmartySmarty.class.php.html#a56">56</a>]</span></h3>
+	<h3>SMARTY_PHP_PASSTHRU <span class="smalllinenumber">[line 55]</span></h3>
 	<div class="tags">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -296,7 +293,7 @@ Project:     Smarty: the PHP compiling template engine  File:        Smarty.clas
 	<div class="top">[ <a href="#top">Top</a> ]</div><br /><br />
   <hr />
 	<a name="defineSMARTY_PHP_QUOTE"></a>
-	<h3>SMARTY_PHP_QUOTE <span class="smalllinenumber">[line <a href="../__filesource/fsource_Smarty__adminlibSmartySmarty.class.php.html#a57">57</a>]</span></h3>
+	<h3>SMARTY_PHP_QUOTE <span class="smalllinenumber">[line 56]</span></h3>
 	<div class="tags">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -309,7 +306,7 @@ Project:     Smarty: the PHP compiling template engine  File:        Smarty.clas
 	<div class="top">[ <a href="#top">Top</a> ]</div><br /><br />
   <hr />
 	<a name="defineSMARTY_PHP_REMOVE"></a>
-	<h3>SMARTY_PHP_REMOVE <span class="smalllinenumber">[line <a href="../__filesource/fsource_Smarty__adminlibSmartySmarty.class.php.html#a58">58</a>]</span></h3>
+	<h3>SMARTY_PHP_REMOVE <span class="smalllinenumber">[line 57]</span></h3>
 	<div class="tags">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -324,7 +321,7 @@ Project:     Smarty: the PHP compiling template engine  File:        Smarty.clas
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Sat, 11 Apr 2009 04:47:23 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Sat, 11 Apr 2009 12:39:14 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

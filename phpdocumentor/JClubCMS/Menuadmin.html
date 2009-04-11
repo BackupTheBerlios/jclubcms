@@ -116,10 +116,6 @@
 		</a><br>
 	  </div><br />
       
-            <b>Interfaces:</b><br />
-        <div class="package">
-		    		<a href="../JClubCMS/Module.html">Module</a><br />
-	  </div>
       
             <b>Classes:</b><br />
         <div class="package">
@@ -164,7 +160,7 @@ Source Location: /admin/modules/menuadmin.class.php<br /><br />
 
 <h3><a href="#class_details">Class Overview</a></h3>
 <pre></pre><br />
-<div class="description">Diese Datei ist für die Administration der Contents zuständig. Über dieses Modul  wird das Hinzufügen von neuen Inhalten (Contents), das Bearbeiten von bestehenden und  das Archivieren (verstecken) von vergangenen und Löschen zuständig.</div><br /><br />
+<div class="description">Diese Datei ist für die Administration der Contents zuständig.</div><br /><br />
 <h4>Author(s):</h4>
 <ul>
           <li>Simon Däster  contentadmin.class.php</li>
@@ -175,11 +171,6 @@ Source Location: /admin/modules/menuadmin.class.php<br /><br />
 
         
 
-                <p class="implements">
-            Implements interfaces:
-            <ul>
-                <li><a href="../JClubCMS/Module.html">Module</a></li>            </ul>
-        </p>
         
 </td>
 
@@ -191,6 +182,20 @@ Source Location: /admin/modules/menuadmin.class.php<br /><br />
     <li><a href="../JClubCMS/Menuadmin.html#method__construct">__construct</a></li>
     <li><a href="../JClubCMS/Menuadmin.html#methodaction">action</a></li>
     <li><a href="../JClubCMS/Menuadmin.html#methodgettplfile">gettplfile</a></li>
+    <li><a href="../JClubCMS/Menuadmin.html#method_add2mysql">_add2mysql</a></li>
+    <li><a href="../JClubCMS/Menuadmin.html#method_checkformdata">_checkformdata</a></li>
+    <li><a href="../JClubCMS/Menuadmin.html#method_checkMenuProbs">_checkMenuProbs</a></li>
+    <li><a href="../JClubCMS/Menuadmin.html#method_create">_create</a></li>
+    <li><a href="../JClubCMS/Menuadmin.html#method_del">_del</a></li>
+    <li><a href="../JClubCMS/Menuadmin.html#method_edit">_edit</a></li>
+    <li><a href="../JClubCMS/Menuadmin.html#method_getMenues">_getMenues</a></li>
+    <li><a href="../JClubCMS/Menuadmin.html#method_getPos">_getPos</a></li>
+    <li><a href="../JClubCMS/Menuadmin.html#method_isformsend">_isformsend</a></li>
+    <li><a href="../JClubCMS/Menuadmin.html#method_send_feedback">_send_feedback</a></li>
+    <li><a href="../JClubCMS/Menuadmin.html#method_showeditor">_showeditor</a></li>
+    <li><a href="../JClubCMS/Menuadmin.html#method_upd2mysql">_upd2mysql</a></li>
+    <li><a href="../JClubCMS/Menuadmin.html#method_updView">_updView</a></li>
+    <li><a href="../JClubCMS/Menuadmin.html#method_view">_view</a></li>
   </ul>
 </td>
 
@@ -210,8 +215,8 @@ Source Location: /admin/modules/menuadmin.class.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line <a href="../__filesource/fsource_JClubCMS__adminmodulesmenuadmin.class.php.html#a17">17</a>]<br />
-Diese Datei ist für die Administration der Contents zuständig. Über dieses Modul  wird das Hinzufügen von neuen Inhalten (Contents), das Bearbeiten von bestehenden und  das Archivieren (verstecken) von vergangenen und Löschen zuständig.<br /><br /><br /><br />
+[line 16]<br />
+Diese Datei ist für die Administration der Contents zuständig.<br /><br /><p>Über dieses Modul wird das Hinzufügen von neuen Inhalten (Contents), das Bearbeiten von bestehenden und  das Archivieren (verstecken) von vergangenen und Löschen zuständig.</p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
@@ -234,7 +239,7 @@ Diese Datei ist für die Administration der Contents zuständig. Über dieses Mo
 
   <hr />
 	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminmodulesmenuadmin.class.php.html#a74">74</a>]</span></h3>
+	<h3>constructor __construct <span class="smalllinenumber">[line 73]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -246,22 +251,8 @@ $smarty)</code>
     </td></tr></table><br />
 	
 		Aufbau der Klasse<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
-  </tr>
-</table>
-</div>
-<br /><br />
 
-			<hr class="separator" />
-		<div class="notes">Implementation of:</div>
-			<dl>
-			<dt><a href="../JClubCMS/Module.html#method__construct">Module::__construct()</a></dt>
-					</dl>
-		
+	
         <h4>Parameters:</h4>
     <div class="tags">
     <table border="0" cellspacing="0" cellpadding="0">
@@ -281,7 +272,7 @@ $smarty)</code>
   </div>
   <hr />
 	<a name="methodaction"></a>
-	<h3>method action <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminmodulesmenuadmin.class.php.html#a87">87</a>]</span></h3>
+	<h3>method action <span class="smalllinenumber">[line 86]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -293,22 +284,8 @@ $parameters)</code>
     </td></tr></table><br />
 	
 		Fuehrt die einzelnen Methoden aus, abhaengig vom parameter<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
-  </tr>
-</table>
-</div>
-<br /><br />
 
-			<hr class="separator" />
-		<div class="notes">Implementation of:</div>
-			<dl>
-			<dt><a href="../JClubCMS/Module.html#methodaction">Module::action()</a></dt>
-					</dl>
-		
+	
         <h4>Parameters:</h4>
     <div class="tags">
     <table border="0" cellspacing="0" cellpadding="0">
@@ -328,7 +305,7 @@ $parameters)</code>
   </div>
   <hr />
 	<a name="methodgettplfile"></a>
-	<h3>method gettplfile <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminmodulesmenuadmin.class.php.html#a135">135</a>]</span></h3>
+	<h3>method gettplfile <span class="smalllinenumber">[line 134]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -344,19 +321,435 @@ $parameters)</code>
   <tr>
     <td><b>return:</b>&nbsp;&nbsp;</td><td>Template-Datei</td>
   </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="method_add2mysql"></a>
+	<h3>method _add2mysql <span class="smalllinenumber">[line 343]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void _add2mysql(
+array
+$data)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Fügt einen Eintrag in die Datenbank ein.<br /><br /><p>Wird von der Methode _create() aufgerufen.</p><br /><br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">array&nbsp;&nbsp;</td>
+        <td><b>$data</b>&nbsp;&nbsp;</td>
+        <td>Datenarray von checkformdata</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="method_checkformdata"></a>
+	<h3>method _checkformdata <span class="smalllinenumber">[line 434]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>boolean _checkformdata(
+
+&$answer, array[ref]
+$answer)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Kontrolliert die Daten, welche aus dem Formular stammen.<br /><br /><p>Sind die Daten fehlerhaft (leere oder ungültige Einträge) gibt die Funktion false zurück und der Parameter $answer enthält die Fehlermeldungen. Sind die Daten hingegen gut, enthält $answer ein Array mit den Daten aus dem Formular.</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Erfolg(true) oder Fehler(false)</td>
   </tr>
 </table>
 </div>
 <br /><br />
 
-			<hr class="separator" />
-		<div class="notes">Implementation of:</div>
-			<dl>
-			<dt><a href="../JClubCMS/Module.html#methodgettplfile">Module::gettplfile()</a></dt>
-					</dl>
-		
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">array[ref]&nbsp;&nbsp;</td>
+        <td><b>$answer</b>&nbsp;&nbsp;</td>
+        <td>Antwort-Array, wird als Referenz übergeben. Enthält die Daten oder Fehlertexte</td>
+      </tr>
+          <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>&$answer</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="method_checkMenuProbs"></a>
+	<h3>method _checkMenuProbs <span class="smalllinenumber">[line 735]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void _checkMenuProbs(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Versucht, Menu-Probleme zu finden.<br /><br /><p>U.a. wären dies folgende - Seite/Modul, auf die die Startseite verweisst, ist nicht erreichbar.  (Startseite wird mit der Mysql-Spalte `menu_position` bestummen). - Startseite-Menupunkt ist nicht erreichbar. - Menupunkte verweisen auf Seiten/Module, die nicht erreichbar sind. - Mehr als ein Menu-Punkt ist einem Inhalt/Modul zugewiesen - Ein Inhalt/Modul wird nicht von einem Menu-Punkt verwiesen</p><br /><br /><br />
+
+	
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="method_create"></a>
+	<h3>method _create <span class="smalllinenumber">[line 187]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void _create(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Diese Funktion ist für das Erstellen neuer Inhalt verantwortlich.<br /><br /><br /><br />
+
+	
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="method_del"></a>
+	<h3>method _del <span class="smalllinenumber">[line 241]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void _del(
+int
+$ID)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Verantwortlich für das Löschen eines Inhalts.<br /><br /><br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$ID</b>&nbsp;&nbsp;</td>
+        <td>ID des Eintrags</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="method_edit"></a>
+	<h3>method _edit <span class="smalllinenumber">[line 211]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void _edit(
+int
+$ID)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Diese Funktion ist für das Editieren bestehender Einträge verantwortlich.<br /><br /><br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$ID</b>&nbsp;&nbsp;</td>
+        <td>ID des Eintrags</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="method_getMenues"></a>
+	<h3>method _getMenues <span class="smalllinenumber">[line 592]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>array _getMenues(
+[int
+$start = null], [int
+$number = null], [boolean
+$unit_topid = true])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Gibt die Navigation in Form eines Arrays zurück<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Navigation</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$start</b>&nbsp;&nbsp;</td>
+        <td>Start</td>
+      </tr>
+          <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$number</b>&nbsp;&nbsp;</td>
+        <td>Anzahl</td>
+      </tr>
+          <tr>
+        <td class="type">boolean&nbsp;&nbsp;</td>
+        <td><b>$unit_topid</b>&nbsp;&nbsp;</td>
+        <td>untergeordnete Menus eines Topid-Menus (topid = 0) nicht trennen</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="method_getPos"></a>
+	<h3>method _getPos <span class="smalllinenumber">[line 689]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>array _getPos(
+[int
+$number = 10])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Liefert ein Array für die Auswahl von Positionen.<br /><br /><p>Dieses wird im Template für die Auswahl in einer Select-Box gebraucht. Ist die $number z.B. 10, wird ein Array erstellt mit den Einträgen von -10 bis +10.</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Positionenarray</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$number</b>&nbsp;&nbsp;</td>
+        <td>Abweichung von Null</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="method_isformsend"></a>
+	<h3>method _isformsend <span class="smalllinenumber">[line 420]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>boolean _isformsend(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Prüft, ob das Editor-Formular gesendet wurde.<br /><br /><p>Trifft dies zu, gibt die Methode true zurück, ansonsten false</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Formular gesendet?</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="method_send_feedback"></a>
+	<h3>method _send_feedback <span class="smalllinenumber">[line 712]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void _send_feedback(
+string
+$title, string
+$content, string
+$link, string
+$linktext)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Speichert die angegebenen Variablen in Smarty und speichert das Feedback-Template<br /><br /><br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$title</b>&nbsp;&nbsp;</td>
+        <td>Titel</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$content</b>&nbsp;&nbsp;</td>
+        <td>Inhalt</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$link</b>&nbsp;&nbsp;</td>
+        <td>Link</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$linktext</b>&nbsp;&nbsp;</td>
+        <td>Linktext</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="method_showeditor"></a>
+	<h3>method _showeditor <span class="smalllinenumber">[line 512]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void _showeditor(
+[boolean[optional]
+$tk_std_values = true], [array[optional]
+$error_arr = null], [boolean[optional]
+$tk_mysql_values = false], [int[optional]
+$ref_ID = 0])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Zeigt den Editor an<br /><br /><br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">boolean[optional]&nbsp;&nbsp;</td>
+        <td><b>$tk_std_values</b>&nbsp;&nbsp;</td>
+        <td>Soll der Editor mit Standartwerten gefüllt werden?</td>
+      </tr>
+          <tr>
+        <td class="type">array[optional]&nbsp;&nbsp;</td>
+        <td><b>$error_arr</b>&nbsp;&nbsp;</td>
+        <td>Fehlerstring-Array aus checkformdata</td>
+      </tr>
+          <tr>
+        <td class="type">boolean[optional]&nbsp;&nbsp;</td>
+        <td><b>$tk_mysql_values</b>&nbsp;&nbsp;</td>
+        <td>Soll der Editor mit den Daten aus der Datenbank gefüllt werden?</td>
+      </tr>
+          <tr>
+        <td class="type">int[optional]&nbsp;&nbsp;</td>
+        <td><b>$ref_ID</b>&nbsp;&nbsp;</td>
+        <td>ID des contents aus der Mysql-DB</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="method_upd2mysql"></a>
+	<h3>method _upd2mysql <span class="smalllinenumber">[line 387]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void _upd2mysql(
+array
+$data)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Erneuert einen bestehenden Eintrag und das Menu mit den angegebenen Daten<br /><br /><br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">array&nbsp;&nbsp;</td>
+        <td><b>$data</b>&nbsp;&nbsp;</td>
+        <td>Daten</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="method_updView"></a>
+	<h3>method _updView <span class="smalllinenumber">[line 293]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void _updView(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Macht ein Update der Positionen, die auf der Menu-Seite angegeben wurden<br /><br /><br /><br />
+
+	
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="method_view"></a>
+	<h3>method _view <span class="smalllinenumber">[line 144]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void _view(
+[int
+$number = 20])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Zeigt die einzelnen Contents an.<br /><br /><br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$number</b>&nbsp;&nbsp;</td>
+        <td>Anzahl Einträge pro Seite</td>
+      </tr>
+        </table>
+    </div><br />
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
 </div><br />
@@ -364,7 +757,7 @@ $parameters)</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Sat, 11 Apr 2009 04:47:18 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Sat, 11 Apr 2009 12:39:13 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>
