@@ -116,10 +116,6 @@
 		</a><br>
 	  </div><br />
       
-            <b>Interfaces:</b><br />
-        <div class="package">
-		    		<a href="../JClubCMS/Module.html">Module</a><br />
-	  </div>
       
             <b>Classes:</b><br />
         <div class="package">
@@ -187,6 +183,7 @@ Source Location: /admin/lib/bbcodes.class.php<br /><br />
     <li><a href="../JClubCMS/Bbcodes.html#method__destruct">__destruct</a></li>
     <li><a href="../JClubCMS/Bbcodes.html#methodget_bbcodes">get_bbcodes</a></li>
     <li><a href="../JClubCMS/Bbcodes.html#methodreplace_bbcodes">replace_bbcodes</a></li>
+    <li><a href="../JClubCMS/Bbcodes.html#method_check_type">_check_type</a></li>
   </ul>
 </td>
 
@@ -206,8 +203,8 @@ Source Location: /admin/lib/bbcodes.class.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line <a href="../__filesource/fsource_JClubCMS__adminlibbbcodes.class.php.html#a19">19</a>]<br />
-Die Klasse soll die Texte aus den Inhalten der Seite, sowie aus den Gaestebuecher und News uebersetzen.<br /><br /><p>Die BBCodes sind in der MySQL-Tabelle bbcodes abgelegt, sowie das HTML-Pendant.  Das HTML-Pendant enthaelt jeweils ein oder mehrere %s welche den Standort des einzufuegenden Textes enthaelt.</p><p>Zudem muss noch ueberprueft werden:  -&gt; BBCodes muessen sauber verschachtelt sein, wenn nicht sollen sie nicht uebersetzt oder bei der anzeige geloescht werden.</p><p>Beachtet werden sollte spaeter auch noch:  -&gt; Nicht jeder BBCode sollte ueberall verwendet werden koennen (URL und IMG nicht im Gaestebuch)</p><br /><br /><br />
+[line 18]<br />
+Die Klasse soll die Texte aus den Inhalten der Seite, sowie aus den Gaestebuecher und News uebersetzen.<br /><br /><p>Die BBCodes sind in der MySQL-Tabelle bbcodes abgelegt, sowie das HTML-Pendant. Das HTML-Pendant enthaelt jeweils ein oder mehrere %s welche den Standort des einzufuegenden Textes enthaelt.</p><p>Zudem muss noch ueberprueft werden: -&gt; BBCodes muessen sauber verschachtelt sein, wenn nicht sollen sie nicht uebersetzt oder bei der anzeige geloescht werden.</p><p>Beachtet werden sollte spaeter auch noch: -&gt; Nicht jeder BBCode sollte ueberall verwendet werden koennen (URL und IMG nicht im Gaestebuch)</p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
@@ -230,7 +227,7 @@ Die Klasse soll die Texte aus den Inhalten der Seite, sowie aus den Gaestebueche
 
   <hr />
 	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibbbcodes.class.php.html#a29">29</a>]</span></h3>
+	<h3>constructor __construct <span class="smalllinenumber">[line 28]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -242,15 +239,6 @@ $mysql_link)</code>
     </td></tr></table><br />
 	
 		Konstruktor der Klasse<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
-  </tr>
-</table>
-</div>
-<br /><br />
 
 	
         <h4>Parameters:</h4>
@@ -272,7 +260,7 @@ $mysql_link)</code>
   </div>
   <hr />
 	<a name="method__destruct"></a>
-	<h3>destructor __destruct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibbbcodes.class.php.html#a38">38</a>]</span></h3>
+	<h3>destructor __destruct <span class="smalllinenumber">[line 37]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -282,22 +270,13 @@ $mysql_link)</code>
     </td></tr></table><br />
 	
 		Klassendestruktor<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
-  </tr>
-</table>
-</div>
-<br /><br />
 
 	
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
   <hr />
 	<a name="methodget_bbcodes"></a>
-	<h3>method get_bbcodes <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibbbcodes.class.php.html#a58">58</a>]</span></h3>
+	<h3>method get_bbcodes <span class="smalllinenumber">[line 57]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -306,23 +285,14 @@ $mysql_link)</code>
     </td></tr></table>
     </td></tr></table><br />
 	
-		Liefert die bbcodes zurück. Arbeitet mit _check_type() zusammen.<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
-  </tr>
-</table>
-</div>
-<br /><br />
+		Liefert die bbcodes zurück.<br /><br /><p>Arbeitet mit <a href="../JClubCMS/Bbcodes.html#method_check_type">_check_type()</a> zusammen.</p><br /><br /><br />
 
 	
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
   <hr />
 	<a name="methodreplace_bbcodes"></a>
-	<h3>method replace_bbcodes <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibbbcodes.class.php.html#a79">79</a>]</span></h3>
+	<h3>method replace_bbcodes <span class="smalllinenumber">[line 78]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -333,15 +303,6 @@ $text)</code>
     </td></tr></table><br />
 	
 		TODO PHP Documentation<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
-  </tr>
-</table>
-</div>
-<br /><br />
 
 	
         <h4>Parameters:</h4>
@@ -356,12 +317,39 @@ $text)</code>
     </div><br />
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
+  <hr />
+	<a name="method_check_type"></a>
+	<h3>method _check_type <span class="smalllinenumber">[line 45]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void _check_type(
+object
+$mysql_link)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Holt die BBCodes aus der Datenbank.<br /><br /><p>Geschieht am Anfang, damit nachher dauernd mit den gleichen Daten gearbeitet wird.</p><br /><br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">object&nbsp;&nbsp;</td>
+        <td><b>$mysql_link</b>&nbsp;&nbsp;</td>
+        <td>Datenverbindung zur MySQL</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
 </div><br />
 
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Sat, 11 Apr 2009 04:47:04 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Sat, 11 Apr 2009 12:39:11 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

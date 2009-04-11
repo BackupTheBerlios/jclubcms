@@ -116,10 +116,6 @@
 		</a><br>
 	  </div><br />
       
-            <b>Interfaces:</b><br />
-        <div class="package">
-		    		<a href="../JClubCMS/Module.html">Module</a><br />
-	  </div>
       
             <b>Classes:</b><br />
         <div class="package">
@@ -175,11 +171,6 @@ Source Location: /modules/image_send.class.php<br /><br />
 
     
 
-                <p class="implements">
-            Implements interfaces:
-            <ul>
-                <li><a href="../JClubCMS/Module.html">Module</a></li>            </ul>
-        </p>
         
 </td>
 
@@ -191,6 +182,10 @@ Source Location: /modules/image_send.class.php<br /><br />
     <li><a href="../JClubCMS/Image_send.html#method__construct">__construct</a></li>
     <li><a href="../JClubCMS/Image_send.html#methodaction">action</a></li>
     <li><a href="../JClubCMS/Image_send.html#methodgettplfile">gettplfile</a></li>
+    <li><a href="../JClubCMS/Image_send.html#method_calcSize">_calcSize</a></li>
+    <li><a href="../JClubCMS/Image_send.html#method_initErrImg">_initErrImg</a></li>
+    <li><a href="../JClubCMS/Image_send.html#method_initImg">_initImg</a></li>
+    <li><a href="../JClubCMS/Image_send.html#method_initThumb">_initThumb</a></li>
   </ul>
 </td>
 
@@ -210,7 +205,7 @@ Source Location: /modules/image_send.class.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line <a href="../__filesource/fsource_JClubCMS__modulesimage_send.class.php.html#a12">12</a>]<br />
+[line 11]<br />
 Diese Klasse ist zustaendig fuer das Anzeigen der Bilder.<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
@@ -231,7 +226,7 @@ Diese Klasse ist zustaendig fuer das Anzeigen der Bilder.<br /><br /><br /><br /
 
   <hr />
 	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__modulesimage_send.class.php.html#a35">35</a>]</span></h3>
+	<h3>constructor __construct <span class="smalllinenumber">[line 34]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -242,23 +237,9 @@ $smarty)</code>
     </td></tr></table>
     </td></tr></table><br />
 	
-		<br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
-  </tr>
-</table>
-</div>
-<br /><br />
+		GET, POST, COOKIE<br /><br /><br /><br />
 
-			<hr class="separator" />
-		<div class="notes">Implementation of:</div>
-			<dl>
-			<dt><a href="../JClubCMS/Module.html#method__construct">Module::__construct()</a></dt>
-					</dl>
-		
+	
         <h4>Parameters:</h4>
     <div class="tags">
     <table border="0" cellspacing="0" cellpadding="0">
@@ -278,7 +259,7 @@ $smarty)</code>
   </div>
   <hr />
 	<a name="methodaction"></a>
-	<h3>method action <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__modulesimage_send.class.php.html#a40">40</a>]</span></h3>
+	<h3>method action <span class="smalllinenumber">[line 39]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -289,22 +270,8 @@ $gpc)</code>
     </td></tr></table><br />
 	
 		<br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
-  </tr>
-</table>
-</div>
-<br /><br />
 
-			<hr class="separator" />
-		<div class="notes">Implementation of:</div>
-			<dl>
-			<dt><a href="../JClubCMS/Module.html#methodaction">Module::action()</a></dt>
-					</dl>
-		
+	
         <h4>Parameters:</h4>
     <div class="tags">
     <table border="0" cellspacing="0" cellpadding="0">
@@ -319,7 +286,7 @@ $gpc)</code>
   </div>
   <hr />
 	<a name="methodgettplfile"></a>
-	<h3>method gettplfile <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__modulesimage_send.class.php.html#a56">56</a>]</span></h3>
+	<h3>method gettplfile <span class="smalllinenumber">[line 55]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -335,19 +302,170 @@ $gpc)</code>
   <tr>
     <td><b>deprecated:</b>&nbsp;&nbsp;</td><td></td>
   </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="method_calcSize"></a>
+	<h3>method _calcSize <span class="smalllinenumber">[line 174]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>array _calcSize(
+int
+$isWidth, int
+$isHeight, int
+$maxWidth, int
+$maxHeight)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Berechnet die neue Groesse anhand der Parameter<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>neue Hoehe und Breite</td>
   </tr>
 </table>
 </div>
 <br /><br />
 
-			<hr class="separator" />
-		<div class="notes">Implementation of:</div>
-			<dl>
-			<dt><a href="../JClubCMS/Module.html#methodgettplfile">Module::gettplfile()</a></dt>
-					</dl>
-		
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$isWidth</b>&nbsp;&nbsp;</td>
+        <td>momentane Breite</td>
+      </tr>
+          <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$isHeight</b>&nbsp;&nbsp;</td>
+        <td>momentane Hoehe</td>
+      </tr>
+          <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$maxWidth</b>&nbsp;&nbsp;</td>
+        <td>maximale Breite</td>
+      </tr>
+          <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$maxHeight</b>&nbsp;&nbsp;</td>
+        <td>maximale Hoehe</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="method_initErrImg"></a>
+	<h3>method _initErrImg <span class="smalllinenumber">[line 156]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void _initErrImg(
+[int
+$width = 100], [int
+$height = 80], [string
+$text = 'Bild nicht da'], [string
+$col_bg = &quot;000000255&quot;], [string
+$col_text = &quot;200150080&quot;])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Gibt ein Fehlerbild aus<br /><br /><br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$width</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$height</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$text</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$col_bg</b>&nbsp;&nbsp;</td>
+        <td>Hintergrundfarbe</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$col_text</b>&nbsp;&nbsp;</td>
+        <td>Textfarbe</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="method_initImg"></a>
+	<h3>method _initImg <span class="smalllinenumber">[line 65]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void _initImg(
+
+$bild_ID)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Initialisiert das Bild<br /><br /><br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>$bild_ID</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="method_initThumb"></a>
+	<h3>method _initThumb <span class="smalllinenumber">[line 111]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void _initThumb(
+
+$thumb)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Initialisiert den Thumb<br /><br /><br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>$thumb</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
 </div><br />
@@ -355,7 +473,7 @@ $gpc)</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Sat, 11 Apr 2009 04:47:15 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Sat, 11 Apr 2009 12:39:13 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>
