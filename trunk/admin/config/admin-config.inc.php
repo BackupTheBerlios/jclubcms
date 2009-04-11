@@ -1,10 +1,11 @@
 <?php
 /**
+ * 
+ * Diese Seite speichert Konfigurations-Einstellungen fuer den Admin-Bereich bereit
+ * 
  * @author Simon Däster
  * @package JClubCMS
  * config.inc.php
- * 
- * Diese Seite speichert Konfigurations-Einstellungen fuer den Admin-Bereich bereit
  */
 
 //**Templates Set tempates/default

@@ -1,8 +1,6 @@
 <?php
 
 /**
- * @author Simon Däster
- * @package JClubCMS
  * File: exceptions.class.php
  * Classes: coreexception, mysqlexception, moduleexception, stdexception
  * Requieres: PHP5
@@ -10,6 +8,8 @@
  * 
  * Beschrieb:
  * Sammlung der Exception, mit denen die Fehlerbehandlung des CMS funktioniert
+ * @author Simon Däster
+ * @package JClubCMS
  */
 
 /**

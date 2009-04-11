@@ -8,7 +8,7 @@
  * @package JClubCMS
  * File: formular_check.class.php
  * Classes: Formularcheck
- * Requieres: PHP5
+ * @requieres PHP5
  */
 
 class Formularcheck {

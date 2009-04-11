@@ -2,13 +2,13 @@
 
 
 /**
- * @author Simon Däster
- * @package JClubCMS
- * File: functions.inc.ph
- * 
+ *
  * Diese Datei beinhaltet Funktionen, die nicht einer Klasse zugeordnet werden können. Dies betriff meist
  * auf ueberladene magische Funktionen zu.
  *
+ * @author Simon Däster
+ * @package JClubCMS
+ * File: functions.inc.php
  */
 
 function __autoload($class_name)

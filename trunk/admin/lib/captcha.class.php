@@ -1,9 +1,5 @@
 <?php
 /**
- * @package JClubCMS
- * @author  Andreas John
- * 
- *  
  * Jax Captcha Class v1.o1 - Copyright (c) 2005, Andreas John aka Jack (tR)
  * This program and it's moduls are Open Source in terms of General Public License (GPL) v2.0
  * 
@@ -13,6 +9,9 @@
  * 
  * Last modification through Jack (tR): 2005-09-05
  * Last modification through Redox: 2007-11-18
+ * 
+ * @package JClubCMS
+ * @author  Andreas John
 */
 
 class Captcha

@@ -1,12 +1,12 @@
 <?php
 /**
+ * 
+ * Dieses Inteface wird von jedem Modul impliziert!
+ *
  * @author Simon Däster
  * @package JClubCMS
  * File: module.interface.php
  * interace: Modules
- * 
- * Dieses Inteface wird von jedem Modul impliziert!
- *
  */
 
 interface Module

@@ -1,11 +1,12 @@
 <?php
 
 /**
+ * 
+ * Diese Seite speichert die Texte ab, welche immer wieder in der auth-Klasse gebraucht werden.
+ * 
  * @author Simon Däster
  * @package JClubCMS
  * auth_textes.inc.php
- * 
- * Diese Seite speichert die Texte ab, welche immer wieder in der auth-Klasse gebraucht werden.
  */
 
 

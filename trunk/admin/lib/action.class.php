@@ -4,7 +4,7 @@
  * @author Simon Däster
  * File: action.class.php
  * Classes: Action
- * Requieres: PHP5
+ * @requieres PHP5
  *
  */
 

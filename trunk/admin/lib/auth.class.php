@@ -2,17 +2,17 @@
 require_once ADMIN_DIR.'config/auth_textes.inc.php';
 require_once ADMIN_DIR.'lib/session.class.php';
 /**
- * @author Simon Däster
- * @package JClubCMS
- * File: auth.class.php
- * class: Auth
- * requires: session.class.php
  * 
  * Diese Seite ist das Autorisierungs-Modul. Sie ist fuer das rechtmässige Einloggen
  * verantwortlich; sie schaut, ob der Benutzer noch aktiv ist und schmeisst in, wenn
  * noetig, aus dem Administration. Weiter ist sie dafuer verantworlich, dass der Benutzer 
  * nur Befehle ausfürht, die er rechtmässig verwenden darf.
  *
+ * @author Simon Däster
+ * @package JClubCMS
+ * File: auth.class.php
+ * class: Auth
+ * @requires PHP5
  */
 
 class Auth
