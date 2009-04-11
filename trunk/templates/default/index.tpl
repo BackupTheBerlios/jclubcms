@@ -3,7 +3,7 @@
 <html>
   <head>
     <title>{$content_title}</title>
-	<link rel="shortcut icon" type="image/x-icon" href="templates/style/icons/favicon.ico">
+	<link rel="shortcut icon" type="image/x-icon" href="{$TEMPLATESET_DIR}/style/icons/favicon.ico">
     <style type="text/css">@import url(./{$TEMPLATESET_DIR}/style/style.css) all;</style>
 	<!--[if IE]>
 	<style type="text/css">@import url(./{$TEMPLATESET_DIR}/style/ie_style.css);</style>
@@ -36,7 +36,7 @@
      <div id="subnavigation">
     
       {foreach item=subnav from=$subnav}
-      {*Für alle Level grösser gleich 3 ist die CSS-Klasse subnav3, sonst eine andere*}
+      {*FÃ¼r alle Level grÃ¶sser gleich 3 ist die CSS-Klasse subnav3, sonst eine andere*}
       {if $subnav.level == 1}
       <div class="subnavigation_links">
       {elseif $subnav.level <= 3}

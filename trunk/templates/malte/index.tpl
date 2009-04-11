@@ -5,6 +5,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<title>{$content_title}</title>
 	<link rel="stylesheet" type="text/css" href="{$TEMPLATESET_DIR}/style/style.css"></link>
+	<link rel="shortcut icon" type="image/x-icon" href="{$TEMPLATESET_DIR}/style/icons/favicon.ico"></link>
 	<style>
 	body {ldelim}
 		background-image: url('{$TEMPLATESET_DIR}/style/images/bg.jpg');
