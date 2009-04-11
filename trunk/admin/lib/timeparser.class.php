@@ -1,9 +1,9 @@
 <?php
 /**
- * Die Klasse timeparser ist zuständig für das Parsen der Zeiten die 
- * in den MySQL-Tabellen angelegt sind (Gästebuch, News, uä) und dessen
+ * Die Klasse timeparser ist zustÃ¤ndig fÃ¼r das Parsen der Zeiten die 
+ * in den MySQL-Tabellen angelegt sind (GÃ¤stebuch, News, uÃ¤) und dessen
  * Werte die im Y-m-d H:i:s Format sind.
- * Geparst wird _OHNE_ den Weg über time() um "Zukunftssicher" zu sein.
+ * Geparst wird _OHNE_ den Weg Ã¼ber time() um "Zukunftssicher" zu sein.
  * 
  *
  *
@@ -11,26 +11,26 @@
  * -  __construct($time_format)
  * -  Das Konstrukt dieser Klasse
  *
- * -  time2array() (wird von time_output ausgeführt)
+ * -  time2array() (wird von time_output ausgefÃ¼hrt)
  * -  Schreibt den String in ein Array
  *
- * -  year_replace($format) (wird von time_output ausgeführt)
- * -  Gibt das Jahr im gewünschten Format zurück
+ * -  year_replace($format) (wird von time_output ausgefÃ¼hrt)
+ * -  Gibt das Jahr im gewÃ¼nschten Format zurÃ¼ck
  *
- * -  month_replace($format) (wird von time_output ausgeführt)
- * -  Gibt den Monat im gewünschten Format zurück
+ * -  month_replace($format) (wird von time_output ausgefÃ¼hrt)
+ * -  Gibt den Monat im gewÃ¼nschten Format zurÃ¼ck
  *
- * -  day_replace($format) (wird von time_output ausgeführt)
- * -  Gibt den Tag im gewünschten Format zurück
+ * -  day_replace($format) (wird von time_output ausgefÃ¼hrt)
+ * -  Gibt den Tag im gewÃ¼nschten Format zurÃ¼ck
  *
- * -  hour_replace($format) (wird von time_output ausgeführt)
- * -  Gibt die Stunde im gewünschten Format zurück
+ * -  hour_replace($format) (wird von time_output ausgefÃ¼hrt)
+ * -  Gibt die Stunde im gewÃ¼nschten Format zurÃ¼ck
  *
- * -  minute_replace($format) (wird von time_output ausgeführt)
- * -  Gibt ddie Minute im gewünschten Format zurück
+ * -  minute_replace($format) (wird von time_output ausgefÃ¼hrt)
+ * -  Gibt ddie Minute im gewÃ¼nschten Format zurÃ¼ck
  *
- * -  second_replace($format) (wird von time_output ausgeführt)
- * -  Gibt die Sekunden im gewünschten Format zurück
+ * -  second_replace($format) (wird von time_output ausgefÃ¼hrt)
+ * -  Gibt die Sekunden im gewÃ¼nschten Format zurÃ¼ck
  *
  * -  time_output ($time_string)
  * -  Parst den String nachher in das angegebene Time-Format.
@@ -39,15 +39,15 @@
  * -  Der Destruktor der Klasse
  * 
  *
- * _Nicht_ geplante Unterstüzung:
+ * _Nicht_ geplante UnterstÃ¼zung:
  * 
  * - B	Swatch-Internet-Zeit
- * - D	Tag der Woche gekürzt auf drei Buchstaben
- * - I 	Fällt ein Datum in die Sommerzeit
+ * - D	Tag der Woche gekÃ¼rzt auf drei Buchstaben
+ * - I 	FÃ¤llt ein Datum in die Sommerzeit
  * - l 	Ausgeschriebener Tag der Woche
  * - L	Schaltjahr oder nicht
  * - O	Zeitunterschied zur Greenwich time (GMT) in Stunden
- * - S	Anhang der englischen Aufzählung für einen Monatstag, zwei Zeichen
+ * - S	Anhang der englischen AufzÃ¤hlung fÃ¼r einen Monatstag, zwei Zeichen
  * - t	Anzahl der Tage des angegebenen Monats
  * - T	Zeitzoneneinstellung des Rechners
  * - U	Sekunden seit Beginn der UNIX-Epoche
@@ -56,19 +56,18 @@
  * - z	Der Tag eines Jahres
  * - Z	 Offset der Zeitzone in Sekunden.
  *
- * The Timeparser Class- Parst eine MySQL-Zeit in ein gewünschtes Format.
- * Die Daten aus der DB wird eingelesen und anschliessend über explode in die einzelnen
- * Blöcken (Jahr, Tag, Monat, Stunde, Minute und Sekunde) aufgeteilt und in das time_array
+ * The Timeparser Class- Parst eine MySQL-Zeit in ein gewÃ¼nschtes Format.
+ * Die Daten aus der DB wird eingelesen und anschliessend Ã¼ber explode in die einzelnen
+ * BlÃ¶cken (Jahr, Tag, Monat, Stunde, Minute und Sekunde) aufgeteilt und in das time_array
  * gespeichert.
  * 
- * Anschliessend wird über die Funktion time_output via den Vorlagestring (zum grösten Teil 
- * date()-ähnlich) ausgegeben.
- * Die date()-Funktion wird bewusst ausgelassen, damit auch nach 2038 noch funktionsfähig ist.
+ * Anschliessend wird Ã¼ber die Funktion time_output via den Vorlagestring (zum grÃ¶sten Teil 
+ * date()-Ã¤hnlich) ausgegeben.
+ * Die date()-Funktion wird bewusst ausgelassen, damit auch nach 2038 noch funktionsfÃ¤hig ist.
  * 
- * @author David Däster
+ * @author David DÃ¤ster
  * @version 0.1
  * @package JClubCMS
- * @copyright JClub
  */
 
 class Timeparser {
@@ -78,7 +77,7 @@ class Timeparser {
 	private $time_array = array();
 	
 	/**
-	 * Liest das gewünschte Ausgabe-Timeformat ein
+	 * Liest das gewÃ¼nschte Ausgabe-Timeformat ein
 	 *
 	 * @param string $time_format
 	 */
@@ -87,7 +86,7 @@ class Timeparser {
 	}
 	
 	/**
-	 * Parst den gewünschten Ausgabeformat-String um, und gibt dann in der Form die Zeit aus.
+	 * Parst den gewÃ¼nschten Ausgabeformat-String um, und gibt dann in der Form die Zeit aus.
 	 *
 	 * @param string $time_string
 	 * @return string
@@ -111,14 +110,14 @@ class Timeparser {
 			    case "\n":
 			    	$time_string .= "n";
 			    	break;
-			    //Jahres-Überprufung
+			    //Jahres-Ãœberprufung
 			    case "Y":
 			    	$time_string .= $this->year_replace("Y");
 			    	break;
 			    case "y":
 			    	$time_string .= $this->year_replace("y");
 			    	break;
-			    //Montats-Überprüfung
+			    //Montats-ÃœberprÃ¼fung
 			    case "m":
 			    	$time_string .= $this->month_replace("m");
 			    	break;
@@ -131,14 +130,14 @@ class Timeparser {
 			    case "n":
 			    	$time_string .= $this->month_replace("n");
 			    	break;
-			    //Tages-Überprüfung
+			    //Tages-ÃœberprÃ¼fung
 			    case "d":
 			    	$time_string .= $this->day_replace("d");
 			    	break;
 			    case "j":
 			    	$time_string .= $this->day_replace("j");
 			    	break;
-			    //Stunden-Überprüfung
+			    //Stunden-ÃœberprÃ¼fung
 			    case "H":
 			    	$time_string .= $this->hour_replace("H");
 			    	break;
@@ -157,11 +156,11 @@ class Timeparser {
 			    case "A":
 			    	$time_string .= $this->hour_replace("A");
 			    	break;
-			    //Minuten-Überprüfung
+			    //Minuten-ÃœberprÃ¼fung
 			    case "i":
 			    	$time_string .= $this->minute_replace("i");
 			    	break;
-			    //Sekunden-Überprüfung
+			    //Sekunden-ÃœberprÃ¼fung
 			    case "s":
 			    	$time_string .= $this->second_replace("s");
 			    	break;
@@ -192,7 +191,7 @@ class Timeparser {
 	}
 
 	/**
-	 * Gibt das Jahr in der gewünschten Position des Ausgabe-Timeformats aus.
+	 * Gibt das Jahr in der gewÃ¼nschten Position des Ausgabe-Timeformats aus.
 	 *
 	 * @param char $format
 	 * @return string
@@ -217,7 +216,7 @@ class Timeparser {
 		}
 	}
 	/** 
-	 * Gibt den Monat in der gewünschten Position des Ausgabe-Timeformats aus.
+	 * Gibt den Monat in der gewÃ¼nschten Position des Ausgabe-Timeformats aus.
 	 *
 	 * @param char $format
 	 * @return string
@@ -234,14 +233,14 @@ class Timeparser {
 	    	break;
 	    	
 	    	case "M":
-	    		$month_array = array('Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez');
+	    		$month_array = array('Jan', 'Feb', 'MÃ¤r', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez');
 	    		$month = $this->time_array['time_month'];
 	    		settype($month, "integer");
 	    		return $month_array[$month];
 	    	break;
 	    	
 	    	case "F":
-	    		$month_array = array('Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember');
+	    		$month_array = array('Januar', 'Februar', 'MÃ¤rz', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember');
 	    		$month = $this->time_array['time_month'];
 	    		settype($month, "integer");
 	    		return $month_array[$month];
@@ -251,7 +250,7 @@ class Timeparser {
 		}
 	}
 	/** 
-	 * Gibt den Tag in der gewünschten Position des Ausgabe-Timeformats aus.
+	 * Gibt den Tag in der gewÃ¼nschten Position des Ausgabe-Timeformats aus.
 	 *
 	 * @param char $format
 	 * @return string
@@ -271,7 +270,7 @@ class Timeparser {
 		}
 	}
 	/** 
-	 * Gibt die Stunde in der gewünschten Position des Ausgabe-Timeformats aus.
+	 * Gibt die Stunde in der gewÃ¼nschten Position des Ausgabe-Timeformats aus.
 	 *
 	 * @param char $format
 	 * @return string
@@ -332,7 +331,7 @@ class Timeparser {
 			}
 	}
 	/**
-	 * Gibt die Minute in der gewünschten Position des Ausgabe-Timeformats aus.
+	 * Gibt die Minute in der gewÃ¼nschten Position des Ausgabe-Timeformats aus.
 	 *
 	 * @param char $format
 	 * @return string
@@ -347,7 +346,7 @@ class Timeparser {
 		}
 	}
 	/**
-	 * Gibt die Sekunde in der gewünschten Position des Ausgabe-Timeformats aus.
+	 * Gibt die Sekunde in der gewÃ¼nschten Position des Ausgabe-Timeformats aus.
 	 *
 	 * @param char $format
 	 * @return string
