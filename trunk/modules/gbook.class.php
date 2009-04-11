@@ -132,7 +132,6 @@ class Gbook implements Module {
 					break;
 				default:
 					throw new CMSException('Gewählte Option ist nicht möglich', EXCEPTION_MODULE_CODE);
-					return false;
 			}
 		} else {
 			$this->_view($gbook_entries_per_page);
