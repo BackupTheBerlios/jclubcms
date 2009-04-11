@@ -120,7 +120,6 @@ class News implements Module
 		//Daten definiere und initialisieren
 		$this->_tplfile = 'news.tpl';
 		$news_array = array();
-		$error = false;
 
 		//Seite herausfinden
 		if (isset($this->_gpc['GET']['page']) && is_numeric($this->_gpc['GET']['page']) && $this->_gpc['GET']['page'] > 0) {

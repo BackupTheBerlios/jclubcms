@@ -223,11 +223,7 @@ class Mailmodule implements Module
 	{
 		$mail_vars = $this->_configvars['Mail'];
 
-		if (!key_exists('hash', $this->_gpc['GET'])) {
-			throw new CMSException('Parameter `hash` nicht angegeben', EXCEPTION_MODULE_CODE, 'Parameter fehlt');
-		}
-
-		$mail_hash = $this->_gpc['GET']['hash'];
+		$mail_hash = $hash;
 		$mail_send = new Mailsend();
 		$controll = $mail_send->mail_send_hash($this->_mysql, $mail_hash);
 

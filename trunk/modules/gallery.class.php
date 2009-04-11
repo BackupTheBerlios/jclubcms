@@ -312,10 +312,10 @@ class Gallery implements Module
 	 *
 	 * @param int $img_ID
 	 */
-	private function _commentImg($img_ID)
-	{
-		/*$msbox = new Messageboxes($this->_mysql, 'news', array('ID' => 'news_ID', 'ref_ID' => 'news_ref_ID', 'content' => 'news_content', 'name' => 'news_name', 'time' => 'news_time', 'email' => 'news_email', 'hp' => 'news_hp', 'title' => 'news_title'));*/
-	}
+//	private function _commentImg($img_ID)
+//	{
+//		/*$msbox = new Messageboxes($this->_mysql, 'news', array('ID' => 'news_ID', 'ref_ID' => 'news_ref_ID', 'content' => 'news_content', 'name' => 'news_name', 'time' => 'news_time', 'email' => 'news_email', 'hp' => 'news_hp', 'title' => 'news_title'));*/
+//	}
 
 	/**
 	 * Liefert der Path der Kategorien aus von der angegebenen Kategorie bis zur Hauptseite.
@@ -351,9 +351,10 @@ class Gallery implements Module
 			/*Hauptseite noch einfügen*/
 			$tmp_arr[++$i] = array('ID' => '0', 'name' => 'Hauptseite');
 			return array_reverse($tmp_arr);
+		} else {
+			return null;
 		}
 	}
-
 }
 ?>
 	
