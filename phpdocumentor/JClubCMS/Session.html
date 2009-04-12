@@ -64,8 +64,6 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---modules---gbookadmin.class.php.html">		gbookadmin.class.php
 		</a><br>
-			<a href="../JClubCMS/_config---gbook_textes.inc.php.html">		gbook_textes.inc.php
-		</a><br>
 			<a href="../JClubCMS/_admin---config---global-config.inc.php.html">		global-config.inc.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---image.class.php.html">		image.class.php
@@ -74,17 +72,15 @@
 		</a><br>
 			<a href="../JClubCMS/_modules---image_send.class.php.html">		image_send.class.php
 		</a><br>
-			<a href="../JClubCMS/_index.php.html">		index.php
-		</a><br>
 			<a href="../JClubCMS/_admin---index.php.html">		index.php
+		</a><br>
+			<a href="../JClubCMS/_index.php.html">		index.php
 		</a><br>
 			<a href="../JClubCMS/_admin---modules---mailmodule.class.php.html">		mailmodule.class.php
 		</a><br>
 			<a href="../JClubCMS/_modules---mailmodule.class.php.html">		mailmodule.class.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---mailsend.class.php.html">		mailsend.class.php
-		</a><br>
-			<a href="../JClubCMS/_config---mail_textes.inc.php.html">		mail_textes.inc.php
 		</a><br>
 			<a href="../JClubCMS/_modules---members.class.php.html">		members.class.php
 		</a><br>
@@ -116,6 +112,10 @@
 		</a><br>
 	  </div><br />
       
+            <b>Interfaces:</b><br />
+        <div class="package">
+		    		<a href="../JClubCMS/Module.html">Module</a><br />
+	  </div>
       
             <b>Classes:</b><br />
         <div class="package">
@@ -186,7 +186,6 @@ Source Location: /admin/lib/session.class.php<br /><br />
     <li><a href="../JClubCMS/Session.html#methoddelete">delete</a></li>
     <li><a href="../JClubCMS/Session.html#methodget_sessionstring">get_sessionstring</a></li>
     <li><a href="../JClubCMS/Session.html#methodwatch4session">watch4session</a></li>
-    <li><a href="../JClubCMS/Session.html#method_garbage_collector">_garbage_collector</a></li>
   </ul>
 </td>
 
@@ -206,7 +205,7 @@ Source Location: /admin/lib/session.class.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line 10]<br />
+[line <a href="../__filesource/fsource_JClubCMS__adminlibsession.class.php.html#a11">11</a>]<br />
 Die Session-Klasse handelt mit den Session-Daten, welche in der Datenbank abgespitz sind.<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
@@ -227,7 +226,7 @@ Die Session-Klasse handelt mit den Session-Daten, welche in der Datenbank abgesp
 
   <hr />
 	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line 25]</span></h3>
+	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibsession.class.php.html#a26">26</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -239,6 +238,15 @@ $mysql)</code>
     </td></tr></table><br />
 	
 		Erstellt die Klasse<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
 
 	
         <h4>Parameters:</h4>
@@ -260,7 +268,7 @@ $mysql)</code>
   </div>
   <hr />
 	<a name="methodactiv"></a>
-	<h3>method activ <span class="smalllinenumber">[line 89]</span></h3>
+	<h3>method activ <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibsession.class.php.html#a90">90</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -271,6 +279,15 @@ $maxtime)</code>
     </td></tr></table><br />
 	
 		Kontroliert, ob der User noch aktiv ist<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
 
 	
         <h4>Parameters:</h4>
@@ -287,7 +304,7 @@ $maxtime)</code>
   </div>
   <hr />
 	<a name="methodchecksession"></a>
-	<h3>method checksession <span class="smalllinenumber">[line 59]</span></h3>
+	<h3>method checksession <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibsession.class.php.html#a60">60</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -297,13 +314,22 @@ $maxtime)</code>
     </td></tr></table><br />
 	
 		Kontroliert, ob die Session gültig ist.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
 
 	
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
   <hr />
 	<a name="methodcreate_session"></a>
-	<h3>method create_session <span class="smalllinenumber">[line 115]</span></h3>
+	<h3>method create_session <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibsession.class.php.html#a116">116</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -314,6 +340,15 @@ $userID)</code>
     </td></tr></table><br />
 	
 		Erstellt eine Session mit der gegebenen User_ID.<br /><br /><p>War die Erstellung der Session erfolgreich, gibt die Funktion true zurueck, sonst false.</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
 
 	
         <h4>Parameters:</h4>
@@ -330,7 +365,7 @@ $userID)</code>
   </div>
   <hr />
 	<a name="methoddelete"></a>
-	<h3>method delete <span class="smalllinenumber">[line 151]</span></h3>
+	<h3>method delete <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibsession.class.php.html#a152">152</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -340,13 +375,22 @@ $userID)</code>
     </td></tr></table><br />
 	
 		ZERSTOERT die Session<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
 
 	
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
   <hr />
 	<a name="methodget_sessionstring"></a>
-	<h3>method get_sessionstring <span class="smalllinenumber">[line 141]</span></h3>
+	<h3>method get_sessionstring <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibsession.class.php.html#a142">142</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -362,6 +406,9 @@ $userID)</code>
   <tr>
     <td><b>return:</b>&nbsp;&nbsp;</td><td>session_string</td>
   </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
 </table>
 </div>
 <br /><br />
@@ -371,7 +418,7 @@ $userID)</code>
   </div>
   <hr />
 	<a name="methodwatch4session"></a>
-	<h3>method watch4session <span class="smalllinenumber">[line 42]</span></h3>
+	<h3>method watch4session <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibsession.class.php.html#a43">43</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -387,6 +434,9 @@ $get_array)</code>
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td><b>return:</b>&nbsp;&nbsp;</td><td>Session vorhanden</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
   </tr>
 </table>
 </div>
@@ -405,48 +455,12 @@ $get_array)</code>
     </div><br />
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
-  <hr />
-	<a name="method_garbage_collector"></a>
-	<h3>method _garbage_collector <span class="smalllinenumber">[line 164]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>boolean _garbage_collector(
-int
-$userID)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Räumt die Session_IDs weg, welche dieselbe user_id, ip_address und user_agent haben wie die momentane Session Gab es etwas zu rueumen, wird true zurueckgegeben; andernfalls false.<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>return:</b>&nbsp;&nbsp;</td><td>Sessions wurden gelöscht</td>
-  </tr>
-</table>
-</div>
-<br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">int&nbsp;&nbsp;</td>
-        <td><b>$userID</b>&nbsp;&nbsp;</td>
-        <td>User_ID des Benutzers</td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
 </div><br />
 
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Sat, 11 Apr 2009 12:39:14 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Mon, 13 Apr 2009 00:26:21 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

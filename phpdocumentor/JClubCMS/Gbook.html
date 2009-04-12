@@ -64,8 +64,6 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---modules---gbookadmin.class.php.html">		gbookadmin.class.php
 		</a><br>
-			<a href="../JClubCMS/_config---gbook_textes.inc.php.html">		gbook_textes.inc.php
-		</a><br>
 			<a href="../JClubCMS/_admin---config---global-config.inc.php.html">		global-config.inc.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---image.class.php.html">		image.class.php
@@ -74,17 +72,15 @@
 		</a><br>
 			<a href="../JClubCMS/_modules---image_send.class.php.html">		image_send.class.php
 		</a><br>
-			<a href="../JClubCMS/_index.php.html">		index.php
-		</a><br>
 			<a href="../JClubCMS/_admin---index.php.html">		index.php
+		</a><br>
+			<a href="../JClubCMS/_index.php.html">		index.php
 		</a><br>
 			<a href="../JClubCMS/_admin---modules---mailmodule.class.php.html">		mailmodule.class.php
 		</a><br>
 			<a href="../JClubCMS/_modules---mailmodule.class.php.html">		mailmodule.class.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---mailsend.class.php.html">		mailsend.class.php
-		</a><br>
-			<a href="../JClubCMS/_config---mail_textes.inc.php.html">		mail_textes.inc.php
 		</a><br>
 			<a href="../JClubCMS/_modules---members.class.php.html">		members.class.php
 		</a><br>
@@ -116,6 +112,10 @@
 		</a><br>
 	  </div><br />
       
+            <b>Interfaces:</b><br />
+        <div class="package">
+		    		<a href="../JClubCMS/Module.html">Module</a><br />
+	  </div>
       
             <b>Classes:</b><br />
         <div class="package">
@@ -171,6 +171,11 @@ Source Location: /modules/gbook.class.php<br /><br />
 
     
 
+                <p class="implements">
+            Implements interfaces:
+            <ul>
+                <li><a href="../JClubCMS/Module.html">Module</a></li>            </ul>
+        </p>
         
 </td>
 
@@ -182,13 +187,6 @@ Source Location: /modules/gbook.class.php<br /><br />
     <li><a href="../JClubCMS/Gbook.html#method__construct">__construct</a></li>
     <li><a href="../JClubCMS/Gbook.html#methodaction">action</a></li>
     <li><a href="../JClubCMS/Gbook.html#methodgettplfile">gettplfile</a></li>
-    <li><a href="../JClubCMS/Gbook.html#method_add">_add</a></li>
-    <li><a href="../JClubCMS/Gbook.html#method_check_form">_check_form</a></li>
-    <li><a href="../JClubCMS/Gbook.html#method_comment">_comment</a></li>
-    <li><a href="../JClubCMS/Gbook.html#method_initCaptcha">_initCaptcha</a></li>
-    <li><a href="../JClubCMS/Gbook.html#method_send_entryform">_send_entryform</a></li>
-    <li><a href="../JClubCMS/Gbook.html#method_send_feedback">_send_feedback</a></li>
-    <li><a href="../JClubCMS/Gbook.html#method_view">_view</a></li>
   </ul>
 </td>
 
@@ -208,7 +206,7 @@ Source Location: /modules/gbook.class.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line 16]<br />
+[line <a href="../__filesource/fsource_JClubCMS__modulesgbook.class.php.html#a23">23</a>]<br />
 Diese Klasse ist zuständig für das Anzeigen und Hinzufügen der Gästebucheinträge.<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
@@ -229,7 +227,7 @@ Diese Klasse ist zuständig für das Anzeigen und Hinzufügen der Gästebucheint
 
   <hr />
 	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line 86]</span></h3>
+	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__modulesgbook.class.php.html#a93">93</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -241,8 +239,22 @@ $smarty)</code>
     </td></tr></table><br />
 	
 		Aufbau der Klasse<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
 
-	
+			<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../JClubCMS/Module.html#method__construct">Module::__construct()</a></dt>
+					</dl>
+		
         <h4>Parameters:</h4>
     <div class="tags">
     <table border="0" cellspacing="0" cellpadding="0">
@@ -262,7 +274,7 @@ $smarty)</code>
   </div>
   <hr />
 	<a name="methodaction"></a>
-	<h3>method action <span class="smalllinenumber">[line 99]</span></h3>
+	<h3>method action <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__modulesgbook.class.php.html#a108">108</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -273,8 +285,28 @@ $gpc)</code>
     </td></tr></table><br />
 	
 		Führt die einzelnen Methoden aus, abhängig vom Parameter<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>global:</b>&nbsp;&nbsp;</td><td>string $dir_smilies: dir_smilies Used for the dir where the smilies-gif are saved</td>
+  </tr>
+  <tr>
+    <td><b>global:</b>&nbsp;&nbsp;</td><td>int $gbook_entries_per_page: gbook_entries_per_page</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
 
-	
+			<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../JClubCMS/Module.html#methodaction">Module::action()</a></dt>
+					</dl>
+		
         <h4>Parameters:</h4>
     <div class="tags">
     <table border="0" cellspacing="0" cellpadding="0">
@@ -289,7 +321,7 @@ $gpc)</code>
   </div>
   <hr />
 	<a name="methodgettplfile"></a>
-	<h3>method gettplfile <span class="smalllinenumber">[line 148]</span></h3>
+	<h3>method gettplfile <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__modulesgbook.class.php.html#a157">157</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -303,226 +335,21 @@ $gpc)</code>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>return:</b>&nbsp;&nbsp;</td><td>$tplfile Templatedatei</td>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Templatedatei</td>
   </tr>
-</table>
-</div>
-<br /><br />
-
-	
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="method_add"></a>
-	<h3>method _add <span class="smalllinenumber">[line 218]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void _add(
-)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Fügt einen Eintrag hinzu oder liefert das Forumular dazu<br /><br /><br /><br />
-
-	
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="method_check_form"></a>
-	<h3>method _check_form <span class="smalllinenumber">[line 351]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>boolean _check_form(
-
-&$answer, [array
-$blacklist = array()], array[reference]
-$answer)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Kontrolliert das Formular auf Standarteinträge, richtige Mailmuster und Captcha-Wort. Ist alles ordnungsgemäss, wird true zurückgegeben, sonst false.<br /><br /><p>Bei false finden sich die Mängel in $answer.</p><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>return:</b>&nbsp;&nbsp;</td><td>Erfolg</td>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
   </tr>
 </table>
 </div>
 <br /><br />
 
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">array[reference]&nbsp;&nbsp;</td>
-        <td><b>$answer</b>&nbsp;&nbsp;</td>
-        <td>Antwort</td>
-      </tr>
-          <tr>
-        <td class="type">array&nbsp;&nbsp;</td>
-        <td><b>$blacklist</b>&nbsp;&nbsp;</td>
-        <td>Array der Schlüssel, die nicht geprüft werden sollen</td>
-      </tr>
-          <tr>
-        <td class="type">&nbsp;&nbsp;</td>
-        <td><b>&$answer</b>&nbsp;&nbsp;</td>
-        <td></td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="method_comment"></a>
-	<h3>method _comment <span class="smalllinenumber">[line 274]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void _comment(
-)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Kommentarfunktion dieser Klasse<br /><br /><br /><br />
-
-	
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="method_initCaptcha"></a>
-	<h3>method _initCaptcha <span class="smalllinenumber">[line 329]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void _initCaptcha(
-)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Initialisiert die Captcha-Klasse<br /><br /><br /><br />
-
-	
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="method_send_entryform"></a>
-	<h3>method _send_entryform <span class="smalllinenumber">[line 439]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void _send_entryform(
-[boolean
-$first_form = true], [string|null
-$error = null], [boolean
-$comment = false], boolean
-$mysql_data)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Erstellt das Eintragsformular für Beiträge im Gästebuch.<br /><br /><p>Wenn nötig werden der vorhergehende Einträg (und die Kommentare dazu) ermittelt.</p><br /><br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">boolean&nbsp;&nbsp;</td>
-        <td><b>$first_form</b>&nbsp;&nbsp;</td>
-        <td><ol><li>Aufruf des Formulars?</li></ol></td>
-      </tr>
-          <tr>
-        <td class="type">string|null&nbsp;&nbsp;</td>
-        <td><b>$error</b>&nbsp;&nbsp;</td>
-        <td>Errortexte</td>
-      </tr>
-          <tr>
-        <td class="type">boolean&nbsp;&nbsp;</td>
-        <td><b>$comment</b>&nbsp;&nbsp;</td>
-        <td>Ist der Beitrag ein Kommentar?</td>
-      </tr>
-          <tr>
-        <td class="type">boolean&nbsp;&nbsp;</td>
-        <td><b>$mysql_data</b>&nbsp;&nbsp;</td>
-        <td>Werden die Daten vom Mysql geholt.</td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="method_send_feedback"></a>
-	<h3>method _send_feedback <span class="smalllinenumber">[line 523]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void _send_feedback(
-string
-$title, string
-$content, string
-$link, string
-$linktext)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Speichert die angegebenen Variablen in Smarty und speichert das Feedback-Template<br /><br /><br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$title</b>&nbsp;&nbsp;</td>
-        <td>Titel</td>
-      </tr>
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$content</b>&nbsp;&nbsp;</td>
-        <td>Inhalt</td>
-      </tr>
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$link</b>&nbsp;&nbsp;</td>
-        <td>Link</td>
-      </tr>
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$linktext</b>&nbsp;&nbsp;</td>
-        <td>Linktext</td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="method_view"></a>
-	<h3>method _view <span class="smalllinenumber">[line 159]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void _view(
-int
-$max_entries_pp)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Zeigt die Einträge an<br /><br /><br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">int&nbsp;&nbsp;</td>
-        <td><b>$max_entries_pp</b>&nbsp;&nbsp;</td>
-        <td>Anzahl Einträge pro Seite</td>
-      </tr>
-        </table>
-    </div><br />
+			<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../JClubCMS/Module.html#methodgettplfile">Module::gettplfile()</a></dt>
+					</dl>
+		
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
 </div><br />
@@ -530,7 +357,7 @@ $max_entries_pp)</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Sat, 11 Apr 2009 12:39:13 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Mon, 13 Apr 2009 00:26:13 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

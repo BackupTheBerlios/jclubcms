@@ -64,8 +64,6 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---modules---gbookadmin.class.php.html">		gbookadmin.class.php
 		</a><br>
-			<a href="../JClubCMS/_config---gbook_textes.inc.php.html">		gbook_textes.inc.php
-		</a><br>
 			<a href="../JClubCMS/_admin---config---global-config.inc.php.html">		global-config.inc.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---image.class.php.html">		image.class.php
@@ -74,17 +72,15 @@
 		</a><br>
 			<a href="../JClubCMS/_modules---image_send.class.php.html">		image_send.class.php
 		</a><br>
-			<a href="../JClubCMS/_index.php.html">		index.php
-		</a><br>
 			<a href="../JClubCMS/_admin---index.php.html">		index.php
+		</a><br>
+			<a href="../JClubCMS/_index.php.html">		index.php
 		</a><br>
 			<a href="../JClubCMS/_admin---modules---mailmodule.class.php.html">		mailmodule.class.php
 		</a><br>
 			<a href="../JClubCMS/_modules---mailmodule.class.php.html">		mailmodule.class.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---mailsend.class.php.html">		mailsend.class.php
-		</a><br>
-			<a href="../JClubCMS/_config---mail_textes.inc.php.html">		mail_textes.inc.php
 		</a><br>
 			<a href="../JClubCMS/_modules---members.class.php.html">		members.class.php
 		</a><br>
@@ -116,6 +112,10 @@
 		</a><br>
 	  </div><br />
       
+            <b>Interfaces:</b><br />
+        <div class="package">
+		    		<a href="../JClubCMS/Module.html">Module</a><br />
+	  </div>
       
             <b>Classes:</b><br />
         <div class="package">
@@ -160,16 +160,16 @@ Source Location: /admin/lib/auth.class.php<br /><br />
 
 <h3><a href="#class_details">Class Overview</a></h3>
 <pre></pre><br />
-<div class="description"></div><br /><br />
+<div class="description">Diese Seite ist das Autorisierungs-Modul. Sie ist fuer das rechtmässige Einloggen  verantwortlich; sie schaut, ob der Benutzer noch aktiv ist und schmeisst in, wenn  noetig, aus dem Administration. Weiter ist sie dafuer verantworlich, dass der Benutzer  nur Befehle ausfürht, die er rechtmässig verwenden darf.</div><br /><br />
 <h4>Author(s):</h4>
 <ul>
           <li>Simon Däster</li>
-      </ul>
+            </ul>
 
 
 
 
-    
+        
 
         
 </td>
@@ -183,8 +183,6 @@ Source Location: /admin/lib/auth.class.php<br /><br />
     <li><a href="../JClubCMS/Auth.html#methodcheck4login">check4login</a></li>
     <li><a href="../JClubCMS/Auth.html#methodcheck4user">check4user</a></li>
     <li><a href="../JClubCMS/Auth.html#methodlogout">logout</a></li>
-    <li><a href="../JClubCMS/Auth.html#method_controlrights">_controlrights</a></li>
-    <li><a href="../JClubCMS/Auth.html#method_getlogindata">_getlogindata</a></li>
   </ul>
 </td>
 
@@ -204,13 +202,16 @@ Source Location: /admin/lib/auth.class.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line 17]<br />
-<br /><br />
+[line <a href="../__filesource/fsource_JClubCMS__adminlibauth.class.php.html#a18">18</a>]<br />
+Diese Seite ist das Autorisierungs-Modul. Sie ist fuer das rechtmässige Einloggen  verantwortlich; sie schaut, ob der Benutzer noch aktiv ist und schmeisst in, wenn  noetig, aus dem Administration. Weiter ist sie dafuer verantworlich, dass der Benutzer  nur Befehle ausfürht, die er rechtmässig verwenden darf.<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td><b>author:</b>&nbsp;&nbsp;</td><td>Simon Däster</td>
+  </tr>
+  <tr>
+    <td><b>requires:</b>&nbsp;&nbsp;</td><td>PHP5</td>
   </tr>
 </table>
 </div>
@@ -225,7 +226,7 @@ Source Location: /admin/lib/auth.class.php<br /><br />
 
   <hr />
 	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line 54]</span></h3>
+	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibauth.class.php.html#a55">55</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -237,6 +238,15 @@ $mysql)</code>
     </td></tr></table><br />
 	
 		Oeffnet die Autorisierungsklasse<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
 
 	
         <h4>Parameters:</h4>
@@ -258,7 +268,7 @@ $mysql)</code>
   </div>
   <hr />
 	<a name="methodcheck4login"></a>
-	<h3>method check4login <span class="smalllinenumber">[line 70]</span></h3>
+	<h3>method check4login <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibauth.class.php.html#a71">71</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -275,6 +285,9 @@ $post_array)</code>
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td><b>return:</b>&nbsp;&nbsp;</td><td>Antwort, ob sich jemand einloggt.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
   </tr>
 </table>
 </div>
@@ -300,7 +313,7 @@ $post_array)</code>
   </div>
   <hr />
 	<a name="methodcheck4user"></a>
-	<h3>method check4user <span class="smalllinenumber">[line 135]</span></h3>
+	<h3>method check4user <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibauth.class.php.html#a136">136</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -311,6 +324,15 @@ $get_array)</code>
     </td></tr></table><br />
 	
 		Schaut nach, ob sich ein User rechtmaessig eingeloggt hat, und prüft auf deren Rechmaessigkeit<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
 
 	
         <h4>Parameters:</h4>
@@ -327,7 +349,7 @@ $get_array)</code>
   </div>
   <hr />
 	<a name="methodlogout"></a>
-	<h3>method logout <span class="smalllinenumber">[line 175]</span></h3>
+	<h3>method logout <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibauth.class.php.html#a176">176</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -337,68 +359,17 @@ $get_array)</code>
     </td></tr></table><br />
 	
 		Loggt den User aus<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
 
 	
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="method_controlrights"></a>
-	<h3>method _controlrights <span class="smalllinenumber">[line 231]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void _controlrights(
-string
-$rightname)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Ueberprueft die Rechte.<br /><br /><br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$rightname</b>&nbsp;&nbsp;</td>
-        <td>Name des Rechts</td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="method_getlogindata"></a>
-	<h3>method _getlogindata <span class="smalllinenumber">[line 194]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>array|int _getlogindata(
-
-&$post_array, array
-$post_array)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		List die Logindaten heraus oder gibt einen Fehlerwert zurueck<br /><br /><br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">array&nbsp;&nbsp;</td>
-        <td><b>$post_array</b>&nbsp;&nbsp;</td>
-        <td>$_POST-Daten</td>
-      </tr>
-          <tr>
-        <td class="type">&nbsp;&nbsp;</td>
-        <td><b>&$post_array</b>&nbsp;&nbsp;</td>
-        <td></td>
-      </tr>
-        </table>
-    </div><br />
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
 </div><br />
@@ -406,7 +377,7 @@ $post_array)</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Sat, 11 Apr 2009 12:39:11 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Mon, 13 Apr 2009 00:26:04 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

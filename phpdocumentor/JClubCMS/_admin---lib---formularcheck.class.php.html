@@ -64,8 +64,6 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---modules---gbookadmin.class.php.html">		gbookadmin.class.php
 		</a><br>
-			<a href="../JClubCMS/_config---gbook_textes.inc.php.html">		gbook_textes.inc.php
-		</a><br>
 			<a href="../JClubCMS/_admin---config---global-config.inc.php.html">		global-config.inc.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---image.class.php.html">		image.class.php
@@ -74,17 +72,15 @@
 		</a><br>
 			<a href="../JClubCMS/_modules---image_send.class.php.html">		image_send.class.php
 		</a><br>
-			<a href="../JClubCMS/_index.php.html">		index.php
-		</a><br>
 			<a href="../JClubCMS/_admin---index.php.html">		index.php
+		</a><br>
+			<a href="../JClubCMS/_index.php.html">		index.php
 		</a><br>
 			<a href="../JClubCMS/_admin---modules---mailmodule.class.php.html">		mailmodule.class.php
 		</a><br>
 			<a href="../JClubCMS/_modules---mailmodule.class.php.html">		mailmodule.class.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---mailsend.class.php.html">		mailsend.class.php
-		</a><br>
-			<a href="../JClubCMS/_config---mail_textes.inc.php.html">		mail_textes.inc.php
 		</a><br>
 			<a href="../JClubCMS/_modules---members.class.php.html">		members.class.php
 		</a><br>
@@ -116,6 +112,10 @@
 		</a><br>
 	  </div><br />
       
+            <b>Interfaces:</b><br />
+        <div class="package">
+		    		<a href="../JClubCMS/Module.html">Module</a><br />
+	  </div>
       
             <b>Classes:</b><br />
         <div class="package">
@@ -160,139 +160,27 @@ Source Location: /admin/lib/formularcheck.class.php<br /><br />
 <div class="contents">
 <h2>Classes:</h2>
 <dt><a href="../JClubCMS/Formularcheck.html">Formularcheck</a></dt>
-	<dd></dd>
+	<dd>Überprüft Formulare, ob alle nötigen Werte eingefüllt und plausibel sind.</dd>
 </div><br /><br />
 
 <h2>Page Details:</h2>
 <br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>filesource:</b>&nbsp;&nbsp;</td><td><a href="../__filesource/fsource_JClubCMS__adminlibformularcheck.class.php.html">Source Code for this file</a></td>
+  </tr>
+</table>
+</div>
+<br /><br />
 <br /><br />
 <br /><br />
 <br />
-  <hr />
-	<a name="functionhpcheck"></a>
-	<h3>hpcheck <span class="smalllinenumber">[line 80]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>string hpcheck(
-string $hp)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-
-		Ersetzt http:// und ftp:// mit einem Leerzeichen, da die Templates diesen Aufruf machen<br /><br />    <br /><br />
-	
-    		<h4>Parameters</h4>
-    <table border="0" cellspacing="0" cellpadding="0">
-		      <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$hp</b>&nbsp;&nbsp;</td>
-        <td></td>
-      </tr>
-				</table>
-    	<div class="top">[ <a href="#top">Top</a> ]</div><br /><br />
-	</div>
-  <hr />
-	<a name="functionis_country"></a>
-	<h3>is_country <span class="smalllinenumber">[line 163]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void is_country(
-)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-
-		Hier wird geschaut ob es ein korrektes Land ist.<br /><br /><p>Die Laenderliste wird aus einem Text-File in ein Array abgespitzt und nachher wird aus diesem Array geprueft.</p><p>Quelle der Domains spaeter vieleicht oline.</p><br />    <br /><br />
-	
-    	<div class="top">[ <a href="#top">Top</a> ]</div><br /><br />
-	</div>
-  <hr />
-	<a name="functionis_domain"></a>
-	<h3>is_domain <span class="smalllinenumber">[line 127]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void is_domain(
-)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-
-		Der Domain-Name-Checker<br /><br /><p>Prueft einfach ob die Domain ihre Minimalwerte hat.</p><br />    <br /><br />
-	
-    	<div class="top">[ <a href="#top">Top</a> ]</div><br /><br />
-	</div>
-  <hr />
-	<a name="functionis_name"></a>
-	<h3>is_name <span class="smalllinenumber">[line 144]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void is_name(
-)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-
-		Der Domain-Name-Checker<br /><br /><p>Prueft einfach ob die Domain ihre Minimalwerte hat.</p><br />    <br /><br />
-	
-    	<div class="top">[ <a href="#top">Top</a> ]</div><br /><br />
-	</div>
-  <hr />
-	<a name="functionmailcheck"></a>
-	<h3>mailcheck <span class="smalllinenumber">[line 91]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>integer mailcheck(
- $mail)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-
-		Wird aufgerufen, startet alle anderen Funktionen und gibt den Fehlercode zurueck.<br /><br />    <br /><br />
-	
-    		<h4>Parameters</h4>
-    <table border="0" cellspacing="0" cellpadding="0">
-		      <tr>
-        <td class="type">&nbsp;&nbsp;</td>
-        <td><b>$mail</b>&nbsp;&nbsp;</td>
-        <td></td>
-      </tr>
-				</table>
-    	<div class="top">[ <a href="#top">Top</a> ]</div><br /><br />
-	</div>
-  <hr />
-	<a name="functionmailexplode"></a>
-	<h3>mailexplode <span class="smalllinenumber">[line 107]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void mailexplode(
-)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-
-		Der Mail-Exploder<br /><br /><p>Teil die Mail fuer die einfachere Pruefung in ihre Subsegmente auf</p><br />    <br /><br />
-	
-    	<div class="top">[ <a href="#top">Top</a> ]</div><br /><br />
-	</div>
-  <hr />
-	<a name="function__destruct"></a>
-	<h3>__destruct <span class="smalllinenumber">[line 193]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void __destruct(
-)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-
-		Klassendestruktor<br /><br />    <br /><br />
-	
-    	<div class="top">[ <a href="#top">Top</a> ]</div><br /><br />
-	</div>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Sat, 11 Apr 2009 12:39:12 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Mon, 13 Apr 2009 00:26:09 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

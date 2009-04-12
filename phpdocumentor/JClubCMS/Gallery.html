@@ -64,8 +64,6 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---modules---gbookadmin.class.php.html">		gbookadmin.class.php
 		</a><br>
-			<a href="../JClubCMS/_config---gbook_textes.inc.php.html">		gbook_textes.inc.php
-		</a><br>
 			<a href="../JClubCMS/_admin---config---global-config.inc.php.html">		global-config.inc.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---image.class.php.html">		image.class.php
@@ -74,17 +72,15 @@
 		</a><br>
 			<a href="../JClubCMS/_modules---image_send.class.php.html">		image_send.class.php
 		</a><br>
-			<a href="../JClubCMS/_index.php.html">		index.php
-		</a><br>
 			<a href="../JClubCMS/_admin---index.php.html">		index.php
+		</a><br>
+			<a href="../JClubCMS/_index.php.html">		index.php
 		</a><br>
 			<a href="../JClubCMS/_admin---modules---mailmodule.class.php.html">		mailmodule.class.php
 		</a><br>
 			<a href="../JClubCMS/_modules---mailmodule.class.php.html">		mailmodule.class.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---mailsend.class.php.html">		mailsend.class.php
-		</a><br>
-			<a href="../JClubCMS/_config---mail_textes.inc.php.html">		mail_textes.inc.php
 		</a><br>
 			<a href="../JClubCMS/_modules---members.class.php.html">		members.class.php
 		</a><br>
@@ -116,6 +112,10 @@
 		</a><br>
 	  </div><br />
       
+            <b>Interfaces:</b><br />
+        <div class="package">
+		    		<a href="../JClubCMS/Module.html">Module</a><br />
+	  </div>
       
             <b>Classes:</b><br />
         <div class="package">
@@ -160,7 +160,7 @@ Source Location: /modules/gallery.class.php<br /><br />
 
 <h3><a href="#class_details">Class Overview</a></h3>
 <pre></pre><br />
-<div class="description">Dieses Modul ist für die Gallery zuständig, die Anzeige von Bildern in den verschiedenen Alben und richtigen Reihenfolge</div><br /><br />
+<div class="description">Dieses Modul ist für die Gallery zuständig, die Anzeige von Bildern  in den verschiedenen Alben und richtigen Reihenfolge</div><br /><br />
 <h4>Author(s):</h4>
 <ul>
           <li>Simon Däster  File: gallery.php  Classes: none  Requieres: PHP5</li>
@@ -171,6 +171,11 @@ Source Location: /modules/gallery.class.php<br /><br />
 
     
 
+                <p class="implements">
+            Implements interfaces:
+            <ul>
+                <li><a href="../JClubCMS/Module.html">Module</a></li>            </ul>
+        </p>
         
 </td>
 
@@ -182,11 +187,6 @@ Source Location: /modules/gallery.class.php<br /><br />
     <li><a href="../JClubCMS/Gallery.html#method__construct">__construct</a></li>
     <li><a href="../JClubCMS/Gallery.html#methodaction">action</a></li>
     <li><a href="../JClubCMS/Gallery.html#methodgettplfile">gettplfile</a></li>
-    <li><a href="../JClubCMS/Gallery.html#method_commentImg">_commentImg</a></li>
-    <li><a href="../JClubCMS/Gallery.html#method_getRoot">_getRoot</a></li>
-    <li><a href="../JClubCMS/Gallery.html#method_showCat">_showCat</a></li>
-    <li><a href="../JClubCMS/Gallery.html#method_showGallery">_showGallery</a></li>
-    <li><a href="../JClubCMS/Gallery.html#method_showImg">_showImg</a></li>
   </ul>
 </td>
 
@@ -206,8 +206,8 @@ Source Location: /modules/gallery.class.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line 21]<br />
-Dieses Modul ist für die Gallery zuständig, die Anzeige von Bildern in den verschiedenen Alben und richtigen Reihenfolge<br /><br /><p>INFO:</p><br /><br /><br />
+[line <a href="../__filesource/fsource_JClubCMS__modulesgallery.class.php.html#a22">22</a>]<br />
+Dieses Modul ist für die Gallery zuständig, die Anzeige von Bildern  in den verschiedenen Alben und richtigen Reihenfolge<br /><br /><p>INFO:</p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
@@ -227,7 +227,7 @@ Dieses Modul ist für die Gallery zuständig, die Anzeige von Bildern in den ver
 
   <hr />
 	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line 69]</span></h3>
+	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__modulesgallery.class.php.html#a70">70</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -239,8 +239,22 @@ $smarty)</code>
     </td></tr></table><br />
 	
 		Aufbau der Klasse<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
 
-	
+			<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../JClubCMS/Module.html#method__construct">Module::__construct()</a></dt>
+					</dl>
+		
         <h4>Parameters:</h4>
     <div class="tags">
     <table border="0" cellspacing="0" cellpadding="0">
@@ -260,7 +274,7 @@ $smarty)</code>
   </div>
   <hr />
 	<a name="methodaction"></a>
-	<h3>method action <span class="smalllinenumber">[line 82]</span></h3>
+	<h3>method action <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__modulesgallery.class.php.html#a83">83</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -272,8 +286,25 @@ $parameters)</code>
     </td></tr></table><br />
 	
 		Führt die einzelnen Methoden aus, abhaengig vom parameter<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>global:</b>&nbsp;&nbsp;</td><td>string $dir_smilies: dir_smilies Used for the dir where the smilies-gif are saved</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
 
-	
+			<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../JClubCMS/Module.html#methodaction">Module::action()</a></dt>
+					</dl>
+		
         <h4>Parameters:</h4>
     <div class="tags">
     <table border="0" cellspacing="0" cellpadding="0">
@@ -293,7 +324,7 @@ $parameters)</code>
   </div>
   <hr />
 	<a name="methodgettplfile"></a>
-	<h3>method gettplfile <span class="smalllinenumber">[line 134]</span></h3>
+	<h3>method gettplfile <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__modulesgallery.class.php.html#a135">135</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -307,178 +338,21 @@ $parameters)</code>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>return:</b>&nbsp;&nbsp;</td><td>$tplfile Template-Datei</td>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Template-Datei</td>
   </tr>
-</table>
-</div>
-<br /><br />
-
-	
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="method_commentImg"></a>
-	<h3>method _commentImg <span class="smalllinenumber">[line 314]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void _commentImg(
-int
-$img_ID)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Kommentare zu den Bildern abgeben<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>todo:</b>&nbsp;&nbsp;</td><td><p>In der nächsten Version, voraussichtlich</p><p></p></td>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
   </tr>
 </table>
 </div>
 <br /><br />
 
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">int&nbsp;&nbsp;</td>
-        <td><b>$img_ID</b>&nbsp;&nbsp;</td>
-        <td></td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="method_getRoot"></a>
-	<h3>method _getRoot <span class="smalllinenumber">[line 330]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>array _getRoot(
-int
-$cat_ID, [bool[optional]
-$inc_catID = false], [bool[optional]
-$inc_hs = true])</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Liefert der Path der Kategorien aus von der angegebenen Kategorie bis zur Hauptseite.<br /><br /><p>Das zurückgelieferte Array sieht etwa folgendermassen aus: array(0 =&gt; Hauptseite, 1 =&gt; Kategorie 1, 2 =&gt; Kategorie 1.1, 3 =&gt; ...)</p><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>return:</b>&nbsp;&nbsp;</td><td>$root_array Path der Kategorien.</td>
-  </tr>
-</table>
-</div>
-<br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">int&nbsp;&nbsp;</td>
-        <td><b>$cat_ID</b>&nbsp;&nbsp;</td>
-        <td>KategorieID der untersten Kategorie</td>
-      </tr>
-          <tr>
-        <td class="type">bool[optional]&nbsp;&nbsp;</td>
-        <td><b>$inc_catID</b>&nbsp;&nbsp;</td>
-        <td>Gibt an, ob die Kategorie mit ID = $cat_ID auch in der Wurzel vorkommen soll</td>
-      </tr>
-          <tr>
-        <td class="type">bool[optional]&nbsp;&nbsp;</td>
-        <td><b>$inc_hs</b>&nbsp;&nbsp;</td>
-        <td>Gibt an, ob der Eintrag 'Hauptseite' auch in der Wurzel vorkommen soll</td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="method_showCat"></a>
-	<h3>method _showCat <span class="smalllinenumber">[line 147]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void _showCat(
-int
-$cat_ID)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Kategorie anzeigen inklusive Unterkategorien. Kategoriene können übergeordnete und  untergeordnete Kategorien haben.<br /><br /><p>Gallerien können nur Bilder enthalten und sind einer Kategorie untergeordnet.</p><br /><br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">int&nbsp;&nbsp;</td>
-        <td><b>$cat_ID</b>&nbsp;&nbsp;</td>
-        <td>Kategorie-ID</td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="method_showGallery"></a>
-	<h3>method _showGallery <span class="smalllinenumber">[line 201]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void _showGallery(
-int
-$gal_ID)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Zeigt die Gallery an, genauer einen Teil der Bilder zu der gehörenden Gallery.<br /><br /><p>Eine Gallery kann in mehrere Seiten unterteilt sein, je nach der Anzahl der Bilder. Eine Gallery kann eine übergeordnete Kategorie haben, jedoch keine übergeordnete Gallery.</p><br /><br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">int&nbsp;&nbsp;</td>
-        <td><b>$gal_ID</b>&nbsp;&nbsp;</td>
-        <td>Gallery-ID</td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="method_showImg"></a>
-	<h3>method _showImg <span class="smalllinenumber">[line 255]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void _showImg(
-unknown_type
-$img_ID)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Anzeige des Bildes<br /><br /><br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">unknown_type&nbsp;&nbsp;</td>
-        <td><b>$img_ID</b>&nbsp;&nbsp;</td>
-        <td></td>
-      </tr>
-        </table>
-    </div><br />
+			<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../JClubCMS/Module.html#methodgettplfile">Module::gettplfile()</a></dt>
+					</dl>
+		
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
 </div><br />
@@ -486,7 +360,7 @@ $img_ID)</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Sat, 11 Apr 2009 12:39:13 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Mon, 13 Apr 2009 00:26:12 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

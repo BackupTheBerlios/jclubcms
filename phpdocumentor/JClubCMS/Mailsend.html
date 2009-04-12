@@ -64,8 +64,6 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---modules---gbookadmin.class.php.html">		gbookadmin.class.php
 		</a><br>
-			<a href="../JClubCMS/_config---gbook_textes.inc.php.html">		gbook_textes.inc.php
-		</a><br>
 			<a href="../JClubCMS/_admin---config---global-config.inc.php.html">		global-config.inc.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---image.class.php.html">		image.class.php
@@ -74,17 +72,15 @@
 		</a><br>
 			<a href="../JClubCMS/_modules---image_send.class.php.html">		image_send.class.php
 		</a><br>
-			<a href="../JClubCMS/_index.php.html">		index.php
-		</a><br>
 			<a href="../JClubCMS/_admin---index.php.html">		index.php
+		</a><br>
+			<a href="../JClubCMS/_index.php.html">		index.php
 		</a><br>
 			<a href="../JClubCMS/_admin---modules---mailmodule.class.php.html">		mailmodule.class.php
 		</a><br>
 			<a href="../JClubCMS/_modules---mailmodule.class.php.html">		mailmodule.class.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---mailsend.class.php.html">		mailsend.class.php
-		</a><br>
-			<a href="../JClubCMS/_config---mail_textes.inc.php.html">		mail_textes.inc.php
 		</a><br>
 			<a href="../JClubCMS/_modules---members.class.php.html">		members.class.php
 		</a><br>
@@ -116,6 +112,10 @@
 		</a><br>
 	  </div><br />
       
+            <b>Interfaces:</b><br />
+        <div class="package">
+		    		<a href="../JClubCMS/Module.html">Module</a><br />
+	  </div>
       
             <b>Classes:</b><br />
         <div class="package">
@@ -183,10 +183,6 @@ Source Location: /admin/lib/mailsend.class.php<br /><br />
     <li><a href="../JClubCMS/Mailsend.html#method__destruct">__destruct</a></li>
     <li><a href="../JClubCMS/Mailsend.html#methodmail_send_hash">mail_send_hash</a></li>
     <li><a href="../JClubCMS/Mailsend.html#methodmail_send_link">mail_send_link</a></li>
-    <li><a href="../JClubCMS/Mailsend.html#method_db2mail">_db2mail</a></li>
-    <li><a href="../JClubCMS/Mailsend.html#method_mail2db">_mail2db</a></li>
-    <li><a href="../JClubCMS/Mailsend.html#method_mail_hash">_mail_hash</a></li>
-    <li><a href="../JClubCMS/Mailsend.html#method_mail_send">_mail_send</a></li>
   </ul>
 </td>
 
@@ -206,8 +202,8 @@ Source Location: /admin/lib/mailsend.class.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line 26]<br />
-Klasse fuer den den ganzen Mail-Ablauf<br /><br /><p><ol><li>Phase</li></ol> - Hash-Berechnung</p><p>- Ablage in Datenbank</p><p>- Versand Kontrollmail</p><p>2. Phase</p><p>- Auslese aus Datenbank</p><p>- Versand des Mails</p><br /><br /><br />
+[line <a href="../__filesource/fsource_JClubCMS__adminlibmailsend.class.php.html#a27">27</a>]<br />
+Klasse fuer den den ganzen Mail-Ablauf<br /><br /><p><ol><li>Phase</li></ol> <ul><li>Hash-Berechnung</li></ul> <ul><li>Ablage in Datenbank</li></ul> <ul><li>Versand Kontrollmail</li></ul>  2. Phase</p><p><ul><li>Auslese aus Datenbank</li></ul> <ul><li>Versand des Mails</li></ul></p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
@@ -227,7 +223,7 @@ Klasse fuer den den ganzen Mail-Ablauf<br /><br /><p><ol><li>Phase</li></ol> - H
 
   <hr />
 	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line 37]</span></h3>
+	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmailsend.class.php.html#a38">38</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -237,13 +233,22 @@ Klasse fuer den den ganzen Mail-Ablauf<br /><br /><p><ol><li>Phase</li></ol> - H
     </td></tr></table><br />
 	
 		Das Konstrukt dieser Klasse<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
 
 	
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
   <hr />
 	<a name="method__destruct"></a>
-	<h3>destructor __destruct <span class="smalllinenumber">[line 178]</span></h3>
+	<h3>destructor __destruct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmailsend.class.php.html#a179">179</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -253,13 +258,22 @@ Klasse fuer den den ganzen Mail-Ablauf<br /><br /><p><ol><li>Phase</li></ol> - H
     </td></tr></table><br />
 	
 		Klassendestruktor<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
 
 	
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
   <hr />
 	<a name="methodmail_send_hash"></a>
-	<h3>method mail_send_hash <span class="smalllinenumber">[line 119]</span></h3>
+	<h3>method mail_send_hash <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmailsend.class.php.html#a120">120</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -271,6 +285,15 @@ $hash)</code>
     </td></tr></table><br />
 	
 		Startet das Senden des Links an den Empfänger bei gültigem Hash<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
 
 	
         <h4>Parameters:</h4>
@@ -292,7 +315,7 @@ $hash)</code>
   </div>
   <hr />
 	<a name="methodmail_send_link"></a>
-	<h3>method mail_send_link <span class="smalllinenumber">[line 53]</span></h3>
+	<h3>method mail_send_link <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmailsend.class.php.html#a54">54</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -309,6 +332,15 @@ $mail_content)</code>
     </td></tr></table><br />
 	
 		Versendet den Link um die Mail auszulösen<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
 
 	
         <h4>Parameters:</h4>
@@ -353,145 +385,12 @@ $mail_content)</code>
     </div><br />
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
-  <hr />
-	<a name="method_db2mail"></a>
-	<h3>method _db2mail <span class="smalllinenumber">[line 140]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void _db2mail(
-reference
-$mysql_link, string
-$hash, [
-$delete = false])</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Liest aus der DB die Maildaten aus.<br /><br /><br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">reference&nbsp;&nbsp;</td>
-        <td><b>$mysql_link</b>&nbsp;&nbsp;</td>
-        <td>MySQL Objekt</td>
-      </tr>
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$hash</b>&nbsp;&nbsp;</td>
-        <td>Hash</td>
-      </tr>
-          <tr>
-        <td class="type">&nbsp;&nbsp;</td>
-        <td><b>$delete</b>&nbsp;&nbsp;</td>
-        <td></td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="method_mail2db"></a>
-	<h3>method _mail2db <span class="smalllinenumber">[line 98]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void _mail2db(
-reference
-$mysql_link, string
-$mail_hash)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Füllt die Daten in die Tabelle ab, um später zu versenden.<br /><br /><br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">reference&nbsp;&nbsp;</td>
-        <td><b>$mysql_link</b>&nbsp;&nbsp;</td>
-        <td>MySQL-Objekt</td>
-      </tr>
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$mail_hash</b>&nbsp;&nbsp;</td>
-        <td>Hash des Mails</td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="method_mail_hash"></a>
-	<h3>method _mail_hash <span class="smalllinenumber">[line 80]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>string _mail_hash(
-)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Liefert dem Hash der Mail zurück um in die DB abzulegen<br /><br /><br /><br />
-
-	
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="method_mail_send"></a>
-	<h3>method _mail_send <span class="smalllinenumber">[line 167]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>boolean _mail_send(
-string
-$reciver, string
-$subject, string
-$message, string
-$header)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Zustaendig fuer das Versenden von Mails<br /><br /><br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$reciver</b>&nbsp;&nbsp;</td>
-        <td>Empfänger</td>
-      </tr>
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$subject</b>&nbsp;&nbsp;</td>
-        <td>Betreff</td>
-      </tr>
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$message</b>&nbsp;&nbsp;</td>
-        <td>Nachricht</td>
-      </tr>
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$header</b>&nbsp;&nbsp;</td>
-        <td>Headerdaten (Sender, Name, Mailer)</td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
 </div><br />
 
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Sat, 11 Apr 2009 12:39:13 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Mon, 13 Apr 2009 00:26:16 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

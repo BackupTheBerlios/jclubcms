@@ -64,8 +64,6 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---modules---gbookadmin.class.php.html">		gbookadmin.class.php
 		</a><br>
-			<a href="../JClubCMS/_config---gbook_textes.inc.php.html">		gbook_textes.inc.php
-		</a><br>
 			<a href="../JClubCMS/_admin---config---global-config.inc.php.html">		global-config.inc.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---image.class.php.html">		image.class.php
@@ -74,17 +72,15 @@
 		</a><br>
 			<a href="../JClubCMS/_modules---image_send.class.php.html">		image_send.class.php
 		</a><br>
-			<a href="../JClubCMS/_index.php.html">		index.php
-		</a><br>
 			<a href="../JClubCMS/_admin---index.php.html">		index.php
+		</a><br>
+			<a href="../JClubCMS/_index.php.html">		index.php
 		</a><br>
 			<a href="../JClubCMS/_admin---modules---mailmodule.class.php.html">		mailmodule.class.php
 		</a><br>
 			<a href="../JClubCMS/_modules---mailmodule.class.php.html">		mailmodule.class.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---mailsend.class.php.html">		mailsend.class.php
-		</a><br>
-			<a href="../JClubCMS/_config---mail_textes.inc.php.html">		mail_textes.inc.php
 		</a><br>
 			<a href="../JClubCMS/_modules---members.class.php.html">		members.class.php
 		</a><br>
@@ -116,6 +112,10 @@
 		</a><br>
 	  </div><br />
       
+            <b>Interfaces:</b><br />
+        <div class="package">
+		    		<a href="../JClubCMS/Module.html">Module</a><br />
+	  </div>
       
             <b>Classes:</b><br />
         <div class="package">
@@ -160,7 +160,7 @@ Source Location: /admin/lib/page.class.php<br /><br />
 
 <h3><a href="#class_details">Class Overview</a></h3>
 <pre></pre><br />
-<div class="description">Diese Klasse ist fuer die Darstellung der Seite verantworlich.</div><br /><br />
+<div class="description">Diese Klasse ist fuer die Darstellung der Seite verantworlich. Sie bietet geeignete Methoden fuer die Menudarstellung und  Seitennavigation an (vormals in pagesnav.class gelagert)</div><br /><br />
 <h4>Author(s):</h4>
 <ul>
           <li>Simon Daester</li>
@@ -188,9 +188,6 @@ Source Location: /admin/lib/page.class.php<br /><br />
     <li><a href="../JClubCMS/Page.html#methodget_pagesnav_array">get_pagesnav_array</a></li>
     <li><a href="../JClubCMS/Page.html#methodget_static_pagesnav_array">get_static_pagesnav_array</a></li>
     <li><a href="../JClubCMS/Page.html#methodlet_build_menu_array">let_build_menu_array</a></li>
-    <li><a href="../JClubCMS/Page.html#method_build_subnav_array">_build_subnav_array</a></li>
-    <li><a href="../JClubCMS/Page.html#method_get_shortlinksmenu_array">_get_shortlinksmenu_array</a></li>
-    <li><a href="../JClubCMS/Page.html#method_get_topidsmenu_array">_get_topidsmenu_array</a></li>
   </ul>
 </td>
 
@@ -210,8 +207,8 @@ Source Location: /admin/lib/page.class.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line 17]<br />
-Diese Klasse ist fuer die Darstellung der Seite verantworlich.<br /><br /><p>Sie bietet geeignete Methoden fuer die Menudarstellung und Seitennavigation an (vormals in pagesnav.class gelagert)</p><br /><br /><br />
+[line <a href="../__filesource/fsource_JClubCMS__adminlibpage.class.php.html#a18">18</a>]<br />
+Diese Klasse ist fuer die Darstellung der Seite verantworlich. Sie bietet geeignete Methoden fuer die Menudarstellung und  Seitennavigation an (vormals in pagesnav.class gelagert)<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
@@ -228,117 +225,28 @@ Diese Klasse ist fuer die Darstellung der Seite verantworlich.<br /><br /><p>Sie
 <a name="class_methods"></a>
 <h3>Class Methods</h3>
 <div class="tags">
-
-  <hr />
-	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line 30]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>Page __construct(
-<a href="../Smarty/Smarty.html">Smarty</a>
-$smarty, <a href="../JClubCMS/Mysql.html">Mysql</a>
-$mysql)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Initialisiert die Klasse<br /><br /><br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type"><a href="../Smarty/Smarty.html">Smarty</a>&nbsp;&nbsp;</td>
-        <td><b>$smarty</b>&nbsp;&nbsp;</td>
-        <td></td>
-      </tr>
-          <tr>
-        <td class="type"><a href="../JClubCMS/Mysql.html">Mysql</a>&nbsp;&nbsp;</td>
-        <td><b>$mysql</b>&nbsp;&nbsp;</td>
-        <td></td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="method__destruct"></a>
-	<h3>destructor __destruct <span class="smalllinenumber">[line 250]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void __destruct(
-)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Destruktor der Klasse<br /><br /><br /><br />
-
-	
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="methodgetUri"></a>
-	<h3>method getUri <span class="smalllinenumber">[line 183]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>string getUri(
-array
-$get_array, array
-$black_list)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Gibt die URL zurueck mit dem aktuellen Skriptund allen $_GET-Variablen ausser denen, welche im Array $black_list aufgelistet sind<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>return:</b>&nbsp;&nbsp;</td><td>$url URL-String</td>
-  </tr>
-</table>
-</div>
-<br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">array&nbsp;&nbsp;</td>
-        <td><b>$get_array</b>&nbsp;&nbsp;</td>
-        <td>Array der $_GET-Variablen</td>
-      </tr>
-          <tr>
-        <td class="type">array&nbsp;&nbsp;</td>
-        <td><b>$black_list</b>&nbsp;&nbsp;</td>
-        <td>Array mit den $_GET-Keys, die nicht vorkommen sollen</td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
   <hr />
 	<a name="methodgetUriStatic"></a>
-	<h3>method getUriStatic <span class="smalllinenumber">[line 197]</span></h3>
+	<h3>static method getUriStatic <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibpage.class.php.html#a207">207</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>string getUriStatic(
+		<code>static string getUriStatic(
 array
 $get_array, [array
 $black_list = array()])</code>
     </td></tr></table>
     </td></tr></table><br />
 	
-		Gibt die URL zurueck mit dem aktuellen Skriptund allen $_GET-Variablen ausser denen, welche im Array $black_list aufgelistet sind<br /><br /><br /><br />
+		Gibt die URL zurueck mit dem aktuellen Skriptund allen $_GET-Variablen ausser denen,  welche im Array $black_list aufgelistet sind<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>return:</b>&nbsp;&nbsp;</td><td>$url URL-String</td>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>URL-String</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
   </tr>
 </table>
 </div>
@@ -364,17 +272,26 @@ $black_list = array()])</code>
   </div>
   <hr />
 	<a name="methodget_current_page"></a>
-	<h3>method get_current_page <span class="smalllinenumber">[line 81]</span></h3>
+	<h3>static method get_current_page <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibpage.class.php.html#a91">91</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void get_current_page(
+		<code>static void get_current_page(
 
 $get_array)</code>
     </td></tr></table>
     </td></tr></table><br />
 	
 		<br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
 
 	
         <h4>Parameters:</h4>
@@ -390,8 +307,172 @@ $get_array)</code>
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
   <hr />
+	<a name="methodget_static_pagesnav_array"></a>
+	<h3>static method get_static_pagesnav_array <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibpage.class.php.html#a129">129</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>static array get_static_pagesnav_array(
+int
+$number_entries, int
+$max_entries_pp, array
+$get_array)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Liefert ein Array, welches die Eintraege der Seitennavigation enthält.<br /><br /><p>Klasse braucht nicht initialisiert zu werden.</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Array der Eintraege</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$number_entries</b>&nbsp;&nbsp;</td>
+        <td>Anzahl der Eintraege</td>
+      </tr>
+          <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$max_entries_pp</b>&nbsp;&nbsp;</td>
+        <td>maximale Anzahl Eintraege pro Seite</td>
+      </tr>
+          <tr>
+        <td class="type">array&nbsp;&nbsp;</td>
+        <td><b>$get_array</b>&nbsp;&nbsp;</td>
+        <td>Inhalt von $_GET, kontroliert abzugeben</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+
+  <hr />
+	<a name="method__construct"></a>
+	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibpage.class.php.html#a41">41</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>Page __construct(
+<a href="../Smarty/Smarty.html">Smarty</a>
+$smarty, <a href="../JClubCMS/Mysql.html">Mysql</a>
+$mysql)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Initialisiert die Klasse<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type"><a href="../Smarty/Smarty.html">Smarty</a>&nbsp;&nbsp;</td>
+        <td><b>$smarty</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type"><a href="../JClubCMS/Mysql.html">Mysql</a>&nbsp;&nbsp;</td>
+        <td><b>$mysql</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="method__destruct"></a>
+	<h3>destructor __destruct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibpage.class.php.html#a260">260</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void __destruct(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Destruktor der Klasse<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodgetUri"></a>
+	<h3>method getUri <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibpage.class.php.html#a193">193</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>string getUri(
+array
+$get_array, array
+$black_list)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Gibt die URL zurueck mit dem aktuellen Skriptund allen $_GET-Variablen ausser denen,  welche im Array $black_list aufgelistet sind<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>URL-String</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">array&nbsp;&nbsp;</td>
+        <td><b>$get_array</b>&nbsp;&nbsp;</td>
+        <td>Array der $_GET-Variablen</td>
+      </tr>
+          <tr>
+        <td class="type">array&nbsp;&nbsp;</td>
+        <td><b>$black_list</b>&nbsp;&nbsp;</td>
+        <td>Array mit den $_GET-Keys, die nicht vorkommen sollen</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
 	<a name="methodget_menu_array"></a>
-	<h3>method get_menu_array <span class="smalllinenumber">[line 47]</span></h3>
+	<h3>method get_menu_array <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibpage.class.php.html#a57">57</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -408,7 +489,10 @@ $admin_menu = false])</code>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>return:</b>&nbsp;&nbsp;</td><td>$menu_array Array mit den Menu-Eintraegen Keys: nav_id, topnav, subnav</td>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Array mit den Menu-Eintraegen Keys: nav_id, topnav, subnav</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
   </tr>
 </table>
 </div>
@@ -439,7 +523,7 @@ $admin_menu = false])</code>
   </div>
   <hr />
 	<a name="methodget_pagesnav_array"></a>
-	<h3>method get_pagesnav_array <span class="smalllinenumber">[line 102]</span></h3>
+	<h3>method get_pagesnav_array <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibpage.class.php.html#a112">112</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -456,55 +540,10 @@ $get_array)</code>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>return:</b>&nbsp;&nbsp;</td><td>$pages_array Array der Eintraege</td>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Array der Eintraege</td>
   </tr>
-</table>
-</div>
-<br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">int&nbsp;&nbsp;</td>
-        <td><b>$number_entries</b>&nbsp;&nbsp;</td>
-        <td>Anzahl der Eintraege</td>
-      </tr>
-          <tr>
-        <td class="type">int&nbsp;&nbsp;</td>
-        <td><b>$max_entries_pp</b>&nbsp;&nbsp;</td>
-        <td>maximale Anzahl Eintraege pro Seite</td>
-      </tr>
-          <tr>
-        <td class="type">array&nbsp;&nbsp;</td>
-        <td><b>$get_array</b>&nbsp;&nbsp;</td>
-        <td>Inhalt von $_GET, kontroliert abzugeben</td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="methodget_static_pagesnav_array"></a>
-	<h3>method get_static_pagesnav_array <span class="smalllinenumber">[line 119]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>array get_static_pagesnav_array(
-int
-$number_entries, int
-$max_entries_pp, array
-$get_array)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Liefert ein Array, welches die Eintraege der Seitennavigation enthält.<br /><br /><p>Klasse braucht nicht initialisiert zu werden.</p><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>return:</b>&nbsp;&nbsp;</td><td>$pages_array Array der Eintraege</td>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
   </tr>
 </table>
 </div>
@@ -535,7 +574,7 @@ $get_array)</code>
   </div>
   <hr />
 	<a name="methodlet_build_menu_array"></a>
-	<h3>method let_build_menu_array <span class="smalllinenumber">[line 237]</span></h3>
+	<h3>method let_build_menu_array <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibpage.class.php.html#a247">247</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -551,7 +590,16 @@ $fields = array()], array[reference]
     </td></tr></table>
     </td></tr></table><br />
 	
-		Baut ein Menu-Array auf.<br /><br /><p>Das mitgelieferte Topid-Array wird durchgearbeitet, indem zuerst alle Menu-Einträge der ersten TopID (1. Schlüssel des TopID-Arrays) aus der Datenbank gelesen werden. Die Menu-Einträge werden als Array durchgearbeitet. Tritt ein Menu-Eintrag auf, welcher die Menu-ID hat, welcher der Id des 2. Schlüssels des TopID-Arrays entspricht, werden alle Menu-Einträge mit dieser TopID aufgerufen. Das ganze beginnt dann wieder von vorn mit dem durcharbeiten, menuID = topID usw. Daher wird bei menuID = topID die Funktion rekursiv aufgerufen</p><br /><br /><br />
+		Baut ein Menu-Array auf. Das mitgelieferte Topid-Array wird durchgearbeitet, indem zuerst alle  Menu-Einträge der ersten TopID (1. Schlüssel des TopID-Arrays) aus der Datenbank gelesen werden.<br /><br /><p>Die Menu-Einträge werden als Array durchgearbeitet. Tritt ein Menu-Eintrag auf, welcher  die Menu-ID hat, welcher der Id des 2. Schlüssels des TopID-Arrays entspricht, werden alle Menu-Einträge  mit dieser TopID aufgerufen. Das ganze beginnt dann wieder von vorn mit dem durcharbeiten, menuID = topID usw.  Daher wird bei menuID = topID die Funktion rekursiv aufgerufen</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
 
 	
         <h4>Parameters:</h4>
@@ -596,153 +644,12 @@ $fields = array()], array[reference]
     </div><br />
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
-  <hr />
-	<a name="method_build_subnav_array"></a>
-	<h3>method _build_subnav_array <span class="smalllinenumber">[line 389]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void _build_subnav_array(
-string
-$table_name, 
-&$topid_array, array[reference]
-&$subnav_array, [
-$options = array()], array
-$topid_array, array
-$options[optional])</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Baut das Subnav-Array auf.<br /><br /><p>Das mitgelieferte Topid-Array wird durchgearbeitet, indem zuerst alle Menu-Einträge der ersten TopID (1. Schlüssel des TopID-Arrays) aus der Datenbank gelesen werden. Die Menu-Einträge werden durchgearbeitet als Array durchgearbeitet. Tritt ein Menu-Eintrag auf, welcher die Menu-ID hat, welcher der Id des 2. Schlüssels des TopID-Arrays entspricht, werden alle Menu-Einträge mit dieser TopID aufgerufen. Das ganze beginnt dann wieder von vorn mit dem durcharbeiten, menuID = topID usw. Daher wird bei menuID = topID die Funktion rekursiv aufgerufen</p><br /><br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$table_name</b>&nbsp;&nbsp;</td>
-        <td>Name der MySQL-Tabelle</td>
-      </tr>
-          <tr>
-        <td class="type">array&nbsp;&nbsp;</td>
-        <td><b>$topid_array</b>&nbsp;&nbsp;</td>
-        <td>Array mit den Top-IDs</td>
-      </tr>
-          <tr>
-        <td class="type">array[reference]&nbsp;&nbsp;</td>
-        <td><b>&$subnav_array</b>&nbsp;&nbsp;</td>
-        <td>Array, wo die Navigation gespeichert wird</td>
-      </tr>
-          <tr>
-        <td class="type">array&nbsp;&nbsp;</td>
-        <td><b>$options[optional]</b>&nbsp;&nbsp;</td>
-        <td>Optionen für die Funktion wie 'Jump_search', 'reset' und 'rows' (für zusätzliche Felder</td>
-      </tr>
-          <tr>
-        <td class="type">&nbsp;&nbsp;</td>
-        <td><b>&$topid_array</b>&nbsp;&nbsp;</td>
-        <td></td>
-      </tr>
-          <tr>
-        <td class="type">&nbsp;&nbsp;</td>
-        <td><b>$options</b>&nbsp;&nbsp;</td>
-        <td></td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="method_get_shortlinksmenu_array"></a>
-	<h3>method _get_shortlinksmenu_array <span class="smalllinenumber">[line 266]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>array _get_shortlinksmenu_array(
-int
-$nav_id, string
-$table_name)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Liefert ein Array zurueck, welches die Menu-Eintraege enthaelt.<br /><br /><p>Die shortlinks-Menu befinden sich hier in der topnav.</p><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>return:</b>&nbsp;&nbsp;</td><td>Menu-Array</td>
-  </tr>
-</table>
-</div>
-<br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">int&nbsp;&nbsp;</td>
-        <td><b>$nav_id</b>&nbsp;&nbsp;</td>
-        <td>Navigations-Id</td>
-      </tr>
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$table_name</b>&nbsp;&nbsp;</td>
-        <td>Name der Mysql-Tabelle</td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="method_get_topidsmenu_array"></a>
-	<h3>method _get_topidsmenu_array <span class="smalllinenumber">[line 323]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>array _get_topidsmenu_array(
-int
-$nav_id, string
-$table_name)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Gibt das Menu-Array zurück, wo die Top-Navigation aus Eintraegen mit topID == 0 besteht<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>return:</b>&nbsp;&nbsp;</td><td>$menu_array Array des Menus</td>
-  </tr>
-</table>
-</div>
-<br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">int&nbsp;&nbsp;</td>
-        <td><b>$nav_id</b>&nbsp;&nbsp;</td>
-        <td>Navigations-ID</td>
-      </tr>
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$table_name</b>&nbsp;&nbsp;</td>
-        <td>Name der MySQL-Tabelle</td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
 </div><br />
 
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Sat, 11 Apr 2009 12:39:14 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Mon, 13 Apr 2009 00:26:21 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

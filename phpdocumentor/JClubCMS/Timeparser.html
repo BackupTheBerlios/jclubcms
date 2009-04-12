@@ -64,8 +64,6 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---modules---gbookadmin.class.php.html">		gbookadmin.class.php
 		</a><br>
-			<a href="../JClubCMS/_config---gbook_textes.inc.php.html">		gbook_textes.inc.php
-		</a><br>
 			<a href="../JClubCMS/_admin---config---global-config.inc.php.html">		global-config.inc.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---image.class.php.html">		image.class.php
@@ -74,17 +72,15 @@
 		</a><br>
 			<a href="../JClubCMS/_modules---image_send.class.php.html">		image_send.class.php
 		</a><br>
-			<a href="../JClubCMS/_index.php.html">		index.php
-		</a><br>
 			<a href="../JClubCMS/_admin---index.php.html">		index.php
+		</a><br>
+			<a href="../JClubCMS/_index.php.html">		index.php
 		</a><br>
 			<a href="../JClubCMS/_admin---modules---mailmodule.class.php.html">		mailmodule.class.php
 		</a><br>
 			<a href="../JClubCMS/_modules---mailmodule.class.php.html">		mailmodule.class.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---mailsend.class.php.html">		mailsend.class.php
-		</a><br>
-			<a href="../JClubCMS/_config---mail_textes.inc.php.html">		mail_textes.inc.php
 		</a><br>
 			<a href="../JClubCMS/_modules---members.class.php.html">		members.class.php
 		</a><br>
@@ -116,6 +112,10 @@
 		</a><br>
 	  </div><br />
       
+            <b>Interfaces:</b><br />
+        <div class="package">
+		    		<a href="../JClubCMS/Module.html">Module</a><br />
+	  </div>
       
             <b>Classes:</b><br />
         <div class="package">
@@ -160,27 +160,22 @@ Source Location: /admin/lib/timeparser.class.php<br /><br />
 
 <h3><a href="#class_details">Class Overview</a></h3>
 <pre></pre><br />
-<div class="description">Die Klasse timeparser ist zuständig für das Parsen der Zeiten die  in den MySQL-Tabellen angelegt sind (Gästebuch, News, uä) und dessen Werte die im Y-m-d H:i:s Format sind.</div><br /><br />
+<div class="description">Die Klasse timeparser ist zustÃ¤ndig fÃ¼r das Parsen der Zeiten die  in den MySQL-Tabellen angelegt sind (GÃ¤stebuch, News, uÃ¤) und dessen  Werte die im Y-m-d H:i:s Format sind.</div><br /><br />
 <h4>Author(s):</h4>
 <ul>
-          <li>David Däster</li>
-                  </ul>
+          <li>David DÃ¤ster</li>
+            </ul>
 
 
 
 
         
-          
-  
+    
 <h4>Version:</h4>
 <ul>
   <li>0.1</li>
 </ul>
 
-<h4>Copyright:</h4>
-<ul>
-  <li>JClub</li>
-</ul>
         
 </td>
 
@@ -191,14 +186,7 @@ Source Location: /admin/lib/timeparser.class.php<br /><br />
 <ul>
     <li><a href="../JClubCMS/Timeparser.html#method__construct">__construct</a></li>
     <li><a href="../JClubCMS/Timeparser.html#method__destruct">__destruct</a></li>
-    <li><a href="../JClubCMS/Timeparser.html#methodday_replace">day_replace</a></li>
-    <li><a href="../JClubCMS/Timeparser.html#methodhour_replace">hour_replace</a></li>
-    <li><a href="../JClubCMS/Timeparser.html#methodminute_replace">minute_replace</a></li>
-    <li><a href="../JClubCMS/Timeparser.html#methodmonth_replace">month_replace</a></li>
-    <li><a href="../JClubCMS/Timeparser.html#methodsecond_replace">second_replace</a></li>
-    <li><a href="../JClubCMS/Timeparser.html#methodtime2array">time2array</a></li>
     <li><a href="../JClubCMS/Timeparser.html#methodtime_output">time_output</a></li>
-    <li><a href="../JClubCMS/Timeparser.html#methodyear_replace">year_replace</a></li>
   </ul>
 </td>
 
@@ -218,19 +206,16 @@ Source Location: /admin/lib/timeparser.class.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line 73]<br />
-Die Klasse timeparser ist zuständig für das Parsen der Zeiten die  in den MySQL-Tabellen angelegt sind (Gästebuch, News, uä) und dessen Werte die im Y-m-d H:i:s Format sind.<br /><br /><p>Geparst wird _OHNE_ den Weg über time() um &quot;Zukunftssicher&quot; zu sein.</p><p>Funktionsbeschrieb: -  __construct($time_format) -  Das Konstrukt dieser Klasse</p><p>-  time2array() (wird von time_output ausgeführt) -  Schreibt den String in ein Array</p><p>-  year_replace($format) (wird von time_output ausgeführt) -  Gibt das Jahr im gewünschten Format zurück</p><p>-  month_replace($format) (wird von time_output ausgeführt) -  Gibt den Monat im gewünschten Format zurück</p><p>-  day_replace($format) (wird von time_output ausgeführt) -  Gibt den Tag im gewünschten Format zurück</p><p>-  hour_replace($format) (wird von time_output ausgeführt) -  Gibt die Stunde im gewünschten Format zurück</p><p>-  minute_replace($format) (wird von time_output ausgeführt) -  Gibt ddie Minute im gewünschten Format zurück</p><p>-  second_replace($format) (wird von time_output ausgeführt) -  Gibt die Sekunden im gewünschten Format zurück</p><p>-  time_output ($time_string) -  Parst den String nachher in das angegebene Time-Format.</p><p>-  __destruct -  Der Destruktor der Klasse</p><p>_Nicht_ geplante Unterstüzung:</p><p>- B	Swatch-Internet-Zeit - D	Tag der Woche gekürzt auf drei Buchstaben - I 	Fällt ein Datum in die Sommerzeit - l 	Ausgeschriebener Tag der Woche - L	Schaltjahr oder nicht - O	Zeitunterschied zur Greenwich time (GMT) in Stunden - S	Anhang der englischen Aufzählung für einen Monatstag, zwei Zeichen - t	Anzahl der Tage des angegebenen Monats - T	Zeitzoneneinstellung des Rechners - U	Sekunden seit Beginn der UNIX-Epoche - w	Numerischer Tag einer Woche - W	ISO-8601 Wochennummer des Jahres, die Woche beginnt am Montag - z	Der Tag eines Jahres - Z	 Offset der Zeitzone in Sekunden.</p><p>The Timeparser Class- Parst eine MySQL-Zeit in ein gewünschtes Format. Die Daten aus der DB wird eingelesen und anschliessend über explode in die einzelnen Blöcken (Jahr, Tag, Monat, Stunde, Minute und Sekunde) aufgeteilt und in das time_array gespeichert.</p><p>Anschliessend wird über die Funktion time_output via den Vorlagestring (zum grösten Teil  date()-ähnlich) ausgegeben. Die date()-Funktion wird bewusst ausgelassen, damit auch nach 2038 noch funktionsfähig ist.</p><br /><br /><br />
+[line <a href="../__filesource/fsource_JClubCMS__adminlibtimeparser.class.php.html#a73">73</a>]<br />
+Die Klasse timeparser ist zustÃ¤ndig fÃ¼r das Parsen der Zeiten die  in den MySQL-Tabellen angelegt sind (GÃ¤stebuch, News, uÃ¤) und dessen  Werte die im Y-m-d H:i:s Format sind.<br /><br /><p>Geparst wird _OHNE_ den Weg Ã¼ber time() um &quot;Zukunftssicher&quot; zu sein.</p><p>Funktionsbeschrieb: <ul><li>__construct($time_format)</li><li>Das Konstrukt dieser Klasse</li></ul> <ul><li>time2array() (wird von time_output ausgefÃ¼hrt)</li><li>Schreibt den String in ein Array</li></ul> <ul><li>year_replace($format) (wird von time_output ausgefÃ¼hrt)</li><li>Gibt das Jahr im gewÃ¼nschten Format zurÃ¼ck</li></ul> <ul><li>month_replace($format) (wird von time_output ausgefÃ¼hrt)</li><li>Gibt den Monat im gewÃ¼nschten Format zurÃ¼ck</li></ul> <ul><li>day_replace($format) (wird von time_output ausgefÃ¼hrt)</li><li>Gibt den Tag im gewÃ¼nschten Format zurÃ¼ck</li></ul> <ul><li>hour_replace($format) (wird von time_output ausgefÃ¼hrt)</li><li>Gibt die Stunde im gewÃ¼nschten Format zurÃ¼ck</li></ul> <ul><li>minute_replace($format) (wird von time_output ausgefÃ¼hrt)</li><li>Gibt ddie Minute im gewÃ¼nschten Format zurÃ¼ck</li></ul> <ul><li>second_replace($format) (wird von time_output ausgefÃ¼hrt)</li><li>Gibt die Sekunden im gewÃ¼nschten Format zurÃ¼ck</li></ul> <ul><li>time_output ($time_string)</li><li>Parst den String nachher in das angegebene Time-Format.</li></ul> <ul><li>__destruct</li><li>Der Destruktor der Klasse</li></ul></p><p>_Nicht_ geplante UnterstÃ¼zung:</p><p><ul><li>B	Swatch-Internet-Zeit</li><li>D	Tag der Woche gekÃ¼rzt auf drei Buchstaben</li><li>I 	FÃ¤llt ein Datum in die Sommerzeit</li><li>l 	Ausgeschriebener Tag der Woche</li><li>L	Schaltjahr oder nicht</li><li>O	Zeitunterschied zur Greenwich time (GMT) in Stunden</li><li>S	Anhang der englischen AufzÃ¤hlung fÃ¼r einen Monatstag, zwei Zeichen</li><li>t	Anzahl der Tage des angegebenen Monats</li><li>T	Zeitzoneneinstellung des Rechners</li><li>U	Sekunden seit Beginn der UNIX-Epoche</li><li>w	Numerischer Tag einer Woche</li><li>W	ISO-8601 Wochennummer des Jahres, die Woche beginnt am Montag</li><li>z	Der Tag eines Jahres</li><li>Z	 Offset der Zeitzone in Sekunden.</li></ul>  The Timeparser Class- Parst eine MySQL-Zeit in ein gewÃ¼nschtes Format.  Die Daten aus der DB wird eingelesen und anschliessend Ã¼ber explode in die einzelnen  BlÃ¶cken (Jahr, Tag, Monat, Stunde, Minute und Sekunde) aufgeteilt und in das time_array  gespeichert.</p><p>Anschliessend wird Ã¼ber die Funktion time_output via den Vorlagestring (zum grÃ¶sten Teil  date()-Ã¤hnlich) ausgegeben.  Die date()-Funktion wird bewusst ausgelassen, damit auch nach 2038 noch funktionsfÃ¤hig ist.</p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>author:</b>&nbsp;&nbsp;</td><td>David Däster</td>
+    <td><b>author:</b>&nbsp;&nbsp;</td><td>David DÃ¤ster</td>
   </tr>
   <tr>
     <td><b>version:</b>&nbsp;&nbsp;</td><td>0.1</td>
-  </tr>
-  <tr>
-    <td><b>copyright:</b>&nbsp;&nbsp;</td><td>JClub</td>
   </tr>
 </table>
 </div>
@@ -245,7 +230,7 @@ Die Klasse timeparser ist zuständig für das Parsen der Zeiten die  in den MySQL-
 
   <hr />
 	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line 84]</span></h3>
+	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibtimeparser.class.php.html#a84">84</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -255,7 +240,16 @@ $time_format)</code>
     </td></tr></table>
     </td></tr></table><br />
 	
-		Liest das gewünschte Ausgabe-Timeformat ein<br /><br /><br /><br />
+		Liest das gewÃ¼nschte Ausgabe-Timeformat ein<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
 
 	
         <h4>Parameters:</h4>
@@ -272,7 +266,7 @@ $time_format)</code>
   </div>
   <hr />
 	<a name="method__destruct"></a>
-	<h3>destructor __destruct <span class="smalllinenumber">[line 367]</span></h3>
+	<h3>destructor __destruct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibtimeparser.class.php.html#a367">367</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -282,164 +276,22 @@ $time_format)</code>
     </td></tr></table><br />
 	
 		Setzt alle Daten wieder auf die Standardwerte<br /><br /><br /><br />
-
-	
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="methodday_replace"></a>
-	<h3>method day_replace <span class="smalllinenumber">[line 258]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>string day_replace(
-char
-$format)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Gibt den Tag in der gewünschten Position des Ausgabe-Timeformats aus.<br /><br /><br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">char&nbsp;&nbsp;</td>
-        <td><b>$format</b>&nbsp;&nbsp;</td>
-        <td></td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="methodhour_replace"></a>
-	<h3>method hour_replace <span class="smalllinenumber">[line 278]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>string hour_replace(
-char
-$format)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Gibt die Stunde in der gewünschten Position des Ausgabe-Timeformats aus.<br /><br /><br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">char&nbsp;&nbsp;</td>
-        <td><b>$format</b>&nbsp;&nbsp;</td>
-        <td></td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="methodminute_replace"></a>
-	<h3>method minute_replace <span class="smalllinenumber">[line 339]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>string minute_replace(
-char
-$format)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Gibt die Minute in der gewünschten Position des Ausgabe-Timeformats aus.<br /><br /><br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">char&nbsp;&nbsp;</td>
-        <td><b>$format</b>&nbsp;&nbsp;</td>
-        <td></td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="methodmonth_replace"></a>
-	<h3>method month_replace <span class="smalllinenumber">[line 224]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>string month_replace(
-char
-$format)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Gibt den Monat in der gewünschten Position des Ausgabe-Timeformats aus.<br /><br /><br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">char&nbsp;&nbsp;</td>
-        <td><b>$format</b>&nbsp;&nbsp;</td>
-        <td></td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="methodsecond_replace"></a>
-	<h3>method second_replace <span class="smalllinenumber">[line 354]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>string second_replace(
-char
-$format)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Gibt die Sekunde in der gewünschten Position des Ausgabe-Timeformats aus.<br /><br /><br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">char&nbsp;&nbsp;</td>
-        <td><b>$format</b>&nbsp;&nbsp;</td>
-        <td></td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="methodtime2array"></a>
-	<h3>method time2array <span class="smalllinenumber">[line 184]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void time2array(
-)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Erstellt aus der Zeit in der DB ein Array, um nachher einfach weiter mit den Daten zu arbeiten<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
 
 	
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
   <hr />
 	<a name="methodtime_output"></a>
-	<h3>method time_output <span class="smalllinenumber">[line 94]</span></h3>
+	<h3>method time_output <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibtimeparser.class.php.html#a94">94</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -449,7 +301,16 @@ $time_string)</code>
     </td></tr></table>
     </td></tr></table><br />
 	
-		Parst den gewünschten Ausgabeformat-String um, und gibt dann in der Form die Zeit aus.<br /><br /><br /><br />
+		Parst den gewÃ¼nschten Ausgabeformat-String um, und gibt dann in der Form die Zeit aus.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
 
 	
         <h4>Parameters:</h4>
@@ -464,39 +325,12 @@ $time_string)</code>
     </div><br />
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
-  <hr />
-	<a name="methodyear_replace"></a>
-	<h3>method year_replace <span class="smalllinenumber">[line 199]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>string year_replace(
-char
-$format)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Gibt das Jahr in der gewünschten Position des Ausgabe-Timeformats aus.<br /><br /><br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">char&nbsp;&nbsp;</td>
-        <td><b>$format</b>&nbsp;&nbsp;</td>
-        <td></td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
 </div><br />
 
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Sat, 11 Apr 2009 12:39:15 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Mon, 13 Apr 2009 00:26:27 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>
