@@ -6,7 +6,7 @@
  */
 
 /*DB-Einstellungen*/
-define('DB_SERVER', 'localost');
+define('DB_SERVER', 'localhost');
 define('DB_NAME', 'jclubch_jclubcms');
 define('DB_USER', 'jclubch_jclubcms');
 define('DB_PW', '4pw4jclubcms');

@@ -284,3 +284,16 @@ GET: Array ( )
 COMMENT: 
 #END
 
+#LOG-ENTRY
+TITLE: Mysql-Fehler
+CODE: 2
+TIME: 2009-04-12 15:48
+FILE: H:\www\htdocs\JClubCMS\trunk\admin\lib\mysql.class.php
+LINE: 127
+MESSAGE: Verbindung zum Mysql-Server fehlgeschlagen  - (#2005) Unknown MySQL server host 'localost' (11001)
+TRACE: #0 H:\www\htdocs\JClubCMS\trunk\admin\lib\mysql.class.php(108): Mysql->_connect() #1 H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php(196): Mysql->__construct('localost', 'jclubch_jclubcm...', 'jclubch_jclubcm...', '4pw4jclubcms') #2 H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php(136): Core->_initObjects() #3 H:\www\htdocs\JClubCMS\trunk\admin\lib\core.class.php(121): Core->__construct() #4 H:\www\htdocs\JClubCMS\trunk\index.php(21): Core::singleton() #5 {main}
+POST: Array ( ) 
+GET: Array (     [nav_id] => 25 ) 
+COMMENT: 
+#END
+
