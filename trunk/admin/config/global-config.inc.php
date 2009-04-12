@@ -17,8 +17,14 @@ define('SMARTY_COMPILE_CHECK', true);
 define('SMARTY_DEBUGING', false);
 define('SMARTY_CONFIG_DIR', 'config');
 
-/*Bild und Thumb*/
+/*Sprach-Einstellungen*/
+define('LANGUAGE_ABR', 'de');
 
+/*Fehler-Einstellungen*/
+//Trace des PHP-Parser anzeigen. Aus Sicherheitsgründen (z.B. Offenlegen des MySQL-Passworts bei MySQL-Fehler) nicht empfohlen
+define('EXCEPTION_SHOW_TRACE', false);
+
+/*Bild und Thumb*/
 /**
  * **Speicherort der Bilder**
  * Bilder werden standartmässig im Ordner originals abgespeichert. 
@@ -39,11 +45,16 @@ define('THUMB_DIR', USER_DIR."graphics/gallery/thumbs/");
 define('THUMB_MAXHEIHGT', 150);
 define('THUMB_MAXWIDTH', 150);
 
+
+
 /**Smilies*/
 define('SMILIES_DIR', USER_DIR."graphics/smilies/");
 
+
 //**Date TimeZone
 date_default_timezone_set('Europe/Zurich');
+
+
 
 //**Bei der Gallerie: Alle Gallerien in der obersten Kategorie anzeigen, nicht nur die direkt untergeordneten
 define('SHOW_ALL_GALLERIES_ON_TOP',true);

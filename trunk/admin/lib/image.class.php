@@ -89,7 +89,6 @@ class Image {
 
 		imagefill($this->im, 0,0, $background_color);
 		imagestring($this->im, 5, 5, 35, $text, $text_color);
-		//throw new CMSException('TEST', EXCEPTION_LIBARY_CODE);
 	}
 	
 

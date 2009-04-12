@@ -70,7 +70,7 @@ class CMSException extends Exception
 	 * @param array $msg_key Schlüssel für den System-Text (@link system_textes.inc.php), z.B. array('mysql' => 'server_connection_failed')
 	 * @param int $code Benutzercode
 	 * @param string $msg_append zusätzlicher String für die Fehlerbeschreibung
-	 * @param string $title Fehlertitel
+	 * @param array $title Titel - enthält ein Array mit Bezug auf die Sprachvariable, z.B. array('core' => 'modul_not_found');
 	 */
 
 	public function __construct($msg_key, $code = 0, $msg_append = "", $title = "")
@@ -80,7 +80,7 @@ class CMSException extends Exception
 		$id = $msg_key[$group];
 		
 		//Nachricht erstellen aus den Texten von system_textes.inc.php und Anhang im Konstruktor
-		$message = $system_textes['de']["$group"]["$id"];
+		$message = $system_textes[LANGUAGE_ABR]["$group"]["$id"];
 		
 		if ($msg_append != "") {
 			$message .= "\n - ".$msg_append;
@@ -108,6 +108,11 @@ class CMSException extends Exception
 		}
 		
 		if (!empty($title)) {
+			
+			//$titel darf auch auf eine Sprachvariable hinweisen sein
+			if (is_array($title)) {
+				$title = $system_textes[LANGUAGE_ABR][key($title)][$title[key($title)]];
+			}
 			$this->_title .= " - $title";
 		}
 	}

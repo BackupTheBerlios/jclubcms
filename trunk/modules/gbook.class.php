@@ -129,7 +129,7 @@ class Gbook implements Module {
 					$this->_view($gbook_entries_per_page);
 					break;
 				default:
-					throw new CMSException('Gewählte Option ist nicht möglich', EXCEPTION_MODULE_CODE);
+					throw new CMSException(array('gbook' => 'invalid_option'), EXCEPTION_MODULE_CODE);
 			}
 		} else {
 			$this->_view(GBOOK_ENTRIES_PER_PAGE);

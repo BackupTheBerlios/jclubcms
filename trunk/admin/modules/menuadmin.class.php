@@ -212,7 +212,7 @@ class Menuadmin implements Module
 	{
 		/*Parameter kontrollieren */
 		if (!is_int($ID) || $ID < 1) {
-			throw new CMSException('1. Parameter ist nicht gültig. Typ Int ist verlangt.', EXCEPTION_MODULE_CODE, 'Laufzeit-Fehler');
+			throw new CMSException(array('menu' => 'wrong_param_int'), EXCEPTION_MODULE_CODE, array('menu' => 'runtime_error'));
 		}
 		$lang_vars = $this->_configvars['Editor'];
 		if ($this->_isformsend()) {
@@ -247,7 +247,7 @@ class Menuadmin implements Module
 		$lang_vars = $this->_configvars['Editor'];
 
 		if (!is_int($ID) || $ID < 1) {
-			throw new CMSException('1. Parameter ist nicht gültig. Typ Int ist verlangt.', EXCEPTION_MODULE_CODE, 'Laufzeit-Fehler');
+			throw new CMSException(array('menu' => 'wrong_param_int'), EXCEPTION_MODULE_CODE, array('menu' => 'runtime_error'));
 		}
 
 		if (key_exists('weiter', $post) && $post['weiter'] == $linktext) {
@@ -344,7 +344,7 @@ class Menuadmin implements Module
 	{
 		/*Parameter kontrollieren */
 		if (!is_array($data) || empty($data)) {
-			throw new CMSException('1. Parameter ist nicht gültig. Typ Array ist verlangt.', EXCEPTION_MODULE_CODE, 'Laufzeit-Fehler');
+			throw new CMSException(array('menu' => 'wrong_param_array'), EXCEPTION_MODULE_CODE, array('menu' => 'runtime_error'));
 		}
 
 
@@ -388,12 +388,12 @@ class Menuadmin implements Module
 	{
 		/*Parameter kontrollieren */
 		if (!is_array($data) || empty($data)) {
-			throw new CMSException('1. Parameter ist nicht gültig. Typ Array ist verlangt.', EXCEPTION_MODULE_CODE, 'Laufzeit-Fehler');
+			throw new CMSException(array('menu' => 'wrong_param_array'), EXCEPTION_MODULE_CODE, array('menu' => 'runtime_error'));
 		}
 
 
 		if (!key_exists('m_ID', $data) || !is_numeric($data['m_ID'])) {
-			throw new CMSException('Daten ungültig. Menu-ID verlangt.', EXCEPTION_MODULE_CODE, 'Laufzeit-Fehler');
+			throw new CMSException(array('menu' => 'no_menu_id'), EXCEPTION_MODULE_CODE, array('menu' => 'runtime_error'));
 		}
 
 		$sql = "UPDATE `menu` SET `menu_topid` = '".$this->_mysql->escapeString($data['m_topid'])."', `menu_position` = '".$this->_mysql->escapeString($data['m_pos'])."'";
@@ -541,7 +541,7 @@ class Menuadmin implements Module
 				}
 
 			} else {
-				throw new CMSException('Angegeben ID für Menueintrag ist nicht vorhanden', EXCEPTION_MODULE_CODE, 'Ungültige ID');
+				throw new CMSException(array('menu' => 'no_machting_id'), EXCEPTION_MODULE_CODE, array('menu' => 'invalid_id'));
 			}
 
 		} elseif ($tk_std_values == false) {

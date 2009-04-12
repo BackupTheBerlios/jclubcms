@@ -138,7 +138,7 @@ class Gbookadmin implements Module {
 					$this->_view(5);
 					break;
 				default:
-					throw new CMSException('Gewählte Option ist nicht möglich', EXCEPTION_MODULE_CODE);
+					throw new CMSException(array('gbook' => 'invalid_option'), EXCEPTION_MODULE_CODE);
 					return false;
 			}
 		} else {
