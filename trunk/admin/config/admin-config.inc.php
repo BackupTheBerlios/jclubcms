@@ -12,10 +12,11 @@
 define('TEMPLATESET_DIR', 'templates/default');
 
 //---Session-Einstellungen---
-$session_timeout = 3600; //Anzahl Sekunden, bis Session ungültig ist;
+//Anzahl Sekunden, bis Session ungültig ist;
+define('SESSION_TIMEOUT',3600);
 
 /*---Admin-Menu---*/
-$admin_menu_shortlinks = true;
+define('ADMIN_MENU_USE_SHORTLINKS',true);
 
 
 ?>

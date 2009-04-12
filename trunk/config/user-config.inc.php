@@ -8,16 +8,17 @@
 define('TEMPLATESET_DIR', 'templates/malte');
 
 /*Menu-Einstellungen*/
-$user_menu_shortlinks = false;
+define('USER_MENU_USE_SHORTLINKS',false);
 
 /*News-Einstellungen*/
-$news_entries_per_page = 5;
+define('NEWS_ENTRIES_PER_PAGE',5);
 
 
 /*Gallery-Einstellungen*/
-$gallery_pics_x = 4;
-$gallery_pics_y = 4;
-$gallery_menuview = 2; //Wieviele Bilder Links und Rechts des aktuellen Bildes gezeigt werden
+define('GALLERY_PICS_X',4);
+define('GALLERY_PICS_Y',4);
+//Wieviele Bilder Links und Rechts des aktuellen Bildes gezeigt werden
+define('GALLERY_MENUVIEW',2);
 
 /*------$time_format-----------------------
 * Analog des data() von PHP, mit Ausnahmen
@@ -36,9 +37,9 @@ $gallery_menuview = 2; //Wieviele Bilder Links und Rechts des aktuellen Bildes g
 * z	Der Tag eines Jahres
 * Z	 Offset der Zeitzone in Sekunden.
 */
-$time_format = "j.m.Y H:i";
+//$time_format = "j.m.Y H:i";
 
 
 /*------GBook-Settings----------*/
-$gbook_entries_per_page = 5;
+define('GBOOK_ENTRIES_PER_PAGE',5);
 ?>

@@ -135,8 +135,6 @@ class Auth
 
 	public function check4user($get_array)
 	{
-		global $session_timeout;
-
 		global $auth_error_nonactiv, $auth_error_sessioncorupt;
 
 		if ($this->_session->watch4session($get_array) == false) {
@@ -154,7 +152,7 @@ class Auth
 			return false;
 		}
 
-		if ($this->_session->activ($session_timeout) == false) {
+		if ($this->_session->activ(SESSION_TIMEOUT) == false) {
 			$this->_session->delete();
 
 			$this->_smarty->assign('error_text', $auth_error_nonactiv);

@@ -87,7 +87,6 @@ class Menuadmin implements Module
 	public function action($gpc)
 	{
 		//Daten initialisieren
-		global $dir_smilies;
 		$this->_gpc['POST'] = $gpc['POST'];
 		$this->_gpc['GET'] = $gpc['GET'];
 

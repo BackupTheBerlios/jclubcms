@@ -1,10 +1,8 @@
 <?php
-error_reporting(E_ALL | E_STRICT); //Zu Debug-Zwecken
-$start_time = microtime(true);
-
 //Config laden
 require_once ADMIN_DIR.'config/global-config.inc.php';
 require_once ADMIN_DIR.'config/functions.inc.php';
+require_once ADMIN_DIR.'config/system_textes.inc.php';
 
 
 //notwendige Module laden
@@ -155,8 +153,12 @@ class Core
 			if (!class_exists('Smarty') || !($this->_smarty instanceof Smarty)) {
 				CMSException::logException($e,null,'Instance of Smarty does not exists');
 				CMSException::printException($e->getFilename(), $e->getLine(), $e->getMessage(), $strTrace);
+				
 			} else {
 				CMSException::logException($e);
+				
+				//**Template-Set einstellen und für die Templates als Variable zugänglich machen
+				$this->_smarty_array['TEMPLATESET_DIR'] = TEMPLATESET_DIR;
 				$this->_smarty_array['file'] = 'error_include.tpl';
 				$this->_smarty_array['error_title'] = CMSException::htmlencode($e->getTitle());
 				$this->_smarty_array['error_text'] = CMSException::htmlencode($e->getMessage())."<br />\nFehler aufgetreten in der Datei ".$e->getFilename()." auf Zeilenummer ".$e->getLine();
@@ -179,17 +181,24 @@ class Core
 
 	private function _initObjects()
 	{
-		global $db_server, $db_name, $db_user, $db_pw, $TEMPLATESET_DIR;
 		//Smarty-Objekt
 		$this->_smarty = new Smarty();
-		$this->_smarty->compile_check = true;
-		$this->_smarty->debugging = false;
-		$this->_smarty->config_dir = 'config';
+		
+		//Eigenschaften des Smarty-Objektes nach den Vorgaben von global-config.inc.php ändern
+		$this->_smarty->compile_check = SMARTY_COMPILE_CHECK;
+		$this->_smarty->debugging = SMARTY_DEBUGING;
+		$this->_smarty->config_dir = SMARTY_CONFIG_DIR;
+		
 		//**Template-Set einstellen und für die Templates als Variable zugänglich machen
 		$this->_smarty->template_dir = TEMPLATESET_DIR;
-		$this->_mysql = new Mysql($db_server, $db_name, $db_user, $db_pw);
+		
+		//MySQL-Objekt initialisieren
+		$this->_mysql = new Mysql(DB_SERVER, DB_NAME, DB_USER, DB_PW);
 
+		//Page-Objekt initialisieren für die Darstellung des CMS
 		$this->_page = new Page($this->_smarty, $this->_mysql);
+		
+		//Auth-Objekt initialisieren für die Zutrittsverwaltung
 		$this->_auth = new Auth($this->_smarty, $this->_mysql);
 	}
 
@@ -259,8 +268,6 @@ class Core
 
 	private function _initPage()
 	{
-		global $start_time;
-
 		//**Template-Set einstellen und für die Templates als Variable zugänglich machen
 		$this->_smarty_array['TEMPLATESET_DIR'] = TEMPLATESET_DIR;
 
@@ -269,13 +276,11 @@ class Core
 
 
 		if ($this->_is_admin == true) {
-			global $admin_menu_shortlinks;
 			$table = 'admin_menu';
-			$shortlink = $admin_menu_shortlinks;
+			$shortlink = ADMIN_MENU_USE_SHORTLINKS;
 		} else {
-			global $user_menu_shortlinks;
 			$table = 'menu';
-			$shortlink = $user_menu_shortlinks;
+			$shortlink = USER_MENU_USE_SHORTLINKS;
 		}
 
 		$this->_loadNav($shortlink);
@@ -304,7 +309,7 @@ class Core
 
 		$this->_smarty_array['shortlink'] = $shortlink;
 
-		$this->_smarty_array['generated_time'] = round(((float)(microtime(true) - $start_time)),5);
+		$this->_smarty_array['generated_time'] = round(((float)(microtime(true) - START_TIME)),5);
 
 		
 		$this->_smarty->assign($this->_smarty_array);

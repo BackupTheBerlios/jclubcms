@@ -67,13 +67,25 @@ class CMSException extends Exception
 	/**
 	 * Aufbau der Exception-Klasse
 	 *
-	 * @param string $message Nachricht
+	 * @param array $msg_key Schlüssel für den System-Text (@link system_textes.inc.php), z.B. array('mysql' => 'server_connection_failed')
 	 * @param int $code Benutzercode
+	 * @param string $msg_append zusätzlicher String für die Fehlerbeschreibung
 	 * @param string $title Fehlertitel
 	 */
 
-	public function __construct($message, $code = 0, $title = "")
+	public function __construct($msg_key, $code = 0, $msg_append = "", $title = "")
 	{
+		global $system_textes;
+		$group = key($msg_key);
+		$id = $msg_key[$group];
+		
+		//Nachricht erstellen aus den Texten von system_textes.inc.php und Anhang im Konstruktor
+		$message = $system_textes['de']["$group"]["$id"];
+		
+		if ($msg_append != "") {
+			$message .= "\n - ".$msg_append;
+		}
+
 		// sicherstellen, dass alles korrekt zugewiesen wird
 		parent::__construct($message, $code);
 		

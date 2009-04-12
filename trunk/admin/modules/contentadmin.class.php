@@ -89,7 +89,6 @@ class Contentadmin implements Module
 	public function action($gpc)
 	{
 		//Daten initialisieren
-		global $dir_smilies;
 		$this->_gpc['POST'] = $gpc['POST'];
 		$this->_gpc['GET'] = $gpc['GET'];
 
@@ -103,7 +102,7 @@ class Contentadmin implements Module
 
 		$this->_nav_id = $this->_smarty->get_template_vars('local_link');
 
-		$this->_smilie = new Smilies($dir_smilies);
+		$this->_smilie = new Smilies(SMILIES_DIR);
 
 		if (key_exists('ref_ID', $this->_gpc['GET']) && is_numeric($this->_gpc['GET']['ref_ID'])) {
 			$id = (int)$this->_gpc['GET']['ref_ID'];

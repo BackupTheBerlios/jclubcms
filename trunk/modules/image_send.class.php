@@ -65,8 +65,6 @@ class Image_send implements Module
 
 	private function _initImg($bild_ID)
 	{
-		global $dir_galImage, $dir_orgImage;
-		global $image_maxheight, $image_maxwidth;
 		//Eintrag zur ID vorhanden?
 		$this->_mysql->query("SELECT `filename` FROM `bilder` WHERE `bilder_ID` = '$bild_ID' LIMIT 1");
 
@@ -80,24 +78,24 @@ class Image_send implements Module
 		}
 
 		//Entweder liegt das Bild im Gallery-Ordner oder im Origianl-Ordner (mit falscher Groesse?)
-		if(is_file($dir_galImage.$mysql_data['filename'])) {
-			$this->_img = new Image($dir_galImage.$mysql_data['filename']);
+		if(is_file(IMAGE_DIR_GALL.$mysql_data['filename'])) {
+			$this->_img = new Image(IMAGE_DIR_GALL.$mysql_data['filename']);
 
 		} else {
 
-			$this->_img = new Image($dir_orgImage.$mysql_data['filename']);
+			$this->_img = new Image(IMAGE_DIR_ORIGN.$mysql_data['filename']);
 			$bild_data = $this->_img->send_infos();
 
-			if($bild_data['height'] > $image_maxheight || $bild_data['width'] > $image_maxwidth) {
-				$newSize = $this->_calcSize($bild_data['width'], $bild_data['height'], $image_maxwidth, $image_maxheight);
+			if($bild_data['height'] > IMAGE_MAXHEIGHT || $bild_data['width'] > IMAGE_MAXWIDTH) {
+				$newSize = $this->_calcSize($bild_data['width'], $bild_data['height'], IMAGE_MAXWIDTH, IMAGE_MAXHEIGHT);
 				//verkleinertes Bild in den Ordner speichern
-				$this->_img->copy($newSize['width'], $newSize['height'], $dir_galImage.$mysql_data['filename']);
+				$this->_img->copy($newSize['width'], $newSize['height'], IMAGE_DIR_GALL.$mysql_data['filename']);
 
 				//Alte Instanz loeschen
 				unset($this->_img);
 
 				//Neue Instanz mit kleinem Bild
-				$this->_img = new Image($dir_galImage.$mysql_data['filename']);
+				$this->_img = new Image(IMAGE_DIR_GALL.$mysql_data['filename']);
 			}
 		}
 
@@ -111,8 +109,6 @@ class Image_send implements Module
 	 */
 	private function _initThumb($thumb)
 	{
-		global $dir_thumb, $dir_orgImage;
-		global $thumb_maxheight, $thumb_maxwidth;
 		//Eintrag zur ID vorhanden?
 		$this->_mysql->query("SELECT `filename` FROM `bilder` WHERE `bilder_ID` = '$thumb' LIMIT 1");
 
@@ -127,20 +123,20 @@ class Image_send implements Module
 		}
 
 		//Existiert kein Thumb, wird eins erstellt
-		if(!is_file($dir_thumb.$mysql_data['filename']))
+		if(!is_file(THUMB_DIR.$mysql_data['filename']))
 		{
-			$orgImg = new Image($dir_orgImage.$mysql_data['filename']);
+			$orgImg = new Image(IMAGE_DIR_ORIGN.$mysql_data['filename']);
 			$bild_data = $orgImg->send_infos();
 
 			$newSize = $this->_calcSize($bild_data['width'], $bild_data['height'], $thumb_maxwidth, $thumb_maxheight);
 
-			$orgImg->copy($newSize['width'] , $newSize['height'], $dir_thumb.$mysql_data['filename'], "jpeg");
+			$orgImg->copy($newSize['width'] , $newSize['height'], THUMB_DIR.$mysql_data['filename'], "jpeg");
 			unset($orgImg);
 		}
 
 
 		//Bild ausgeben
-		$this->_img = new Image($dir_thumb.$mysql_data['filename']);
+		$this->_img = new Image(THUMB_DIR.$mysql_data['filename']);
 		$this->_img->send_image();
 	}
 

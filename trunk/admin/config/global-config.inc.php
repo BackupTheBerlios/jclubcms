@@ -6,25 +6,41 @@
  */
 
 /*DB-Einstellungen*/
-$db_server = "localhost";
-$db_name = "jclubch_jclubcms";
-$db_user = "jclubch_jclubcms";
-$db_pw ="4pw4jclubcms";
+define('DB_SERVER', 'localost');
+define('DB_NAME', 'jclubch_jclubcms');
+define('DB_USER', 'jclubch_jclubcms');
+define('DB_PW', '4pw4jclubcms');
 
-//**Bild und Thumb
 
-//!!! Bilder sind stdmaessig in originals abgespeichert, aber wenn sie zu gross sind, in gallery
-$dir_orgImage = USER_DIR."graphics/originals/"; //Relativ zur Index-Datei
-$dir_galImage = USER_DIR."graphics/gallery/";  //Relativ zur Index-Datei
-$image_maxheight = 600;
-$image_maxwidth = 600;
+/*Smarty-Einstellungen*/
+define('SMARTY_COMPILE_CHECK', true);
+define('SMARTY_DEBUGING', false);
+define('SMARTY_CONFIG_DIR', 'config');
 
-$dir_thumb = USER_DIR."graphics/gallery/thumbs/";  //Relativ zur Index-Datei
-$thumb_maxheight = 150;
-$thumb_maxwidth = 150;
+/*Bild und Thumb*/
 
-//**Smilies
-$dir_smilies = USER_DIR."graphics/smilies/";
+/**
+ * **Speicherort der Bilder**
+ * Bilder werden standartmässig im Ordner originals abgespeichert. 
+ * Automatisch generierte Kopien dieser Bilder (u.a. weil das Originalbild zu gross ist) werden
+ * im Ornder gallery abgespeichert.
+ * Die kleinen automatische generierten Vorzeigebilder (sog. Thumbs) wernden standardmässig
+ * im Ordner thumbs gespeichert.
+ * 
+ * Wichtig: Speicherorte sind relativ zur Index.php-Datei anzugeben
+ *
+ */
+define('IMAGE_DIR_ORIGN', USER_DIR."graphics/originals/");
+define('IMAGE_DIR_GALL', USER_DIR."graphics/gallery/");
+define('IMAGE_MAXHEIGHT', 600);
+define('IMAGE_MAXWIDTH', 600);
+
+define('THUMB_DIR', USER_DIR."graphics/gallery/thumbs/");
+define('THUMB_MAXHEIHGT', 150);
+define('THUMB_MAXWIDTH', 150);
+
+/**Smilies*/
+define('SMILIES_DIR', USER_DIR."graphics/smilies/");
 
 //**Date TimeZone
 date_default_timezone_set('Europe/Zurich');

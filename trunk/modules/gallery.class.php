@@ -83,9 +83,8 @@ class Gallery implements Module
 	public function action($gpc)
 	{
 		//Daten initialisieren
-		global $dir_smilies;
 		$this->_gpc = $gpc;
-		$this->_smilie = new Smilies($dir_smilies);
+		$this->_smilie = new Smilies(SMILIES_DIR);
 
 		/*
 		Unterstützung in der nächsten Version
@@ -205,13 +204,12 @@ class Gallery implements Module
 		/* Anzeige-Config-Daten auslesen */
 		include_once(USER_DIR.'config/user-config.inc.php');
 
-		global $gallery_pics_x, $gallery_pics_y;
 
 		/*Aktuelle Seite ermitteln */
 		$page = Page::get_current_page($this->_gpc['GET']);
 
 		//Ein paar Daten berechnen
-		$bildproseite = (int)($gallery_pics_x * $gallery_pics_y);
+		$bildproseite = (int)(GALLERY_PICS_X * GALLERY_PICS_Y);
 		$start = (int)(($page-1)*$bildproseite);
 
 
@@ -242,7 +240,7 @@ class Gallery implements Module
 		$this->_smarty->assign("pages", $pages_array);
 		$this->_smarty->assign("gallery", $gallery_imgs);
 		$this->_smarty->assign(array('thispage' => $page, 'number' => $number, 'gal_ID' => $gal_ID,
-		'top_ID' => $root[(count($root) - 1)]['ID'], 'gallery_name' => $gallery_name, 'breakline' => $gallery_pics_x));
+		'top_ID' => $root[(count($root) - 1)]['ID'], 'gallery_name' => $gallery_name, 'breakline' => GALLERY_PICS_X));
 
 
 	}
