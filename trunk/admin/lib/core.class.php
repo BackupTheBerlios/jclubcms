@@ -340,7 +340,7 @@ class Core
 	/**
 	 * Laedt die Navigation und speicher sie in $this->_smarty_array
 	 *
-	 * @param booleane $shortlinks
+	 * @param boolean $shortlinks
 	 */
 
 	private function _loadNav($shortlinks = false)
