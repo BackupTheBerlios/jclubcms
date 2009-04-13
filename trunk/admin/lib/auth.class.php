@@ -143,8 +143,6 @@ class Auth
 
 	public function check4user($get_array)
 	{
-		global $session_timeout;
-
 		global $auth_error_nonactiv, $auth_error_sessioncorupt;
 
 		if ($this->_session->watch4session($get_array) == false) {
@@ -162,7 +160,7 @@ class Auth
 			return false;
 		}
 
-		if ($this->_session->activ($session_timeout) == false) {
+		if ($this->_session->activ(SESSION_TIMEOUT) == false) {
 			$this->_session->delete();
 
 			$this->_smarty->assign('error_text', $auth_error_nonactiv);
@@ -184,9 +182,8 @@ class Auth
 	public function logout()
 	{
 		$this->_session->delete();
-
-		$this->_smarty->assign('forward_text', "Sie haben sich erfolgreich ausgeloggt");
-		$this->_smarty->assign('forward_linktext', "Zum Login");
+		//Sektion der Sprachdatei weitergeben für die Texte im Template
+		$this->_smarty->assign('section', 'Logout');
 		$this->_smarty->assign('forward_link', "?");
 		$this->_smarty->display('forward.tpl');
 	}

@@ -24,7 +24,6 @@
  * @package JClubCMS
  * @uses Mysql for connectiong to the database
  */
-
 class Bbcodes {
 	private $_bbcodes_array;
 	private $_type;
