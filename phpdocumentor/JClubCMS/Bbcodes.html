@@ -68,17 +68,17 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---image.class.php.html">		image.class.php
 		</a><br>
-			<a href="../JClubCMS/_admin---modules---image_send.class.php.html">		image_send.class.php
-		</a><br>
 			<a href="../JClubCMS/_modules---image_send.class.php.html">		image_send.class.php
+		</a><br>
+			<a href="../JClubCMS/_admin---modules---image_send.class.php.html">		image_send.class.php
 		</a><br>
 			<a href="../JClubCMS/_admin---index.php.html">		index.php
 		</a><br>
 			<a href="../JClubCMS/_index.php.html">		index.php
 		</a><br>
-			<a href="../JClubCMS/_admin---modules---mailmodule.class.php.html">		mailmodule.class.php
-		</a><br>
 			<a href="../JClubCMS/_modules---mailmodule.class.php.html">		mailmodule.class.php
+		</a><br>
+			<a href="../JClubCMS/_admin---modules---mailmodule.class.php.html">		mailmodule.class.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---mailsend.class.php.html">		mailsend.class.php
 		</a><br>
@@ -103,6 +103,8 @@
 			<a href="../JClubCMS/_admin---lib---session.class.php.html">		session.class.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---smilies.class.php.html">		smilies.class.php
+		</a><br>
+			<a href="../JClubCMS/_admin---config---system_textes.inc.php.html">		system_textes.inc.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---timeparser.class.php.html">		timeparser.class.php
 		</a><br>
@@ -202,7 +204,7 @@ Source Location: /admin/lib/bbcodes.class.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line <a href="../__filesource/fsource_JClubCMS__adminlibbbcodes.class.php.html#a28">28</a>]<br />
+[line <a href="../__filesource/fsource_JClubCMS__adminlibbbcodes.class.php.html#a27">27</a>]<br />
 Die Klasse soll die Texte aus den Inhalten der Seite, sowie aus den Gaestebuecher und News uebersetzen.<br /><br /><p>Die BBCodes sind in der MySQL-Tabelle bbcodes abgelegt, sowie das HTML-Pendant.  Das HTML-Pendant enthaelt jeweils ein oder mehrere %s welche den Standort des einzufuegenden Textes enthaelt.</p><p>Zudem muss noch ueberprueft werden:  -&gt; BBCodes muessen sauber verschachtelt sein, wenn nicht sollen sie nicht uebersetzt oder bei der anzeige geloescht werden.</p><p>Beachtet werden sollte spaeter auch noch:  -&gt; Nicht jeder BBCode sollte ueberall verwendet werden koennen (URL und IMG nicht im Gaestebuch)</p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
@@ -229,7 +231,7 @@ Die Klasse soll die Texte aus den Inhalten der Seite, sowie aus den Gaestebueche
 
   <hr />
 	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibbbcodes.class.php.html#a38">38</a>]</span></h3>
+	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibbbcodes.class.php.html#a37">37</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -271,7 +273,7 @@ $mysql_link)</code>
   </div>
   <hr />
 	<a name="method__destruct"></a>
-	<h3>destructor __destruct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibbbcodes.class.php.html#a47">47</a>]</span></h3>
+	<h3>destructor __destruct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibbbcodes.class.php.html#a46">46</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -296,7 +298,7 @@ $mysql_link)</code>
   </div>
   <hr />
 	<a name="methodget_bbcodes"></a>
-	<h3>method get_bbcodes <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibbbcodes.class.php.html#a67">67</a>]</span></h3>
+	<h3>method get_bbcodes <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibbbcodes.class.php.html#a66">66</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -321,7 +323,7 @@ $mysql_link)</code>
   </div>
   <hr />
 	<a name="methodreplace_bbcodes"></a>
-	<h3>method replace_bbcodes <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibbbcodes.class.php.html#a88">88</a>]</span></h3>
+	<h3>method replace_bbcodes <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibbbcodes.class.php.html#a87">87</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -360,7 +362,7 @@ $text)</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Mon, 13 Apr 2009 02:17:17 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Mon, 13 Apr 2009 02:46:02 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>
