@@ -96,8 +96,6 @@ class Gbookadmin implements Module {
 	 */
 	public function action($gpc)
 	{
-		global $dir_smilies;
-
 		//Daten laden
 		$this->_smarty->config_load('textes.de.conf', 'Gbook');
 		$this->_configvars['Gbook'] = $this->_smarty->get_config_vars();
@@ -113,7 +111,7 @@ class Gbookadmin implements Module {
 		'content' => 'gbook_content', 'name' => 'gbook_name', 'time' => 'gbook_time', 'email' => 'gbook_email',
 		'hp' => 'gbook_hp', 'title' => 'gbook_title'));
 
-		$this->_smilie = new Smilies($dir_smilies);
+		$this->_smilie = new Smilies(SMILIES_DIR);
 		
 		if ($this->_getStatus() == 'off') {
 			$this->_smarty->assign('info', 'Das Modul G&auml;stebuch ist deaktiviert. Benutzer k&ouml;nnen keine G&auml;stebucheintr&auml;ge anschauen');
@@ -140,7 +138,7 @@ class Gbookadmin implements Module {
 					$this->_view(5);
 					break;
 				default:
-					throw new CMSException('Gewählte Option ist nicht möglich', EXCEPTION_MODULE_CODE);
+					throw new CMSException(array('gbook' => 'invalid_option'), EXCEPTION_MODULE_CODE);
 					return false;
 			}
 		} else {

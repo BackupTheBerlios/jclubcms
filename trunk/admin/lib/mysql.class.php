@@ -99,22 +99,7 @@ class Mysql {
 	
 	
 	/**
-	 * Gibt es ein Fehler
-	 *
-	 * @var boolean
-	 */
-	private $_errorexists = false;
-
-	/**
-	 * Speichern des Fehlers
-	 * 
-	 * @var array
-	 */
-	private $_error = array();
-	
-	
-	/**
-	 * Das Konstrukt dieser Klasse
+	 * Der Konstruktor dieser Klasse
 	 *
 	 * @param string $server Name des Servers
 	 * @param string $name Name der Datenbank
@@ -149,17 +134,14 @@ class Mysql {
 		if (!is_resource($this->_serverlink)) {
 			$mysql_errstr = mysql_error();
 			$mysql_errno = mysql_errno();
-			$error_str = "Verbindung zum Mysql-Server fehlgeschlagen.<br />\n(#$mysql_errno) $mysql_errstr";
-			throw new CMSException($error_str, EXCEPTION_MYSQL_CODE);
+			throw new CMSException(array('mysql' => 'server_connection_failed'), EXCEPTION_MYSQL_CODE, "(#$mysql_errno) $mysql_errstr");
 		}
 
 		if (!mysql_select_db($this->_mysqldb, $this->_serverlink)) {
-			throw new CMSException('Verbindung zum Mysql-Server fehlgeschlagen', EXCEPTION_MYSQL_CODE);
-			//$this->_logError(__FUNCTION__, __LINE__, 'Verbindung zur Mysql-Datenbank fehlgeschlagen');
-			//return false;
-		}/* else {
-			return true;
-		}*/
+			$mysql_errstr = mysql_error();
+			$mysql_errno = mysql_errno();
+			throw new CMSException(array('mysql' => 'server_connection_failed'), EXCEPTION_MYSQL_CODE, "(#$mysql_errno) $mysql_errstr");
+		}
 
 	}
 	
@@ -177,7 +159,7 @@ class Mysql {
 	public function escapeString($string)
 	{	
 		if (($string = mysql_real_escape_string(stripslashes($string), $this->_serverlink)) === false) {
-			throw new CMSException('Mysql-Anfrage konnte nicht maskiert werden', EXCEPTION_MYSQL_CODE);
+			throw new CMSException(array('mysql' => 'query_not_masked'), EXCEPTION_MYSQL_CODE);
 		} else {
 			return addslashes($string);
 		}
@@ -200,7 +182,7 @@ class Mysql {
 		$success = true;
 		
 		if (!is_string($query)) {
-			throw new CMSException('Angegebener Mysql-Query ist kein String', EXCEPTION_MYSQL_CODE);
+			throw new CMSException(array('mysql' => 'query_not_string'), EXCEPTION_MYSQL_CODE);
 		}
 		
 			
@@ -232,7 +214,7 @@ class Mysql {
 		}
 		
 		if(($this->_noresult == true && $success == false) || ($this->_noresult == false && $this->_result === false)) {
-			throw new CMSException("Mysql-Query ist ungültig\n".mysql_error($this->_serverlink), EXCEPTION_MYSQL_CODE, "Query");
+			throw new CMSException(array('mysql' => 'query_invalid'), EXCEPTION_MYSQL_CODE, mysql_error($this->_serverlink), "Query");
 			
 		} else {
 			return true;
@@ -249,9 +231,6 @@ class Mysql {
 
 	public function fetcharray($resulttype = "both") {
 
-		if ($this->_errorexists) {
-			return false;
-		}
 		
 		switch ($resulttype) {
 			case "num":
@@ -368,7 +347,7 @@ class Mysql {
 	public function disconnect() {
 		if (!is_resource($this->_serverlink) && !mysql_close($this->_serverlink))
 		{
-			throw new CMSException('Mysql-Verbindung konnte nicht auf Anfrage geschlossen werden', EXCEPTION_MYSQL_CODE);
+			throw new CMSException(array('mysql' => 'server_not_closed'), EXCEPTION_MYSQL_CODE);
 		}
 		
 		return true;
@@ -404,45 +383,6 @@ class Mysql {
 		$this->_result = null;
 
 	}
-	
-//	/**
-//	 * Speichert intern den Fehler
-//	 *
-//	 * @param string $function Methode/Funktion
-//	 * @param string $line Zeile
-//	 * @param string $msg Nachricht
-//	 */
-//	
-//	private function _logError($function, $line, $msg)
-//	{
-//		$this->_errorexists = true;
-//		$this->_error = array('function' => $function, 'line' => $line, 'msg' => $msg);
-//	}
-//	
-//	/**
-//	 * Gibt an, ob ein Fehler aufgetreten ist.
-//	 *
-//	 * @return boolean
-//	 */
-//	
-//	public function isError()
-//	{
-//		if ($this->_errorexists == true) {
-//			return true;
-//		} else {
-//			return false;
-//		}
-//	}
-//	
-//	/**
-//	 * Gibt ein Array zurueck, welches Ort, Zeile und Nachricht des Fehlers enthaelt
-//	 *
-//	 * @return array $error
-//	 */
-//	
-//	public function getError()
-//	{
-//		return $this->_error;
-//	}
+
 
 };

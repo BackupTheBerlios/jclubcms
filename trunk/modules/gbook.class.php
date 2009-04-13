@@ -108,8 +108,6 @@ class Gbook implements Module {
 	public function action($gpc)
 	{
 
-		global $dir_smilies, $gbook_entries_per_page;
-
 		//Daten laden
 		$this->_smarty->config_load('textes.de.conf', 'Gbook');
 		$this->_configvars['Gbook'] = $this->_smarty->get_config_vars();
@@ -122,7 +120,7 @@ class Gbook implements Module {
 		'content' => 'gbook_content', 'name' => 'gbook_name', 'time' => 'gbook_time', 'email' => 'gbook_email',
 		'hp' => 'gbook_hp', 'title' => 'gbook_title'));
 
-		$this->_smilie = new Smilies($dir_smilies);
+		$this->_smilie = new Smilies(SMILIES_DIR);
 
 		if (isset($this->_gpc['GET']['action'])) {
 			switch ($this->_gpc['GET']['action']) {
@@ -139,10 +137,10 @@ class Gbook implements Module {
 					$this->_view($gbook_entries_per_page);
 					break;
 				default:
-					throw new CMSException('Gewählte Option ist nicht möglich', EXCEPTION_MODULE_CODE);
+					throw new CMSException(array('gbook' => 'invalid_option'), EXCEPTION_MODULE_CODE);
 			}
 		} else {
-			$this->_view($gbook_entries_per_page);
+			$this->_view(GBOOK_ENTRIES_PER_PAGE);
 		}
 
 		return true;

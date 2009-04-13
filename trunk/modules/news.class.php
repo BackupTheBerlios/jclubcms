@@ -84,15 +84,14 @@ class News implements Module
 	public function action($gpc)
 	{
 		//Daten initialisieren
-		global $dir_smilies;
 		$this->_gpc = $gpc;
 
 		$this->_msbox = new Messageboxes($this->_mysql, 'news', array('ID' => 'news_ID', 'ref_ID' => 'news_ref_ID', 'content' => 'news_content', 'name' => 'news_name', 'time' => 'news_time', 'email' => 'news_email', 'hp' => 'news_hp', 'title' => 'news_title'));
 
-		$this->_smilie = new Smilies($dir_smilies);
+		$this->_smilie = new Smilies(SMILIES_DIR);
 
 		//Keine Angabe -> Ausgabe der News
-		$this->_view(10);
+		$this->_view(NEWS_ENTRIES_PER_PAGE);
 		return true;
 
 	}

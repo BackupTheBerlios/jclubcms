@@ -89,7 +89,6 @@ class Contentadmin implements Module
 	public function action($gpc)
 	{
 		//Daten initialisieren
-		global $dir_smilies;
 		$this->_gpc['POST'] = $gpc['POST'];
 		$this->_gpc['GET'] = $gpc['GET'];
 
@@ -103,7 +102,7 @@ class Contentadmin implements Module
 
 		$this->_nav_id = $this->_smarty->get_template_vars('local_link');
 
-		$this->_smilie = new Smilies($dir_smilies);
+		$this->_smilie = new Smilies(SMILIES_DIR);
 
 		if (key_exists('ref_ID', $this->_gpc['GET']) && is_numeric($this->_gpc['GET']['ref_ID'])) {
 			$id = (int)$this->_gpc['GET']['ref_ID'];
@@ -207,7 +206,7 @@ class Contentadmin implements Module
 
 		/*Parameter kontrollieren */
 		if (!is_int($ID) || $ID < 1) {
-			throw new CMSException('1. Parameter ist nicht gültig. Typ Int ist verlangt.', EXCEPTION_MODULE_CODE, 'Laufzeit-Fehler');
+			throw new CMSException(array('content' => 'wrong_param_int'), EXCEPTION_MODULE_CODE, "", array('content' => 'runtime_error'));
 		}
 		$lang_vars = $this->_configvars['Editor'];
 		if ($this->_isformsend()) {
@@ -242,7 +241,7 @@ class Contentadmin implements Module
 		$lang_vars = $this->_configvars['Editor'];
 
 		if (!is_int($ID) || $ID < 1) {
-			throw new CMSException('1. Parameter ist nicht gültig. Typ Int ist verlangt.', EXCEPTION_MODULE_CODE, 'Laufzeit-Fehler');
+			throw new CMSException(array('content' => 'wrong_param_int'), EXCEPTION_MODULE_CODE, "", array('content' => 'runtime_error'));
 		}
 
 		if (key_exists('weiter', $post) && $post['weiter'] == $linktext) {
@@ -279,7 +278,7 @@ class Contentadmin implements Module
 	{
 		/*Parameter kontrollieren */
 		if (!is_array($data) || empty($data)) {
-			throw new CMSException('1. Parameter ist nicht gültig. Typ Array ist verlangt.', EXCEPTION_MODULE_CODE, 'Laufzeit-Fehler');
+			throw new CMSException(array('content' => 'wrong_param_array'), EXCEPTION_MODULE_CODE, "", array('content' => 'runtime_error'));
 		}
 
 		/*Modus Content hinzufügen */
@@ -327,17 +326,17 @@ class Contentadmin implements Module
 		/*Parameter kontrollieren */
 		//** Es werden nur gefüllte Array akzeptiert
 		if (!is_array($data) || empty($data)) {
-			throw new CMSException('1. Parameter ist nicht gültig. Typ Array ist verlangt.', EXCEPTION_MODULE_CODE, 'Laufzeit-Fehler');
+			throw new CMSException(array('content' => 'wrong_param_array'), EXCEPTION_MODULE_CODE, "", array('content' => 'runtime_error'));
 		}
 
 		//**Content-ID darf nur numerisch sein, weil sonst kein gültiger Abruf im Mysql stattfindet
 		if (!key_exists('c_ID', $data) || !is_numeric($data['c_ID'])) {
-			throw new CMSException('Daten ungültig. Content-ID verlangt.', EXCEPTION_MODULE_CODE, 'Laufzeit-Fehler');
+			throw new CMSException(array('content' => 'no_content_id'), EXCEPTION_MODULE_CODE, "", array('content' => 'runtime_error'));
 		}
 
 		//Wird das Menu nicht ignoriert, ein Schlüssel m_new nicht existiert und keine richtige Menu-ID vorliegt, wird hier abgebrochen
 		if ((!key_exists('m_ignore', $data) || $data['m_ignore'] != true) && !(key_exists('m_new', $data) && $data['m_new'] = "NEW_MEN_ID") && (!key_exists('m_ID', $data) || !is_numeric($data['m_ID']))) {
-			throw new CMSException('Daten ungültig. Menu-ID verlangt.', EXCEPTION_MODULE_CODE, 'Laufzeit-Fehler');
+			throw new CMSException(array('content' => 'no_menu_id'), EXCEPTION_MODULE_CODE, "", array('content' => 'runtime_error'));
 		}
 
 		/*Modus Content editieren*/
@@ -694,7 +693,7 @@ class Contentadmin implements Module
 	 * - Menupunkte verweisen auf Seiten/Module, die nicht erreichbar sind.
 	 * - Mehr als ein Menu-Punkt ist einem Inhalt/Modul zugewiesen
 	 * - Ein Inhalt/Modul wird nicht von einem Menu-Punkt verwiesen
-	 * 
+	 * @todo: Funktion schreiben
 	 *
 	 */
 
