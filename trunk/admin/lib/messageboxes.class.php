@@ -29,6 +29,11 @@ if (!defined('MSGBOX_FORMCHECK_INVALID')) {
 	define('MSGBOX_FORMCHECK_INVALID', 4);
 }
 /**
+ * Die Klasse MessageBoxes ist verantwortlich für das Verwalten von Nachrichten in der Datenbank. Nachrichten können News, Gästebucheinträge, 
+ * Nachrichten u.ä. sein. Die Klasse kann diese Nachrichten in die Datenbank eintragen, zu Nachrichten Kommentare schreiben, Nachrichten löschen,
+ * Nachrichten zurückgeben und kontrollileren, ob einen Nachricht ein Kommentar einer anderen Nachricht ist. Weiter verfügt die Klasse über
+ * eine Methode, die angegeben Einträge auf Standart-Werte und leere String prüft. Dies ist nützlich, wenn ein Modul überprüfen will, ob keine
+ * dieser Werte vorhanden sind.
  * Dem Konstruktor wird der Aufbau der Tabelle mit einem Array weitergegeben. Werte in diesem Array unbeding vorkommen muss ID
  * und content. Weiter nueztliche Dine sind ref_ID, name, time, hp, mail. So koennen die Daten nach time geordenet werden 
  * oder hp/mail verifiziert werden. Sie sind nicht absolut noetig, aber hilfreich. Damit diese richtig behandelt werden,
@@ -36,6 +41,7 @@ if (!defined('MSGBOX_FORMCHECK_INVALID')) {
  * die werden aber nicht besonders behandelt. Diese koennen mit nummerierten keys weitergegeben werden.
  * @author Simon Däster
  * @package JClubCMS
+ * @uses Mysql Zugriff auf Datenbank
  * File: messageboxes.class.php
  * Classes: messageboxes
  * @requieres PHP5
@@ -83,7 +89,6 @@ class Messageboxes {
 	 * @param string $tablename Tabellenname
 	 * @param array $tablestruct Struktur der Tabelle
 	 */
-
 	public function __construct($mysql, $tablename, $tablestruct)
 	{
 		//Argumente ueberpruefen
@@ -95,7 +100,7 @@ class Messageboxes {
 
 		if (is_string($tablename)) {
 			$this->_tablename = $this->_mysql->escapeString($tablename);
-		} elseif (!$this->_errorexists) {
+		} else {
 			throw new CMSException(array('msg_box' => 'wrong_param_string'), EXCEPTION_LIBARY_CODE);
 		}
 

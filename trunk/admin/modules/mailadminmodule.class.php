@@ -15,7 +15,6 @@ require_once ADMIN_DIR.'lib/mailsend.class.php';
  * Classes: Mailmodule
  * @requieres PHP5
  */
-
 class Mailmodule implements Module
 {
 	/**
@@ -65,7 +64,7 @@ class Mailmodule implements Module
 	 *
 	 * @var array
 	 */
-	private $_configvars = array();
+	private $_config_textes = array();
 	
 	/**
 	 * Daten der Tabellen für Emailversand
@@ -97,9 +96,9 @@ class Mailmodule implements Module
 
 		//Daten laden
 		$this->_smarty->config_load('textes.de.conf', 'Mail');
-		$this->_configvars['Mail'] = $this->_smarty->get_config_vars();
+		$this->_config_textes['Mail'] = $this->_smarty->get_config_vars();
 		$this->_smarty->config_load('textes.de.conf', 'Form_Error');
-		$this->_configvars['Error'] = $this->_smarty->get_config_vars();
+		$this->_config_textes['Error'] = $this->_smarty->get_config_vars();
 
 		if (key_exists('hash', $gpc['GET']) && is_string($gpc['GET']['hash'])) {
 			$this->_truemail_send($gpc['GET']['hash']);
@@ -129,7 +128,7 @@ class Mailmodule implements Module
 
 	private function _checkmail_send($mod_navID)
 	{
-		$mail_vars = $this->_configvars['Mail'];
+		$mail_vars = $this->_config_textes['Mail'];
 
 		/* nav_id angegeben? */
 		if (!key_exists('nav_id', $this->_gpc['GET'])) {
@@ -219,7 +218,7 @@ class Mailmodule implements Module
 	 */
 	private function _truemail_send($mail_hash)
 	{
-		$mail_vars = $this->_configvars['Mail'];
+		$mail_textes = $this->_config_textes['Mail'];
 
 		if (!key_exists('hash', $this->_gpc['GET'])) {
 			throw new CMSException(array('mail' => 'no_hash'), EXCEPTION_MODULE_CODE, array('mail' => 'param_missing'));
@@ -228,9 +227,9 @@ class Mailmodule implements Module
 		$controll = $mail_send->mail_send_hash($this->_mysql, $mail_hash);
 
 		if ($controll == true) {
-			$this->_send_feedback($mail_vars['saved_title'], $mail_vars['saved_content'], "", $mail_vars['send_link']);
+			$this->_send_feedback($mail_textes['saved_title'], $mail_textes['saved_content'], "", $mail_textes['send_link']);
 		} else {
-			$this->_send_feedback($mail_vars['failer_send_title'], $mail_vars['failer_send_content'], "", $mail_vars['send_link']);
+			$this->_send_feedback($mail_textes['failer_send_title'], $mail_textes['failer_send_content'], "", $mail_textes['send_link']);
 		}
 	}
 
@@ -310,17 +309,17 @@ class Mailmodule implements Module
 	 */
 	private function _check_form(&$answer)
 	{
-		$mail_vars = $this->_configvars['Mail'];
-		$error_vars =$this->_configvars['Error'];
+		$mail_textes = $this->_config_textes['Mail'];
+		$error_textes =$this->_config_textes['Error'];
 
 		/* Formularcheck vorbereiten */
 		$formcheck = new Formularcheck();
 		$val = array($this->_gpc['POST']['title'], $this->_gpc['POST']['content'], $this->_gpc['POST']['name'],
 		$this->_gpc['POST']['email']);
-		$std = array($mail_vars['entry_title'], $mail_vars['entry_content'], $mail_vars['entry_name'],
-		$mail_vars['entry_email']);
-		$err = array($error_vars['title_error'], $error_vars['content_error'], $error_vars['name_error'],
-		$error_vars['email_error']);
+		$std = array($mail_textes['entry_title'], $mail_textes['entry_content'], $mail_textes['entry_name'],
+		$mail_textes['entry_email']);
+		$err = array($error_textes['title_error'], $error_textes['content_error'], $error_textes['name_error'],
+		$error_textes['email_error']);
 
 		$rtn_arr = $formcheck->field_check_arr($val, $std);
 
@@ -333,7 +332,7 @@ class Mailmodule implements Module
 		
 		//Email-Adresse auf Gültigkeit prüfen
 		if ($this->_gpc['POST']['email'] != "" && $formcheck->mailcheck($this->_gpc['POST']['email']) > 0) {
-			$answer[] = $error_vars['email_checkfailed'];
+			$answer[] = $error_textes['email_checkfailed'];
 		}
 
 		if (empty($answer)) {
@@ -364,7 +363,7 @@ class Mailmodule implements Module
 			'entry_email' => $this->_gpc['POST']['email'], 'sessioncode' => $this->_sessioncode);
 		} else {
 			/* Standard-Einträge */
-			$mail_vars = $this->_configvars['Mail'];
+			$mail_vars = $this->_config_textes['Mail'];
 			$data = array('entry_id' => $this->_gpc['GET']['entry_id'], 'entry_title' => $mail_vars['entry_title'],
 			'entry_content' => $mail_vars['entry_content'], 'entry_name' => $mail_vars['entry_name'],
 			'entry_email' => $mail_vars['entry_email'], 'sessioncode' => $this->_sessioncode);
@@ -373,7 +372,7 @@ class Mailmodule implements Module
 		/* Error-Einträge */
 		if (isset($error)) {
 			$data['dump_errors'] = true;
-			$data['error_title'] = 'Fehler im Formular';
+			$data['error_title'] = $this->_configvars['Form_Error']['error_title'];
 			$data['error_contents'] = $error;
 		}
 

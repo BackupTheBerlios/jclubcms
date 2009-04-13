@@ -67,7 +67,7 @@ class Gbook implements Module {
 	 */
 	private $_msbox = null;
 
-	private $_timeformat = '%e.%m.%Y %k:%i';
+	private $_timeformat = TIMEFORMAT;
 
 	/**
 	 * Daten aus den Config-Dateien

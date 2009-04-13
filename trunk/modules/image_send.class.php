@@ -24,6 +24,13 @@ class Image_send implements Module
 	 * @var Image
 	 */	
 	private $_img = null;
+	
+	/**
+	 * Smarty-Objekt
+	 *
+	 * @var Smarty
+	 */
+	private $_smarty = null;
 
 	/**
 	 * Mysql-Objekt
@@ -38,27 +45,38 @@ class Image_send implements Module
 	 * @var array
 	 */
 	private $_gpc = null;
+	
+	/**
+	 * Texte zu den Bildern
+	 *
+	 * @var array
+	 */
+	private $_img_textes = array();
 
 	/**
 	 * Konstruktor. Diese Klasse braucht den Zugriff auf das Smarty-Objekt nicht.
 	 *
-	 * @param unknown_type $mysql
-	 * @param unknown_type $smarty
+	 * @param Mysql $mysql
+	 * @param Smarty $smarty
 	 */
 	public function __construct($mysql, $smarty)
 	{
 		$this->_mysql = $mysql;
+		$this->_smarty = $smarty;
+		
 	}
 
 	public function action($gpc)
 	{
+		$this->_smarty->config_load('textes.de.conf', 'Image');
+		$this->_img_textes = $this->_smarty->get_config_vars();
 		$this->_gpc = $gpc;
 		if (isset($gpc['GET']['img'])) {
 			$this->_initImg($gpc['GET']['img']);
 		} elseif (isset($gpc['GET']['thumb'])) {
 			$this->_initThumb($gpc['GET']['thumb']);
 		} else {
-			$this->_initErrImg('Keine Parameter');
+			$this->_initErrImg($this->_img_textes['no_param']);
 		}
 	}
 
@@ -86,7 +104,7 @@ class Image_send implements Module
 
 		if(empty($mysql_data)) {
 			
-			$this->_initErrImg(100, 80, "Keine ID");
+			$this->_initErrImg(100, 80, $this->_img_textes['no_id']);
 			return;
 		}
 
@@ -131,7 +149,7 @@ class Image_send implements Module
 		if(empty($mysql_data))
 		{
 			//Fehlerbild ausgeben, weil kein Eintrag vorhanden ist
-			$this->_initErrImg(100, 80, "Keine ID");
+			$this->_initErrImg(100, 80, $this->_img_textes['no_id']);
 			return;
 		}
 
@@ -163,8 +181,9 @@ class Image_send implements Module
 	 * @param string $col_text Textfarbe
 	 */
 
-	private function _initErrImg($width = 100, $height = 80, $text = 'Bild nicht da', $col_bg = "000000255", $col_text = "200150080")
+	private function _initErrImg($width = 100, $height = 80, $text = '', $col_bg = "000000255", $col_text = "200150080")
 	{
+		$text = ($text == '') ? $this->_img_textes['img_not_found'] : $text;
 		$this->_img = new Image('');
 		$this->_img->create_image($width, $height, $text, $col_bg, $col_text);
 		$this->_img->send_image();
