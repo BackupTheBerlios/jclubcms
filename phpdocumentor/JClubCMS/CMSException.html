@@ -68,17 +68,17 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---image.class.php.html">		image.class.php
 		</a><br>
-			<a href="../JClubCMS/_admin---modules---image_send.class.php.html">		image_send.class.php
-		</a><br>
 			<a href="../JClubCMS/_modules---image_send.class.php.html">		image_send.class.php
+		</a><br>
+			<a href="../JClubCMS/_admin---modules---image_send.class.php.html">		image_send.class.php
 		</a><br>
 			<a href="../JClubCMS/_admin---index.php.html">		index.php
 		</a><br>
 			<a href="../JClubCMS/_index.php.html">		index.php
 		</a><br>
-			<a href="../JClubCMS/_admin---modules---mailmodule.class.php.html">		mailmodule.class.php
-		</a><br>
 			<a href="../JClubCMS/_modules---mailmodule.class.php.html">		mailmodule.class.php
+		</a><br>
+			<a href="../JClubCMS/_admin---modules---mailmodule.class.php.html">		mailmodule.class.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---mailsend.class.php.html">		mailsend.class.php
 		</a><br>
@@ -103,6 +103,8 @@
 			<a href="../JClubCMS/_admin---lib---session.class.php.html">		session.class.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---smilies.class.php.html">		smilies.class.php
+		</a><br>
+			<a href="../JClubCMS/_admin---config---system_textes.inc.php.html">		system_textes.inc.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---timeparser.class.php.html">		timeparser.class.php
 		</a><br>
@@ -166,12 +168,12 @@ Source Location: /admin/lib/cmsexception.class.php<br /><br />
 <h4>Author(s):</h4>
 <ul>
           <li>Simon Däster</li>
-      </ul>
+            </ul>
 
 
 
 
-    
+        
 
         
 </td>
@@ -322,6 +324,9 @@ Sammlung der Exception, mit denen die Fehlerbehandlung des CMS funktioniert<br /
   <tr>
     <td><b>author:</b>&nbsp;&nbsp;</td><td>Simon Däster</td>
   </tr>
+  <tr>
+    <td><b>requires:</b>&nbsp;&nbsp;</td><td>PHP5</td>
+  </tr>
 </table>
 </div>
 </div><br /><br />
@@ -334,7 +339,7 @@ Sammlung der Exception, mit denen die Fehlerbehandlung des CMS funktioniert<br /
 <div class="tags">
   <hr />
 	<a name="methodhtmlencode"></a>
-	<h3>static method htmlencode <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibcmsexception.class.php.html#a273">273</a>]</span></h3>
+	<h3>static method htmlencode <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibcmsexception.class.php.html#a307">307</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -373,7 +378,7 @@ $string)</code>
   </div>
   <hr />
 	<a name="methodlogException"></a>
-	<h3>static method logException <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibcmsexception.class.php.html#a172">172</a>]</span></h3>
+	<h3>static method logException <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibcmsexception.class.php.html#a203">203</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -421,7 +426,7 @@ $comment = null])</code>
   </div>
   <hr />
 	<a name="methodprintException"></a>
-	<h3>static method printException <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibcmsexception.class.php.html#a223">223</a>]</span></h3>
+	<h3>static method printException <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibcmsexception.class.php.html#a254">254</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -475,7 +480,7 @@ $trace)</code>
   </div>
   <hr />
 	<a name="methodstdExceptionHandler"></a>
-	<h3>static method stdExceptionHandler <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibcmsexception.class.php.html#a153">153</a>]</span></h3>
+	<h3>static method stdExceptionHandler <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibcmsexception.class.php.html#a184">184</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -512,14 +517,15 @@ $exception)</code>
 
   <hr />
 	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibcmsexception.class.php.html#a85">85</a>]</span></h3>
+	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibcmsexception.class.php.html#a98">98</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
 		<code>CMSException __construct(
-string
-$message, [int
+array
+$msg_key, [int
 $code = 0], [string
+$msg_append = &quot;&quot;], [array
 $title = &quot;&quot;])</code>
     </td></tr></table>
     </td></tr></table><br />
@@ -540,9 +546,9 @@ $title = &quot;&quot;])</code>
     <div class="tags">
     <table border="0" cellspacing="0" cellpadding="0">
           <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$message</b>&nbsp;&nbsp;</td>
-        <td>Nachricht</td>
+        <td class="type">array&nbsp;&nbsp;</td>
+        <td><b>$msg_key</b>&nbsp;&nbsp;</td>
+        <td>Schlüssel für den System-Text (@link system_textes.inc.php), z.B. array('mysql' =&gt; 'server_connection_failed')</td>
       </tr>
           <tr>
         <td class="type">int&nbsp;&nbsp;</td>
@@ -551,8 +557,13 @@ $title = &quot;&quot;])</code>
       </tr>
           <tr>
         <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$msg_append</b>&nbsp;&nbsp;</td>
+        <td>zusätzlicher String für die Fehlerbeschreibung</td>
+      </tr>
+          <tr>
+        <td class="type">array&nbsp;&nbsp;</td>
         <td><b>$title</b>&nbsp;&nbsp;</td>
-        <td>Fehlertitel</td>
+        <td>Titel - enthält ein Array mit Bezug auf die Sprachvariable, z.B. array('core' =&gt; 'modul_not_found');</td>
       </tr>
         </table>
     </div><br />
@@ -560,7 +571,7 @@ $title = &quot;&quot;])</code>
   </div>
   <hr />
 	<a name="methodgetFilename"></a>
-	<h3>method getFilename <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibcmsexception.class.php.html#a130">130</a>]</span></h3>
+	<h3>method getFilename <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibcmsexception.class.php.html#a161">161</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -588,7 +599,7 @@ $title = &quot;&quot;])</code>
   </div>
   <hr />
 	<a name="methodgetTitle"></a>
-	<h3>method getTitle <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibcmsexception.class.php.html#a119">119</a>]</span></h3>
+	<h3>method getTitle <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibcmsexception.class.php.html#a150">150</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -616,7 +627,7 @@ $title = &quot;&quot;])</code>
   </div>
   <hr />
 	<a name="method__toString"></a>
-	<h3>method __toString <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibcmsexception.class.php.html#a142">142</a>]</span></h3>
+	<h3>method __toString <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibcmsexception.class.php.html#a173">173</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -647,7 +658,7 @@ $title = &quot;&quot;])</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Mon, 13 Apr 2009 02:17:18 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Mon, 13 Apr 2009 02:46:03 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>
