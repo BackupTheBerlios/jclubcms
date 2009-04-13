@@ -202,8 +202,10 @@ Source Location: /admin/lib/mailsend.class.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line <a href="../__filesource/fsource_JClubCMS__adminlibmailsend.class.php.html#a27">27</a>]<br />
-Klasse fuer den den ganzen Mail-Ablauf<br /><br /><p><ol><li>Phase</li></ol> <ul><li>Hash-Berechnung</li></ul> <ul><li>Ablage in Datenbank</li></ul> <ul><li>Versand Kontrollmail</li></ul>  2. Phase</p><p><ul><li>Auslese aus Datenbank</li></ul> <ul><li>Versand des Mails</li></ul></p><br /><br /><br />
+[line <a href="../__filesource/fsource_JClubCMS__adminlibmailsend.class.php.html#a28">28</a>]<br />
+Klasse fuer den den ganzen Mail-Ablauf<br /><br /><p>Ablauf der Phasen  <ol><li>1. Phase
+ <ul><li>Hash-Berechnung</li><li>Ablage in Datenbank</li><li>Versand Kontrollmail</li></ul></li><li>2. Phase
+ <ul><li>Auslese aus Datenbank</li><li>Versand des Mails</li></ul></li></ol></p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
@@ -223,7 +225,7 @@ Klasse fuer den den ganzen Mail-Ablauf<br /><br /><p><ol><li>Phase</li></ol> <ul
 
   <hr />
 	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmailsend.class.php.html#a38">38</a>]</span></h3>
+	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmailsend.class.php.html#a39">39</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -248,7 +250,7 @@ Klasse fuer den den ganzen Mail-Ablauf<br /><br /><p><ol><li>Phase</li></ol> <ul
   </div>
   <hr />
 	<a name="method__destruct"></a>
-	<h3>destructor __destruct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmailsend.class.php.html#a179">179</a>]</span></h3>
+	<h3>destructor __destruct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmailsend.class.php.html#a180">180</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -273,7 +275,7 @@ Klasse fuer den den ganzen Mail-Ablauf<br /><br /><p><ol><li>Phase</li></ol> <ul
   </div>
   <hr />
 	<a name="methodmail_send_hash"></a>
-	<h3>method mail_send_hash <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmailsend.class.php.html#a120">120</a>]</span></h3>
+	<h3>method mail_send_hash <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmailsend.class.php.html#a121">121</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -315,12 +317,12 @@ $hash)</code>
   </div>
   <hr />
 	<a name="methodmail_send_link"></a>
-	<h3>method mail_send_link <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmailsend.class.php.html#a54">54</a>]</span></h3>
+	<h3>method mail_send_link <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmailsend.class.php.html#a55">55</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
 		<code>boolean mail_send_link(
-object
+<a href="../JClubCMS/Mysql.html">Mysql</a>
 $mysql_link, string
 $mail_reciver_name, string
 $mail_reciver, string
@@ -347,7 +349,7 @@ $mail_content)</code>
     <div class="tags">
     <table border="0" cellspacing="0" cellpadding="0">
           <tr>
-        <td class="type">object&nbsp;&nbsp;</td>
+        <td class="type"><a href="../JClubCMS/Mysql.html">Mysql</a>&nbsp;&nbsp;</td>
         <td><b>$mysql_link</b>&nbsp;&nbsp;</td>
         <td>MysqlObjekt</td>
       </tr>
@@ -390,7 +392,7 @@ $mail_content)</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Mon, 13 Apr 2009 00:48:19 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Mon, 13 Apr 2009 02:17:30 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

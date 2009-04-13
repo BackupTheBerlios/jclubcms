@@ -39,7 +39,6 @@
 <a href="#Post-parsing">Post-parsing</a><br>
 <a href="#admin-config.inc.php">admin-config.inc.php</a><br>
 <a href="#auth.class.php">auth.class.php</a><br>
-<a href="#bbcodes.class.php">bbcodes.class.php</a><br>
 <a href="#captcha.class.php">captcha.class.php</a><br>
 <a href="#captcha_image.class.php">captcha_image.class.php</a><br>
 <a href="#cmsexception.class.php">cmsexception.class.php</a><br>
@@ -75,26 +74,25 @@
 <h1>Post-parsing</h1>
 <h2>Warnings:</h2><br>
 <b>Warning</b> - 
-duplicate class element "Mailmodule" in file /home/david/Zend/workspaces/DefaultWorkspace/JClubCMS/trunk/admin/modules/mailmodule.class.php will be ignored.
-Use an @ignore tag on the original if you want this case to be documented.<br>
-<b>Warning</b> - class CMSException in package JClubCMS parent not found in @see parent::__construct()<br>
-<b>Warning</b> - class CMSException in package JClubCMS parent not found in @see parent::__construct()<br>
-<b>Warning</b> - 
 duplicate define element "ADMIN_DIR" in file /home/david/Zend/workspaces/DefaultWorkspace/JClubCMS/trunk/admin/index.php will be ignored.
 Use an @ignore tag on the original if you want this case to be documented.<br>
-<b>Warning</b> - @todo on an include element is ignored (line 16, file /home/david/Zend/workspaces/DefaultWorkspace/JClubCMS/trunk/admin/modules/contentadmin.class.php)<br>
-<b>Warning</b> - @todo on an include element is ignored (line 16, file /home/david/Zend/workspaces/DefaultWorkspace/JClubCMS/trunk/admin/modules/contentadmin.class.php)<br>
 <b>Warning</b> - 
-duplicate define element "TEMPLATESET_DIR" in file /home/david/Zend/workspaces/DefaultWorkspace/JClubCMS/trunk/admin/config/admin-config.inc.php will be ignored.
+duplicate class element "Mailmodule" in file /home/david/Zend/workspaces/DefaultWorkspace/JClubCMS/trunk/admin/modules/mailmodule.class.php will be ignored.
 Use an @ignore tag on the original if you want this case to be documented.<br>
 <b>Warning</b> - 
 duplicate define element "USER_DIR" in file /home/david/Zend/workspaces/DefaultWorkspace/JClubCMS/trunk/admin/index.php will be ignored.
 Use an @ignore tag on the original if you want this case to be documented.<br>
+<b>Warning</b> - @todo on an include element is ignored (line 16, file /home/david/Zend/workspaces/DefaultWorkspace/JClubCMS/trunk/admin/modules/contentadmin.class.php)<br>
+<b>Warning</b> - 
+duplicate define element "TEMPLATESET_DIR" in file /home/david/Zend/workspaces/DefaultWorkspace/JClubCMS/trunk/admin/config/admin-config.inc.php will be ignored.
+Use an @ignore tag on the original if you want this case to be documented.<br>
+<b>Warning</b> - @todo on an include element is ignored (line 16, file /home/david/Zend/workspaces/DefaultWorkspace/JClubCMS/trunk/admin/modules/contentadmin.class.php)<br>
+<b>Warning</b> - class CMSException in package JClubCMS parent not found in @see parent::__construct()<br>
+<b>Warning</b> - class CMSException in package JClubCMS parent not found in @see parent::__construct()<br>
 <a name="action.class.php"></a>
 <h1>action.class.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 10</b> - Unknown tag "@requieres" used<br>
-<b>Warning on line 11</b> - DocBlock would be page-level, but precedes class "Action", use another DocBlock to document the file<br>
+<b>Warning on line 20</b> - no @package tag was used in a DocBlock for class Action<br>
 <a name="admin-config.inc.php"></a>
 <h1>admin-config.inc.php</h1>
 <h2>Warnings:</h2><br>
@@ -102,15 +100,12 @@ Use an @ignore tag on the original if you want this case to be documented.<br>
 <a name="auth.class.php"></a>
 <h1>auth.class.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 237</b> - File "/home/david/Zend/workspaces/DefaultWorkspace/JClubCMS/trunk/admin/lib/auth.class.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
-<a name="bbcodes.class.php"></a>
-<h1>bbcodes.class.php</h1>
-<h2>Warnings:</h2><br>
-<b>Warning on line 18</b> - DocBlock would be page-level, but precedes class "Bbcodes", use another DocBlock to document the file<br>
+<b>Warning on line 8</b> - Page-level DocBlock precedes "require_once ADMIN_DIR.'config/auth_textes.inc.php'", use another DocBlock to document the source element<br>
+<b>Warning on line 26</b> - no @package tag was used in a DocBlock for class Auth<br>
 <a name="captcha.class.php"></a>
 <h1>captcha.class.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 17</b> - DocBlock would be page-level, but precedes class "Captcha", use another DocBlock to document the file<br>
+<b>Warning on line 22</b> - no @package tag was used in a DocBlock for class Captcha<br>
 <a name="captcha_image.class.php"></a>
 <h1>captcha_image.class.php</h1>
 <h2>Warnings:</h2><br>
@@ -119,7 +114,7 @@ Use an @ignore tag on the original if you want this case to be documented.<br>
 <a name="cmsexception.class.php"></a>
 <h1>cmsexception.class.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 62</b> - Unknown tag "@requieres" used<br>
+<b>Warning on line 72</b> - Unknown tag "@requieres" used<br>
 <a name="contentadmin.class.php"></a>
 <h1>contentadmin.class.php</h1>
 <h2>Warnings:</h2><br>
@@ -130,13 +125,12 @@ Use an @ignore tag on the original if you want this case to be documented.<br>
 <a name="core.class.php"></a>
 <h1>core.class.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 321</b> - Unknown tag "@parambooleane" used<br>
-<b>Warning on line 526</b> - File "/home/david/Zend/workspaces/DefaultWorkspace/JClubCMS/trunk/admin/lib/core.class.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<b>Warning on line 13</b> - Page-level DocBlock precedes "require_once ADMIN_DIR.'config/global-config.inc.php'", use another DocBlock to document the source element<br>
+<b>Warning on line 329</b> - Unknown tag "@parambooleane" used<br>
 <a name="formularcheck.class.php"></a>
 <h1>formularcheck.class.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 13</b> - Unknown tag "@requieres" used<br>
-<b>Warning on line 13</b> - DocBlock would be page-level, but precedes class "Formularcheck", use another DocBlock to document the file<br>
+<b>Warning on line 20</b> - Unknown tag "@requieres" used<br>
 <a name="function.html_select_time.php"></a>
 <h1>function.html_select_time.php</h1>
 <h2>Warnings:</h2><br>
@@ -168,8 +162,7 @@ Use an @ignore tag on the original if you want this case to be documented.<br>
 <a name="image.class.php"></a>
 <h1>image.class.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 24</b> - DocBlock would be page-level, but precedes class "Image", use another DocBlock to document the file<br>
-<b>Warning on line 24</b> - Unknown tag "@requieres" used<br>
+<b>Warning on line 31</b> - Unknown tag "@requieres" used<br>
 <a name="image_send.class.php"></a>
 <h1>image_send.class.php</h1>
 <h2>Warnings:</h2><br>
@@ -189,8 +182,7 @@ Use an @ignore tag on the original if you want this case to be documented.<br>
 <a name="mailsend.class.php"></a>
 <h1>mailsend.class.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 26</b> - DocBlock would be page-level, but precedes class "Mailsend", use another DocBlock to document the file<br>
-<b>Warning on line 26</b> - Unknown tag "@requieres" used<br>
+<b>Warning on line 27</b> - Unknown tag "@requieres" used<br>
 <a name="members.class.php"></a>
 <h1>members.class.php</h1>
 <h2>Warnings:</h2><br>
@@ -216,9 +208,8 @@ Use an @ignore tag on the original if you want this case to be documented.<br>
 <a name="mysql.class.php"></a>
 <h1>mysql.class.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 21</b> - DocBlock would be page-level, but precedes class "Mysql", use another DocBlock to document the file<br>
-<b>Warning on line 21</b> - Unknown tag "@requieres" used<br>
-<b>Warning on line 21</b> - Unknown tag "@requieres" used<br>
+<b>Warning on line 31</b> - Unknown tag "@requieres" used<br>
+<b>Warning on line 31</b> - Unknown tag "@requieres" used<br>
 <a name="news.class.php"></a>
 <h1>news.class.php</h1>
 <h2>Warnings:</h2><br>
@@ -253,7 +244,7 @@ Use an @ignore tag on the original if you want this case to be documented.<br>
 <b>Warning on line 7</b> - Page-level DocBlock precedes "define TEMPLATESET_DIR", use another DocBlock to document the source element<br>
         <div class="credit">
 		    <hr />
-		    Documentation generated on Mon, 13 Apr 2009 00:48:31 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Mon, 13 Apr 2009 02:17:43 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

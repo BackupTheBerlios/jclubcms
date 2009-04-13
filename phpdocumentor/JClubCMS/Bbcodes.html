@@ -164,12 +164,12 @@ Source Location: /admin/lib/bbcodes.class.php<br /><br />
 <h4>Author(s):</h4>
 <ul>
           <li>David Däster</li>
-            </ul>
+                  </ul>
 
 
 
 
-        
+            
 
         
 </td>
@@ -202,7 +202,7 @@ Source Location: /admin/lib/bbcodes.class.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line <a href="../__filesource/fsource_JClubCMS__adminlibbbcodes.class.php.html#a19">19</a>]<br />
+[line <a href="../__filesource/fsource_JClubCMS__adminlibbbcodes.class.php.html#a28">28</a>]<br />
 Die Klasse soll die Texte aus den Inhalten der Seite, sowie aus den Gaestebuecher und News uebersetzen.<br /><br /><p>Die BBCodes sind in der MySQL-Tabelle bbcodes abgelegt, sowie das HTML-Pendant.  Das HTML-Pendant enthaelt jeweils ein oder mehrere %s welche den Standort des einzufuegenden Textes enthaelt.</p><p>Zudem muss noch ueberprueft werden:  -&gt; BBCodes muessen sauber verschachtelt sein, wenn nicht sollen sie nicht uebersetzt oder bei der anzeige geloescht werden.</p><p>Beachtet werden sollte spaeter auch noch:  -&gt; Nicht jeder BBCode sollte ueberall verwendet werden koennen (URL und IMG nicht im Gaestebuch)</p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
@@ -212,6 +212,9 @@ Die Klasse soll die Texte aus den Inhalten der Seite, sowie aus den Gaestebueche
   </tr>
   <tr>
     <td><b>requires:</b>&nbsp;&nbsp;</td><td>PHP5</td>
+  </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Mysql.html">Mysql</a> - for connectiong to the database</td>
   </tr>
 </table>
 </div>
@@ -226,7 +229,7 @@ Die Klasse soll die Texte aus den Inhalten der Seite, sowie aus den Gaestebueche
 
   <hr />
 	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibbbcodes.class.php.html#a29">29</a>]</span></h3>
+	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibbbcodes.class.php.html#a38">38</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -268,7 +271,7 @@ $mysql_link)</code>
   </div>
   <hr />
 	<a name="method__destruct"></a>
-	<h3>destructor __destruct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibbbcodes.class.php.html#a38">38</a>]</span></h3>
+	<h3>destructor __destruct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibbbcodes.class.php.html#a47">47</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -293,7 +296,7 @@ $mysql_link)</code>
   </div>
   <hr />
 	<a name="methodget_bbcodes"></a>
-	<h3>method get_bbcodes <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibbbcodes.class.php.html#a58">58</a>]</span></h3>
+	<h3>method get_bbcodes <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibbbcodes.class.php.html#a67">67</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -318,7 +321,7 @@ $mysql_link)</code>
   </div>
   <hr />
 	<a name="methodreplace_bbcodes"></a>
-	<h3>method replace_bbcodes <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibbbcodes.class.php.html#a79">79</a>]</span></h3>
+	<h3>method replace_bbcodes <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibbbcodes.class.php.html#a88">88</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -328,7 +331,7 @@ $text)</code>
     </td></tr></table>
     </td></tr></table><br />
 	
-		TODO PHP Documentation<br /><br /><br /><br />
+		Ersetzt den Text durch<br /><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
@@ -357,7 +360,7 @@ $text)</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Mon, 13 Apr 2009 00:48:07 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Mon, 13 Apr 2009 02:17:17 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>
