@@ -6,6 +6,9 @@
  * @package JClubCMS
  * @author Simon Däster
  */
+/**
+ * Wird gebraucht für das Session Handling
+ */
 require_once ADMIN_DIR.'lib/session.class.php';
 /**
  * 
@@ -17,8 +20,7 @@ require_once ADMIN_DIR.'lib/session.class.php';
  * nur Befehle ausfürht, die er rechtmässig verwenden darf.
  *
  * @author Simon Däster
- * File: auth.class.php
- * class: Auth
+ * @package JClubCMS
  * @requires PHP5
  */
 
@@ -62,8 +64,9 @@ class Auth
 	/**
 	 * Oeffnet die Autorisierungsklasse
 	 *
-	 * @param smarty $smarty
-	 * @param mysql $mysql
+	 * @param Smarty $smarty
+	 * @param Mysql $mysql
+	 * @uses Smarty Als Template-System
 	 */
 
 	public function __construct($smarty, $mysql)
@@ -83,6 +86,8 @@ class Auth
 	 *
 	 * @param array $post_array $_POST-Daten
 	 * @return boolean Antwort, ob sich jemand einloggt.
+	 * @uses Mysql Für die Verbindung zur Mysql-DB
+	 * @uses Smarty Als Template-System
 	 */
 
 	public function check4login(&$post_array)
@@ -148,6 +153,7 @@ class Auth
 	 * 
 	 * @param array $get_array $_GET-Daten
 	 * @return boolean
+	 * @uses Smarty Als Template-System
 	 */
 
 	public function check4user($get_array)
@@ -184,7 +190,7 @@ class Auth
 
 	/**
 	 * Loggt den User aus
-	 *
+	 * @uses Smarty Als Template-System
 	 */
 
 	public function logout()
@@ -240,6 +246,7 @@ class Auth
 	 * Ueberprueft die Rechte.
 	 *
 	 * @param string $rightname Name des Rechts
+	 * @todo Correct Implementation
 	 */
 
 	private function _controlrights($rightname)

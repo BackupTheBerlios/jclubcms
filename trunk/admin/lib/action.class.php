@@ -16,6 +16,7 @@
  * Fehlender Klassenbeschrieb
  *
  * @author Simon Däster
+ * @package JClubCMS
  */
 class Action
 {

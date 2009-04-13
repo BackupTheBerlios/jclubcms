@@ -1,42 +1,19 @@
 <?php
 /**
+ * Beinhaltet Elemente um statt der time() die MYSQL-Date-Elemente zu benutzen.
+ * 
+ * Methoden um MySQL-Zeiten soweit umzuwandeln, dass PHP damit arbeiten kann.
+ * Die Funktion date() wird bewusst umgangen, um System- und Zeitunabhängig zu sein,
+ * also sowohl vor 1970 als auch nach 2038.
+ * @author David Däster
+ * @package JClubCMS
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3
+ */
+/**
  * Die Klasse timeparser ist zuständig für das Parsen der Zeiten die 
  * in den MySQL-Tabellen angelegt sind (Gästebuch, News, uä) und dessen
  * Werte die im Y-m-d H:i:s Format sind.
  * Geparst wird _OHNE_ den Weg über time() um "Zukunftssicher" zu sein.
- * 
- *
- *
- * Funktionsbeschrieb:
- * -  __construct($time_format)
- * -  Das Konstrukt dieser Klasse
- *
- * -  time2array() (wird von time_output ausgeführt)
- * -  Schreibt den String in ein Array
- *
- * -  year_replace($format) (wird von time_output ausgeführt)
- * -  Gibt das Jahr im gewünschten Format zurück
- *
- * -  month_replace($format) (wird von time_output ausgeführt)
- * -  Gibt den Monat im gewünschten Format zurück
- *
- * -  day_replace($format) (wird von time_output ausgeführt)
- * -  Gibt den Tag im gewünschten Format zurück
- *
- * -  hour_replace($format) (wird von time_output ausgeführt)
- * -  Gibt die Stunde im gewünschten Format zurück
- *
- * -  minute_replace($format) (wird von time_output ausgeführt)
- * -  Gibt ddie Minute im gewünschten Format zurück
- *
- * -  second_replace($format) (wird von time_output ausgeführt)
- * -  Gibt die Sekunden im gewünschten Format zurück
- *
- * -  time_output ($time_string)
- * -  Parst den String nachher in das angegebene Time-Format.
- *
- * -  __destruct
- * -  Der Destruktor der Klasse
  * 
  *
  * _Nicht_ geplante Unterstüzung:

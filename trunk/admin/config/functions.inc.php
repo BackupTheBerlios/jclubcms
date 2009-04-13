@@ -1,16 +1,17 @@
 <?php
-
-
 /**
- *
- * Diese Datei beinhaltet Funktionen, die nicht einer Klasse zugeordnet werden können. Dies betriff meist
- * auf ueberladene magische Funktionen zu.
+ * Diese Datei beinhaltet Funktionen, die nicht einer Klasse zugeordnet werden können. 
+ * Dies betriff meist auf ueberladene magische Funktionen zu.
  *
  * @author Simon Däster
  * @package JClubCMS
- * File: functions.inc.php
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License version 3
  */
-
+/**
+ * @todo Desc
+ *
+ * @param string $class_name
+ */
 function __autoload($class_name)
 {
 	//Kleine Unschönheit: Wenn der Autoload in der obersten index.php aufgerufen wird, klappts nicht!!

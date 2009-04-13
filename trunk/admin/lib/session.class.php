@@ -1,11 +1,15 @@
 <?php
 /**
- * Die Session-Klasse handelt mit den Session-Daten, welche in der Datenbank abgespitz sind.
+ * Beinhaltet die Klassen und Methoden für das Sessionhandling.
  * @author Simon Däster
  * @package JClubCMS
- * 
- * file: session.class.php
- * classes: session
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3
+ */
+/**
+ * Ermöglicht das Sessionhandling.
+ * Wird primär gebraucht für Bereiche mit Login.
+ * @author Simon Däster
+ * @package JClubCMS
  *
  */
 class Session {

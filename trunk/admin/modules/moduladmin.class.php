@@ -11,8 +11,8 @@ require_once ADMIN_DIR.'lib/smilies.class.php';
 
  * @package JClubCMS
  * @author Simon Däster
- * contentadmin.class.php
  * @todo Klasse aufbauen und Funktionen integrieren
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License version 3
  */
 
 class Moduladmin implements Module
