@@ -1,6 +1,6 @@
 <?php
 /**
- * TODO PageDoc
+ * @todo PageDoc
  * 
  * Filedokumentation fehlt
  * 
@@ -19,7 +19,6 @@
  * Beachtet werden sollte spaeter auch noch:
  * -> Nicht jeder BBCode sollte ueberall verwendet werden koennen (URL und IMG nicht im Gaestebuch)
  * 
- * @requires PHP5
  * @author David Däster
  * @package JClubCMS
  * @uses Mysql for connectiong to the database

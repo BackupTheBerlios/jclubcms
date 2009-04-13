@@ -1,4 +1,15 @@
 <?php
+/**
+ * Messageboxes ist eine Abstraktion von gängingen Meitteilungsboxen
+ * 
+ * Messageboxes ermöglicht die standardisierte Variante von
+ * <ul><li>Speichern</li><li>Auslesen</li><li>Ändern</li></ul>
+ * von Daten, die in einer Mysql-Tabelle vorhanden sind.
+ * 
+ * @package JClubCMS
+ * @author Simon Däster
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3
+ */
 require_once ADMIN_DIR.'lib/captcha.class.php';
 require_once ADMIN_DIR.'lib/mysql.class.php';
 require_once ADMIN_DIR.'lib/formularcheck.class.php';
@@ -42,6 +53,7 @@ if (!defined('MSGBOX_FORMCHECK_INVALID')) {
  * @author Simon Däster
  * @package JClubCMS
  * @uses Mysql Zugriff auf Datenbank
+ * @uses Formularcheck Plausibilitätsüberprüfung von Formularen
  * File: messageboxes.class.php
  * Classes: messageboxes
  * @requieres PHP5
@@ -85,14 +97,16 @@ class Messageboxes {
 	 * Baut die Klasse auf. Kontrolliert, ob ein MySQL-Objetk weitergegeben wurde und testet (mittels anderer
 	 * Methoden), ob der Tabellenname und die Struktur stimmen.
 	 *
-	 * @param mysql $mysql Mysql-Objekt
+	 * @param Mysql $mysql Mysql-Objekt
 	 * @param string $tablename Tabellenname
 	 * @param array $tablestruct Struktur der Tabelle
+	 * @uses Mysql Für die Verbindung zur Mysql-DB
+	 * @uses Formularcheck Plausibilitätsüberprüfung von Formularen
 	 */
 	public function __construct($mysql, $tablename, $tablestruct)
 	{
 		//Argumente ueberpruefen
-		if ($mysql instanceof mysql) {
+		if ($mysql instanceof Mysql) {
 			$this->_mysql = $mysql;
 		} else {
 			throw new CMSException(array('msg_box' => 'wrong_param_mysql'), EXCEPTION_LIBARY_CODE);
@@ -121,7 +135,7 @@ class Messageboxes {
 		}
 
 		//Eigene Objekte initialisieren
-		$this->_formCheck = new FormularCheck();
+		$this->_formCheck = new Formularcheck();
 
 	}
 
@@ -131,6 +145,7 @@ class Messageboxes {
 	 *
 	 * @param array $tabledata einzugebende Daten
 	 * @return boolean Liefert bei Erfolg true, sonst Exception
+	 * @uses Mysql Für die Verbindung zur Mysql-DB
 	 */
 
 	public function addEntry($tabledata)
@@ -195,6 +210,7 @@ class Messageboxes {
 	 * @param num $id ID der referenzierenden Beitrags
 	 * @param array $tabledata einzugebende Daten
 	 * @return boolean Liefert bei Erfolg true, sonst Exception
+	 * @uses Mysql Für die Verbindung zur Mysql-DB
 	 */	
 
 	public function commentEntry($id, array $tabledata)
@@ -260,6 +276,7 @@ class Messageboxes {
 	 *
 	 * @param array $tabledata einzugebende Daten
 	 * @param array $tablestddata Standartdaten aus dem Formular, welche nicht gebraucht werden duerfen.
+	 * @uses Mysql Für die Verbindung zur Mysql-DB
 	 */
 
 	public function editEntry($tabledata)
@@ -314,6 +331,7 @@ class Messageboxes {
 	 * @param string $timeformat Zeitformat nach Mysql
 	 * @param boolean $comments Kommentare auch senden
 	 * @return array Eintrag, bei Fehler false
+	 * @uses Mysql Für die Verbindung zur Mysql-DB
 	 */
 
 	public function getEntry($id, $timeformat = "", $comments = true)
@@ -352,10 +370,6 @@ class Messageboxes {
 				}
 			}
 		}
-
-
-
-
 		return $msg_array;
 
 	}
@@ -372,6 +386,7 @@ class Messageboxes {
 	 * @param string $corder Reihenfolge der Kommentare DESC|ASC
 	 * @param string $timeformat Zeitformat nach Mysql
 	 * @return array Eintraege, bei Fehler false
+	 * @uses Mysql Für die Verbindung zur Mysql-DB
 	 */
 
 	public function getEntries($entries_pp, $page, $order = 'DESC', $corder = 'ASC', $timeformat = "")
@@ -464,6 +479,7 @@ class Messageboxes {
 	 * Loescht einen Eintrag aus der Datenbank inkl. alle Kommentaren
 	 *
 	 * @param int $id
+	 * @uses Mysql Für die Verbindung zur Mysql-DB
 	 */
 
 	public function delEntry($id)
@@ -497,7 +513,8 @@ class Messageboxes {
 	 * Gibt an, ob die angegeben ID ein Kommentar ist oder nicht
 	 *
 	 * @param int $id
-	 * @return boolean
+	 * @return boolean 
+	 * @uses Mysql Für die Verbindung zur Mysql-DB
 	 */
 
 	public function is_comment($id)
@@ -530,6 +547,7 @@ class Messageboxes {
 	 * @param array $tabledata
 	 * @param array $stddata Standartangaben
 	 * @return array $arr_rtn Ergebnis
+	 * @uses Formularcheck Plausibilitätsüberprüfung von Formularen
 	 */
 
 	public function formCheck($tabledata, $stddata)
@@ -568,11 +586,9 @@ class Messageboxes {
 
 		}
 
-
 		$this->_form_checked = true;
 
 		return $arr_rtn;
-
 	}
 
 
@@ -583,6 +599,7 @@ class Messageboxes {
 	 * @param string $time
 	 * @param string $timeformat
 	 * @return string formatierte Zeit, bei Fehler false
+	 * @uses Mysql Für die Verbindung zur Mysql-DB
 	 */
 
 	private function _formatTime($time, $timeformat)
@@ -607,6 +624,7 @@ class Messageboxes {
 	 *
 	 * @param array $tablestruct Array vom Konstruktor
 	 * @return boolean Erfolg
+	 * @uses Mysql Für die Verbindung zur Mysql-DB
 	 */
 
 	private function _fillStruct($tablestruct)
@@ -633,6 +651,7 @@ class Messageboxes {
 	 *
 	 * @param array $tablestruct
 	 * @return boolean Erfolg
+	 * @uses Mysql Für die Verbindung zur Mysql-DB
 	 */
 
 	private function _checkTable($tablestruct)

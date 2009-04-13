@@ -8,7 +8,7 @@ require_once ADMIN_DIR.'lib/smilies.class.php';
  * 
  * @author Simon Däster
  * @package JClubCMS
- * news.class.php
+ * contentadmin.class.php
  */
 
 class Newsadmin implements Module

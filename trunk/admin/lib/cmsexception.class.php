@@ -1,6 +1,6 @@
 <?php
 /**
- * TODO PageDoc
+ * @todo PageDoc
  * 
  * Filedokumentation fehlt
  * 
@@ -11,7 +11,6 @@
 /**
  * File: exceptions.class.php
  * Classes: coreexception, mysqlexception, moduleexception, stdexception
- * Requieres: PHP5
  * 
  * 
  * Beschrieb:
@@ -19,7 +18,6 @@
  * @author Simon Däster
  * @package JClubCMS
  * @uses CMSException for exception handling
- * @uses 
  */
 
 /**
@@ -67,7 +65,6 @@ if (!defined('EXCEPTION_LIBARY_CODE')) {
  * @package JClubCMS
  * File: exceptions.class.php
  * Classes: coreexception, mysqlexception, moduleexception, stdexception
- * @requires PHP5
  */
 
 class CMSException extends Exception

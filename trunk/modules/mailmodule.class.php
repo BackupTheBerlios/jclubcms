@@ -1,4 +1,15 @@
 <?php
+/**
+ * Dieses Modul ist für das Mailversenden zuständig.
+ * 
+ * Dieses Modul beinhaltet die Funktionen zum Mailversand und
+ * zum Versenden des Bestätigungsmail verantwortlich sowie 
+ * für das Versenden des angegebenen Mails nach der erfolgreichen Bestätigung.
+ * 
+ * @package JClubCMS
+ * @author Simon Däster
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License version 3
+ */
 require_once ADMIN_DIR.'lib/module.interface.php';
 require_once ADMIN_DIR.'lib/captcha.class.php';
 require_once ADMIN_DIR.'lib/formularcheck.class.php';
@@ -11,6 +22,7 @@ require_once ADMIN_DIR.'lib/mailsend.class.php';
  *
  * @package JClubCMS
  * @author Simon Däster
+ * @uses Mysql Für Verbindungen zur MySQL-DB.
  * File: mailmodule.class.php
  * Classes: Mailmodule
  * @requieres PHP5

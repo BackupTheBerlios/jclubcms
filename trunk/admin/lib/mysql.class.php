@@ -1,6 +1,6 @@
 <?php
 /**
- * TODO PageDoc
+ * @todo PageDoc
  * 
  * Filedokumentation fehlt
  * 

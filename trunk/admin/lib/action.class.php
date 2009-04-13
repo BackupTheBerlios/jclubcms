@@ -1,6 +1,6 @@
 <?php
 /**
- * TODO File Description
+ * @todo File Description
  * 
  * Fehlender Filebeschrieb
  * 
@@ -11,11 +11,12 @@
  */
 
 /**
- * TODO ClassDescription
+ * @todo ClassDescription
  * 
  * Fehlender Klassenbeschrieb
  *
  * @author Simon Däster
+ * @package JClubCMS
  */
 class Action
 {
@@ -71,7 +72,7 @@ class Action
 		return self::$_reserved_action;
 	}
 	/**
-	 * TODO Documentation
+	 * @todo Documentation
 	 */
 	public function _exe_reserved_action($function)
 	{

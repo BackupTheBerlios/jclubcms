@@ -5,7 +5,7 @@
  * 
  * @author Simon Däster
  * @package JClubCMS
- * config.inc.php
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License version 3
  */
 
 //**Templates Set tempates/default

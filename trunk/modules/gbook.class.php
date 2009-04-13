@@ -9,16 +9,25 @@
  * @author Simon Däster
  * @package JClubCMS
  */
+/**
+ * Messageboxes für den standardisierten Zugriff auf Tabellen
+ */
 require_once ADMIN_DIR.'lib/messageboxes.class.php';
+/**
+ * Smilies für das anzeigen von Smilies
+ */
 require_once ADMIN_DIR.'lib/smilies.class.php';
+/**
+ * Das Module-Interface
+ */
 require_once ADMIN_DIR.'lib/module.interface.php';
 /**
  * 
  * Diese Klasse ist zuständig für das Anzeigen und Hinzufügen der Gästebucheinträge.
  * @author Simon Däster
+ * @uses Mysql Für Verbindungen zur MySQL-DB.
+ * @package JClubCMS
  */
-
-
 
 class Gbook implements Module {
 	/**

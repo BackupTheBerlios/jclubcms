@@ -1,7 +1,4 @@
 <?php
-require_once ADMIN_DIR.'lib/module.interface.php';
-require_once ADMIN_DIR.'lib/smilies.class.php';
-
 /**
  * Diese Datei ist für die Administration der Contents zuständig. Über dieses Modul
  * wird das Hinzufügen von neuen Inhalten (Contents), das Bearbeiten von bestehenden und 
@@ -10,8 +7,21 @@ require_once ADMIN_DIR.'lib/smilies.class.php';
  * @todo Klasse aufbauen und Funktionen integrieren
  * @package JClubCMS
  * @author Simon Däster
- * contentadmin.class.php
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License version 3
  */
+
+require_once ADMIN_DIR.'lib/module.interface.php';
+require_once ADMIN_DIR.'lib/smilies.class.php';
+require_once ADMIN_DIR.'lib/module.interface.php';
+require_once ADMIN_DIR.'lib/smilies.class.php';
+
+/**
+ * Diese Klasse ist verantwortlich für die Administration der Inhalte
+ * @todo Klassenbeschrieb
+ * @package JClubCMS
+ * @author Simon Däster
+ */
+
 class Contentadmin implements Module
 {
 	/**
@@ -701,6 +711,4 @@ class Contentadmin implements Module
 	}
 
 }
-
-
 ?>
