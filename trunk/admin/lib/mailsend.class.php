@@ -74,6 +74,7 @@ class Mailsend {
         $betreff = $system_textes[LANGUAGE_ABR]['mail']['send_check'];
         $failer = $this->_mail_send($empfaenger,$betreff,$msg,$header);
         return $failer;
+
 	}
 
 	/**
