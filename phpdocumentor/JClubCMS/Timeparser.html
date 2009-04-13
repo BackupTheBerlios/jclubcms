@@ -206,8 +206,8 @@ Source Location: /admin/lib/timeparser.class.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line <a href="../__filesource/fsource_JClubCMS__adminlibtimeparser.class.php.html#a73">73</a>]<br />
-Die Klasse timeparser ist zuständig für das Parsen der Zeiten die  in den MySQL-Tabellen angelegt sind (Gästebuch, News, uä) und dessen  Werte die im Y-m-d H:i:s Format sind.<br /><br /><p>Geparst wird _OHNE_ den Weg über time() um &quot;Zukunftssicher&quot; zu sein.</p><p>Funktionsbeschrieb: <ul><li>__construct($time_format)</li><li>Das Konstrukt dieser Klasse</li></ul> <ul><li>time2array() (wird von time_output ausgeführt)</li><li>Schreibt den String in ein Array</li></ul> <ul><li>year_replace($format) (wird von time_output ausgeführt)</li><li>Gibt das Jahr im gewünschten Format zurück</li></ul> <ul><li>month_replace($format) (wird von time_output ausgeführt)</li><li>Gibt den Monat im gewünschten Format zurück</li></ul> <ul><li>day_replace($format) (wird von time_output ausgeführt)</li><li>Gibt den Tag im gewünschten Format zurück</li></ul> <ul><li>hour_replace($format) (wird von time_output ausgeführt)</li><li>Gibt die Stunde im gewünschten Format zurück</li></ul> <ul><li>minute_replace($format) (wird von time_output ausgeführt)</li><li>Gibt ddie Minute im gewünschten Format zurück</li></ul> <ul><li>second_replace($format) (wird von time_output ausgeführt)</li><li>Gibt die Sekunden im gewünschten Format zurück</li></ul> <ul><li>time_output ($time_string)</li><li>Parst den String nachher in das angegebene Time-Format.</li></ul> <ul><li>__destruct</li><li>Der Destruktor der Klasse</li></ul></p><p>_Nicht_ geplante Unterstüzung:</p><p><ul><li>B	Swatch-Internet-Zeit</li><li>D	Tag der Woche gekürzt auf drei Buchstaben</li><li>I 	Fällt ein Datum in die Sommerzeit</li><li>l 	Ausgeschriebener Tag der Woche</li><li>L	Schaltjahr oder nicht</li><li>O	Zeitunterschied zur Greenwich time (GMT) in Stunden</li><li>S	Anhang der englischen Aufzählung für einen Monatstag, zwei Zeichen</li><li>t	Anzahl der Tage des angegebenen Monats</li><li>T	Zeitzoneneinstellung des Rechners</li><li>U	Sekunden seit Beginn der UNIX-Epoche</li><li>w	Numerischer Tag einer Woche</li><li>W	ISO-8601 Wochennummer des Jahres, die Woche beginnt am Montag</li><li>z	Der Tag eines Jahres</li><li>Z	 Offset der Zeitzone in Sekunden.</li></ul>  The Timeparser Class- Parst eine MySQL-Zeit in ein gewünschtes Format.  Die Daten aus der DB wird eingelesen und anschliessend über explode in die einzelnen  Blöcken (Jahr, Tag, Monat, Stunde, Minute und Sekunde) aufgeteilt und in das time_array  gespeichert.</p><p>Anschliessend wird über die Funktion time_output via den Vorlagestring (zum grösten Teil  date()-ähnlich) ausgegeben.  Die date()-Funktion wird bewusst ausgelassen, damit auch nach 2038 noch funktionsfähig ist.</p><br /><br /><br />
+[line <a href="../__filesource/fsource_JClubCMS__adminlibtimeparser.class.php.html#a50">50</a>]<br />
+Die Klasse timeparser ist zuständig für das Parsen der Zeiten die  in den MySQL-Tabellen angelegt sind (Gästebuch, News, uä) und dessen  Werte die im Y-m-d H:i:s Format sind.<br /><br /><p>Geparst wird _OHNE_ den Weg über time() um &quot;Zukunftssicher&quot; zu sein.</p><p>_Nicht_ geplante Unterstüzung:</p><p><ul><li>B	Swatch-Internet-Zeit</li><li>D	Tag der Woche gekürzt auf drei Buchstaben</li><li>I 	Fällt ein Datum in die Sommerzeit</li><li>l 	Ausgeschriebener Tag der Woche</li><li>L	Schaltjahr oder nicht</li><li>O	Zeitunterschied zur Greenwich time (GMT) in Stunden</li><li>S	Anhang der englischen Aufzählung für einen Monatstag, zwei Zeichen</li><li>t	Anzahl der Tage des angegebenen Monats</li><li>T	Zeitzoneneinstellung des Rechners</li><li>U	Sekunden seit Beginn der UNIX-Epoche</li><li>w	Numerischer Tag einer Woche</li><li>W	ISO-8601 Wochennummer des Jahres, die Woche beginnt am Montag</li><li>z	Der Tag eines Jahres</li><li>Z	 Offset der Zeitzone in Sekunden.</li></ul>  The Timeparser Class- Parst eine MySQL-Zeit in ein gewünschtes Format.  Die Daten aus der DB wird eingelesen und anschliessend über explode in die einzelnen  Blöcken (Jahr, Tag, Monat, Stunde, Minute und Sekunde) aufgeteilt und in das time_array  gespeichert.</p><p>Anschliessend wird über die Funktion time_output via den Vorlagestring (zum grösten Teil  date()-ähnlich) ausgegeben.  Die date()-Funktion wird bewusst ausgelassen, damit auch nach 2038 noch funktionsfähig ist.</p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
@@ -230,7 +230,7 @@ Die Klasse timeparser ist zuständig für das Parsen der Zeiten die  in den MySQ
 
   <hr />
 	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibtimeparser.class.php.html#a84">84</a>]</span></h3>
+	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibtimeparser.class.php.html#a61">61</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -266,7 +266,7 @@ $time_format)</code>
   </div>
   <hr />
 	<a name="method__destruct"></a>
-	<h3>destructor __destruct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibtimeparser.class.php.html#a367">367</a>]</span></h3>
+	<h3>destructor __destruct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibtimeparser.class.php.html#a344">344</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -291,7 +291,7 @@ $time_format)</code>
   </div>
   <hr />
 	<a name="methodtime_output"></a>
-	<h3>method time_output <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibtimeparser.class.php.html#a94">94</a>]</span></h3>
+	<h3>method time_output <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibtimeparser.class.php.html#a71">71</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -330,7 +330,7 @@ $time_string)</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Mon, 13 Apr 2009 20:05:49 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Mon, 13 Apr 2009 22:15:15 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

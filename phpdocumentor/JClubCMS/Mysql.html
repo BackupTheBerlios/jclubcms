@@ -165,12 +165,12 @@ Source Location: /admin/lib/mysql.class.php<br /><br />
 <ul>
           <li>Simon Däster</li>
               <li>David Däster</li>
-                                                                                          </ul>
+                                                                                                                  </ul>
 
 
 
 
-                                                                
+                                                                                
 
         
 </td>
@@ -223,16 +223,19 @@ Die Klasse mysql ist zustaendig fuer das ganze Datenbankhandling von mysql.<br /
     <td><b>author:</b>&nbsp;&nbsp;</td><td>David Däster</td>
   </tr>
   <tr>
-    <td><b>usedby:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Messageboxes.html#methodgetEntry">Messageboxes::getEntry()</a> - Für die Verbindung zur Mysql-DB</td>
+    <td><b>usedby:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Messageboxes.html#methodcommentEntry">Messageboxes::commentEntry()</a> - Für die Verbindung zur Mysql-DB</td>
   </tr>
   <tr>
     <td><b>usedby:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Messageboxes.html#methodeditEntry">Messageboxes::editEntry()</a> - Für die Verbindung zur Mysql-DB</td>
   </tr>
   <tr>
-    <td><b>usedby:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Messageboxes.html#methodgetEntries">Messageboxes::getEntries()</a> - Für die Verbindung zur Mysql-DB</td>
+    <td><b>usedby:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Messageboxes.html#methodaddEntry">Messageboxes::addEntry()</a> - Für die Verbindung zur Mysql-DB</td>
   </tr>
   <tr>
-    <td><b>usedby:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Messageboxes.html#methoddelEntry">Messageboxes::delEntry()</a> - Für die Verbindung zur Mysql-DB</td>
+    <td><b>usedby:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Messageboxes.html#methodgetEntry">Messageboxes::getEntry()</a> - Für die Verbindung zur Mysql-DB</td>
+  </tr>
+  <tr>
+    <td><b>usedby:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Messageboxes.html#methodgetEntries">Messageboxes::getEntries()</a> - Für die Verbindung zur Mysql-DB</td>
   </tr>
   <tr>
     <td><b>usedby:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Bbcodes.html">Bbcodes</a> - for connectiong to the database</td>
@@ -241,10 +244,16 @@ Die Klasse mysql ist zustaendig fuer das ganze Datenbankhandling von mysql.<br /
     <td><b>usedby:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Messageboxes.html#methodis_comment">Messageboxes::is_comment()</a> - Für die Verbindung zur Mysql-DB</td>
   </tr>
   <tr>
-    <td><b>usedby:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Messageboxes.html#methodcommentEntry">Messageboxes::commentEntry()</a> - Für die Verbindung zur Mysql-DB</td>
+    <td><b>usedby:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Messageboxes.html#methoddelEntry">Messageboxes::delEntry()</a> - Für die Verbindung zur Mysql-DB</td>
   </tr>
   <tr>
     <td><b>usedby:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Messageboxes.html#method__construct">Messageboxes::__construct()</a> - Für die Verbindung zur Mysql-DB</td>
+  </tr>
+  <tr>
+    <td><b>usedby:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Auth.html#methodcheck4login">Auth::check4login()</a> - Für die Verbindung zur Mysql-DB</td>
+  </tr>
+  <tr>
+    <td><b>usedby:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/News.html">News</a> - Für Verbindungen zur MySQL-DB.</td>
   </tr>
   <tr>
     <td><b>usedby:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Members.html">Members</a> - Für die Verbindung zur MySQL-DB</td>
@@ -255,16 +264,19 @@ Die Klasse mysql ist zustaendig fuer das ganze Datenbankhandling von mysql.<br /
  Classes: Mailmodule</td>
   </tr>
   <tr>
-    <td><b>usedby:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/News.html">News</a> - Für Verbindungen zur MySQL-DB.</td>
-  </tr>
-  <tr>
     <td><b>usedby:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Gbook.html">Gbook</a> - Für Verbindungen zur MySQL-DB.</td>
   </tr>
   <tr>
-    <td><b>usedby:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Messageboxes.html">Messageboxes</a> - Für die Verbindung zur Mysql-DB</td>
+    <td><b>usedby:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Smilies.html#methodcreate_smiliesarray">Smilies::create_smiliesarray()</a></td>
   </tr>
   <tr>
-    <td><b>usedby:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Messageboxes.html#methodaddEntry">Messageboxes::addEntry()</a> - Für die Verbindung zur Mysql-DB</td>
+    <td><b>usedby:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Page.html">Page</a></td>
+  </tr>
+  <tr>
+    <td><b>usedby:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Smilies.html#methodshow_smilie">Smilies::show_smilie()</a></td>
+  </tr>
+  <tr>
+    <td><b>usedby:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Messageboxes.html">Messageboxes</a> - Für die Verbindung zur Mysql-DB</td>
   </tr>
 </table>
 </div>
@@ -670,7 +682,7 @@ $resulttype = &quot;assoc&quot;])</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Mon, 13 Apr 2009 20:05:41 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Mon, 13 Apr 2009 22:15:07 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

@@ -163,13 +163,13 @@ Source Location: /admin/lib/auth.class.php<br /><br />
 <div class="description">Authorisierungsklasse für den Adminbereich</div><br /><br />
 <h4>Author(s):</h4>
 <ul>
-          <li>Simon Däster  File: auth.class.php  class: Auth</li>
-            </ul>
+          <li>Simon Däster</li>
+      </ul>
 
 
 
 
-        
+    
 
         
 </td>
@@ -202,16 +202,13 @@ Source Location: /admin/lib/auth.class.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line <a href="../__filesource/fsource_JClubCMS__adminlibauth.class.php.html#a25">25</a>]<br />
+[line <a href="../__filesource/fsource_JClubCMS__adminlibauth.class.php.html#a27">27</a>]<br />
 Authorisierungsklasse für den Adminbereich<br /><br /><p>Diese Seite ist das Autorisierungs-Modul. Sie ist fuer das rechtmässige Einloggen  verantwortlich; sie schaut, ob der Benutzer noch aktiv ist und schmeisst in, wenn  noetig, aus dem Administration. Weiter ist sie dafuer verantworlich, dass der Benutzer  nur Befehle ausfürht, die er rechtmässig verwenden darf.</p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>author:</b>&nbsp;&nbsp;</td><td>Simon Däster  File: auth.class.php  class: Auth</td>
-  </tr>
-  <tr>
-    <td><b>requires:</b>&nbsp;&nbsp;</td><td>PHP5</td>
+    <td><b>author:</b>&nbsp;&nbsp;</td><td>Simon Däster</td>
   </tr>
 </table>
 </div>
@@ -226,13 +223,13 @@ Authorisierungsklasse für den Adminbereich<br /><br /><p>Diese Seite ist das Au
 
   <hr />
 	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibauth.class.php.html#a69">69</a>]</span></h3>
+	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibauth.class.php.html#a72">72</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
 		<code>Auth __construct(
-smarty
-$smarty, mysql
+<a href="../Smarty/Smarty.html">Smarty</a>
+$smarty, <a href="../JClubCMS/Mysql.html">Mysql</a>
 $mysql)</code>
     </td></tr></table>
     </td></tr></table><br />
@@ -244,6 +241,9 @@ $mysql)</code>
   <tr>
     <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
   </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../Smarty/Smarty.html">Smarty</a> - Als Template-System</td>
+  </tr>
 </table>
 </div>
 <br /><br />
@@ -253,12 +253,12 @@ $mysql)</code>
     <div class="tags">
     <table border="0" cellspacing="0" cellpadding="0">
           <tr>
-        <td class="type">smarty&nbsp;&nbsp;</td>
+        <td class="type"><a href="../Smarty/Smarty.html">Smarty</a>&nbsp;&nbsp;</td>
         <td><b>$smarty</b>&nbsp;&nbsp;</td>
         <td></td>
       </tr>
           <tr>
-        <td class="type">mysql&nbsp;&nbsp;</td>
+        <td class="type"><a href="../JClubCMS/Mysql.html">Mysql</a>&nbsp;&nbsp;</td>
         <td><b>$mysql</b>&nbsp;&nbsp;</td>
         <td></td>
       </tr>
@@ -268,7 +268,7 @@ $mysql)</code>
   </div>
   <hr />
 	<a name="methodcheck4login"></a>
-	<h3>method check4login <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibauth.class.php.html#a88">88</a>]</span></h3>
+	<h3>method check4login <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibauth.class.php.html#a93">93</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -288,6 +288,12 @@ $post_array)</code>
   </tr>
   <tr>
     <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../Smarty/Smarty.html">Smarty</a> - Als Template-System</td>
+  </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Mysql.html">Mysql</a> - Für die Verbindung zur Mysql-DB</td>
   </tr>
 </table>
 </div>
@@ -313,7 +319,7 @@ $post_array)</code>
   </div>
   <hr />
 	<a name="methodcheck4user"></a>
-	<h3>method check4user <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibauth.class.php.html#a153">153</a>]</span></h3>
+	<h3>method check4user <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibauth.class.php.html#a159">159</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -329,6 +335,9 @@ $get_array)</code>
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../Smarty/Smarty.html">Smarty</a> - Als Template-System</td>
   </tr>
 </table>
 </div>
@@ -349,7 +358,7 @@ $get_array)</code>
   </div>
   <hr />
 	<a name="methodlogout"></a>
-	<h3>method logout <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibauth.class.php.html#a190">190</a>]</span></h3>
+	<h3>method logout <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibauth.class.php.html#a196">196</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -365,6 +374,9 @@ $get_array)</code>
   <tr>
     <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
   </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../Smarty/Smarty.html">Smarty</a> - Als Template-System</td>
+  </tr>
 </table>
 </div>
 <br /><br />
@@ -377,7 +389,7 @@ $get_array)</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Mon, 13 Apr 2009 20:05:25 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Mon, 13 Apr 2009 22:14:50 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

@@ -46,71 +46,111 @@
 <li><div class="src-line"><a name="a3"></a><span class="src-doc">/**</span></div></li>
 <li><div class="src-line"><a name="a4"></a><span class="src-doc">&nbsp;*&nbsp;</span><span class="src-doc-coretag">@package</span><span class="src-doc">&nbsp;JClubCMS</span></div></li>
 <li><div class="src-line"><a name="a5"></a><span class="src-doc">&nbsp;*&nbsp;</span><span class="src-doc-coretag">@author</span><span class="src-doc">&nbsp;David&nbsp;Däter,&nbsp;Simon&nbsp;Däster</span></div></li>
-<li><div class="src-line"><a name="a6"></a><span class="src-doc">&nbsp;*/</span></div></li>
-<li><div class="src-line"><a name="a7"></a>&nbsp;</div></li>
-<li><div class="src-line"><a name="a8"></a><span class="src-comm">/*DB-Einstellungen*/</span></div></li>
-<li><div class="src-line"><a name="a9"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'DB_SERVER'</span><span class="src-sym">,&nbsp;</span><span class="src-str">'localhost'</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
-<li><div class="src-line"><a name="a10"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'DB_NAME'</span><span class="src-sym">,&nbsp;</span><span class="src-str">'jclubch_jclubcms'</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
-<li><div class="src-line"><a name="a11"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'DB_USER'</span><span class="src-sym">,&nbsp;</span><span class="src-str">'jclubch_jclubcms'</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
-<li><div class="src-line"><a name="a12"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'DB_PW'</span><span class="src-sym">,&nbsp;</span><span class="src-str">'4pw4jclubcms'</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
-<li><div class="src-line"><a name="a13"></a>&nbsp;</div></li>
-<li><div class="src-line"><a name="a14"></a>&nbsp;</div></li>
-<li><div class="src-line"><a name="a15"></a><span class="src-comm">/*Smarty-Einstellungen*/</span></div></li>
-<li><div class="src-line"><a name="a16"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'SMARTY_COMPILE_CHECK'</span><span class="src-sym">,&nbsp;</span><span class="src-id">true</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
-<li><div class="src-line"><a name="a17"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'SMARTY_DEBUGING'</span><span class="src-sym">,&nbsp;</span><span class="src-id">false</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
-<li><div class="src-line"><a name="a18"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'SMARTY_CONFIG_DIR'</span><span class="src-sym">,&nbsp;</span><span class="src-str">'config'</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
-<li><div class="src-line"><a name="a19"></a>&nbsp;</div></li>
-<li><div class="src-line"><a name="a20"></a><span class="src-comm">/*Sprach-Einstellungen*/</span></div></li>
-<li><div class="src-line"><a name="a21"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'LANGUAGE_ABR'</span><span class="src-sym">,&nbsp;</span><span class="src-str">'de'</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
-<li><div class="src-line"><a name="a22"></a>&nbsp;</div></li>
-<li><div class="src-line"><a name="a23"></a><span class="src-comm">/*Fehler-Einstellungen*/</span></div></li>
-<li><div class="src-line"><a name="a24"></a><span class="src-comm">//Trace&nbsp;des&nbsp;PHP-Parser&nbsp;anzeigen.&nbsp;Aus&nbsp;Sicherheitsgründen&nbsp;(z.B.&nbsp;Offenlegen&nbsp;des&nbsp;MySQL-Passworts&nbsp;bei&nbsp;MySQL-Fehler)&nbsp;nicht&nbsp;empfohlen</span></div></li>
-<li><div class="src-line"><a name="a25"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'EXCEPTION_SHOW_TRACE'</span><span class="src-sym">,&nbsp;</span><span class="src-id">false</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
-<li><div class="src-line"><a name="a26"></a>&nbsp;</div></li>
-<li><div class="src-line"><a name="a27"></a><span class="src-comm">/*Bild&nbsp;und&nbsp;Thumb*/</span></div></li>
+<li><div class="src-line"><a name="a6"></a><span class="src-doc">&nbsp;*&nbsp;</span><span class="src-doc-coretag">@license</span><span class="src-doc">&nbsp;http://opensource.org/licenses/gpl-3.0.html&nbsp;GNU&nbsp;Public&nbsp;License&nbsp;version&nbsp;3</span></div></li>
+<li><div class="src-line"><a name="a7"></a><span class="src-doc">&nbsp;*/</span></div></li>
+<li><div class="src-line"><a name="a8"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a9"></a><span class="src-doc">/**</span></div></li>
+<li><div class="src-line"><a name="a10"></a><span class="src-doc">&nbsp;*&nbsp;DBServer&nbsp;Adresse</span></div></li>
+<li><div class="src-line"><a name="a11"></a><span class="src-doc">&nbsp;*&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a12"></a><span class="src-doc">&nbsp;*&nbsp;Wird&nbsp;gebraucht&nbsp;als&nbsp;Zugriffspfad&nbsp;zum&nbsp;DBServer,</span></div></li>
+<li><div class="src-line"><a name="a13"></a><span class="src-doc">&nbsp;*&nbsp;und&nbsp;wird&nbsp;vom&nbsp;Anbieter&nbsp;gegeben</span></div></li>
+<li><div class="src-line"><a name="a14"></a><span class="src-doc">&nbsp;*/</span></div></li>
+<li><div class="src-line"><a name="a15"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'DB_SERVER'</span><span class="src-sym">,&nbsp;</span><span class="src-str">'localhost'</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a16"></a><span class="src-doc">/**</span></div></li>
+<li><div class="src-line"><a name="a17"></a><span class="src-doc">&nbsp;*&nbsp;DB&nbsp;Name</span></div></li>
+<li><div class="src-line"><a name="a18"></a><span class="src-doc">&nbsp;*&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a19"></a><span class="src-doc">&nbsp;*&nbsp;Name&nbsp;der&nbsp;Datenbank,&nbsp;wird&nbsp;vom&nbsp;Anbieter&nbsp;geliefert</span></div></li>
+<li><div class="src-line"><a name="a20"></a><span class="src-doc">&nbsp;*/</span></div></li>
+<li><div class="src-line"><a name="a21"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'DB_NAME'</span><span class="src-sym">,&nbsp;</span><span class="src-str">'jclubch_jclubcms'</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a22"></a><span class="src-doc">/**</span></div></li>
+<li><div class="src-line"><a name="a23"></a><span class="src-doc">&nbsp;*&nbsp;DB&nbsp;Benutzer</span></div></li>
+<li><div class="src-line"><a name="a24"></a><span class="src-doc">&nbsp;*&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a25"></a><span class="src-doc">&nbsp;*&nbsp;Datenbankbenutzer,&nbsp;wird&nbsp;vom&nbsp;Anbieter&nbsp;geliefert</span></div></li>
+<li><div class="src-line"><a name="a26"></a><span class="src-doc">&nbsp;*/</span></div></li>
+<li><div class="src-line"><a name="a27"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'DB_USER'</span><span class="src-sym">,&nbsp;</span><span class="src-str">'jclubch_jclubcms'</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
 <li><div class="src-line"><a name="a28"></a><span class="src-doc">/**</span></div></li>
-<li><div class="src-line"><a name="a29"></a><span class="src-doc">&nbsp;*&nbsp;**Speicherort&nbsp;der&nbsp;Bilder**</span></div></li>
-<li><div class="src-line"><a name="a30"></a><span class="src-doc">&nbsp;*&nbsp;Bilder&nbsp;werden&nbsp;standartmässig&nbsp;im&nbsp;Ordner&nbsp;originals&nbsp;abgespeichert.</span></div></li>
-<li><div class="src-line"><a name="a31"></a><span class="src-doc">&nbsp;*&nbsp;Automatisch&nbsp;generierte&nbsp;Kopien&nbsp;dieser&nbsp;Bilder&nbsp;(u.a.&nbsp;weil&nbsp;das&nbsp;Originalbild&nbsp;zu&nbsp;gross&nbsp;ist)&nbsp;werden</span></div></li>
-<li><div class="src-line"><a name="a32"></a><span class="src-doc">&nbsp;*&nbsp;im&nbsp;Ornder&nbsp;gallery&nbsp;abgespeichert.</span></div></li>
-<li><div class="src-line"><a name="a33"></a><span class="src-doc">&nbsp;*&nbsp;Die&nbsp;kleinen&nbsp;automatische&nbsp;generierten&nbsp;Vorzeigebilder&nbsp;(sog.&nbsp;Thumbs)&nbsp;wernden&nbsp;standardmässig</span></div></li>
-<li><div class="src-line"><a name="a34"></a><span class="src-doc">&nbsp;*&nbsp;im&nbsp;Ordner&nbsp;thumbs&nbsp;gespeichert.</span></div></li>
-<li><div class="src-line"><a name="a35"></a><span class="src-doc">&nbsp;*&nbsp;</span></div></li>
-<li><div class="src-line"><a name="a36"></a><span class="src-doc">&nbsp;*&nbsp;Wichtig:&nbsp;Speicherorte&nbsp;sind&nbsp;relativ&nbsp;zur&nbsp;Index.php-Datei&nbsp;anzugeben</span></div></li>
-<li><div class="src-line"><a name="a37"></a><span class="src-doc">&nbsp;*</span></div></li>
+<li><div class="src-line"><a name="a29"></a><span class="src-doc">&nbsp;*&nbsp;DB&nbsp;Benutzer&nbsp;Passwort</span></div></li>
+<li><div class="src-line"><a name="a30"></a><span class="src-doc">&nbsp;*&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a31"></a><span class="src-doc">&nbsp;*&nbsp;Passwort&nbsp;des&nbsp;Datenbankbenutzer,&nbsp;wird&nbsp;vom&nbsp;Anbieter&nbsp;geliefert</span></div></li>
+<li><div class="src-line"><a name="a32"></a><span class="src-doc">&nbsp;*/</span></div></li>
+<li><div class="src-line"><a name="a33"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'DB_PW'</span><span class="src-sym">,&nbsp;</span><span class="src-str">'4pw4jclubcms'</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a34"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a35"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a36"></a><span class="src-doc">/**</span></div></li>
+<li><div class="src-line"><a name="a37"></a><span class="src-doc">&nbsp;*&nbsp;Einschalten&nbsp;des&nbsp;CompileChecks&nbsp;von&nbsp;Smarty</span></div></li>
 <li><div class="src-line"><a name="a38"></a><span class="src-doc">&nbsp;*/</span></div></li>
-<li><div class="src-line"><a name="a39"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'IMAGE_DIR_ORIGN'</span><span class="src-sym">,&nbsp;</span><span class="src-id">USER_DIR</span>.<span class="src-str">&quot;graphics/originals/&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
-<li><div class="src-line"><a name="a40"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'IMAGE_DIR_GALL'</span><span class="src-sym">,&nbsp;</span><span class="src-id">USER_DIR</span>.<span class="src-str">&quot;graphics/gallery/&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
-<li><div class="src-line"><a name="a41"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'IMAGE_MAXHEIGHT'</span><span class="src-sym">,&nbsp;</span><span class="src-num">600</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
-<li><div class="src-line"><a name="a42"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'IMAGE_MAXWIDTH'</span><span class="src-sym">,&nbsp;</span><span class="src-num">600</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
-<li><div class="src-line"><a name="a43"></a>&nbsp;</div></li>
-<li><div class="src-line"><a name="a44"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'THUMB_DIR'</span><span class="src-sym">,&nbsp;</span><span class="src-id">USER_DIR</span>.<span class="src-str">&quot;graphics/gallery/thumbs/&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
-<li><div class="src-line"><a name="a45"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'THUMB_MAXHEIHGT'</span><span class="src-sym">,&nbsp;</span><span class="src-num">150</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
-<li><div class="src-line"><a name="a46"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'THUMB_MAXWIDTH'</span><span class="src-sym">,&nbsp;</span><span class="src-num">150</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
-<li><div class="src-line"><a name="a47"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a39"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'SMARTY_COMPILE_CHECK'</span><span class="src-sym">,&nbsp;</span><span class="src-id">true</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a40"></a><span class="src-doc">/**</span></div></li>
+<li><div class="src-line"><a name="a41"></a><span class="src-doc">&nbsp;*&nbsp;Einschalten&nbsp;des&nbsp;Debungings&nbsp;von&nbsp;Smarty</span></div></li>
+<li><div class="src-line"><a name="a42"></a><span class="src-doc">&nbsp;*/</span></div></li>
+<li><div class="src-line"><a name="a43"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'SMARTY_DEBUGING'</span><span class="src-sym">,&nbsp;</span><span class="src-id">false</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a44"></a><span class="src-doc">/**</span></div></li>
+<li><div class="src-line"><a name="a45"></a><span class="src-doc">&nbsp;*&nbsp;Konfigurationspfad&nbsp;von&nbsp;Smarty</span></div></li>
+<li><div class="src-line"><a name="a46"></a><span class="src-doc">&nbsp;*/</span></div></li>
+<li><div class="src-line"><a name="a47"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'SMARTY_CONFIG_DIR'</span><span class="src-sym">,&nbsp;</span><span class="src-str">'config'</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
 <li><div class="src-line"><a name="a48"></a>&nbsp;</div></li>
-<li><div class="src-line"><a name="a49"></a>&nbsp;</div></li>
-<li><div class="src-line"><a name="a50"></a><span class="src-comm">/**Smilies*/</span></div></li>
-<li><div class="src-line"><a name="a51"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'SMILIES_DIR'</span><span class="src-sym">,&nbsp;</span><span class="src-id">USER_DIR</span>.<span class="src-str">&quot;graphics/smilies/&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
-<li><div class="src-line"><a name="a52"></a>&nbsp;</div></li>
-<li><div class="src-line"><a name="a53"></a>&nbsp;</div></li>
-<li><div class="src-line"><a name="a54"></a><span class="src-comm">//**Date&nbsp;TimeZone</span></div></li>
-<li><div class="src-line"><a name="a55"></a><a href="http://www.php.net/date_default_timezone_set">date_default_timezone_set</a><span class="src-sym">(</span><span class="src-str">'Europe/Zurich'</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
-<li><div class="src-line"><a name="a56"></a>&nbsp;</div></li>
-<li><div class="src-line"><a name="a57"></a><span class="src-comm">//**Ausgegebenes&nbsp;Timeformat</span></div></li>
-<li><div class="src-line"><a name="a58"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'TIMEFORMAT'</span><span class="src-sym">,&nbsp;</span><span class="src-str">'%e.%m.%Y&nbsp;%k:%i'</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
-<li><div class="src-line"><a name="a59"></a>&nbsp;</div></li>
-<li><div class="src-line"><a name="a60"></a>&nbsp;</div></li>
-<li><div class="src-line"><a name="a61"></a>&nbsp;</div></li>
-<li><div class="src-line"><a name="a62"></a><span class="src-comm">//**Bei&nbsp;der&nbsp;Gallerie:&nbsp;Alle&nbsp;Gallerien&nbsp;in&nbsp;der&nbsp;obersten&nbsp;Kategorie&nbsp;anzeigen,&nbsp;nicht&nbsp;nur&nbsp;die&nbsp;direkt&nbsp;untergeordneten</span></div></li>
-<li><div class="src-line"><a name="a63"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'SHOW_ALL_GALLERIES_ON_TOP'</span><span class="src-sym">,</span><span class="src-id">true</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a49"></a><span class="src-doc">/**</span></div></li>
+<li><div class="src-line"><a name="a50"></a><span class="src-doc">&nbsp;*&nbsp;Sprache</span></div></li>
+<li><div class="src-line"><a name="a51"></a><span class="src-doc">&nbsp;*</span></div></li>
+<li><div class="src-line"><a name="a52"></a><span class="src-doc">&nbsp;*&nbsp;Definition&nbsp;der&nbsp;Seitensprache</span></div></li>
+<li><div class="src-line"><a name="a53"></a><span class="src-doc">&nbsp;*/</span></div></li>
+<li><div class="src-line"><a name="a54"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'LANGUAGE_ABR'</span><span class="src-sym">,&nbsp;</span><span class="src-str">'de'</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a55"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a56"></a><span class="src-comm">/*Fehler-Einstellungen*/</span></div></li>
+<li><div class="src-line"><a name="a57"></a><span class="src-doc">/**</span></div></li>
+<li><div class="src-line"><a name="a58"></a><span class="src-doc">&nbsp;*&nbsp;Trace&nbsp;des&nbsp;PHP-Parser&nbsp;anzeigen.</span></div></li>
+<li><div class="src-line"><a name="a59"></a><span class="src-doc">&nbsp;*&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a60"></a><span class="src-doc">&nbsp;*&nbsp;Aus&nbsp;Sicherheitsgründen&nbsp;(z.B.&nbsp;Offenlegen&nbsp;des&nbsp;MySQL-Passworts&nbsp;bei</span></div></li>
+<li><div class="src-line"><a name="a61"></a><span class="src-doc">&nbsp;*&nbsp;MySQL-Fehler)&nbsp;nicht&nbsp;empfohlen.</span></div></li>
+<li><div class="src-line"><a name="a62"></a><span class="src-doc">&nbsp;*/</span></div></li>
+<li><div class="src-line"><a name="a63"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'EXCEPTION_SHOW_TRACE'</span><span class="src-sym">,&nbsp;</span><span class="src-id">false</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
 <li><div class="src-line"><a name="a64"></a>&nbsp;</div></li>
-<li><div class="src-line"><a name="a65"></a><span class="src-php">?&gt;</span></div></li>
+<li><div class="src-line"><a name="a65"></a><span class="src-comm">/*Bild&nbsp;und&nbsp;Thumb*/</span></div></li>
+<li><div class="src-line"><a name="a66"></a><span class="src-doc">/**</span></div></li>
+<li><div class="src-line"><a name="a67"></a><span class="src-doc">&nbsp;*&nbsp;Speicherort&nbsp;der&nbsp;Bilder</span></div></li>
+<li><div class="src-line"><a name="a68"></a><span class="src-doc">&nbsp;*&nbsp;Bilder&nbsp;werden&nbsp;standartmässig&nbsp;im&nbsp;Ordner&nbsp;originals&nbsp;abgespeichert.</span></div></li>
+<li><div class="src-line"><a name="a69"></a><span class="src-doc">&nbsp;*&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a70"></a><span class="src-doc">&nbsp;*&nbsp;Automatisch&nbsp;generierte&nbsp;Kopien&nbsp;dieser&nbsp;Bilder&nbsp;(u.a.&nbsp;weil&nbsp;das&nbsp;Originalbild&nbsp;zu&nbsp;gross&nbsp;ist)&nbsp;werden</span></div></li>
+<li><div class="src-line"><a name="a71"></a><span class="src-doc">&nbsp;*&nbsp;im&nbsp;Ornder&nbsp;gallery&nbsp;abgespeichert.</span></div></li>
+<li><div class="src-line"><a name="a72"></a><span class="src-doc">&nbsp;*&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a73"></a><span class="src-doc">&nbsp;*&nbsp;Die&nbsp;kleinen&nbsp;automatische&nbsp;generierten&nbsp;Vorzeigebilder&nbsp;(sog.&nbsp;Thumbs)&nbsp;wernden&nbsp;standardmässig</span></div></li>
+<li><div class="src-line"><a name="a74"></a><span class="src-doc">&nbsp;*&nbsp;im&nbsp;Ordner&nbsp;thumbs&nbsp;gespeichert.</span></div></li>
+<li><div class="src-line"><a name="a75"></a><span class="src-doc">&nbsp;*&nbsp;</span></div></li>
+<li><div class="src-line"><a name="a76"></a><span class="src-doc">&nbsp;*&nbsp;Wichtig:&nbsp;Speicherorte&nbsp;sind&nbsp;relativ&nbsp;zur&nbsp;index.php-Datei&nbsp;anzugeben</span></div></li>
+<li><div class="src-line"><a name="a77"></a><span class="src-doc">&nbsp;*</span></div></li>
+<li><div class="src-line"><a name="a78"></a><span class="src-doc">&nbsp;*/</span></div></li>
+<li><div class="src-line"><a name="a79"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'IMAGE_DIR_ORIGN'</span><span class="src-sym">,&nbsp;</span><span class="src-id">USER_DIR</span>.<span class="src-str">&quot;graphics/originals/&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a80"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'IMAGE_DIR_GALL'</span><span class="src-sym">,&nbsp;</span><span class="src-id">USER_DIR</span>.<span class="src-str">&quot;graphics/gallery/&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a81"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'IMAGE_MAXHEIGHT'</span><span class="src-sym">,&nbsp;</span><span class="src-num">600</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a82"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'IMAGE_MAXWIDTH'</span><span class="src-sym">,&nbsp;</span><span class="src-num">600</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a83"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a84"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'THUMB_DIR'</span><span class="src-sym">,&nbsp;</span><span class="src-id">USER_DIR</span>.<span class="src-str">&quot;graphics/gallery/thumbs/&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a85"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'THUMB_MAXHEIHGT'</span><span class="src-sym">,&nbsp;</span><span class="src-num">150</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a86"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'THUMB_MAXWIDTH'</span><span class="src-sym">,&nbsp;</span><span class="src-num">150</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a87"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a88"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a89"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a90"></a><span class="src-comm">/**Smilies*/</span></div></li>
+<li><div class="src-line"><a name="a91"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'SMILIES_DIR'</span><span class="src-sym">,&nbsp;</span><span class="src-id">USER_DIR</span>.<span class="src-str">&quot;graphics/smilies/&quot;</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a92"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a93"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a94"></a><span class="src-comm">//**Date&nbsp;TimeZone</span></div></li>
+<li><div class="src-line"><a name="a95"></a><a href="http://www.php.net/date_default_timezone_set">date_default_timezone_set</a><span class="src-sym">(</span><span class="src-str">'Europe/Zurich'</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a96"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a97"></a><span class="src-comm">//**Ausgegebenes&nbsp;Timeformat</span></div></li>
+<li><div class="src-line"><a name="a98"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'TIMEFORMAT'</span><span class="src-sym">,&nbsp;</span><span class="src-str">'%e.%m.%Y&nbsp;%k:%i'</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a99"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a100"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a101"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a102"></a><span class="src-comm">//**Bei&nbsp;der&nbsp;Gallerie:&nbsp;Alle&nbsp;Gallerien&nbsp;in&nbsp;der&nbsp;obersten&nbsp;Kategorie&nbsp;anzeigen,&nbsp;nicht&nbsp;nur&nbsp;die&nbsp;direkt&nbsp;untergeordneten</span></div></li>
+<li><div class="src-line"><a name="a103"></a><a href="http://www.php.net/define">define</a><span class="src-sym">(</span><span class="src-str">'SHOW_ALL_GALLERIES_ON_TOP'</span><span class="src-sym">,</span><span class="src-id">true</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a104"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a105"></a><span class="src-php">?&gt;</span></div></li>
 </ol>
 </div>
         <div class="credit">
 		    <hr />
-		    Documentation generated on Mon, 13 Apr 2009 20:05:35 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Mon, 13 Apr 2009 22:15:01 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

@@ -48,27 +48,26 @@
 <li><div class="src-line"><a name="a5"></a><span class="src-doc">&nbsp;*</span></div></li>
 <li><div class="src-line"><a name="a6"></a><span class="src-doc">&nbsp;*&nbsp;</span><span class="src-doc-coretag">@author</span><span class="src-doc">&nbsp;Simon&nbsp;Däster</span></div></li>
 <li><div class="src-line"><a name="a7"></a><span class="src-doc">&nbsp;*&nbsp;</span><span class="src-doc-coretag">@package</span><span class="src-doc">&nbsp;JClubCMS</span></div></li>
-<li><div class="src-line"><a name="a8"></a><span class="src-doc">&nbsp;*&nbsp;&nbsp;File:&nbsp;module.interface.php</span></div></li>
-<li><div class="src-line"><a name="a9"></a><span class="src-doc">&nbsp;*&nbsp;&nbsp;interace:&nbsp;Modules</span></div></li>
-<li><div class="src-line"><a name="a10"></a><span class="src-doc">&nbsp;*/</span></div></li>
-<li><div class="src-line"><a name="a11"></a>&nbsp;</div></li>
-<li><div class="src-line"><a name="a12"></a><span class="src-key">interface&nbsp;</span><a href="../JClubCMS/Module.html">Module</a></div></li>
-<li><div class="src-line"><a name="a13"></a><span class="src-sym">{</span></div></li>
-<li><div class="src-line"><a name="a14"></a>&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//Nimmt&nbsp;die&nbsp;Objekte&nbsp;mysql&nbsp;und&nbsp;smarty&nbsp;auf</span></div></li>
-<li><div class="src-line"><a name="a15"></a>&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">public&nbsp;</span><span class="src-key">function&nbsp;</span><a href="../JClubCMS/Module.html#method__construct">__construct</a><span class="src-sym">(</span><span class="src-var">$mysql</span><span class="src-sym">,&nbsp;</span><span class="src-var">$smarty</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
-<li><div class="src-line"><a name="a16"></a>&nbsp;&nbsp;&nbsp;&nbsp;</div></li>
-<li><div class="src-line"><a name="a17"></a>&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//Liest&nbsp;aus&nbsp;der&nbsp;Variable&nbsp;$parameters&nbsp;($_GET,&nbsp;$_POST,&nbsp;$_COOKIE)&nbsp;die&nbsp;noetigen&nbsp;Daten&nbsp;aus&nbsp;und&nbsp;startet&nbsp;die&nbsp;zugehoerige&nbsp;Methode</span></div></li>
-<li><div class="src-line"><a name="a18"></a>&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">public&nbsp;</span><span class="src-key">function&nbsp;</span><a href="../JClubCMS/Module.html#methodaction">action</a><span class="src-sym">(</span><span class="src-var">$gpc</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
-<li><div class="src-line"><a name="a19"></a>&nbsp;&nbsp;&nbsp;&nbsp;</div></li>
-<li><div class="src-line"><a name="a20"></a>&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//Gibt&nbsp;das&nbsp;zur&nbsp;Klasse&nbsp;gehoerende&nbsp;Templatefile&nbsp;zurueck,&nbsp;welches&nbsp;dann&nbsp;im&nbsp;Haupt-Template&nbsp;(siehe&nbsp;index.php)&nbsp;eingebunden&nbsp;wird</span></div></li>
-<li><div class="src-line"><a name="a21"></a>&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">public&nbsp;</span><span class="src-key">function&nbsp;</span><a href="../JClubCMS/Module.html#methodgettplfile">gettplfile</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
-<li><div class="src-line"><a name="a22"></a><span class="src-sym">}</span></div></li>
-<li><div class="src-line"><a name="a23"></a><span class="src-php">?&gt;</span></div></li>
+<li><div class="src-line"><a name="a8"></a><span class="src-doc">&nbsp;*&nbsp;</span><span class="src-doc-coretag">@license</span><span class="src-doc">&nbsp;http://opensource.org/licenses/gpl-3.0.html&nbsp;GNU&nbsp;Public&nbsp;License&nbsp;version&nbsp;3</span></div></li>
+<li><div class="src-line"><a name="a9"></a><span class="src-doc">&nbsp;*/</span></div></li>
+<li><div class="src-line"><a name="a10"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a11"></a><span class="src-key">interface&nbsp;</span><a href="../JClubCMS/Module.html">Module</a></div></li>
+<li><div class="src-line"><a name="a12"></a><span class="src-sym">{</span></div></li>
+<li><div class="src-line"><a name="a13"></a>&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//Nimmt&nbsp;die&nbsp;Objekte&nbsp;mysql&nbsp;und&nbsp;smarty&nbsp;auf</span></div></li>
+<li><div class="src-line"><a name="a14"></a>&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">public&nbsp;</span><span class="src-key">function&nbsp;</span><a href="../JClubCMS/Module.html#method__construct">__construct</a><span class="src-sym">(</span><span class="src-var">$mysql</span><span class="src-sym">,&nbsp;</span><span class="src-var">$smarty</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a15"></a>&nbsp;&nbsp;&nbsp;&nbsp;</div></li>
+<li><div class="src-line"><a name="a16"></a>&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//Liest&nbsp;aus&nbsp;der&nbsp;Variable&nbsp;$parameters&nbsp;($_GET,&nbsp;$_POST,&nbsp;$_COOKIE)&nbsp;die&nbsp;noetigen&nbsp;Daten&nbsp;aus&nbsp;und&nbsp;startet&nbsp;die&nbsp;zugehoerige&nbsp;Methode</span></div></li>
+<li><div class="src-line"><a name="a17"></a>&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">public&nbsp;</span><span class="src-key">function&nbsp;</span><a href="../JClubCMS/Module.html#methodaction">action</a><span class="src-sym">(</span><span class="src-var">$gpc</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a18"></a>&nbsp;&nbsp;&nbsp;&nbsp;</div></li>
+<li><div class="src-line"><a name="a19"></a>&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">//Gibt&nbsp;das&nbsp;zur&nbsp;Klasse&nbsp;gehoerende&nbsp;Templatefile&nbsp;zurueck,&nbsp;welches&nbsp;dann&nbsp;im&nbsp;Haupt-Template&nbsp;(siehe&nbsp;index.php)&nbsp;eingebunden&nbsp;wird</span></div></li>
+<li><div class="src-line"><a name="a20"></a>&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">public&nbsp;</span><span class="src-key">function&nbsp;</span><a href="../JClubCMS/Module.html#methodgettplfile">gettplfile</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a21"></a><span class="src-sym">}</span></div></li>
+<li><div class="src-line"><a name="a22"></a><span class="src-php">?&gt;</span></div></li>
 </ol>
 </div>
         <div class="credit">
 		    <hr />
-		    Documentation generated on Mon, 13 Apr 2009 20:05:41 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Mon, 13 Apr 2009 22:15:06 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

@@ -160,22 +160,17 @@ Source Location: /admin/lib/smilies.class.php<br /><br />
 
 <h3><a href="#class_details">Class Overview</a></h3>
 <pre></pre><br />
-<div class="description">Klasse fuer das Aulsenen der Smilies aus der DB,  Ueberpruefung ob die Bilder noch vorhanden sind  und Retourgabe der Daten als Array.</div><br /><br />
+<div class="description">Darstellen von Smilies in Texten  Klasse fuer das Aulsenen der Smilies aus der DB,  Ueberpruefung ob die Bilder noch vorhanden sind  und Retourgabe der Daten als Array.</div><br /><br />
 <h4>Author(s):</h4>
 <ul>
           <li>David Däster</li>
-                        </ul>
+                  </ul>
 
 
 
 
-          
-          
+            
 
-<h4>Copyright:</h4>
-<ul>
-  <li>JClub  File: smilies.class.php  Classes: smilies</li>
-</ul>
         
 </td>
 
@@ -207,8 +202,8 @@ Source Location: /admin/lib/smilies.class.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line <a href="../__filesource/fsource_JClubCMS__adminlibsmilies.class.php.html#a18">18</a>]<br />
-Klasse fuer das Aulsenen der Smilies aus der DB,  Ueberpruefung ob die Bilder noch vorhanden sind  und Retourgabe der Daten als Array.<br /><br /><p>Evnt. noch Administration der Smilies.</p><br /><br /><br />
+[line <a href="../__filesource/fsource_JClubCMS__adminlibsmilies.class.php.html#a23">23</a>]<br />
+Darstellen von Smilies in Texten  Klasse fuer das Aulsenen der Smilies aus der DB,  Ueberpruefung ob die Bilder noch vorhanden sind  und Retourgabe der Daten als Array.<br /><br /><p>Evnt. noch Administration der Smilies.</p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
@@ -216,10 +211,7 @@ Klasse fuer das Aulsenen der Smilies aus der DB,  Ueberpruefung ob die Bilder no
     <td><b>author:</b>&nbsp;&nbsp;</td><td>David Däster</td>
   </tr>
   <tr>
-    <td><b>copyright:</b>&nbsp;&nbsp;</td><td>JClub  File: smilies.class.php  Classes: smilies</td>
-  </tr>
-  <tr>
-    <td><b>requires:</b>&nbsp;&nbsp;</td><td>PHP5</td>
+    <td><b>todo:</b>&nbsp;&nbsp;</td><td>Administrationsmodul für das Editieren von Smilies</td>
   </tr>
   <tr>
     <td><b>usedby:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/News.html">News</a> - Ermöglicht das anzeigen von Smilies</td>
@@ -237,7 +229,7 @@ Klasse fuer das Aulsenen der Smilies aus der DB,  Ueberpruefung ob die Bilder no
 
   <hr />
 	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibsmilies.class.php.html#a33">33</a>]</span></h3>
+	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibsmilies.class.php.html#a38">38</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -273,7 +265,7 @@ $dir_smilies)</code>
   </div>
   <hr />
 	<a name="method__destruct"></a>
-	<h3>destructor __destruct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibsmilies.class.php.html#a41">41</a>]</span></h3>
+	<h3>destructor __destruct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibsmilies.class.php.html#a46">46</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -298,12 +290,12 @@ $dir_smilies)</code>
   </div>
   <hr />
 	<a name="methodcreate_smiliesarray"></a>
-	<h3>method create_smiliesarray <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibsmilies.class.php.html#a58">58</a>]</span></h3>
+	<h3>method create_smiliesarray <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibsmilies.class.php.html#a64">64</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
 		<code>array create_smiliesarray(
-resource
+<a href="../JClubCMS/Mysql.html">Mysql</a>
 $mysql_link)</code>
     </td></tr></table>
     </td></tr></table><br />
@@ -318,6 +310,9 @@ $mysql_link)</code>
   <tr>
     <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
   </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Mysql.html">Mysql</a></td>
+  </tr>
 </table>
 </div>
 <br /><br />
@@ -327,7 +322,7 @@ $mysql_link)</code>
     <div class="tags">
     <table border="0" cellspacing="0" cellpadding="0">
           <tr>
-        <td class="type">resource&nbsp;&nbsp;</td>
+        <td class="type"><a href="../JClubCMS/Mysql.html">Mysql</a>&nbsp;&nbsp;</td>
         <td><b>$mysql_link</b>&nbsp;&nbsp;</td>
         <td>Verbindung zur DB</td>
       </tr>
@@ -337,13 +332,13 @@ $mysql_link)</code>
   </div>
   <hr />
 	<a name="methodshow_smilie"></a>
-	<h3>method show_smilie <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibsmilies.class.php.html#a85">85</a>]</span></h3>
+	<h3>method show_smilie <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibsmilies.class.php.html#a92">92</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
 		<code>string show_smilie(
 string
-$text, object
+$text, <a href="../JClubCMS/Mysql.html">Mysql</a>
 $mysql_link)</code>
     </td></tr></table>
     </td></tr></table><br />
@@ -354,6 +349,9 @@ $mysql_link)</code>
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Mysql.html">Mysql</a></td>
   </tr>
 </table>
 </div>
@@ -369,7 +367,7 @@ $mysql_link)</code>
         <td>Der zu parsende Text</td>
       </tr>
           <tr>
-        <td class="type">object&nbsp;&nbsp;</td>
+        <td class="type"><a href="../JClubCMS/Mysql.html">Mysql</a>&nbsp;&nbsp;</td>
         <td><b>$mysql_link</b>&nbsp;&nbsp;</td>
         <td>Verbindung zur DB</td>
       </tr>
@@ -382,7 +380,7 @@ $mysql_link)</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Mon, 13 Apr 2009 20:05:49 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Mon, 13 Apr 2009 22:15:14 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>
