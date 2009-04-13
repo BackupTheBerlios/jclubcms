@@ -5,7 +5,6 @@ require_once ADMIN_DIR."lib/page.class.php";
 require_once ADMIN_DIR.'lib/module.interface.php';
 require_once ADMIN_DIR.'lib/messageboxes.class.php';
 require_once ADMIN_DIR.'lib/smilies.class.php';
-require_once USER_DIR.'config/gbook_textes.inc.php';
 
 /**
  * Dieses Modul ist für die Gallery zuständig, die Anzeige von Bildern
