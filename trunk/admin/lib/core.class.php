@@ -48,7 +48,7 @@ class Core
 	/**
 	 * Core-Objekt (das einzige!)
 	 *
-	 * @var Core
+	 * @staticvar Core
 	 */
 	private static $_core = null;
 	/**
@@ -112,12 +112,14 @@ class Core
 	private $_tplfile = null;
 
 	/**
-	 * Über diese Methode wird das Core-Objekt initialisiert. Der Grund, warum das über diese Methode
-	 * und nicht über den Konstruktor geschieht, ist folgender: Es soll nur ein Core-Objekt geben.
-	 * Daher wird ein Core-Objekt mit singelton initialiert. Wurde aber vorher ein Core-Objekt initialisiert,
-	 * passiert keine neue Initialisierung eines Core-Objekts. Es gibt maximal ein Objekt der Core-Klasse.
+	 * Über diese Methode wird das Core-Objekt initialisiert. 
+	 * 
+	 * Der Grund, warum das über diese Methode und nicht über den Konstruktor 
+	 * geschieht, ist folgender: Es soll nur ein Core-Objekt geben.
+	 * Daher wird ein Core-Objekt mit singelton initialiert. Wurde aber vorher 
+	 * ein Core-Objekt initialisiert, passiert keine neue Initialisierung 
+	 * eines Core-Objekts. Es gibt maximal ein Objekt der Core-Klasse.
 	 * @link http://www.php.net/manual/en/language.oop5.patterns.php - singleton.
-	 *
 	 */
 
 
@@ -338,7 +340,7 @@ class Core
 	/**
 	 * Laedt die Navigation und speicher sie in $this->_smarty_array
 	 *
-	 * @parambooleane $shortlinks
+	 * @param booleane $shortlinks
 	 */
 
 	private function _loadNav($shortlinks = false)
@@ -550,9 +552,5 @@ class Core
 		}
 
 	}
-
 }
-
-
-
 ?>
