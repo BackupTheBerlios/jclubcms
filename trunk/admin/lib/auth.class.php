@@ -21,7 +21,6 @@ require_once ADMIN_DIR.'lib/session.class.php';
  *
  * @author Simon Däster
  * @package JClubCMS
- * @requires PHP5
  */
 
 class Auth

@@ -39,9 +39,6 @@ set_exception_handler(array('CMSException', 'stdExceptionHandler'));
  * 
  * @package JClubCMS
  * @author Simon Däster
- * File: core.class.php
- * Classes: core
- * @requires PHP5
  */
 class Core
 {
