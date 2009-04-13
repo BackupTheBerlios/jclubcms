@@ -14,7 +14,11 @@
 **/
 
 require_once ADMIN_DIR.'lib/module.interface.php';
-
+/**
+ * @todo ClassDev
+ * @package JClubCMS
+ * @author  Andreas John
+ */
 class Captcha_image implements Module
 {
 	/**

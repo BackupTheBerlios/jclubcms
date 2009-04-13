@@ -1,17 +1,38 @@
 <?php
 /**
+ * Administration des Gästebuchs
+ * 
+ * Diese Datei beinhaltet alle Elemente für die Administration des Gästebuchs
  * @author Simon Däster
  * @package JClubCMS
- * gbookadmin.class.php
- * 
- * Diese Klasse ist zuständig für das Anzeigen und Hinzufügen der Gästebucheinträge.
- * 
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License version 3
  */
 
+/**
+ * Messageboxes für den standardisierten Zugriff auf Tabellen
+ */
 require_once ADMIN_DIR.'lib/messageboxes.class.php';
+/**
+ * Smilies für das anzeigen von Smilies
+ */
 require_once ADMIN_DIR.'lib/smilies.class.php';
+/**
+ * Das Module-Interface
+ */
 require_once ADMIN_DIR.'lib/module.interface.php';
-
+/**
+ * Diese Klasse ermöglicht die Administration des Gästebuchs
+ * 
+ * Diese Klasse beinhaltet die spezifischen Module für das Adminmenu
+ * um das Gästebuch zu verwalten.
+ * 
+ * Es ermöglicht folgende Funktionen:
+ * <ul><li>Anzeigen von Einträgen</li>
+ * <li>Editieren von Einträgen</li>
+ * <li>Löschen von Einträgen</li></ul> 
+ * @author Simon Däster
+ * @package JClubCMS 
+ */
 class Gbookadmin implements Module {
 	/**
 	 * Templatefile
@@ -22,7 +43,7 @@ class Gbookadmin implements Module {
 	/**
 	 * Mysql-Klasse
 	 *
-	 * @var mysql
+	 * @var Mysql
 	 */
 	private $_mysql = null;
 
@@ -92,6 +113,7 @@ class Gbookadmin implements Module {
 	 *
 	 * @param array $gpc $_POST- und $_GET-Arrays
 	 * @return boolean
+	 * @uses Smarty als Template-System
 	 */
 	public function action($gpc)
 	{

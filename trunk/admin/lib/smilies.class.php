@@ -1,18 +1,23 @@
 <?php
-
+/**
+ * Beinhaltet die Klassen und Methoden für Smilies
+ * 
+ * Ermöglicht das ersetzen von Text um Keywords als Smilies darzustellen.
+ * @author David Däster
+ * @package JClubCMS
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3
+ */
 
 /**
+ * Darstellen von Smilies in Texten
  * Klasse fuer das Aulsenen der Smilies aus der DB, 
  * Ueberpruefung ob die Bilder noch vorhanden sind
  * und Retourgabe der Daten als Array.
  * 
  * Evnt. noch Administration der Smilies.
+ * @todo Administrationsmodul für das Editieren von Smilies
  * @author David Däster
  * @package JClubCMS
- * @copyright JClub
- * File: smilies.class.php
- * Classes: smilies
- * @requires PHP5
  */
 
 class Smilies {
@@ -52,8 +57,9 @@ class Smilies {
 	 * 
 	 * Aufbau des Arrays: Code, Filepath
 	 * 
-	 * @param resource $mysql_link Verbindung zur DB
+	 * @param Mysql $mysql_link Verbindung zur DB
 	 * @return array Array der Smilies.
+	 * @uses Mysql
 	 */
 	public function create_smiliesarray ($mysql_link) {
 		$query = "SELECT * FROM smilies GROUP BY smilies_file ORDER BY smilies_sign";
@@ -79,8 +85,9 @@ class Smilies {
 	 * 4. Rueckgabe des Textes. 
 	 *
 	 * @param string $text Der zu parsende Text
-	 * @param object $mysql_link Verbindung zur DB
+	 * @param Mysql $mysql_link Verbindung zur DB
 	 * @return string
+	 * @uses Mysql
 	 */
 	public function show_smilie ($text, $mysql_link) {
 		$query = "SELECT * FROM smilies ORDER BY smilies_sign";

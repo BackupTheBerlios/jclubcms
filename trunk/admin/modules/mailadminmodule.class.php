@@ -11,9 +11,7 @@ require_once ADMIN_DIR.'lib/mailsend.class.php';
  * 
  * @package JClubCMS
  * @author Simon Däster
- * File: mailmodule.class.php
- * Classes: Mailmodule
- * @requieres PHP5
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License version 3
  */
 
 class Mailmodule implements Module

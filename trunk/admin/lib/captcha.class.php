@@ -16,8 +16,9 @@
 */
 
 /**
- * TODO ClassDev
- *
+ * @todo ClassDev
+ * @package JClubCMS
+ * @author  Andreas John
  */
 class Captcha
 {
