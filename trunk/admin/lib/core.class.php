@@ -528,7 +528,7 @@ class Core
 		}
 
 		if (key_exists('mail', $this->_gpc['GET'])) {
-			$modulname = 'mailmodule';
+			$modulname =  'mailmodule';
 		} elseif (key_exists('image', $this->_gpc['GET'])) {
 			$modulname = 'image_send';
 

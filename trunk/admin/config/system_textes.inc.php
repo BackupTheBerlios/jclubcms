@@ -83,6 +83,9 @@ $system_textes['de']['mail']['wrong_form'] = 'Sie benutzen das falsche Formular 
 $system_textes['de']['mail']['no_hash'] = 'Parameter `hash` nicht angegeben';
 $system_textes['de']['mail']['data_collaps'] = 'Datenkollision';
 
+$system_textes['de']['mail']['link_send'] = 'Um die Mail zu senden benutzen Sie bitte folgenden Link';
+$system_textes['de']['mail']['send_check'] = 'Bestaetigung des Mail-Sendens';
+
 
 //**Menu
 $system_textes['de']['menu'] = array();
@@ -101,6 +104,10 @@ $system_textes['de']['img']['no_img_param'] = 'kein Bild über &img=... angegebe
 $system_textes['de']['img']['param_error'] = 'Parameterfehler';
 $system_textes['de']['img']['error_open_file'] = 'Die Bilddatei konnte nicht geöffnet werten!';
 $system_textes['de']['img']['error_open'] = 'Fehler beim Öffnen';
+$system_textes['de']['img']['img_not_found'] = 'Bild nicht gefunden';
+$system_textes['de']['img']['copy_failed'] = 'Kopieren fehlgeschlagen';
+$system_textes['de']['img']['format_not_supported'] = 'Format wird nicht unterstuetzt';
+
 
 //**Exception
 $system_textes['de']['excn'] = array();
@@ -122,15 +129,18 @@ $system_textes['de']['excn']['trace'] = 'Trace';
 $system_textes['de']['excn']['exp_error_often'] = $system_textes['de']['core']['exp_error_often'];
 
 
-$auth_error_sessioncorupt = "Ihre Session-ID ist nicht mehr g&uuml;ltig oder wurde gef&auml;lscht. Bitte loggen Sie sich neu ein.";
-$auth_error_nonactiv = "Sie waren zu lange inaktiv. Bitte loggen Sie sich neu ein";
+//**Auth
+$system_textes['de']['auth'] = array();
+$system_textes['de']['auth'][''] = '';
+$system_textes['de']['auth']['sessioncorupt'] = 'Ihre Session-ID ist nicht mehr g&uuml;ltig oder wurde gef&auml;lscht. Bitte loggen Sie sich neu ein.';
+$system_textes['de']['auth']['nonactiv'] = 'Sie waren zu lange inaktiv. Bitte loggen Sie sich neu ein';
 
-$auth_error_noentry = "Sie m&uuml;ssen einen Benutzernamen und/oder ein Passwort eingeben";
-$auth_error_failname = "Benutzername nicht vorhanden. (Achte auf Gross-/Kleinschreibung!)";
-$auth_error_failpw = "Passwort wurde falsch eingegeben";
-$auth_error_userinvalid = "Benutzer ist nicht g&uuml;ltig";
+$system_textes['de']['auth']['noentry'] = 'Sie m&uuml;ssen einen Benutzernamen und/oder ein Passwort eingeben';
+$system_textes['de']['auth']['failname'] = '"Benutzername nicht vorhanden. (Achte auf Gross-/Kleinschreibung!)';
+$system_textes['de']['auth']['failpw'] = 'Passwort wurde falsch eingegeben';
+$system_textes['de']['auth']['userinvalid'] = 'Benutzer ist nicht g&uuml;ltig';
 
-$auth_forward_successlogin = "Sie haben sich erfolgreich eingeloggt. Sie werden weitergeleitet.";
-$auth_forward_linktext = "Sollte die Weiterleitung nicht funktionieren, dr&uuml;cken Sie diesen Link";
-$auth_forward_title = "Weiterleitung JClub-Administration"
+$system_textes['de']['auth']['forward_successlogin'] = 'Sie haben sich erfolgreich eingeloggt. Sie werden weitergeleitet.';
+$system_textes['de']['auth']['forward_linktext'] = 'Sollte die Weiterleitung nicht funktionieren, dr&uuml;cken Sie diesen Link';
+$system_textes['de']['auth']['forward_title'] = 'Weiterleitung JClub-Administration';
 ?>

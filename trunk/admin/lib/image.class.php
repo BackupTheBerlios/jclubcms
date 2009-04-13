@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Die Klasse image ist zustaendig fuer Grafikfunktionen
+ * Die Klasse image ist zuständig fuer Grafikfunktionen
  * Sie speichert die Informationen ueber ein Bild ab, kann diese Informationen senden
  * und das Bild selber ausgeben
  * Wenn keine Bilddatei vorhanden ist, dann wird automatisch ein Fehlerbild erstellt
@@ -10,8 +10,8 @@
  * Dazu kann man einfach die Grössen belassen
  * !Achtung: Vorhandene Dateien werden ohne Abfrage überschrieben!!!
  *
- * Diese Klasse ist nicht fuer die Administration der Bilder zustaendig
- * Die Klasse wird fuer jedes Bild gebraucht, um es darzustellen und noetige
+ * Diese Klasse ist nicht für die Administration der Bilder zuständig
+ * Die Klasse wird für jedes Bild gebraucht, um es darzustellen und nötige
  * Informationen zum jeweiligen Bild zu erhalten
  *
  * @author Simon Däster
@@ -20,15 +20,44 @@
  * Classes: image
  * @requieres PHP5
  */
-
-
 class Image {
 
+	/**
+	 * Datei zum Bild
+	 *
+	 * @var string
+	 */
 	private $file = null;
+	/**
+	 * Binäre Bildinformation
+	 *
+	 * @var binary
+	 */
 	private $im = null;
+	/**
+	 * Grafikformat
+	 *
+	 * @var string
+	 */
 	private $graphicformat = "jpeg";
+	/**
+	 * Höhe des Bildes
+	 *
+	 * @var numeric
+	 */
 	private $height = null;
+	/**
+	 * Breite des Bildes
+	 *
+	 * @var numeric
+	 */
 	private $width = null;
+	/**
+	 * Texte für die Bilder bei Fehlern
+	 *
+	 * @var array
+	 */
+	private $textes = array();
 
 
 	/*------------------
@@ -47,6 +76,9 @@ class Image {
 
 	public function __construct($file) 
 	{
+		global $system_textes;
+		$this->textes = $system_textes[LANGUAGE_ABR]['img'];
+		
 		if($file != "" && is_file($file) && file_exists($file)) {
 			$this->file = $file;
 
@@ -54,7 +86,7 @@ class Image {
 
 		} else {
 			$this->file = "";			
-			$this->create_image(180, 100, 'Bild nicht gefunden');
+			$this->create_image(180, 100, $this->textes['img_not_found']);
 		}
 
 
@@ -73,13 +105,15 @@ class Image {
 	 * @param string $col_text Die Textfarbe im String mit RGB-Werten
 	 */
 
-	public function create_image($width, $height, $text="Bild nicht gefunden", $col_background = "000000000", $col_text="050255070") 	{
+	public function create_image($width, $height, $text="", $col_background = "000000000", $col_text="050255070") 	{
 
 		//Fest vorgegeben
 		$this->graphicformat = "jpeg";
 
 		$this->width = $width;
 		$this->height = $height;
+		
+		empty($text) ? $text = $this->textes['img_not_found'] : $text = $text;
 
 		$this->im = imagecreatetruecolor($this->width, $this->height);
 
@@ -108,7 +142,7 @@ class Image {
 	{
 
 		if ($file != '' && is_file($file) && file_exists($file)) {
-			$this->create_image(300, 26, "Kopieren fehlgeschlagen");
+			$this->create_image(300, 26, $textes['copy_failed']);
 		}
 		
 		if($this->im == null)
@@ -220,7 +254,7 @@ class Image {
 
 			default:
 
-				$this->create_image(300, 26, "Format wird nicht unterstuetzt");
+				$this->create_image(300, 26, $this->textes['format_not_supported']);
 				$supported = false;
 		}
 

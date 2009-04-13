@@ -63,12 +63,14 @@ class Mailsend {
 		$hash = $this->_mail_hash();
 		$this->_mail2db($mysql_link, $hash);
 		
+		global $system_textes
+		
                 $header = 'From: Jclub.ch <mail_query@jclub.ch>'."\r\n"
                           .'X-Mailer: PHP/' . phpversion();
-                $msg = "Um die Mail zu senden benutzen Sie bitte folgenden Link:\r\n"
+                $msg = $system_textes[LANGUAGE_ABR]['mail']['link_send'].":\r\n"
                    ."http://{$_SERVER['HTTP_HOST']}{$_SERVER['SCRIPT_NAME']}?mail&hash=".$hash;
                 $empfaenger = $this->_mail_sender;
-                $betreff = 'Bestaetigung des Mail-Sendens';
+                $betreff = $system_textes[LANGUAGE_ABR]['mail']['send_check'];
                 $failer = $this->_mail_send($empfaenger,$betreff,$msg,$header);
                 return $failer;
 	}
