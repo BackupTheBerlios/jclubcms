@@ -1,4 +1,14 @@
 <?php
+/**
+ * TODO PageDoc
+ * 
+ * Filedokumentation fehlt
+ * 
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3
+ * @author David Däster
+ * @author Simon Däster
+ * @package JClubCMS
+ */
 
 /**
  * Die Klasse mysql ist zustaendig fuer das ganze Datenbankhandling von mysql.

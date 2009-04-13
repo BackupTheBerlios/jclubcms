@@ -1,5 +1,13 @@
 <?php
-
+/**
+ * TODO PageDoc
+ * 
+ * Filedokumentation fehlt
+ * 
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3
+ * @author Simon Däster
+ * @package JClubCMS
+ */
 /**
  * File: exceptions.class.php
  * Classes: coreexception, mysqlexception, moduleexception, stdexception
@@ -10,6 +18,8 @@
  * Sammlung der Exception, mit denen die Fehlerbehandlung des CMS funktioniert
  * @author Simon Däster
  * @package JClubCMS
+ * @uses CMSException for exception handling
+ * @uses 
  */
 
 /**

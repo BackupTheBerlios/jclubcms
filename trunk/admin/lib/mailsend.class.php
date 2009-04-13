@@ -1,23 +1,24 @@
 <?php
-
+/**
+ * 
+ * 
+ * @author David Däster
+ * @package JClubCMS
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3
+ */
 
 /**
  * Klasse fuer den den ganzen Mail-Ablauf
  * 
- * 1. Phase
- * 
- * - Hash-Berechnung 
- * 
- * - Ablage in Datenbank
- * 
- * - Versand Kontrollmail
- * 
- * 2. Phase
- * 
- * - Auslese aus Datenbank
- * 
- * - Versand des Mails
-
+ * Ablauf der Phasen
+ * <ol><li>1. Phase
+ * <ul><li>Hash-Berechnung</li>
+ * <li>Ablage in Datenbank</li>
+ * <li>Versand Kontrollmail</li></li>
+ * <li>2. Phase
+ * <ul><li>Auslese aus Datenbank</li>
+ * <li>Versand des Mails</li>
+ * </ul></ol>
  * @author David Däster
  * @package JClubCMS
  * File: mailsend.class.php
@@ -41,7 +42,7 @@ class Mailsend {
 	/**
 	 * Versendet den Link um die Mail auszulösen
 	 *
-	 * @param object $mysql_link MysqlObjekt
+	 * @param Mysql $mysql_link MysqlObjekt
 	 * @param string $mail_reciver_name Mailempängername (aus Datenbank)
 	 * @param string $mail_reciver Mailempfänger (aus Datenbank)
 	 * @param string $mail_sender_name Mailsendername (aus Formular)
