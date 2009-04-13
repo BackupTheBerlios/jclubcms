@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * Dieses Modul ist für die Gallery zuständig, die Anzeige von Bildern
+ * in den verschiedenen Alben und richtigen Reihenfolge.
+ * 
+ * @package JClubCMS
+ * @author Simon Däster
+ * @license  http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3
+ */
 require_once ADMIN_DIR."lib/page.class.php";
 
 require_once ADMIN_DIR.'lib/module.interface.php';

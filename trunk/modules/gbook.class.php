@@ -16,9 +16,8 @@ require_once ADMIN_DIR.'lib/module.interface.php';
  * 
  * Diese Klasse ist zuständig für das Anzeigen und Hinzufügen der Gästebucheinträge.
  * @author Simon Däster
+ * @uses Mysql Für Verbindungen zur MySQL-DB.
  */
-
-
 
 class Gbook implements Module {
 	/**

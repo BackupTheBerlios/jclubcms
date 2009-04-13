@@ -1,15 +1,23 @@
 <?php 
+/**
+ * Dieses Modul ist zuständig für das anzeigen von Newseinträgen
+ * @author Simon Däster
+ * @package JClubCMS
+ * @license  http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3 
+ */
+
 require_once ADMIN_DIR.'lib/module.interface.php';
 require_once ADMIN_DIR.'lib/messageboxes.class.php';
 require_once ADMIN_DIR.'lib/smilies.class.php';
 
 /**
+ * Diese Klasse ist zustaendig fuer Anzeigen von Newseinträgen.
  * 
- * Diese Klasse ist zustaendig fuer das Editieren der Newseintraege. Auch koennen neue Beitraege hinzugefuegt oder geloescht
- * werden
+ * 
  * 
  * @author Simon Däster
  * @package JClubCMS
+ * @uses Mysql Für Verbindungen zur MySQL-DB.
  * news.class.php
  */
 

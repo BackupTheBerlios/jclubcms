@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * Dieses Modul gibt die Mitglieder aus, welche im Mysql gespeichert sind.
+ *
+ * @package JClubCMS
+ * @author Simon Däster
+ * @license  http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3
+ */
+ 
 require_once ADMIN_DIR.'lib/module.interface.php';
 
 require_once ADMIN_DIR.'lib/captcha.class.php';

@@ -42,8 +42,8 @@ class Image_send implements Module
 	/**
 	 * Konstruktor. Diese Klasse braucht den Zugriff auf das Smarty-Objekt nicht.
 	 *
-	 * @param unknown_type $mysql
-	 * @param unknown_type $smarty
+	 * @param Mysql $mysql
+	 * @param Smarty $smarty
 	 */
 	public function __construct($mysql, $smarty)
 	{
