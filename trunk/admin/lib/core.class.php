@@ -1,4 +1,12 @@
 <?php
+/**
+ * Die core-Datei erledigt:
+ * -laedt notweindige Libaries
+ * -registriert den Exception-Handler
+ * @package JClubCMS
+ * @author Simon Däster
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3
+ */ 
 error_reporting(E_ALL | E_STRICT); //Zu Debug-Zwecken
 $start_time = microtime(true);
 
