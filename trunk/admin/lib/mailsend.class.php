@@ -14,11 +14,11 @@
  * <ol><li>1. Phase
  * <ul><li>Hash-Berechnung</li>
  * <li>Ablage in Datenbank</li>
- * <li>Versand Kontrollmail</li></li>
+ * <li>Versand Kontrollmail</li></ul></li>
  * <li>2. Phase
  * <ul><li>Auslese aus Datenbank</li>
  * <li>Versand des Mails</li>
- * </ul></ol>
+ * </ul></li></ol>
  * @author David Däster
  * @package JClubCMS
  * File: mailsend.class.php
