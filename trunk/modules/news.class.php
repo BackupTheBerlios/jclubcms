@@ -57,7 +57,7 @@ class News implements Module
 	 *
 	 * @var string
 	 */
-	private $_timeformat = '%e.%m.%Y %k:%i';
+	private $_timeformat = TIMEFORMAT;
 
 
 	/**
