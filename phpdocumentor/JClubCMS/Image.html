@@ -68,17 +68,17 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---image.class.php.html">		image.class.php
 		</a><br>
-			<a href="../JClubCMS/_modules---image_send.class.php.html">		image_send.class.php
+			<a href="../JClubCMS/_admin---modules---imageadmin_send.class.php.html">		imageadmin_send.class.php
 		</a><br>
-			<a href="../JClubCMS/_admin---modules---image_send.class.php.html">		image_send.class.php
+			<a href="../JClubCMS/_modules---image_send.class.php.html">		image_send.class.php
 		</a><br>
 			<a href="../JClubCMS/_admin---index.php.html">		index.php
 		</a><br>
 			<a href="../JClubCMS/_index.php.html">		index.php
 		</a><br>
-			<a href="../JClubCMS/_modules---mailmodule.class.php.html">		mailmodule.class.php
+			<a href="../JClubCMS/_admin---modules---mailadminmodule.class.php.html">		mailadminmodule.class.php
 		</a><br>
-			<a href="../JClubCMS/_admin---modules---mailmodule.class.php.html">		mailmodule.class.php
+			<a href="../JClubCMS/_modules---mailmodule.class.php.html">		mailmodule.class.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---mailsend.class.php.html">		mailsend.class.php
 		</a><br>
@@ -206,8 +206,8 @@ Source Location: /admin/lib/image.class.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line <a href="../__filesource/fsource_JClubCMS__adminlibimage.class.php.html#a32">32</a>]<br />
-Die Klasse Image ist zustaendig fuer Grafikfunktionen<br /><br /><p>Image speichert die Informationen ueber ein Bild ab, kann diese Informationen senden  und das Bild selber ausgeben  Wenn keine Bilddatei vorhanden ist, dann wird automatisch ein Fehlerbild erstellt  Um Thumbs zu erstellen, kann die Funktion &quot;copy&quot; verwendet werden.  &quot;copy&quot; kann auch verwendet werden, um das Bild selber zu verändern.  Dazu kann man einfach die Grössen belassen  !Achtung: Vorhandene Dateien werden ohne Abfrage überschrieben!!!</p><p>Diese Klasse ist nicht fuer die Administration der Bilder zustaendig  Die Klasse wird fuer jedes Bild gebraucht, um es darzustellen und noetige  Informationen zum jeweiligen Bild zu erhalten</p><br /><br /><br />
+[line <a href="../__filesource/fsource_JClubCMS__adminlibimage.class.php.html#a31">31</a>]<br />
+Die Klasse Image ist zustaendig fuer Grafikfunktionen<br /><br /><p>Image speichert die Informationen ueber ein Bild ab, kann diese Informationen senden  und das Bild selber ausgeben  Wenn keine Bilddatei vorhanden ist, dann wird automatisch ein Fehlerbild erstellt  Um Thumbs zu erstellen, kann die Funktion &quot;copy&quot; verwendet werden.  &quot;copy&quot; kann auch verwendet werden, um das Bild selber zu verändern.  Dazu kann man einfach die Grössen belassen  !Achtung: Vorhandene Dateien werden ohne Abfrage überschrieben!!!</p><p>Diese Klasse ist nicht für die Administration der Bilder zuständig  Die Klasse wird für jedes Bild gebraucht, um es darzustellen und nötige  Informationen zum jeweiligen Bild zu erhalten</p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
@@ -227,7 +227,7 @@ Die Klasse Image ist zustaendig fuer Grafikfunktionen<br /><br /><p>Image speich
 
   <hr />
 	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibimage.class.php.html#a55">55</a>]</span></h3>
+	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibimage.class.php.html#a85">85</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -263,7 +263,7 @@ $file)</code>
   </div>
   <hr />
 	<a name="method__destruct"></a>
-	<h3>destructor __destruct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibimage.class.php.html#a182">182</a>]</span></h3>
+	<h3>destructor __destruct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibimage.class.php.html#a217">217</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -288,7 +288,7 @@ $file)</code>
   </div>
   <hr />
 	<a name="methodcopy"></a>
-	<h3>method copy <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibimage.class.php.html#a114">114</a>]</span></h3>
+	<h3>method copy <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibimage.class.php.html#a149">149</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -360,7 +360,7 @@ $new_format[optional])</code>
   </div>
   <hr />
 	<a name="methodcreate_image"></a>
-	<h3>method create_image <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibimage.class.php.html#a83">83</a>]</span></h3>
+	<h3>method create_image <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibimage.class.php.html#a116">116</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -368,7 +368,7 @@ $new_format[optional])</code>
 string
 $width, string
 $height, [string
-$text = &quot;Bild nicht gefunden&quot;], [string
+$text = &quot;&quot;], [string
 $col_background = &quot;000000000&quot;], [string
 $col_text = &quot;050255070&quot;])</code>
     </td></tr></table>
@@ -420,7 +420,7 @@ $col_text = &quot;050255070&quot;])</code>
   </div>
   <hr />
 	<a name="methodsend_image"></a>
-	<h3>method send_image <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibimage.class.php.html#a140">140</a>]</span></h3>
+	<h3>method send_image <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibimage.class.php.html#a175">175</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -445,7 +445,7 @@ $col_text = &quot;050255070&quot;])</code>
   </div>
   <hr />
 	<a name="methodsend_infos"></a>
-	<h3>method send_infos <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibimage.class.php.html#a169">169</a>]</span></h3>
+	<h3>method send_infos <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibimage.class.php.html#a204">204</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -476,7 +476,7 @@ $col_text = &quot;050255070&quot;])</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Mon, 13 Apr 2009 03:19:38 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Mon, 13 Apr 2009 04:18:49 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>
