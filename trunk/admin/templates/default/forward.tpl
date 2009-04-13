@@ -13,7 +13,7 @@
 		<div id="header">&nbsp;</div>
 		<div id="forward">
 			{#forward_text#}<br />
-			<a href="{forward_link}">{#forward_linktext#}</a>
+			<a href="{$forward_link}">{$forward_linktext}</a>
 		</div>
 	</body>
 </html>
