@@ -57,7 +57,7 @@ class News implements Module
 	 *
 	 * @var string
 	 */
-	private $_timeformat = '%e.%m.%Y %k:%i';
+	private $_timeformat = TIMEFORMAT;
 
 
 	/**
@@ -131,6 +131,7 @@ class News implements Module
 
 		$this->_mysql->query('SELECT COUNT(*) as many FROM `news` WHERE `news_ref_ID` = \'0\'');
 		$entries = $this->_mysql->fetcharray('num');
+		
 		$pagesnav_array = Page::get_static_pagesnav_array($entries[0],$max_entries_pp, $this->_gpc['GET']);
 
 
@@ -139,11 +140,11 @@ class News implements Module
 		foreach ($news_array as $key => $value) {
 
 			//Nur news-Daten ohne $news_array['many'] abchecken
+			$news_array[$key]['news_content'] = $this->_smilie->show_smilie(nl2br(htmlentities($value['news_content'])), $this->_mysql);
 
-			$value['news_content'] = $this->_smilie->show_smilie(nl2br(htmlentities($value['news_content'])), $this->_mysql);
 
 			foreach ($value['comments'] as $ckey => $cvalue) {
-				$news_array[$key]['comments'][$ckey]['news_content'] = $this->_smilie->show_smilie(nl2br(htmlentities($cvalue['news_content'])), $this->_mysql);
+				$news_array[$key]['comments'][$ckey]['news_content'] = $this->_smilie->show_smilie(nl2br(htmlentities($value['news_content'])), $this->_mysql);
 
 			}
 

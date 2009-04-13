@@ -179,16 +179,21 @@ class Newsadmin implements Module
 
 	private function _view($max_entries_pp)
 	{
+		
+		//Datei definieren und initalisieren
 		$this->_tplfile = 'news.tpl';
 		$news_array = array();
-
+		
+		//Seite herausfinden
 		if (isset($this->_gpc['GET']['page']) && is_numeric($this->_gpc['GET']['page']) && $this->_gpc['GET']['page'] > 0) {
 			$page = $this->_gpc['GET']['page'];
 		} else {
 			$page = 1;
 		}
 
+		//Daten hollen
 		$news_array = $this->_msbox->getEntries($max_entries_pp, $page, 'DESC', 'ASC', $this->_timeformat);
+		
 		$this->_mysql->query('SELECT COUNT(*) as many FROM `news` WHERE `news_ref_ID` = \'0\'');
 		$entries = $this->_mysql->fetcharray('num');
 
