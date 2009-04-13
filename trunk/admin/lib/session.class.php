@@ -89,7 +89,7 @@ class Session {
     
     public function activ($maxtime)
     {
-    	$this->_mysql->query("Select last_activity from `admin_session`where `session_id` = '{$this->_session_id}'");
+    	$this->_mysql->query("SELECT `last_activity` FROM `admin_session` WHERE `session_id` = '{$this->_session_id}'");
     	$lasttime = $this->_mysql->fetcharray();
 
     	$this->_mysql->query("SELECT TIME_TO_SEC(TIMEDIFF(NOW(), '{$lasttime[0]}')) as Diff");
@@ -166,7 +166,7 @@ class Session {
 	{
 		$i = 0;
 		/* Alte Session mit der gleichen User_ID löschen */
-		$sql = "SELECT `session_id` from `admin_session` WHERE `session_id` != '{$this->_session_id}'";
+		$sql = "SELECT `session_id` FROM `admin_session` WHERE `session_id` != '{$this->_session_id}'";
 		
 		$this->_mysql->query($sql);
 		$this->_mysql->saverecords('num');

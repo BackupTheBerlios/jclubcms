@@ -340,7 +340,7 @@ class Core
 	/**
 	 * Laedt die Navigation und speicher sie in $this->_smarty_array
 	 *
-	 * @param booleane $shortlinks
+	 * @param boolean $shortlinks
 	 */
 
 	private function _loadNav($shortlinks = false)
@@ -536,7 +536,7 @@ class Core
 		}
 
 		if (key_exists('mail', $this->_gpc['GET'])) {
-			$modulname = 'mailmodule';
+			$modulname =  'mailmodule';
 		} elseif (key_exists('image', $this->_gpc['GET'])) {
 			$modulname = 'image_send';
 

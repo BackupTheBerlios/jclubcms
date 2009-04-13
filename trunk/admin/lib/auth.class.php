@@ -52,6 +52,13 @@ class Auth
 	 * @var int
 	 */
 	private $_user_id;
+	
+	/**
+	 * Texte für die Fehler
+	 *
+	 * @var array
+	 */
+	private $_textes = array();
 
 	/**
 	 * Oeffnet die Autorisierungsklasse
@@ -66,6 +73,9 @@ class Auth
 		$this->_mysql = $mysql;
 		$this->_session = new Session('s', $mysql);
 		$this->_smarty->assign('TEMPLATESET_DIR', TEMPLATESET_DIR);
+		
+		global $system_textes;
+		$this->_textes = $system_textes[LANGUAGE_ABR]['auth'];
 
 	}
 
@@ -79,9 +89,6 @@ class Auth
 	public function check4login(&$post_array)
 	{
 
-		
-		global $auth_error_noentry, $auth_error_failname, $auth_error_failpw, $auth_error_userinvalid, $auth_forward_linktext, $auth_forward_successlogin, $auth_forward_title;
-
 		//Login-Formular gesendet?
 		if (isset($post_array['login']) && $post_array['login'] == "Anmelden") {
 			$login_data = $this->_getlogindata($post_array);
@@ -92,7 +99,7 @@ class Auth
 				$this->_mysql->query("SELECT `user_ID` FROM `admin_users` WHERE `user_name` = '{$login_data['name']}' LIMIT 1");
 				
 				if (($data = $this->_mysql->fetcharray('assoc')) === false) {
-					$this->_smarty->assign('login_error', $auth_error_failname);
+					$this->_smarty->assign('login_error', $this->_textes['failname']);
 					$this->_smarty->display('login.tpl');
 					
 				} else {
@@ -104,18 +111,18 @@ class Auth
 						$this->_user_id = $data[0];
 						$this->_session->create_session($data[0]);
 
-						$this->_smarty->assign(array('forward_title' => $auth_forward_title, 'forward_text' => $auth_forward_successlogin, 'forward_linktext' => $auth_forward_linktext, 'forward_link' => "?".$this->_session->get_sessionstring()));
+						$this->_smarty->assign(array('forward_title' => $this->_textes['forward_title'], 'forward_text' => $this->_textes['forward_successlogin'], 'forward_linktext' => $this->_textes['forward_linktext'], 'forward_link' => "?".$this->_session->get_sessionstring()));
 						$this->_smarty->display('forward.tpl');
 
 
 					} elseif ($data == false) {
 
-						$this->_smarty->assign('login_error', $auth_error_failpw);
+						$this->_smarty->assign('login_error', $this->_textes['failpw']);
 						$this->_smarty->display('login.tpl');
 						
 					} else {
 						/* Query zwar richtig, aber user_ID ungültig */
-						$this->_smarty->assign('login_error', $auth_error_userinvalid);
+						$this->_smarty->assign('login_error', $this->_textes['userinvalid']);
 						$this->_smarty->display('login.tpl');
 					}
 				}
@@ -123,7 +130,7 @@ class Auth
 				return true;
 
 			} else {
-				$this->_smarty->assign('login_error', $auth_error_noentry);
+				$this->_smarty->assign('login_error', $this->_textes['noentry']);
 				$this->_smarty->display('login.tpl');
 				return true;
 
@@ -143,7 +150,6 @@ class Auth
 
 	public function check4user($get_array)
 	{
-		global $auth_error_nonactiv, $auth_error_sessioncorupt;
 
 		if ($this->_session->watch4session($get_array) == false) {
 			$this->_smarty->assign('file', "");
@@ -154,7 +160,7 @@ class Auth
 		if ($this->_session->checksession() == false) {
 
 			$this->_session->delete();
-			$this->_smarty->assign('error_text', $auth_error_sessioncorupt);
+			$this->_smarty->assign('error_text', $this->_textes['sessioncorupt']);
 			$this->_smarty->display('error_alone.tpl');
 
 			return false;
@@ -163,7 +169,7 @@ class Auth
 		if ($this->_session->activ(SESSION_TIMEOUT) == false) {
 			$this->_session->delete();
 
-			$this->_smarty->assign('error_text', $auth_error_nonactiv);
+			$this->_smarty->assign('error_text', $this->_textes['nonactiv']);
 			$this->_smarty->display('error_alone.tpl');
 
 			return false;
