@@ -2,7 +2,6 @@
 require_once ADMIN_DIR.'lib/module.interface.php';
 require_once ADMIN_DIR.'lib/messageboxes.class.php';
 require_once ADMIN_DIR.'lib/smilies.class.php';
-require_once USER_DIR.'config/gbook_textes.inc.php';
 /**
  * Diese Klasse ist zustaendig fuer das Editieren der Newseintraege. 
  * Auch koennen neue Beitraege hinzugefuegt oder geloescht werden.
@@ -57,7 +56,7 @@ class Newsadmin implements Module
 	 *
 	 * @var string
 	 */
-	private $_timeformat = '%e.%m.%Y %k:%i';
+	private $_timeformat = TIMEFORMAT;
 	
 	
 	/**
@@ -200,7 +199,7 @@ class Newsadmin implements Module
 		foreach ($news_array as $key => $value) {
 
 			$news_array[$key] = array('ID' => $value['news_ID'], 'title' => htmlentities($value['news_title']),
-			'content' => $this->_smilie->show_smilie(htmlentities($value['news_content']), $this->_mysql),
+			'content' => $this->_smilie->show_smilie(nl2br(htmlentities($value['news_content'])), $this->_mysql),
 			'name' => htmlentities($value['news_name']),
 			'time' => $value['news_time'], 'email' => htmlentities($value['news_email']),
 			'hp' => htmlentities($value['news_hp']), 'number_of_comments' => $value['number_of_comments']);
@@ -211,7 +210,7 @@ class Newsadmin implements Module
 
 				$news_array[$key]['comments'][$ckey] = array('ID' => $cvalue['news_ID'],
 				'title' => htmlentities($cvalue['news_title']),
-				'content' => $this->_smilie->show_smilie(htmlentities($cvalue['news_content']), $this->_mysql),
+				'content' => $this->_smilie->show_smilie(nl2br(htmlentities($cvalue['news_content'])), $this->_mysql),
 				'name' => htmlentities($cvalue['news_name']), 'time' => $cvalue['news_time'],
 				'email' => htmlentities($cvalue['news_email']), 'hp' => htmlentities($cvalue['news_hp']));
 
@@ -427,9 +426,6 @@ class Newsadmin implements Module
 	{
 		$news_vars = $this->_configvars['News'];
 		$error_vars =$this->_configvars['Error'];
-
-		/* Formularcheck vorbereiten */
-		$formcheck = new Formularcheck();
 
 		/*Formulardaten */
 		if (!in_array('title', $blacklist)) {

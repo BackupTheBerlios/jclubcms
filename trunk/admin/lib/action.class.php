@@ -75,15 +75,9 @@ class Action
 	 */
 	public function _exe_reserved_action($function)
 	{
+		$function = (string)($function);
 		include_once(ADMIN_DIR."lib/action/action_$function.class.php");
 	}
 	
-	/**
-	 * TODO Documentation
-	 */
-	public function _exe_reserved_mail()
-	{
-		$mail = new Mailclient($this->_smarty, $this->_mysql);
-	}
 }
 ?>

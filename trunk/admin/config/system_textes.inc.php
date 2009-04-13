@@ -140,7 +140,4 @@ $system_textes['de']['auth']['failname'] = '"Benutzername nicht vorhanden. (Acht
 $system_textes['de']['auth']['failpw'] = 'Passwort wurde falsch eingegeben';
 $system_textes['de']['auth']['userinvalid'] = 'Benutzer ist nicht g&uuml;ltig';
 
-$system_textes['de']['auth']['forward_successlogin'] = 'Sie haben sich erfolgreich eingeloggt. Sie werden weitergeleitet.';
-$system_textes['de']['auth']['forward_linktext'] = 'Sollte die Weiterleitung nicht funktionieren, dr&uuml;cken Sie diesen Link';
-$system_textes['de']['auth']['forward_title'] = 'Weiterleitung JClub-Administration';
 ?>

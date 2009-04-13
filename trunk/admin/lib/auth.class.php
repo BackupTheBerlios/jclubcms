@@ -6,7 +6,6 @@
  * @package JClubCMS
  * @author Simon Däster
  */
-require_once ADMIN_DIR.'config/auth_textes.inc.php';
 require_once ADMIN_DIR.'lib/session.class.php';
 /**
  * 
@@ -111,7 +110,10 @@ class Auth
 						$this->_user_id = $data[0];
 						$this->_session->create_session($data[0]);
 
-						$this->_smarty->assign(array('forward_title' => $this->_textes['forward_title'], 'forward_text' => $this->_textes['forward_successlogin'], 'forward_linktext' => $this->_textes['forward_linktext'], 'forward_link' => "?".$this->_session->get_sessionstring()));
+						//Sektion der Sprachdatei weitergeben für die Texte im Template
+						$this->_smarty->assign('section', 'Login');
+						$this->_smarty->assign('forward_link', "?".$this->_session->get_sessionstring());
+						$this->_smarty->display('forward.tpl');
 						$this->_smarty->display('forward.tpl');
 
 
