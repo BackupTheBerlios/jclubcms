@@ -15,7 +15,6 @@
  * @package JClubCMS
 
  */
-
 class Bbcodes {
 	private $_bbcodes_array;
 	private $_type;

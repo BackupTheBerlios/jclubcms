@@ -57,12 +57,24 @@ if (!defined('EXCEPTION_LIBARY_CODE')) {
  * @package JClubCMS
  * File: exceptions.class.php
  * Classes: coreexception, mysqlexception, moduleexception, stdexception
- * @requieres PHP5
+ * @requires PHP5
  */
 
 class CMSException extends Exception
 {
+	/**
+	 * Titel für den Fehler (nicht zwingend nötig)
+	 *
+	 * @var string $_title
+	 */
 	private $_title = "";
+	
+	/**
+	 * Texte für die Fehlermeldungen
+	 * 
+	 * @var array
+	 */
+	private $_textes = array();
 
 	/**
 	 * Aufbau der Exception-Klasse
@@ -76,6 +88,8 @@ class CMSException extends Exception
 	public function __construct($msg_key, $code = 0, $msg_append = "", $title = "")
 	{
 		global $system_textes;
+		
+		$this->_textes = $system_textes[LANGUAGE_ABR]['excn'];
 		$group = key($msg_key);
 		$id = $msg_key[$group];
 		
@@ -91,19 +105,19 @@ class CMSException extends Exception
 		
 		switch ($code) {
 			case EXCEPTION_CORE_CODE:
-				$this->_title = "CMS-Core-Fehler";
+				$this->_title = $this->_textes['cms_core_error'];
 				break;
 			case EXCEPTION_MYSQL_CODE:
-				$this->_title = 'Mysql-Fehler';
+				$this->_title = $this->_textes['mysql_error'];
 				break;
 			case EXCEPTION_MODULE_CODE:
-				$this->_title = 'Modul-Fehler';
+				$this->_title = $this->_textes['modul_error'];
 				break;
 			case EXCEPTION_LIBARY_CODE:
-				$this->_title = "Libary-Fehler";
+				$this->_title = $this->_textes['libary_error'];
 				break;
 			default:
-				$this->_title = 'Fehler';
+				$this->_title = $this->_textes['error'];
 				break;
 		}
 		
@@ -148,7 +162,7 @@ class CMSException extends Exception
 
 	public function __toString()
 	{
-		return "<b>".htmlentities($this->_title)."</b><br />\nEs ist ein Fehler aufgetreten in der Datei ".basename($this->getFile())." auf  Zeile {$this->getLine()} mit folgendern Nachricht: ".htmlentities($this->getMessage());
+		return "<b>".htmlentities($this->_title)."</b><br />\n".$this->_textes['error_in_file']." ".basename($this->getFile())." ".$this->_textes['on_line']." {$this->getLine()} ".$this->_textes['with_msg'].": ".htmlentities($this->getMessage());
 	}
 
 	/**
@@ -229,6 +243,9 @@ class CMSException extends Exception
 
 	public static function printException($file, $line, $msg, $trace)
 	{
+		global $system_textes;
+		$textes = $system_textes[LANGUAGE_ABR]['excn'];
+		
 		//Style: padding in px
 		$pad = 5;
 		
@@ -238,32 +255,32 @@ class CMSException extends Exception
 		echo <<<END
 		<html>
 			<head>
-				<title>Jclub -  Fehler</title>
+				<title>{$textes['jclub_error']}</title>
 			</head>
 			<body>
-				<p style="margin-left: 20%; font-size: 28px; font-weight: bold;">Es ist ein unerwarteter Fehler aufgetreten</p>
+				<p style="margin-left: 20%; font-size: 28px; font-weight: bold;">{$textes['unexcn_error']}</p>
 				<table style="margin-left: 20%; border-style: solid;">
 					<tr style="background-color: #FFDD90">
-						<td colspan="2" style="font-weight: bold; padding:{$pad}px">Fehlertabelle</td>
+						<td colspan="2" style="font-weight: bold; padding:{$pad}px">{$textes['error_table']}</td>
 					</tr>
 					<tr>
-						<td style="padding: {$pad}px">Datei</td>
+						<td style="padding: {$pad}px">{$textes['file']}</td>
 						<td style="padding: {$pad}px">$file</td>
 					</tr>
 					<tr style="background-color: #EFEFEF; padding: 30px">
-						<td style="padding: {$pad}px">Zeile</td>
+						<td style="padding: {$pad}px">{$textes['line']}</td>
 						<td style="padding: {$pad}px">$line</td>
 					</tr>
 					<tr>
-						<td style="padding: {$pad}px">Nachricht</td>
+						<td style="padding: {$pad}px">{$textes['message']}</td>
 						<td style="padding: {$pad}px">$msg</td>
 					</tr>
 					<tr style="background-color: #EFEFEF;">
-						<td style="padding: {$pad}px">Trace</td>
+						<td style="padding: {$pad}px">{$textes['trace']}</td>
 						<td style="padding: {$pad}px">$trace</td>
 					</tr>
 				</table>
-				<p style="margin-left: 20%; font-style: italic">Sollte dieser Fehler &ouml;fters auftreten, kontaktieren Sie bitte den Administrator. Danke.</p>
+				<p style="margin-left: 20%; font-style: italic">{$textes['exp_error_often']}</p>
 			</body>
 		</html>
 END;

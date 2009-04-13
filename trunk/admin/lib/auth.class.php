@@ -174,9 +174,8 @@ class Auth
 	public function logout()
 	{
 		$this->_session->delete();
-
-		$this->_smarty->assign('forward_text', "Sie haben sich erfolgreich ausgeloggt");
-		$this->_smarty->assign('forward_linktext', "Zum Login");
+		//Sektion der Sprachdatei weitergeben für die Texte im Template
+		$this->_smarty->assign('section', 'Logout');
 		$this->_smarty->assign('forward_link', "?");
 		$this->_smarty->display('forward.tpl');
 	}

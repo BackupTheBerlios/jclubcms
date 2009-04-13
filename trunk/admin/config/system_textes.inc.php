@@ -1,7 +1,8 @@
 <?php
 /**
  * 
- * Diese Seite speichert die Texte ab, welche immer wieder in der auth-Klasse gebraucht werden.
+ * Diese Seite speichert die Texte ab, welche zur Verfügung stehen müssen, wenn kein Zugriff auf die textes.conf mittels Smarty möglich ist.
+ * Diese Texte werden hauptsächlich beim Werfen von Exceptions gebraucht
  * 
  * @author Simon Däster
  * @package JClubCMS
@@ -16,7 +17,7 @@ $system_textes['de']['core'] = array();
 $system_textes['de']['core']['exp_no_smarty_instance'] = 'Keine Instanz der Smarty-Klasse vorhanden';
 $system_textes['de']['core']['exp_error_in_file'] = 'Fehler aufgetreten in der Datei';
 $system_textes['de']['core']['exp_on_line'] = 'auf Zeilenummer';
-$system_textes['de']['core']['exp_error_often'] = 'Sollte dieser Fehler &ouml;fters auftreten, benachrichtigen Sie bitte den Administrator';
+$system_textes['de']['core']['exp_error_often'] = 'Sollte dieser Fehler öfters auftreten, benachrichtigen Sie bitte den Administrator.Danke.';
 
 $system_textes['de']['core']['func_exec_fail'] = 'Interne Funktion nicht ausführbar';
 $system_textes['de']['core']['modul_not_found'] = 'Das angegebene Modul konnte nicht gefunden werden';
@@ -100,6 +101,25 @@ $system_textes['de']['img']['no_img_param'] = 'kein Bild über &img=... angegebe
 $system_textes['de']['img']['param_error'] = 'Parameterfehler';
 $system_textes['de']['img']['error_open_file'] = 'Die Bilddatei konnte nicht geöffnet werten!';
 $system_textes['de']['img']['error_open'] = 'Fehler beim Öffnen';
+
+//**Exception
+$system_textes['de']['excn'] = array();
+$system_textes['de']['excn']['cms_core_error'] = 'CMS-Core-Fehler';
+$system_textes['de']['excn']['mysql_error'] = 'Mysql-Fehler';
+$system_textes['de']['excn']['modul_error'] = 'Modul-Fehler';
+$system_textes['de']['excn']['libary_error'] = 'Libary-Fehler';
+$system_textes['de']['excn']['error'] = 'Fehler';
+$system_textes['de']['excn']['error_in_file'] = 'Es ist ein Fehler aufgetreten in der Datei';
+$system_textes['de']['excn']['on_line'] = 'auf der Zeile';
+$system_textes['de']['excn']['with_msg'] = 'mit folgendern Nachricht';
+$system_textes['de']['excn']['jclub_error'] = 'Jclub -  Fehler';
+$system_textes['de']['excn']['unexcn_error'] = 'Es ist ein unerwarteter Fehler aufgetreten';
+$system_textes['de']['excn']['error_table'] = 'Fehlertabelle';
+$system_textes['de']['excn']['file'] = 'Datei';
+$system_textes['de']['excn']['line'] = 'Zeile';
+$system_textes['de']['excn']['message'] = 'Nachricht';
+$system_textes['de']['excn']['trace'] = 'Trace';
+$system_textes['de']['excn']['exp_error_often'] = $system_textes['de']['core']['exp_error_often'];
 
 
 $auth_error_sessioncorupt = "Ihre Session-ID ist nicht mehr g&uuml;ltig oder wurde gef&auml;lscht. Bitte loggen Sie sich neu ein.";
