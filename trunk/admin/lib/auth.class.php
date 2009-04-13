@@ -6,7 +6,6 @@
  * @package JClubCMS
  * @author Simon Däster
  */
-require_once ADMIN_DIR.'config/auth_textes.inc.php';
 require_once ADMIN_DIR.'lib/session.class.php';
 /**
  * 
