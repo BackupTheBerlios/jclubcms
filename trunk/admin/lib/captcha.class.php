@@ -12,8 +12,13 @@
  * 
  * @package JClubCMS
  * @author  Andreas John
+ * @license http://opensource.org/licenses/gpl-2.0.php General Public License (GPL) v2.0
 */
 
+/**
+ * TODO ClassDev
+ *
+ */
 class Captcha
 {
 	/**

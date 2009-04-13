@@ -76,7 +76,7 @@ class Gallery implements Module
 
 	/**
 	 * Führt die einzelnen Methoden aus, abhaengig vom parameter
-	 *
+	 * @global string dir_smilies Used for the dir where the smilies-gif are saved
 	 * @param array $parameters POST, GET und COOKIE-Variablen
 	 */
 
@@ -195,7 +195,8 @@ class Gallery implements Module
 	 * Zeigt die Gallery an, genauer einen Teil der Bilder zu der gehörenden Gallery.
 	 * Eine Gallery kann in mehrere Seiten unterteilt sein, je nach der Anzahl der Bilder.
 	 * Eine Gallery kann eine übergeordnete Kategorie haben, jedoch keine übergeordnete Gallery.
-	 *
+	 * @global int gallery_pics_x Number of pictures in x
+	 * @global int $gallery_pics_y Number of pictures in y
 	 * @param int $gal_ID Gallery-ID
 	 */
 	private function _showGallery($gal_ID)

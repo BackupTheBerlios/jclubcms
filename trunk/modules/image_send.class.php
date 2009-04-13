@@ -1,4 +1,11 @@
 <?php
+/**
+ * Für die Ausgabe der Bilder zuständig
+ * 
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License version 3
+ * @package JClubCMS
+ * @author Simon Däster
+ */
 require_once ADMIN_DIR.'lib/module.interface.php';
 require_once ADMIN_DIR.'lib/image.class.php';
 /**

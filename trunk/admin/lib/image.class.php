@@ -1,8 +1,16 @@
 <?php
-
 /**
- * Die Klasse image ist zuständig fuer Grafikfunktionen
- * Sie speichert die Informationen ueber ein Bild ab, kann diese Informationen senden
+
+ * Beinhaltet die Elemente für Grafikfunktionen.
+ * 
+ * @author Simon Däster
+ * @package JClubCMS
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3
+ */
+/**
+ * Die Klasse Image ist zustaendig fuer Grafikfunktionen
+ * 
+ * Image speichert die Informationen ueber ein Bild ab, kann diese Informationen senden
  * und das Bild selber ausgeben
  * Wenn keine Bilddatei vorhanden ist, dann wird automatisch ein Fehlerbild erstellt
  * Um Thumbs zu erstellen, kann die Funktion "copy" verwendet werden.

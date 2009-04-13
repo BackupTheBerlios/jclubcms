@@ -1,10 +1,17 @@
 <?php
 /**
+ * Beinhaltet die Elemente für das Überprüfen von Formularen
+ * 
+ * @package JClubCMS
+ * @author David Däster
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3
+ */
+/**
  * Überprüft Formulare, ob alle nötigen Werte eingefüllt und plausibel sind.
  * Diese Klasse ist noch sehr monolitisch, und sollte evnt. durch ein interface
  * oder eine final-class ersetzt werden.
  * 
- * @author David Daester
+ * @author David Däster
  * @package JClubCMS
  * File: formular_check.class.php
  * Classes: Formularcheck

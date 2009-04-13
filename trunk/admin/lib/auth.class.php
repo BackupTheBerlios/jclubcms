@@ -1,7 +1,16 @@
 <?php
+/**
+ * Dieses File beinhaltet die Klassen und Methoden für die Authentifizeriung
+ * 
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3
+ * @package JClubCMS
+ * @author Simon Däster
+ */
 require_once ADMIN_DIR.'config/auth_textes.inc.php';
 require_once ADMIN_DIR.'lib/session.class.php';
 /**
+ * 
+ * Authorisierungsklasse für den Adminbereich
  * 
  * Diese Seite ist das Autorisierungs-Modul. Sie ist fuer das rechtmässige Einloggen
  * verantwortlich; sie schaut, ob der Benutzer noch aktiv ist und schmeisst in, wenn
@@ -9,7 +18,6 @@ require_once ADMIN_DIR.'lib/session.class.php';
  * nur Befehle ausfürht, die er rechtmässig verwenden darf.
  *
  * @author Simon Däster
- * @package JClubCMS
  * File: auth.class.php
  * class: Auth
  * @requires PHP5

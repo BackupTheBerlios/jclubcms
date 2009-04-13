@@ -64,27 +64,23 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---modules---gbookadmin.class.php.html">		gbookadmin.class.php
 		</a><br>
-			<a href="../JClubCMS/_config---gbook_textes.inc.php.html">		gbook_textes.inc.php
-		</a><br>
 			<a href="../JClubCMS/_admin---config---global-config.inc.php.html">		global-config.inc.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---image.class.php.html">		image.class.php
 		</a><br>
-			<a href="../JClubCMS/_admin---modules---image_send.class.php.html">		image_send.class.php
-		</a><br>
 			<a href="../JClubCMS/_modules---image_send.class.php.html">		image_send.class.php
 		</a><br>
-			<a href="../JClubCMS/_index.php.html">		index.php
+			<a href="../JClubCMS/_admin---modules---image_send.class.php.html">		image_send.class.php
 		</a><br>
 			<a href="../JClubCMS/_admin---index.php.html">		index.php
 		</a><br>
-			<a href="../JClubCMS/_admin---modules---mailmodule.class.php.html">		mailmodule.class.php
+			<a href="../JClubCMS/_index.php.html">		index.php
 		</a><br>
 			<a href="../JClubCMS/_modules---mailmodule.class.php.html">		mailmodule.class.php
 		</a><br>
-			<a href="../JClubCMS/_admin---lib---mailsend.class.php.html">		mailsend.class.php
+			<a href="../JClubCMS/_admin---modules---mailmodule.class.php.html">		mailmodule.class.php
 		</a><br>
-			<a href="../JClubCMS/_config---mail_textes.inc.php.html">		mail_textes.inc.php
+			<a href="../JClubCMS/_admin---lib---mailsend.class.php.html">		mailsend.class.php
 		</a><br>
 			<a href="../JClubCMS/_modules---members.class.php.html">		members.class.php
 		</a><br>
@@ -108,6 +104,8 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---smilies.class.php.html">		smilies.class.php
 		</a><br>
+			<a href="../JClubCMS/_admin---config---system_textes.inc.php.html">		system_textes.inc.php
+		</a><br>
 			<a href="../JClubCMS/_admin---lib---timeparser.class.php.html">		timeparser.class.php
 		</a><br>
 			<a href="../JClubCMS/_javascript---tinymce---tiny_mce_gzip.php.html">		tiny_mce_gzip.php
@@ -116,6 +114,10 @@
 		</a><br>
 	  </div><br />
       
+            <b>Interfaces:</b><br />
+        <div class="package">
+		    		<a href="../JClubCMS/Module.html">Module</a><br />
+	  </div>
       
             <b>Classes:</b><br />
         <div class="package">
@@ -160,21 +162,37 @@ Source Location: /admin/lib/core.class.php<br /><br />
 <div class="contents">
 <h2>Classes:</h2>
 <dt><a href="../JClubCMS/Core.html">Core</a></dt>
-	<dd>Die core-Datei erledigt:</dd>
+	<dd>Die core-Datei erledigt:  -laedt notweindige Libaries  -registriert den Exception-Handler</dd>
 </div><br /><br />
 
 <h2>Page Details:</h2>
+Die core-Datei erledigt:<br /><br /><p>-laedt notweindige Libaries  -registriert den Exception-Handler</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>author:</b>&nbsp;&nbsp;</td><td>Simon Däster</td>
+  </tr>
+  <tr>
+    <td><b>filesource:</b>&nbsp;&nbsp;</td><td><a href="../__filesource/fsource_JClubCMS__adminlibcore.class.php.html">Source Code for this file</a></td>
+  </tr>
+  <tr>
+    <td><b>license:</b>&nbsp;&nbsp;</td><td><a href="http://opensource.org/licenses/gpl-3.0.html">GNU General Public License version 3</a></td>
+  </tr>
+</table>
+</div>
 <br /><br />
 <h4>Includes:</h4>
 <div class="tags">
-require_once(ADMIN_DIR."config/functions.inc.php") [line 6]<br />
-require_once(ADMIN_DIR."lib/mysql.class.php") [line 10]<br />
-require_once(ADMIN_DIR."config/global-config.inc.php") [line 5]<br />
-require_once(ADMIN_DIR."lib/Smarty/Smarty.class.php") [line 11]<br />
-require_once(ADMIN_DIR."lib/auth.class.php") [line 13]<br />
-require_once(ADMIN_DIR."lib/page.class.php") [line 15]<br />
-require_once(ADMIN_DIR."lib/cmsexception.class.php") [line 17]<br />
-require_once(ADMIN_DIR."lib/session.class.php") [line 14]<br />
+require_once(ADMIN_DIR.'config/system_textes.inc.php') [line <a href="../__filesource/fsource_JClubCMS__adminlibcore.class.php.html#a13">13</a>]<br />
+require_once(ADMIN_DIR.'lib/mysql.class.php') [line <a href="../__filesource/fsource_JClubCMS__adminlibcore.class.php.html#a17">17</a>]<br />
+require_once(ADMIN_DIR.'config/global-config.inc.php') [line <a href="../__filesource/fsource_JClubCMS__adminlibcore.class.php.html#a11">11</a>]<br />
+require_once(ADMIN_DIR.'config/functions.inc.php') [line <a href="../__filesource/fsource_JClubCMS__adminlibcore.class.php.html#a12">12</a>]<br />
+require_once(ADMIN_DIR.'lib/Smarty/Smarty.class.php') [line <a href="../__filesource/fsource_JClubCMS__adminlibcore.class.php.html#a18">18</a>]<br />
+require_once(ADMIN_DIR.'lib/page.class.php') [line <a href="../__filesource/fsource_JClubCMS__adminlibcore.class.php.html#a22">22</a>]<br />
+require_once(ADMIN_DIR.'lib/cmsexception.class.php') [line <a href="../__filesource/fsource_JClubCMS__adminlibcore.class.php.html#a24">24</a>]<br />
+require_once(ADMIN_DIR.'lib/auth.class.php') [line <a href="../__filesource/fsource_JClubCMS__adminlibcore.class.php.html#a20">20</a>]<br />
+require_once(ADMIN_DIR.'lib/session.class.php') [line <a href="../__filesource/fsource_JClubCMS__adminlibcore.class.php.html#a21">21</a>]<br />
 </div>
 <br /><br />
 <br /><br />
@@ -182,7 +200,7 @@ require_once(ADMIN_DIR."lib/session.class.php") [line 14]<br />
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Sat, 11 Apr 2009 12:39:12 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Mon, 13 Apr 2009 02:46:07 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

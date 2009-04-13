@@ -1,14 +1,21 @@
 <?php
+/**
+ * Anzeige und Hinzufügen von Gästebucheinträgen
+ * 
+ * In dieser Datei sind die Klassen und Module für das Anzeigen und 
+ * Hinzufügen von Gästebucheinträgen konsolidiert.
+ * 
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License version 3
+ * @author Simon Däster
+ * @package JClubCMS
+ */
 require_once ADMIN_DIR.'lib/messageboxes.class.php';
 require_once ADMIN_DIR.'lib/smilies.class.php';
 require_once ADMIN_DIR.'lib/module.interface.php';
 /**
  * 
  * Diese Klasse ist zuständig für das Anzeigen und Hinzufügen der Gästebucheinträge.
- * 
  * @author Simon Däster
- * @package JClubCMS
- * gbook.class.php
  */
 
 
@@ -94,6 +101,8 @@ class Gbook implements Module {
 	 * Führt die einzelnen Methoden aus, abhängig vom Parameter
 	 *
 	 * @param array $gpc $_POST- und $_GET-Arrays
+	 * @global string dir_smilies Used for the dir where the smilies-gif are saved
+	 * @global int gbook_entries_per_page
 	 * @return boolean
 	 */
 	public function action($gpc)
@@ -151,7 +160,7 @@ class Gbook implements Module {
 	/**
 	 * Zeigt die Einträge an
 	 *
-	 * @param int $max_entries_pp Anzahl Einträge pro Seite
+	 * @param integer $max_entries_pp Anzahl Einträge pro Seite
 	 */
 
 	private function _view($max_entries_pp)

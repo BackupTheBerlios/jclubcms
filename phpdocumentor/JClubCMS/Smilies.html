@@ -64,27 +64,23 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---modules---gbookadmin.class.php.html">		gbookadmin.class.php
 		</a><br>
-			<a href="../JClubCMS/_config---gbook_textes.inc.php.html">		gbook_textes.inc.php
-		</a><br>
 			<a href="../JClubCMS/_admin---config---global-config.inc.php.html">		global-config.inc.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---image.class.php.html">		image.class.php
 		</a><br>
-			<a href="../JClubCMS/_admin---modules---image_send.class.php.html">		image_send.class.php
-		</a><br>
 			<a href="../JClubCMS/_modules---image_send.class.php.html">		image_send.class.php
 		</a><br>
-			<a href="../JClubCMS/_index.php.html">		index.php
+			<a href="../JClubCMS/_admin---modules---image_send.class.php.html">		image_send.class.php
 		</a><br>
 			<a href="../JClubCMS/_admin---index.php.html">		index.php
 		</a><br>
-			<a href="../JClubCMS/_admin---modules---mailmodule.class.php.html">		mailmodule.class.php
+			<a href="../JClubCMS/_index.php.html">		index.php
 		</a><br>
 			<a href="../JClubCMS/_modules---mailmodule.class.php.html">		mailmodule.class.php
 		</a><br>
-			<a href="../JClubCMS/_admin---lib---mailsend.class.php.html">		mailsend.class.php
+			<a href="../JClubCMS/_admin---modules---mailmodule.class.php.html">		mailmodule.class.php
 		</a><br>
-			<a href="../JClubCMS/_config---mail_textes.inc.php.html">		mail_textes.inc.php
+			<a href="../JClubCMS/_admin---lib---mailsend.class.php.html">		mailsend.class.php
 		</a><br>
 			<a href="../JClubCMS/_modules---members.class.php.html">		members.class.php
 		</a><br>
@@ -108,6 +104,8 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---smilies.class.php.html">		smilies.class.php
 		</a><br>
+			<a href="../JClubCMS/_admin---config---system_textes.inc.php.html">		system_textes.inc.php
+		</a><br>
 			<a href="../JClubCMS/_admin---lib---timeparser.class.php.html">		timeparser.class.php
 		</a><br>
 			<a href="../JClubCMS/_javascript---tinymce---tiny_mce_gzip.php.html">		tiny_mce_gzip.php
@@ -116,6 +114,10 @@
 		</a><br>
 	  </div><br />
       
+            <b>Interfaces:</b><br />
+        <div class="package">
+		    		<a href="../JClubCMS/Module.html">Module</a><br />
+	  </div>
       
             <b>Classes:</b><br />
         <div class="package">
@@ -160,7 +162,7 @@ Source Location: /admin/lib/smilies.class.php<br /><br />
 
 <h3><a href="#class_details">Class Overview</a></h3>
 <pre></pre><br />
-<div class="description">Klasse fuer das Aulsenen der Smilies aus der DB,</div><br /><br />
+<div class="description">Klasse fuer das Aulsenen der Smilies aus der DB,  Ueberpruefung ob die Bilder noch vorhanden sind  und Retourgabe der Daten als Array.</div><br /><br />
 <h4>Author(s):</h4>
 <ul>
           <li>David Däster</li>
@@ -207,8 +209,8 @@ Source Location: /admin/lib/smilies.class.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line 17]<br />
-Klasse fuer das Aulsenen der Smilies aus der DB,<br /><br /><p>Ueberpruefung ob die Bilder noch vorhanden sind und Retourgabe der Daten als Array.</p><p>Evnt. noch Administration der Smilies.</p><br /><br /><br />
+[line <a href="../__filesource/fsource_JClubCMS__adminlibsmilies.class.php.html#a18">18</a>]<br />
+Klasse fuer das Aulsenen der Smilies aus der DB,  Ueberpruefung ob die Bilder noch vorhanden sind  und Retourgabe der Daten als Array.<br /><br /><p>Evnt. noch Administration der Smilies.</p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
@@ -234,7 +236,7 @@ Klasse fuer das Aulsenen der Smilies aus der DB,<br /><br /><p>Ueberpruefung ob 
 
   <hr />
 	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line 32]</span></h3>
+	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibsmilies.class.php.html#a33">33</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -245,6 +247,15 @@ $dir_smilies)</code>
     </td></tr></table><br />
 	
 		Das Konstrukt dieser Klasse<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
 
 	
         <h4>Parameters:</h4>
@@ -261,7 +272,7 @@ $dir_smilies)</code>
   </div>
   <hr />
 	<a name="method__destruct"></a>
-	<h3>destructor __destruct <span class="smalllinenumber">[line 40]</span></h3>
+	<h3>destructor __destruct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibsmilies.class.php.html#a41">41</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -271,13 +282,22 @@ $dir_smilies)</code>
     </td></tr></table><br />
 	
 		Destruktor der Klasse.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
 
 	
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
   <hr />
 	<a name="methodcreate_smiliesarray"></a>
-	<h3>method create_smiliesarray <span class="smalllinenumber">[line 57]</span></h3>
+	<h3>method create_smiliesarray <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibsmilies.class.php.html#a58">58</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -287,12 +307,15 @@ $mysql_link)</code>
     </td></tr></table>
     </td></tr></table><br />
 	
-		Erstellt das Array der Smilies.<br /><br /><p>Grober Ablauf (zur Nachkontrolle): <ol><li>Auslesen der Tabelle(grupiert nach Bild)</li><li>Ueberpruefen ob das Smilie �berhaupt noch existiert (is_file), wenn nicht, auslassen</li><li>Rueckgabe des Arrays.</li></ol> Aufbau des Arrays: Code, Filepath</p><br /><br /><br />
+		Erstellt das Array der Smilies.<br /><br /><p>Grober Ablauf (zur Nachkontrolle): <ol><li>Auslesen der Tabelle(grupiert nach Bild)</li><li>Ueberpruefen ob das Smilie �berhaupt noch existiert (is_file), wenn nicht, auslassen</li><li>Rueckgabe des Arrays.</li></ol>  Aufbau des Arrays: Code, Filepath</p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td><b>return:</b>&nbsp;&nbsp;</td><td>Array der Smilies.</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
   </tr>
 </table>
 </div>
@@ -313,7 +336,7 @@ $mysql_link)</code>
   </div>
   <hr />
 	<a name="methodshow_smilie"></a>
-	<h3>method show_smilie <span class="smalllinenumber">[line 85]</span></h3>
+	<h3>method show_smilie <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibsmilies.class.php.html#a85">85</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -325,6 +348,15 @@ $mysql_link)</code>
     </td></tr></table><br />
 	
 		Erstellt via RegEx die Smilies im Text und gibt sie retour.<br /><br /><p>Grober Ablauf (zur Nachkontrolle): <ol><li>Auslesen der Smilies aus der Tabelle</li><li>Ueberpruefen ob das Smilie ueberhaupt noch existiert (is_file), wenn nicht, auslassen</li><li>RegEx der Texte</li><li>Rueckgabe des Textes.</li></ol></p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
 
 	
         <h4>Parameters:</h4>
@@ -349,7 +381,7 @@ $mysql_link)</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Sat, 11 Apr 2009 12:39:15 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Mon, 13 Apr 2009 02:46:50 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

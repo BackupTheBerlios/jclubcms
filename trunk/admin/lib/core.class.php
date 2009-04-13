@@ -1,4 +1,12 @@
 <?php
+/**
+ * Die core-Datei erledigt:
+ * <ul><li>laedt notweindige Libaries</li>
+ * <li>registriert den Exception-Handler</li></ul>
+ * @package JClubCMS
+ * @author Simon Däster
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3
+ */ 
 //Config laden
 require_once ADMIN_DIR.'config/global-config.inc.php';
 require_once ADMIN_DIR.'config/functions.inc.php';
@@ -18,18 +26,16 @@ require_once ADMIN_DIR.'lib/cmsexception.class.php';
 set_exception_handler(array('CMSException', 'stdExceptionHandler'));
 /**
  * Die core-Datei erledigt:
- * -laedt notweindige Libaries
- * -registriert den Exception-Handler
+ * <ul><li>laedt notweindige Libaries</li>
+ * <li>registriert den Exception-Handler</li></ul>
  * 
  * Die core-Klasse erledigt folgendes:
- * -Erstellten der notwendigen Objekte (smarty, mysql)
- * -Initialiesieren der Rechteverwaltung und testen auf erfolgreiches login
- * -Erstellen der Navigation
- * -Ueberpruefen der Benutzerangaben ueber $_GET / $_POST / $_COOKIE
- * -Aufrufen des geladenen Moduls
- * -Aufrufen der geladenen Seite
- * 
- * 
+ * <ul><li>Erstellten der notwendigen Objekte (smarty, mysql)</li>
+ * <li>Initialiesieren der Rechteverwaltung und testen auf erfolgreiches login</li>
+ * <li>Erstellen der Navigation</li>
+ * <li>Ueberpruefen der Benutzerangaben ueber $_GET / $_POST / $_COOKIE</li>
+ * <li>Aufrufen des geladenen Moduls</li>
+ * <li>Aufrufen der geladenen Seite</li></ul>
  * 
  * @package JClubCMS
  * @author Simon Däster
@@ -42,7 +48,7 @@ class Core
 	/**
 	 * Core-Objekt (das einzige!)
 	 *
-	 * @var Core
+	 * @staticvar Core
 	 */
 	private static $_core = null;
 	/**
@@ -106,12 +112,14 @@ class Core
 	private $_tplfile = null;
 
 	/**
-	 * Über diese Methode wird das Core-Objekt initialisiert. Der Grund, warum das über diese Methode
-	 * und nicht über den Konstruktor geschieht, ist folgender: Es soll nur ein Core-Objekt geben.
-	 * Daher wird ein Core-Objekt mit singelton initialiert. Wurde aber vorher ein Core-Objekt initialisiert,
-	 * passiert keine neue Initialisierung eines Core-Objekts. Es gibt maximal ein Objekt der Core-Klasse.
+	 * Über diese Methode wird das Core-Objekt initialisiert. 
+	 * 
+	 * Der Grund, warum das über diese Methode und nicht über den Konstruktor 
+	 * geschieht, ist folgender: Es soll nur ein Core-Objekt geben.
+	 * Daher wird ein Core-Objekt mit singelton initialiert. Wurde aber vorher 
+	 * ein Core-Objekt initialisiert, passiert keine neue Initialisierung 
+	 * eines Core-Objekts. Es gibt maximal ein Objekt der Core-Klasse.
 	 * @link http://www.php.net/manual/en/language.oop5.patterns.php - singleton.
-	 *
 	 */
 
 
@@ -332,7 +340,7 @@ class Core
 	/**
 	 * Laedt die Navigation und speicher sie in $this->_smarty_array
 	 *
-	 * @parambooleane $shortlinks
+	 * @param booleane $shortlinks
 	 */
 
 	private function _loadNav($shortlinks = false)
@@ -544,9 +552,5 @@ class Core
 		}
 
 	}
-
 }
-
-
-
 ?>
