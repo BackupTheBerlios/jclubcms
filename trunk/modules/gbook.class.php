@@ -131,10 +131,10 @@ class Gbook implements Module {
 					$this->_comment();
 					break;
 				case 'view':
-					$this->_view($gbook_entries_per_page);
+					$this->_view(GBOOK_ENTRIES_PER_PAGE);
 					break;
 				case '':
-					$this->_view($gbook_entries_per_page);
+					$this->_view(GBOOK_ENTRIES_PER_PAGE);
 					break;
 				default:
 					throw new CMSException(array('gbook' => 'invalid_option'), EXCEPTION_MODULE_CODE);

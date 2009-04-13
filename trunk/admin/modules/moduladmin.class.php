@@ -153,7 +153,6 @@ class Moduladmin implements Module
 		}
 
 		if (!empty($status_arr)) {
-			$query = "";
 			foreach ($status_arr as $value) {
 				$this->_mysql->query("UPDATE `modules` SET `modules_status` = '{$value['value']}' WHERE `modules_ID` = '{$value['ID']}' LIMIT 1");
 			}

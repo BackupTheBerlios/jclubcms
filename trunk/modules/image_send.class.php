@@ -39,6 +39,12 @@ class Image_send implements Module
 	 */
 	private $_gpc = null;
 
+	/**
+	 * Konstruktor. Diese Klasse braucht den Zugriff auf das Smarty-Objekt nicht.
+	 *
+	 * @param unknown_type $mysql
+	 * @param unknown_type $smarty
+	 */
 	public function __construct($mysql, $smarty)
 	{
 		$this->_mysql = $mysql;
@@ -135,7 +141,7 @@ class Image_send implements Module
 			$orgImg = new Image(IMAGE_DIR_ORIGN.$mysql_data['filename']);
 			$bild_data = $orgImg->send_infos();
 
-			$newSize = $this->_calcSize($bild_data['width'], $bild_data['height'], $thumb_maxwidth, $thumb_maxheight);
+			$newSize = $this->_calcSize($bild_data['width'], $bild_data['height'], THUMB_MAXWIDTH, THUMB_MAXHEIGHT);
 
 			$orgImg->copy($newSize['width'] , $newSize['height'], THUMB_DIR.$mysql_data['filename'], "jpeg");
 			unset($orgImg);

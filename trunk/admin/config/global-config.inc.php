@@ -54,6 +54,9 @@ define('SMILIES_DIR', USER_DIR."graphics/smilies/");
 //**Date TimeZone
 date_default_timezone_set('Europe/Zurich');
 
+//**Ausgegebenes Timeformat
+define('TIMEFORMAT', '%e.%m.%Y %k:%i');
+
 
 
 //**Bei der Gallerie: Alle Gallerien in der obersten Kategorie anzeigen, nicht nur die direkt untergeordneten

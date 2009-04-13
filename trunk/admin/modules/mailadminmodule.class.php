@@ -217,15 +217,13 @@ class Mailmodule implements Module
 	 *
 	 * @param string $hash Hash vom Link
 	 */
-	private function _truemail_send($hash)
+	private function _truemail_send($mail_hash)
 	{
 		$mail_vars = $this->_configvars['Mail'];
 
 		if (!key_exists('hash', $this->_gpc['GET'])) {
 			throw new CMSException(array('mail' => 'no_hash'), EXCEPTION_MODULE_CODE, array('mail' => 'param_missing'));
 		}
-
-		$mail_hash = $this->_gpc['GET']['hash'];
 		$mail_send = new Mailsend();
 		$controll = $mail_send->mail_send_hash($this->_mysql, $mail_hash);
 

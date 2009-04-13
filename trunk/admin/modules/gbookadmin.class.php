@@ -58,7 +58,7 @@ class Gbookadmin implements Module {
 	 *
 	 * @var unknown_type
 	 */
-	private $_timeformat = '%e.%m.%Y %k:%i';
+	private $_timeformat = TIMEFORMAT;
 
 	/**
 	 * Daten aus den Config-Dateien
@@ -139,7 +139,6 @@ class Gbookadmin implements Module {
 					break;
 				default:
 					throw new CMSException(array('gbook' => 'invalid_option'), EXCEPTION_MODULE_CODE);
-					return false;
 			}
 		} else {
 			$this->_view(5);
@@ -252,7 +251,7 @@ class Gbookadmin implements Module {
 				$this->_msbox->addEntry($answer);
 
 
-				$this->_send_feedback($gbook_vars['allright_title'], $gbook_vars['allright_content'], "?nav_id=$this->_nav_id", $mail_vars['allright_link']);
+				$this->_send_feedback($gbook_vars['allright_title'], $gbook_vars['allright_content'], "?nav_id=$this->_nav_id", $gbook_vars['allright_link']);
 
 
 
@@ -423,9 +422,6 @@ class Gbookadmin implements Module {
 		$gbook_vars = $this->_configvars['Gbook'];
 		$error_vars =$this->_configvars['Error'];
 
-		/* Formularcheck vorbereiten */
-		$formcheck = new Formularcheck();
-
 		/*Formulardaten */
 		if (!in_array('title', $blacklist)) {
 			/* Titel z.B. bei Kommentar nicht vorhanden */
@@ -457,8 +453,6 @@ class Gbookadmin implements Module {
 			}
 		}
 		
-		
-		/*$rtn_arr = $formcheck->field_check_arr($val, $std)*/
 		$rtn_arr = $this->_msbox->formCheck($val, $std);
 
 
