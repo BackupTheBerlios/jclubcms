@@ -150,7 +150,7 @@ class Image {
 	{
 
 		if ($file != '' && is_file($file) && file_exists($file)) {
-			$this->create_image(300, 26, $textes['copy_failed']);
+			$this->create_image(300, 26, $this->textes['copy_failed']);
 		}
 		
 		if($this->im == null)
@@ -216,11 +216,11 @@ class Image {
 
 	public function __destruct() 
 	{
-		$file = null;
-		$im = null;
-		$graphicformat = null;
-		$height = null;
-		$width = null;
+		$this->file = null;
+		$this->im = null;
+		$this->graphicformat = null;
+		$this->height = null;
+		$this->width = null;
 	}
 
 

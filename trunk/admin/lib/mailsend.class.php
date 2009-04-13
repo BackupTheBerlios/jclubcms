@@ -68,12 +68,13 @@ class Mailsend {
 		
         $header = 'From: Jclub.ch <mail_query@jclub.ch>'."\r\n"
                   .'X-Mailer: PHP/' . phpversion();
-		$msg = $system_textes[LANGUAGE_ABR]['mail']['link_send'].":\r\n"
-				."http://{$_SERVER['HTTP_HOST']}{$_SERVER['SCRIPT_NAME']}?mail&hash=".$hash;
-		$empfaenger = $this->_mail_sender;
-		$betreff = $system_textes[LANGUAGE_ABR]['mail']['send_check'];
-		$failer = $this->_mail_send($empfaenger,$betreff,$msg,$header);
-		return $failer;
+        $msg = $system_textes[LANGUAGE_ABR]['mail']['link_send'].":\r\n"
+           ."http://{$_SERVER['HTTP_HOST']}{$_SERVER['SCRIPT_NAME']}?mail&hash=".$hash;
+        $empfaenger = $this->_mail_sender;
+        $betreff = $system_textes[LANGUAGE_ABR]['mail']['send_check'];
+        $failer = $this->_mail_send($empfaenger,$betreff,$msg,$header);
+        return $failer;
+
 	}
 
 	/**

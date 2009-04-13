@@ -39,7 +39,7 @@ class Captcha_image implements Module
 	private $_gpc = array();
 	
 	/**
-	 * Aufbau der Klasse
+	 * Aufbau der Klasse. Diese Klasse braucht weder $smarty noch $mysql
 	 *
 	 * @param Smarty $smarty
 	 * @param Mysql $mysql

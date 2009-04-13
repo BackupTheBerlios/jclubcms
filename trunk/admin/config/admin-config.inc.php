@@ -19,4 +19,8 @@ define('SESSION_TIMEOUT',3600);
 define('ADMIN_MENU_USE_SHORTLINKS',true);
 
 
+/*------GBook-Settings----------*/
+define('GBOOK_ENTRIES_PER_PAGE',5);
+
+
 ?>

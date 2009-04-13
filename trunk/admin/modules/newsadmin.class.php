@@ -56,7 +56,7 @@ class Newsadmin implements Module
 	 *
 	 * @var string
 	 */
-	private $_timeformat = '%e.%m.%Y %k:%i';
+	private $_timeformat = TIMEFORMAT;
 	
 	
 	/**
@@ -426,9 +426,6 @@ class Newsadmin implements Module
 	{
 		$news_vars = $this->_configvars['News'];
 		$error_vars =$this->_configvars['Error'];
-
-		/* Formularcheck vorbereiten */
-		$formcheck = new Formularcheck();
 
 		/*Formulardaten */
 		if (!in_array('title', $blacklist)) {

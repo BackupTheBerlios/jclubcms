@@ -49,7 +49,7 @@ class Contentadmin implements Module
 	 *
 	 * @var string
 	 */
-	private $_timeformat = '%e.%m.%Y %k:%i';
+	private $_timeformat = TIMEFORMAT;
 
 	/**
 	 * Texte aus der Config-Datei

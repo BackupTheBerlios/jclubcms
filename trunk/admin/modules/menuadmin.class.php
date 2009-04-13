@@ -47,7 +47,7 @@ class Menuadmin implements Module
 	 *
 	 * @var string
 	 */
-	private $_timeformat = '%e.%m.%Y %k:%i';
+	private $_timeformat = TIMEFORMAT;
 
 	/**
 	 * Texte aus der Config-Datei
@@ -119,6 +119,7 @@ class Menuadmin implements Module
 				default:
 					$this->_view();
 			}
+			return true;
 
 		} else {
 			$this->_view();
@@ -157,10 +158,6 @@ class Menuadmin implements Module
 		$start = ($page - 1)*$number;
 
 		$menu_data = $this->_getMenues($start, $number, false);
-
-
-		$this->_mysql->saverecords('assoc');
-		$content_data = $this->_mysql->get_records();
 
 		foreach($menu_data as $key => $value) {
 			$str = "";
@@ -614,7 +611,7 @@ class Menuadmin implements Module
 
 			$i = 0;
 			$count_nav['top'][0] = 0;
-			foreach ($nav_arr as $key => $value) {
+			foreach ($nav_arr as $value) {
 				if ($value['menu_topid'] == 0) {
 					//$i = $value['menu_ID'];
 					$i++;
