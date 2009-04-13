@@ -114,7 +114,7 @@ class Gbookadmin implements Module {
 		$this->_smilie = new Smilies(SMILIES_DIR);
 		
 		if ($this->_getStatus() == 'off') {
-			$this->_smarty->assign('info', 'Das Modul G&auml;stebuch ist deaktiviert. Benutzer k&ouml;nnen keine G&auml;stebucheintr&auml;ge anschauen');
+			$this->_smarty->assign('info', $this->_configvars['Gbook']['modul_deactivated']);
 		}
 
 		if (key_exists('action', $this->_gpc['GET'])) {
