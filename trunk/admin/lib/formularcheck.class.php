@@ -13,8 +13,6 @@
  * 
  * @author David Däster
  * @package JClubCMS
- * File: formular_check.class.php
- * Classes: Formularcheck
  * @requieres PHP5
  */
 

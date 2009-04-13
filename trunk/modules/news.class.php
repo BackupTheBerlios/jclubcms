@@ -18,7 +18,9 @@ require_once ADMIN_DIR.'lib/smilies.class.php';
  * @author Simon Däster
  * @package JClubCMS
  * @uses Mysql Für Verbindungen zur MySQL-DB.
- * news.class.php
+ * @uses Smarty Template-Enginge
+ * @uses Smilies Ermöglicht das anzeigen von Smilies
+ * @uses Messageboxes
  */
 
 class News implements Module

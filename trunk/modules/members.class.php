@@ -21,9 +21,9 @@ require_once USER_DIR.'config/gbook_textes.inc.php';
  *
  * @package JClubCMS
  * @author Simon Däster
- * File: members.class.php
- * Classes: Members
- * @requieres PHP5
+ * @uses Mailsend Für das Versenden von Mails
+ * @uses Mysql Für die Verbindung zur MySQL-DB
+ * @uses Formularcheck Für die Überprüfung der Formulare
  */
 class Members implements Module
 {
