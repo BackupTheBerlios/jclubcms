@@ -1,7 +1,8 @@
 <div id="content">
 	<div id="content_txt">
+	{config_load file='textes.de.conf' section='Content'}
 	<h1>Inhalte</h1>
-	<div align="left"><a href="?nav_id={$local_link}&action=new&amp;{$SID}">Neuer Inhalt erstellen</a>
+	<div align="left"><a href="?nav_id={$local_link}&action=new&amp;{$SID}">{#create_content#}</a>
 	<h2>&Uuml;bersicht</h2>
 	{foreach item=content  from=$contents}
 		<a href="#{$content.content_ID}">{$content.content_title}</a>&nbsp;&nbsp;&nbsp;
@@ -15,7 +16,7 @@
 		<table cellpadding="0" cellspacing="0" align="center" class="content_tab" style="max-width: 80%;min-width: 60%;font-size: 11px;">
 			<tr>	
 				<td class="content_tab_header" {if $content.content_archiv == 'yes'}style="color:red"{/if}>
-				{$content.content_title} {if $content.content_archiv == 'yes'}- Inhalt archiviert{/if}
+				{$content.content_title}{if $content.content_archiv == 'yes'} - {#is_archived#}{/if}
 				</td>
 				<td class="content_tab_header" colspan="1">
 				 <img src="{$TEMPLATESET_DIR}/style/icons/date.gif" />
@@ -31,15 +32,15 @@
 				<td class="content_tab_content2" style="text-align:right">
 				<!--<img src="{$TEMPLATESET_DIR}/style/icons/user.gif" />  {$content.content_author|default:"Unknkow User"}<br />-->
 					<br />
-					<a href="?nav_id={$local_link}&amp;action=edit&amp;ref_ID={$content.content_ID}&amp;{$SID}"><img src="{$TEMPLATESET_DIR}/style/icons/pencil.gif" />Editieren</a>
+					<a href="?nav_id={$local_link}&amp;action=edit&amp;ref_ID={$content.content_ID}&amp;{$SID}"><img src="{$TEMPLATESET_DIR}/style/icons/pencil.gif" />{#edit#}</a>
 					<br />
-					<a href="?nav_id={$local_link}&amp;action=del&amp;ref_ID={$content.content_ID}&amp;{$SID}"><img src="{$TEMPLATESET_DIR}/style/icons/del.gif" />L&ouml;schen</a>
+					<a href="?nav_id={$local_link}&amp;action=del&amp;ref_ID={$content.content_ID}&amp;{$SID}"><img src="{$TEMPLATESET_DIR}/style/icons/del.gif" />{#del#}</a>
 				</td>
 			</tr>
 		{/foreach}
 			</td>
 		</tr>
 	</table>
-	<div align="center">Erstellt in {$generated_time}s</div>
+	<div align="center">{#created_in#} {$generated_time}s</div>
 	</div>
 </div>

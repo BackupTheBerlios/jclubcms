@@ -1,7 +1,7 @@
 	 {config_load file='textes.de.conf' section='Editor-Entry'}
 	 <div id="content">
 		<div id="content_txt">
-		<h2>{$editor.title|default:"Neuer Inhalt verfassen"}</h2>
+		<h2>{$editor.title|default:#content_create#}</h2>
     <table width = 100% class="content_tab">
     </table>
 	<!-- tinyMCE -->
@@ -29,7 +29,7 @@ tinyMCE_GZ.init({ldelim}
 	{if $editor.dump_errors}
 	<table class="content_tab" align="center">
 		<tr>
-			<td class="formailer_header" style="background-color: #EC6442">{$editor.error_title|default:"Einige Daten sind ung&uuml;ltig"}</td>
+			<td class="formailer_header" style="background-color: #EC6442">{$editor.error_title|default:#error_invalid_data#}</td>
 		</tr>
 		<tr>
 			<td class="formailer_txt" style="background-color: #ED4B23; color:#000000">{$editor.error_content}</td>
@@ -41,21 +41,21 @@ tinyMCE_GZ.init({ldelim}
 			<tr>
 				<td  class="formailer_txt">
 					<fieldset style="border: 1px solid #FE7000;">
-					  <legend style="color: #FF8000; font-weight: bolder">Inhalt verfassen</legend>
+					  <legend style="color: #FF8000; font-weight: bolder">{#content_create#}</legend>
 						<table cellpadding="0" cellspacing="0" align="center" class="content_tab" style="width: 95%">
 							<tr>
 							  <td class="formailer_header">
-								Titel: <input class="formailer_header_input" name="content_title" type="text" value="{$editor.content_title|default:#content_title#}" size="40"/>
+								{#title#}: <input class="formailer_header_input" name="content_title" type="text" value="{$editor.content_title|default:#content_title#}" size="40"/>
 							  </td>
 							</tr>
 							<tr>
 							  <td class="formailer_txt">
-							  Inhalt:<br />
+							  {#content#}:<br />
 							  <textarea class="formailer_txt_textarea" name="content_text" cols="75" rows="20">{$editor.content_text|replace:"src=\"?image":"src=\"?image&amp;$SID"|default:#content_text#}</textarea></td>
 							</tr>	
 							<tr>
 								<td class="formailer_txt">
-								<label for="content_hide">Inhalt archivieren</label>
+								<label for="content_hide">{#content_archive#}</label>
 								<input type="checkbox" id="content_hide" name="content_hide" {if $editor.content_hide == true}checked="checked"{/if} />
 								</td>
 							</tr>
@@ -66,25 +66,25 @@ tinyMCE_GZ.init({ldelim}
 			<tr>
 				<td  class="formailer_txt">
 					<fieldset style="border: 1px solid #FE7000;">
-					  <legend style="color: #FF8000; font-weight: bolder">Menu</legend>
-					  {if $editor.info}<div align="left" style="background-color: yellow">Info: {$editor.info}</div>{/if}
+					  <legend style="color: #FF8000; font-weight: bolder">{#menu#}</legend>
+					  {if $editor.info}<div align="left" style="background-color: yellow">{#info#}: {$editor.info}</div>{/if}
 					  {if $editor.menu_ID}<input type="hidden" name="menu_ID" value="{$editor.menu_ID}" />{/if}
 					  {if $editor.menu_new}<input type="hidden" name="menu_new" value="{$editor.menu_new}" />{/if}
 						<table cellpadding="0" cellspacing="0" align="center" class="content_tab" style="width: 95%">
 							<tr>
 							  <td class="formailer_header" colspan="2">
-								Menu ignorieren<input class="formailer_header_input" type="checkbox" name="menu_ignore" {if $editor.menu_ignore == true}checked="checked"{/if}/>
+							  {#menu_ignore#}<input class="formailer_header_input" type="checkbox" name="menu_ignore" {if $editor.menu_ignore == true}checked="checked"{/if}/>
 							  </td>
 							</tr>
 							<tr>
-							  <td class="formailer_txt"><label for="menu_name">Name des Menus: </label></td>
+							  <td class="formailer_txt"><label for="menu_name">{#menu_name#}: </label></td>
 							  <td class="formailer_txt"><input type="text" id="menu_name" name="menu_name" value="{$editor.menu_name|default:#menu_name#}"/></td>
 							</tr>
 							<tr>
-							  <td class="formailer_txt"><label for="menu_topid">&Uuml;bergeordnete Id des Menus: </label></td>
+							  <td class="formailer_txt"><label for="menu_topid">{#menu_sup_id#}: </label></td>
 							  <td class="formailer_txt">
 								<select id="menu_topid" name="menu_topid" size="1">
-									<option value="0" selected="selected">=Haupteintrag=</option>
+									<option value="0" selected="selected">={#main_entry#}=</option>
 									{foreach item=menu from=$editor.menues}
 <option value="{$menu.menu_ID}" {if $menu.menu_ID == $editor.menu_topid}selected="selected"{/if}>{$menu.menu_name}</option>
 									{/foreach}
@@ -92,7 +92,7 @@ tinyMCE_GZ.init({ldelim}
 							  </td>
 							</tr>
 							<tr>
-							  <td class="formailer_txt"><label for="menu_position">Position des Menus: </label></td>
+							  <td class="formailer_txt"><label for="menu_position">{#menu_position#}: </label></td>
 							  <td class="formailer_txt">
 								<select id="menu_position" name="menu_position" size="1">
 								{foreach item=position from=$editor.positions}
@@ -102,7 +102,7 @@ tinyMCE_GZ.init({ldelim}
 							  </td>
 							</tr>
 							<tr>
-							  <td class="formailer_txt"><label for="menu_display">Menu anzeigen: </label></td>
+							  <td class="formailer_txt"><label for="menu_display">{#menu_sho#}: </label></td>
 							  <td class="formailer_txt">
 								<input class="formailer_header_input" type="checkbox" id="menu_display" name="menu_display" {if $editor.menu_display == true}checked="checked"{/if}/>
 							  </td>
@@ -113,32 +113,11 @@ tinyMCE_GZ.init({ldelim}
 			</tr>
 			<tr>
 			  <td class="formailer_options" colspan="2">
-			  <input type="submit" name="btn_senden" value="Senden">
-			  <input name="Clear" type="reset" id="Clear" value="Zur&uuml;cksetzen"></td>
+			  <input type="submit" name="btn_senden" value="{#send#}">
+			  <input name="Clear" type="reset" id="Clear" value="{#undo#}"></td>
 			</tr>
 		</table>
     </form>
-	<!--  <form name="newentry" method="post" action="">
-		  <table cellpadding="0" cellspacing="0" align="center" class="content_tab" border="2">
-			<fieldset>
-			  <legend>Inhalt verfassen</legend>
-				<tr>
-				  <td class="formailer_header">Titel: <img src="{$TEMPLATESET_DIR}/style/icons/pencil.gif" /><input class="formailer_header_input" name="title" type="text" onclick="select()" value="{$entry_title}" /></td>
-				</tr>
-				<tr>
-				  <td class="formailer_txt">
-				  Inhalt:<br />
-				  <textarea class="formailer_txt_textarea" name="content" cols="38" rows="20">{$entry_content}</textarea></td>
-				</tr>
-				<tr>
-				<tr>
-				  <td class="formailer_options" colspan="2">
-				  <input type="submit" name="btn_send" value="Senden">
-				  <input name="Clear" type="reset" id="Clear" value="Zur&uuml;cksetzen"></td>
-				</tr>
-			</fieldset>
-		  </table>
-    </form>-->
   </div>
 </div>
 

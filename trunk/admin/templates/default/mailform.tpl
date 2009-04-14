@@ -2,15 +2,15 @@
 	  
 	  <div id="content">
 		<div id="content_txt">
-		<h1>Mail schreiben</h1>
+		<h1>{#mail_write#}</h1>
 		<table width = 100% class="content_tab">
 		</table>
-		Mail an {$reciver_name}:
+		{#mail_to#} {$reciver_name}:
 		{*Fehlerausgabe wenn noetig*}
 		{if $dump_errors}
 		<table class="content_tab" align="center">
 			<tr>
-				<td class="formailer_header" style="background-color: #EC6442; color:#000000">{$error_title|default:"Einige Daten sind ungueltig"}</td>
+				<td class="formailer_header" style="background-color: #EC6442; color:#000000">{$error_title|default:{error_invalid_data}</td>
 			</tr>
 			<tr>
 				<td class="formailer_txt" style="background-color: #ED4B23; color:#000000">{foreach item=error_content from=$error_contents}<li>{$error_content}</li>{/foreach}</td>
@@ -35,7 +35,7 @@
 			</td>
 			</tr>
 			<tr>
-				<td class="formailer_options" colspan="2"><input type="submit" name="btn_send" value="Senden"><input name="Clear" type="reset" id="Clear" value="Zur&uuml;cksetzen"></td>
+				<td class="formailer_options" colspan="2"><input type="submit" name="btn_send" value="{#send#}"><input name="Clear" type="reset" id="Clear" value="{#undo#}"></td>
 			</tr>
 		</table>
 	</div>
