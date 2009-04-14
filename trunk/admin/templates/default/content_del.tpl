@@ -1,5 +1,6 @@
       <div id="content">
 		<div id="content_txt">
+		{config_load file='textes.de.conf' section='Content'}
 		<table width = 100% class="content_tab">
 		</table>
 		<form name="del" method="post" action="">
@@ -11,12 +12,12 @@
 				<tr>
 					<td class="formailer_options" colspan="2">
 					
-						<fieldset><legend>Nachricht</legend>
+						<fieldset><legend>{#message#}</legend>
 						<br />
 						{$text|replace:"src=\"?image":"src=\"?image&amp;$SID"}
 						</fieldset>
-						Wollen Sie den <b>Inhaltstext</b> mit der ID {$del_ID} mit allen <b>daraufverweisenden Menues(!) wirklich löschen</b>?<br />
-						Die Löschung ist UNWIDERRUFLICH!<br />
+						ID = {$del_ID} - {#del_really}<br />
+						{#del_not_undo#}<br />
 					</td>
 				<tr>
 					<td class="formailer_options">               

@@ -9,6 +9,7 @@
 		<script type="text/javascript" language="javascript">
 function focus(){ldelim}document.login.name.focus(); {rdelim}
 </script>
+	{config_load file="textes.de.conf" section="login"}
 	</head>
 	<body onload="focus()">
 		<div id="header">&nbsp;</div>
@@ -22,18 +23,18 @@ function focus(){ldelim}document.login.name.focus(); {rdelim}
 					</tr>
 					{/if}
 					<tr>
-						<td  class="formailer_header">Anmeldung f&uuml;r die Administration</td>
+						<td  class="formailer_header">{#login_for_admin#}</td>
 					</tr>
 					<tr>
-						<td class="formailer_adress">Benutzername: <input class="formailer_adress_input" tabindex="1" type="text" name="name" value="{$user}" /></td>
+						<td class="formailer_adress">{#username#}: <input class="formailer_adress_input" tabindex="1" type="text" name="name" value="{$user}" /></td>
 					</tr>
 					<tr>
-						<td class="formailer_adress">Passwort: <input class="formailer_adress_input" tabindex="2" type="password" name="password" /></td>
+						<td class="formailer_adress">{#password#}: <input class="formailer_adress_input" tabindex="2" type="password" name="password" /></td>
 					</tr>
 					<tr>
 						<td class="formailer_adress">
-							<input type="submit" name="login" value="Anmelden" />
-							<input type="reset" name="Zur&uuml;cksetzen" />
+							<input type="submit" name="login" value="{#login#}" />
+							<input type="reset" name="{#undo#}" />
 						</td>
 					</tr>
 				</table>
