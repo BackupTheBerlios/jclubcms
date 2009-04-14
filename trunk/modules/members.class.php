@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * Dieses Modul gibt die Mitglieder aus, welche im Mysql gespeichert sind.
+ *
+ * @package JClubCMS
+ * @author Simon Däster
+ * @license  http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3
+ */
+ 
 require_once ADMIN_DIR.'lib/module.interface.php';
 
 require_once ADMIN_DIR.'lib/captcha.class.php';
@@ -14,9 +21,9 @@ require_once USER_DIR.'config/gbook_textes.inc.php';
  *
  * @package JClubCMS
  * @author Simon Däster
- * File: members.class.php
- * Classes: Members
- * @requieres PHP5
+ * @uses Mailsend Für das Versenden von Mails
+ * @uses Mysql Für die Verbindung zur MySQL-DB
+ * @uses Formularcheck Für die Überprüfung der Formulare
  */
 class Members implements Module
 {

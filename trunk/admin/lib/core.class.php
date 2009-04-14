@@ -1,10 +1,16 @@
 <?php
-error_reporting(E_ALL | E_STRICT); //Zu Debug-Zwecken
-$start_time = microtime(true);
-
+/**
+ * Die core-Datei erledigt:
+ * <ul><li>laedt notweindige Libaries</li>
+ * <li>registriert den Exception-Handler</li></ul>
+ * @package JClubCMS
+ * @author Simon Däster
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3
+ */ 
 //Config laden
 require_once ADMIN_DIR.'config/global-config.inc.php';
 require_once ADMIN_DIR.'config/functions.inc.php';
+require_once ADMIN_DIR.'config/system_textes.inc.php';
 
 
 //notwendige Module laden
@@ -20,31 +26,26 @@ require_once ADMIN_DIR.'lib/cmsexception.class.php';
 set_exception_handler(array('CMSException', 'stdExceptionHandler'));
 /**
  * Die core-Datei erledigt:
- * -laedt notweindige Libaries
- * -registriert den Exception-Handler
+ * <ul><li>laedt notweindige Libaries</li>
+ * <li>registriert den Exception-Handler</li></ul>
  * 
  * Die core-Klasse erledigt folgendes:
- * -Erstellten der notwendigen Objekte (smarty, mysql)
- * -Initialiesieren der Rechteverwaltung und testen auf erfolgreiches login
- * -Erstellen der Navigation
- * -Ueberpruefen der Benutzerangaben ueber $_GET / $_POST / $_COOKIE
- * -Aufrufen des geladenen Moduls
- * -Aufrufen der geladenen Seite
- * 
- * 
+ * <ul><li>Erstellten der notwendigen Objekte (smarty, mysql)</li>
+ * <li>Initialiesieren der Rechteverwaltung und testen auf erfolgreiches login</li>
+ * <li>Erstellen der Navigation</li>
+ * <li>Ueberpruefen der Benutzerangaben ueber $_GET / $_POST / $_COOKIE</li>
+ * <li>Aufrufen des geladenen Moduls</li>
+ * <li>Aufrufen der geladenen Seite</li></ul>
  * 
  * @package JClubCMS
  * @author Simon Däster
- * File: core.class.php
- * Classes: core
- * @requires PHP5
  */
 class Core
 {
 	/**
 	 * Core-Objekt (das einzige!)
 	 *
-	 * @var Core
+	 * @staticvar Core
 	 */
 	private static $_core = null;
 	/**
@@ -108,12 +109,14 @@ class Core
 	private $_tplfile = null;
 
 	/**
-	 * Über diese Methode wird das Core-Objekt initialisiert. Der Grund, warum das über diese Methode
-	 * und nicht über den Konstruktor geschieht, ist folgender: Es soll nur ein Core-Objekt geben.
-	 * Daher wird ein Core-Objekt mit singelton initialiert. Wurde aber vorher ein Core-Objekt initialisiert,
-	 * passiert keine neue Initialisierung eines Core-Objekts. Es gibt maximal ein Objekt der Core-Klasse.
+	 * Über diese Methode wird das Core-Objekt initialisiert. 
+	 * 
+	 * Der Grund, warum das über diese Methode und nicht über den Konstruktor 
+	 * geschieht, ist folgender: Es soll nur ein Core-Objekt geben.
+	 * Daher wird ein Core-Objekt mit singelton initialiert. Wurde aber vorher 
+	 * ein Core-Objekt initialisiert, passiert keine neue Initialisierung 
+	 * eines Core-Objekts. Es gibt maximal ein Objekt der Core-Klasse.
 	 * @link http://www.php.net/manual/en/language.oop5.patterns.php - singleton.
-	 *
 	 */
 
 
@@ -149,19 +152,34 @@ class Core
 			$this->_initPage();
 
 		} catch(CMSException $e) {
+			
+			global $system_textes;
 
 			$strTrace = '#'.substr($e->getTraceAsString(), 1);
 			//Ist Smarty nicht vorhanden, wird eine Nachricht ueber den Exceptionhandler geschickt, der kein Smarty braucht.
 			if (!class_exists('Smarty') || !($this->_smarty instanceof Smarty)) {
-				CMSException::logException($e,null,'Instance of Smarty does not exists');
+				CMSException::logException($e,null,$system_textes[LANGUAGE_ABR]['core']['exp_no_smarty_instance']);
 				CMSException::printException($e->getFilename(), $e->getLine(), $e->getMessage(), $strTrace);
+				
 			} else {
 				CMSException::logException($e);
+				
+				//Zugriff auf die System-Texte ermöglichen
+				global $system_textes;
+				$textes = $system_textes[LANGUAGE_ABR]['core'];
+				
+				//**Template-Set einstellen und für die Templates als Variable zugänglich machen
+				$this->_smarty_array['TEMPLATESET_DIR'] = TEMPLATESET_DIR;
 				$this->_smarty_array['file'] = 'error_include.tpl';
 				$this->_smarty_array['error_title'] = CMSException::htmlencode($e->getTitle());
-				$this->_smarty_array['error_text'] = CMSException::htmlencode($e->getMessage())."<br />\nFehler aufgetreten in der Datei ".$e->getFilename()." auf Zeilenummer ".$e->getLine();
-				$this->_smarty_array['error_text'] .= "<br />\n"."<div style=\"font-size: 11px\">\n".nl2br(CMSException::htmlencode($strTrace))."\n</div>";
-				$this->_smarty_array['error_text'] .= "<br /><div style=\"font-size: 13px; font-weight: bold\">Sollte dieser Fehler &ouml;fters auftreten, benachrichtigen Sie bitte den Administrator</div>";
+				$this->_smarty_array['error_text'] = CMSException::htmlencode($e->getMessage())."<br />\n".$textes['exp_error_in_file']." ".$e->getFilename()." ".$textes['exp_on_line']." ".$e->getLine();
+				
+				//Aus Sicherheitsgründen (z.B. Sicht auf das MySQL-Passwort bei Mysql-Fehler) nur Trace anzeigen, wenn explizit angegeben!
+				if(EXCEPTION_SHOW_TRACE == true) {
+					$this->_smarty_array['error_text'] .= "<br />\n"."<div style=\"font-size: 11px\">\n".nl2br(CMSException::htmlencode($strTrace))."\n</div>";
+				}
+				
+				$this->_smarty_array['error_text'] .= "<br /><div style=\"font-size: 13px; font-weight: bold\">".$textes['exp_error_often']."</div>";
 				$this->_smarty->assign($this->_smarty_array);
 				$this->_smarty->display('index.tpl');
 			}
@@ -179,17 +197,24 @@ class Core
 
 	private function _initObjects()
 	{
-		global $db_server, $db_name, $db_user, $db_pw, $TEMPLATESET_DIR;
 		//Smarty-Objekt
 		$this->_smarty = new Smarty();
-		$this->_smarty->compile_check = true;
-		$this->_smarty->debugging = false;
-		$this->_smarty->config_dir = 'config';
+		
+		//Eigenschaften des Smarty-Objektes nach den Vorgaben von global-config.inc.php ändern
+		$this->_smarty->compile_check = SMARTY_COMPILE_CHECK;
+		$this->_smarty->debugging = SMARTY_DEBUGING;
+		$this->_smarty->config_dir = SMARTY_CONFIG_DIR;
+		
 		//**Template-Set einstellen und für die Templates als Variable zugänglich machen
 		$this->_smarty->template_dir = TEMPLATESET_DIR;
-		$this->_mysql = new Mysql($db_server, $db_name, $db_user, $db_pw);
+		
+		//MySQL-Objekt initialisieren
+		$this->_mysql = new Mysql(DB_SERVER, DB_NAME, DB_USER, DB_PW);
 
+		//Page-Objekt initialisieren für die Darstellung des CMS
 		$this->_page = new Page($this->_smarty, $this->_mysql);
+		
+		//Auth-Objekt initialisieren für die Zutrittsverwaltung
 		$this->_auth = new Auth($this->_smarty, $this->_mysql);
 	}
 
@@ -235,7 +260,7 @@ class Core
 	private function _checkAdmin()
 	{
 		if ($this->_is_admin != true) {
-			throw new CMSException('Interne Funktion nicht ausführbar', EXCEPTION_CORE_CODE);
+			throw new CMSException(array('core' => 'func_exec_fail'), EXCEPTION_CORE_CODE);
 		}
 
 		//Testet auf Logout und fuehrt es durch
@@ -259,8 +284,6 @@ class Core
 
 	private function _initPage()
 	{
-		global $start_time;
-
 		//**Template-Set einstellen und für die Templates als Variable zugänglich machen
 		$this->_smarty_array['TEMPLATESET_DIR'] = TEMPLATESET_DIR;
 
@@ -269,13 +292,11 @@ class Core
 
 
 		if ($this->_is_admin == true) {
-			global $admin_menu_shortlinks;
 			$table = 'admin_menu';
-			$shortlink = $admin_menu_shortlinks;
+			$shortlink = ADMIN_MENU_USE_SHORTLINKS;
 		} else {
-			global $user_menu_shortlinks;
 			$table = 'menu';
-			$shortlink = $user_menu_shortlinks;
+			$shortlink = USER_MENU_USE_SHORTLINKS;
 		}
 
 		$this->_loadNav($shortlink);
@@ -299,12 +320,12 @@ class Core
 			$this->_loadContent($page_id, $page_data);
 
 		} else {
-			throw new CMSException("Das angegebene Modul konnte nicht gefunden werden", null, 'Modul nicht vorhanden');
+			throw new CMSException(array('core' => 'modul_not_found'), null, "", array('core' => 'modul_load_error'));
 		}
 
 		$this->_smarty_array['shortlink'] = $shortlink;
 
-		$this->_smarty_array['generated_time'] = round(((float)(microtime(true) - $start_time)),5);
+		$this->_smarty_array['generated_time'] = round(((float)(microtime(true) - START_TIME)),5);
 
 		
 		$this->_smarty->assign($this->_smarty_array);
@@ -316,7 +337,7 @@ class Core
 	/**
 	 * Laedt die Navigation und speicher sie in $this->_smarty_array
 	 *
-	 * @parambooleane $shortlinks
+	 * @param boolean $shortlinks
 	 */
 
 	private function _loadNav($shortlinks = false)
@@ -399,10 +420,11 @@ class Core
 		$data = $this->_mysql->fetcharray("assoc");
 
 		if (empty($data) && $data == false) {
-			throw new CMSException("Für die angegebene Modul-ID ist kein Modul hinterlegt!!!", EXCEPTION_CORE_CODE, 'Modul nicht gefunden');
+			throw new CMSException(array('core' => 'modul_dismacht_id'), EXCEPTION_CORE_CODE, "", array('core' => 'modul_not_found'));
 			return;
 		}
 
+		/*Ist das Modul online?*/
 		if ($data['modules_status'] == 'on') {
 			/*Modul ist online*/
 
@@ -413,11 +435,11 @@ class Core
 				$path = USER_DIR.'modules/'.$data['modules_file'];
 			}
 
-			/**Sicherheitscheck noch machen, ob Datei im richtigen Ordner!**/
+			/**Sicherheitscheck noch machen, ob Datei im richtigen Ordner liegen**/
 
-			//File pruefen
+			//File prüfen
 			if(!file_exists($path)) {
-				throw new CMSException("Datei $path konnte nicht included werden!!!", EXCEPTION_CORE_CODE, 'Fehler beim Modulladen');
+				throw new CMSException(array('core' => 'file_not_included'), EXCEPTION_CORE_CODE, $path, array('core' => 'modul_load_error'));
 				return;
 			}
 
@@ -430,7 +452,7 @@ class Core
 
 			//Existenz der Klasse pruefen
 			if(!class_exists($class)) {
-				throw new CMSException("Klasse $class nicht vorhanden!!!", EXCEPTION_CORE_CODE, 'Klasse fehlt');
+				throw new CMSException(array('core' => 'class_not_exists'), EXCEPTION_CORE_CODE, $class, array('core' => 'class_lost'));
 				return;
 			}
 
@@ -448,8 +470,12 @@ class Core
 			
 		} else {
 			/*Modul ist offline*/
-			$this->_smarty_array['error_title'] = "Nicht erreichbar";
-			$this->_smarty_array['error_text'] = "{$page_data['menu_name']} ist zur Zeit nicht erreichbar";
+			
+			global $system_textes;
+			$textes = $system_textes[LANGUAGE_ABR]['core'];
+			
+			$this->_smarty_array['error_title'] = $textes['not_accessible'];
+			$this->_smarty_array['error_text'] = $page_data['menu_name'].$textes['now_not_accessible'];
 			$this->_smarty_array['file'] = 'error_include.tpl';
 		}
 
@@ -478,8 +504,12 @@ class Core
 			$content_text = htmlspecialchars_decode(htmlentities($data['content_text']));
 			$this->_smarty_array += array('content_title' => $content_title, 'content_text' => $content_text);
 		} else {
-			$this->_smarty_array['error_title'] = "Nicht erreichbar";
-			$this->_smarty_array['error_text'] = "{$page_data['menu_name']} ist zur Zeit nicht erreichbar";
+			
+			global $system_textes;
+			$textes = $system_textes[LANGUAGE_ABR]['core'];
+			
+			$this->_smarty_array['error_title'] = $textes['not_accessible'];
+			$this->_smarty_array['error_text'] = $page_data['menu_name'].$textes['now_not_accessible'];
 			$this->_smarty_array['file'] = 'error_include.tpl';
 		}
 
@@ -503,7 +533,7 @@ class Core
 		}
 
 		if (key_exists('mail', $this->_gpc['GET'])) {
-			$modulname = 'mailmodule';
+			$modulname =  'mailmodule';
 		} elseif (key_exists('image', $this->_gpc['GET'])) {
 			$modulname = 'image_send';
 
@@ -519,9 +549,5 @@ class Core
 		}
 
 	}
-
 }
-
-
-
 ?>

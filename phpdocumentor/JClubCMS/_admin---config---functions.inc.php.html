@@ -40,8 +40,6 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---auth.class.php.html">		auth.class.php
 		</a><br>
-			<a href="../JClubCMS/_admin---config---auth_textes.inc.php.html">		auth_textes.inc.php
-		</a><br>
 			<a href="../JClubCMS/_admin---lib---bbcodes.class.php.html">		bbcodes.class.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---captcha.class.php.html">		captcha.class.php
@@ -64,13 +62,11 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---modules---gbookadmin.class.php.html">		gbookadmin.class.php
 		</a><br>
-			<a href="../JClubCMS/_config---gbook_textes.inc.php.html">		gbook_textes.inc.php
-		</a><br>
 			<a href="../JClubCMS/_admin---config---global-config.inc.php.html">		global-config.inc.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---image.class.php.html">		image.class.php
 		</a><br>
-			<a href="../JClubCMS/_admin---modules---image_send.class.php.html">		image_send.class.php
+			<a href="../JClubCMS/_admin---modules---imageadmin_send.class.php.html">		imageadmin_send.class.php
 		</a><br>
 			<a href="../JClubCMS/_modules---image_send.class.php.html">		image_send.class.php
 		</a><br>
@@ -78,13 +74,11 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---index.php.html">		index.php
 		</a><br>
-			<a href="../JClubCMS/_admin---modules---mailmodule.class.php.html">		mailmodule.class.php
+			<a href="../JClubCMS/_admin---modules---mailadminmodule.class.php.html">		mailadminmodule.class.php
 		</a><br>
 			<a href="../JClubCMS/_modules---mailmodule.class.php.html">		mailmodule.class.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---mailsend.class.php.html">		mailsend.class.php
-		</a><br>
-			<a href="../JClubCMS/_config---mail_textes.inc.php.html">		mail_textes.inc.php
 		</a><br>
 			<a href="../JClubCMS/_modules---members.class.php.html">		members.class.php
 		</a><br>
@@ -108,7 +102,7 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---smilies.class.php.html">		smilies.class.php
 		</a><br>
-			<a href="../JClubCMS/_admin---lib---timeparser.class.php.html">		timeparser.class.php
+			<a href="../JClubCMS/_admin---config---system_textes.inc.php.html">		system_textes.inc.php
 		</a><br>
 			<a href="../JClubCMS/_javascript---tinymce---tiny_mce_gzip.php.html">		tiny_mce_gzip.php
 		</a><br>
@@ -116,6 +110,10 @@
 		</a><br>
 	  </div><br />
       
+            <b>Interfaces:</b><br />
+        <div class="package">
+		    		<a href="../JClubCMS/Module.html">Module</a><br />
+	  </div>
       
             <b>Classes:</b><br />
         <div class="package">
@@ -145,7 +143,6 @@
 	    		<a href="../JClubCMS/Page.html">Page</a><br />
 	    		<a href="../JClubCMS/Session.html">Session</a><br />
 	    		<a href="../JClubCMS/Smilies.html">Smilies</a><br />
-	    		<a href="../JClubCMS/Timeparser.html">Timeparser</a><br />
 	  </div>
                 </td>
     <td>
@@ -159,12 +156,18 @@ Source Location: /admin/config/functions.inc.php<br /><br />
 
 
 <h2>Page Details:</h2>
-<br /><br />
+Diese Datei beinhaltet Funktionen, die nicht einer Klasse zugeordnet werden können.<br /><br /><p>Dies betriff meist auf ueberladene magische Funktionen zu.</p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td><b>author:</b>&nbsp;&nbsp;</td><td>Simon Däster</td>
+  </tr>
+  <tr>
+    <td><b>filesource:</b>&nbsp;&nbsp;</td><td><a href="../__filesource/fsource_JClubCMS__adminconfigfunctions.inc.php.html">Source Code for this file</a></td>
+  </tr>
+  <tr>
+    <td><b>license:</b>&nbsp;&nbsp;</td><td><a href="http://opensource.org/licenses/gpl-3.0.html">GNU Public License version 3</a></td>
   </tr>
 </table>
 </div>
@@ -174,21 +177,30 @@ Source Location: /admin/config/functions.inc.php<br /><br />
 <br />
   <hr />
 	<a name="function__autoload"></a>
-	<h3>__autoload <span class="smalllinenumber">[line 13]</span></h3>
+	<h3>__autoload <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminconfigfunctions.inc.php.html#a15">15</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
 		<code>void __autoload(
- $class_name)</code>
+string $class_name)</code>
     </td></tr></table>
     </td></tr></table><br />
 
-		    <br /><br />
+		<br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>todo:</b>&nbsp;&nbsp;</td><td>Desc</td>
+  </tr>
+</table>
+</div>
+    <br /><br />
 	
     		<h4>Parameters</h4>
     <table border="0" cellspacing="0" cellpadding="0">
 		      <tr>
-        <td class="type">&nbsp;&nbsp;</td>
+        <td class="type">string&nbsp;&nbsp;</td>
         <td><b>$class_name</b>&nbsp;&nbsp;</td>
         <td></td>
       </tr>
@@ -198,7 +210,7 @@ Source Location: /admin/config/functions.inc.php<br /><br />
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Sat, 11 Apr 2009 12:39:13 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Mon, 13 Apr 2009 23:00:01 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

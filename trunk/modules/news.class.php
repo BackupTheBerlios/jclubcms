@@ -1,17 +1,26 @@
 <?php 
+/**
+ * Dieses Modul ist zuständig für das anzeigen von Newseinträgen
+ * @author Simon Däster
+ * @package JClubCMS
+ * @license  http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3 
+ */
+
 require_once ADMIN_DIR.'lib/module.interface.php';
 require_once ADMIN_DIR.'lib/messageboxes.class.php';
 require_once ADMIN_DIR.'lib/smilies.class.php';
-require_once USER_DIR.'config/gbook_textes.inc.php';
 
 /**
+ * Diese Klasse ist zustaendig fuer Anzeigen von Newseinträgen.
  * 
- * Diese Klasse ist zustaendig fuer das Editieren der Newseintraege. Auch koennen neue Beitraege hinzugefuegt oder geloescht
- * werden
+ * 
  * 
  * @author Simon Däster
  * @package JClubCMS
- * news.class.php
+ * @uses Mysql Für Verbindungen zur MySQL-DB.
+ * @uses Smarty Template-Enginge
+ * @uses Smilies Ermöglicht das anzeigen von Smilies
+ * @uses Messageboxes
  */
 
 class News implements Module
@@ -58,7 +67,7 @@ class News implements Module
 	 *
 	 * @var string
 	 */
-	private $_timeformat = '%e.%m.%Y %k:%i';
+	private $_timeformat = TIMEFORMAT;
 
 
 	/**
@@ -84,15 +93,14 @@ class News implements Module
 	public function action($gpc)
 	{
 		//Daten initialisieren
-		global $dir_smilies;
 		$this->_gpc = $gpc;
 
 		$this->_msbox = new Messageboxes($this->_mysql, 'news', array('ID' => 'news_ID', 'ref_ID' => 'news_ref_ID', 'content' => 'news_content', 'name' => 'news_name', 'time' => 'news_time', 'email' => 'news_email', 'hp' => 'news_hp', 'title' => 'news_title'));
 
-		$this->_smilie = new Smilies($dir_smilies);
+		$this->_smilie = new Smilies(SMILIES_DIR);
 
 		//Keine Angabe -> Ausgabe der News
-		$this->_view(10);
+		$this->_view(NEWS_ENTRIES_PER_PAGE);
 		return true;
 
 	}
@@ -133,6 +141,7 @@ class News implements Module
 
 		$this->_mysql->query('SELECT COUNT(*) as many FROM `news` WHERE `news_ref_ID` = \'0\'');
 		$entries = $this->_mysql->fetcharray('num');
+		
 		$pagesnav_array = Page::get_static_pagesnav_array($entries[0],$max_entries_pp, $this->_gpc['GET']);
 
 
@@ -141,11 +150,11 @@ class News implements Module
 		foreach ($news_array as $key => $value) {
 
 			//Nur news-Daten ohne $news_array['many'] abchecken
+			$news_array[$key]['news_content'] = $this->_smilie->show_smilie(nl2br(htmlentities($value['news_content'])), $this->_mysql);
 
-			$value['news_content'] = $this->_smilie->show_smilie(nl2br(htmlentities($value['news_content'])), $this->_mysql);
 
 			foreach ($value['comments'] as $ckey => $cvalue) {
-				$news_array[$key]['comments'][$ckey]['news_content'] = $this->_smilie->show_smilie(nl2br(htmlentities($cvalue['news_content'])), $this->_mysql);
+				$news_array[$key]['comments'][$ckey]['news_content'] = $this->_smilie->show_smilie(nl2br(htmlentities($value['news_content'])), $this->_mysql);
 
 			}
 

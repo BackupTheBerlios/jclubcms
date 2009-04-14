@@ -1,13 +1,18 @@
 <?php
 /**
+ * Beinhaltet die Elemente für das Überprüfen von Formularen
+ * 
+ * @package JClubCMS
+ * @author David Däster
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3
+ */
+/**
  * Überprüft Formulare, ob alle nötigen Werte eingefüllt und plausibel sind.
  * Diese Klasse ist noch sehr monolitisch, und sollte evnt. durch ein interface
  * oder eine final-class ersetzt werden.
  * 
- * @author David Daester
+ * @author David Däster
  * @package JClubCMS
- * File: formular_check.class.php
- * Classes: Formularcheck
  * @requieres PHP5
  */
 
@@ -51,7 +56,7 @@ class Formularcheck {
 	public function field_check_arr(array $fields, array $unalloweds = array())
 	{
 		if (!is_array($fields) || !is_array($unalloweds)) {
-			throw  new CMSException('Falsche Parameterangaben in Funktion '.__FUNCTION__.'. 1. oder 2. Parameter kein Array', EXCEPTION_LIBARY_CODE);
+			throw  new CMSException(array('form' => 'wrong_parameter'), EXCEPTION_LIBARY_CODE, __FUNCTION__);
 		}
 
 		$arr_rtn = array();
@@ -163,7 +168,7 @@ class Formularcheck {
 	 */
 	private function is_country () {
 		if (!file_exists(USER_DIR."/config/country.txt")) {
-			throw new CMSException('Datei mit Länderendungen nicht gefunden', EXCEPTION_LIBARY_CODE);
+			throw new CMSException(array('core' => 'file_countr_not_found'), EXCEPTION_LIBARY_CODE);
 		}
 		$handle = fopen(USER_DIR."/config/country.txt", "r");
 		$country_array = array();

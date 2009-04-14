@@ -1,4 +1,11 @@
 <?php
+/**
+ * Für die Ausgabe der Bilder zuständig
+ * 
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License version 3
+ * @package JClubCMS
+ * @author Simon Däster
+ */
 require_once ADMIN_DIR.'lib/module.interface.php';
 require_once ADMIN_DIR.'lib/image.class.php';
 /**
@@ -17,6 +24,13 @@ class Image_send implements Module
 	 * @var Image
 	 */	
 	private $_img = null;
+	
+	/**
+	 * Smarty-Objekt
+	 *
+	 * @var Smarty
+	 */
+	private $_smarty = null;
 
 	/**
 	 * Mysql-Objekt
@@ -31,21 +45,38 @@ class Image_send implements Module
 	 * @var array
 	 */
 	private $_gpc = null;
+	
+	/**
+	 * Texte zu den Bildern
+	 *
+	 * @var array
+	 */
+	private $_img_textes = array();
 
+	/**
+	 * Konstruktor. Diese Klasse braucht den Zugriff auf das Smarty-Objekt nicht.
+	 *
+	 * @param Mysql $mysql
+	 * @param Smarty $smarty
+	 */
 	public function __construct($mysql, $smarty)
 	{
 		$this->_mysql = $mysql;
+		$this->_smarty = $smarty;
+		
 	}
 
 	public function action($gpc)
 	{
+		$this->_smarty->config_load('textes.de.conf', 'Image');
+		$this->_img_textes = $this->_smarty->get_config_vars();
 		$this->_gpc = $gpc;
 		if (isset($gpc['GET']['img'])) {
 			$this->_initImg($gpc['GET']['img']);
 		} elseif (isset($gpc['GET']['thumb'])) {
 			$this->_initThumb($gpc['GET']['thumb']);
 		} else {
-			$this->_initErrImg('Keine Parameter');
+			$this->_initErrImg($this->_img_textes['no_param']);
 		}
 	}
 
@@ -65,8 +96,6 @@ class Image_send implements Module
 
 	private function _initImg($bild_ID)
 	{
-		global $dir_galImage, $dir_orgImage;
-		global $image_maxheight, $image_maxwidth;
 		//Eintrag zur ID vorhanden?
 		$this->_mysql->query("SELECT `filename` FROM `bilder` WHERE `bilder_ID` = '$bild_ID' LIMIT 1");
 
@@ -75,29 +104,29 @@ class Image_send implements Module
 
 		if(empty($mysql_data)) {
 			
-			$this->_initErrImg(100, 80, "Keine ID");
+			$this->_initErrImg(100, 80, $this->_img_textes['no_id']);
 			return;
 		}
 
 		//Entweder liegt das Bild im Gallery-Ordner oder im Origianl-Ordner (mit falscher Groesse?)
-		if(is_file($dir_galImage.$mysql_data['filename'])) {
-			$this->_img = new Image($dir_galImage.$mysql_data['filename']);
+		if(is_file(IMAGE_DIR_GALL.$mysql_data['filename'])) {
+			$this->_img = new Image(IMAGE_DIR_GALL.$mysql_data['filename']);
 
 		} else {
 
-			$this->_img = new Image($dir_orgImage.$mysql_data['filename']);
+			$this->_img = new Image(IMAGE_DIR_ORIGN.$mysql_data['filename']);
 			$bild_data = $this->_img->send_infos();
 
-			if($bild_data['height'] > $image_maxheight || $bild_data['width'] > $image_maxwidth) {
-				$newSize = $this->_calcSize($bild_data['width'], $bild_data['height'], $image_maxwidth, $image_maxheight);
+			if($bild_data['height'] > IMAGE_MAXHEIGHT || $bild_data['width'] > IMAGE_MAXWIDTH) {
+				$newSize = $this->_calcSize($bild_data['width'], $bild_data['height'], IMAGE_MAXWIDTH, IMAGE_MAXHEIGHT);
 				//verkleinertes Bild in den Ordner speichern
-				$this->_img->copy($newSize['width'], $newSize['height'], $dir_galImage.$mysql_data['filename']);
+				$this->_img->copy($newSize['width'], $newSize['height'], IMAGE_DIR_GALL.$mysql_data['filename']);
 
 				//Alte Instanz loeschen
 				unset($this->_img);
 
 				//Neue Instanz mit kleinem Bild
-				$this->_img = new Image($dir_galImage.$mysql_data['filename']);
+				$this->_img = new Image(IMAGE_DIR_GALL.$mysql_data['filename']);
 			}
 		}
 
@@ -111,8 +140,6 @@ class Image_send implements Module
 	 */
 	private function _initThumb($thumb)
 	{
-		global $dir_thumb, $dir_orgImage;
-		global $thumb_maxheight, $thumb_maxwidth;
 		//Eintrag zur ID vorhanden?
 		$this->_mysql->query("SELECT `filename` FROM `bilder` WHERE `bilder_ID` = '$thumb' LIMIT 1");
 
@@ -122,25 +149,25 @@ class Image_send implements Module
 		if(empty($mysql_data))
 		{
 			//Fehlerbild ausgeben, weil kein Eintrag vorhanden ist
-			$this->_initErrImg(100, 80, "Keine ID");
+			$this->_initErrImg(100, 80, $this->_img_textes['no_id']);
 			return;
 		}
 
 		//Existiert kein Thumb, wird eins erstellt
-		if(!is_file($dir_thumb.$mysql_data['filename']))
+		if(!is_file(THUMB_DIR.$mysql_data['filename']))
 		{
-			$orgImg = new Image($dir_orgImage.$mysql_data['filename']);
+			$orgImg = new Image(IMAGE_DIR_ORIGN.$mysql_data['filename']);
 			$bild_data = $orgImg->send_infos();
 
-			$newSize = $this->_calcSize($bild_data['width'], $bild_data['height'], $thumb_maxwidth, $thumb_maxheight);
+			$newSize = $this->_calcSize($bild_data['width'], $bild_data['height'], THUMB_MAXWIDTH, THUMB_MAXHEIGHT);
 
-			$orgImg->copy($newSize['width'] , $newSize['height'], $dir_thumb.$mysql_data['filename'], "jpeg");
+			$orgImg->copy($newSize['width'] , $newSize['height'], THUMB_DIR.$mysql_data['filename'], "jpeg");
 			unset($orgImg);
 		}
 
 
 		//Bild ausgeben
-		$this->_img = new Image($dir_thumb.$mysql_data['filename']);
+		$this->_img = new Image(THUMB_DIR.$mysql_data['filename']);
 		$this->_img->send_image();
 	}
 
@@ -154,8 +181,9 @@ class Image_send implements Module
 	 * @param string $col_text Textfarbe
 	 */
 
-	private function _initErrImg($width = 100, $height = 80, $text = 'Bild nicht da', $col_bg = "000000255", $col_text = "200150080")
+	private function _initErrImg($width = 100, $height = 80, $text = '', $col_bg = "000000255", $col_text = "200150080")
 	{
+		$text = ($text == '') ? $this->_img_textes['img_not_found'] : $text;
 		$this->_img = new Image('');
 		$this->_img->create_image($width, $height, $text, $col_bg, $col_text);
 		$this->_img->send_image();

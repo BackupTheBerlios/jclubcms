@@ -40,8 +40,6 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---auth.class.php.html">		auth.class.php
 		</a><br>
-			<a href="../JClubCMS/_admin---config---auth_textes.inc.php.html">		auth_textes.inc.php
-		</a><br>
 			<a href="../JClubCMS/_admin---lib---bbcodes.class.php.html">		bbcodes.class.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---captcha.class.php.html">		captcha.class.php
@@ -64,13 +62,11 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---modules---gbookadmin.class.php.html">		gbookadmin.class.php
 		</a><br>
-			<a href="../JClubCMS/_config---gbook_textes.inc.php.html">		gbook_textes.inc.php
-		</a><br>
 			<a href="../JClubCMS/_admin---config---global-config.inc.php.html">		global-config.inc.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---image.class.php.html">		image.class.php
 		</a><br>
-			<a href="../JClubCMS/_admin---modules---image_send.class.php.html">		image_send.class.php
+			<a href="../JClubCMS/_admin---modules---imageadmin_send.class.php.html">		imageadmin_send.class.php
 		</a><br>
 			<a href="../JClubCMS/_modules---image_send.class.php.html">		image_send.class.php
 		</a><br>
@@ -78,13 +74,11 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---index.php.html">		index.php
 		</a><br>
-			<a href="../JClubCMS/_admin---modules---mailmodule.class.php.html">		mailmodule.class.php
+			<a href="../JClubCMS/_admin---modules---mailadminmodule.class.php.html">		mailadminmodule.class.php
 		</a><br>
 			<a href="../JClubCMS/_modules---mailmodule.class.php.html">		mailmodule.class.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---mailsend.class.php.html">		mailsend.class.php
-		</a><br>
-			<a href="../JClubCMS/_config---mail_textes.inc.php.html">		mail_textes.inc.php
 		</a><br>
 			<a href="../JClubCMS/_modules---members.class.php.html">		members.class.php
 		</a><br>
@@ -108,7 +102,7 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---smilies.class.php.html">		smilies.class.php
 		</a><br>
-			<a href="../JClubCMS/_admin---lib---timeparser.class.php.html">		timeparser.class.php
+			<a href="../JClubCMS/_admin---config---system_textes.inc.php.html">		system_textes.inc.php
 		</a><br>
 			<a href="../JClubCMS/_javascript---tinymce---tiny_mce_gzip.php.html">		tiny_mce_gzip.php
 		</a><br>
@@ -116,6 +110,10 @@
 		</a><br>
 	  </div><br />
       
+            <b>Interfaces:</b><br />
+        <div class="package">
+		    		<a href="../JClubCMS/Module.html">Module</a><br />
+	  </div>
       
             <b>Classes:</b><br />
         <div class="package">
@@ -145,7 +143,6 @@
 	    		<a href="../JClubCMS/Page.html">Page</a><br />
 	    		<a href="../JClubCMS/Session.html">Session</a><br />
 	    		<a href="../JClubCMS/Smilies.html">Smilies</a><br />
-	    		<a href="../JClubCMS/Timeparser.html">Timeparser</a><br />
 	  </div>
                 </td>
     <td>
@@ -163,13 +160,13 @@ Source Location: /admin/lib/action.class.php<br /><br />
 <div class="description"></div><br /><br />
 <h4>Author(s):</h4>
 <ul>
-          <li>Simon Däster  File: action.class.php  Classes: Action  Requieres: PHP5</li>
-      </ul>
+          <li>Simon Däster</li>
+            </ul>
 
 
 
 
-    
+        
 
         
 </td>
@@ -182,7 +179,6 @@ Source Location: /admin/lib/action.class.php<br /><br />
     <li><a href="../JClubCMS/Action.html#method__construct">__construct</a></li>
     <li><a href="../JClubCMS/Action.html#methodget_reserved_action">get_reserved_action</a></li>
     <li><a href="../JClubCMS/Action.html#method_exe_reserved_action">_exe_reserved_action</a></li>
-    <li><a href="../JClubCMS/Action.html#method_exe_reserved_mail">_exe_reserved_mail</a></li>
   </ul>
 </td>
 
@@ -202,13 +198,16 @@ Source Location: /admin/lib/action.class.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line 10]<br />
+[line <a href="../__filesource/fsource_JClubCMS__adminlibaction.class.php.html#a21">21</a>]<br />
 <br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>author:</b>&nbsp;&nbsp;</td><td>Simon Däster  File: action.class.php  Classes: Action  Requieres: PHP5</td>
+    <td><b>author:</b>&nbsp;&nbsp;</td><td>Simon Däster</td>
+  </tr>
+  <tr>
+    <td><b>todo:</b>&nbsp;&nbsp;</td><td><p>ClassDescription</p><p>Fehlender Klassenbeschrieb</p></td>
   </tr>
 </table>
 </div>
@@ -220,10 +219,35 @@ Source Location: /admin/lib/action.class.php<br /><br />
 <a name="class_methods"></a>
 <h3>Class Methods</h3>
 <div class="tags">
+  <hr />
+	<a name="methodget_reserved_action"></a>
+	<h3>static method get_reserved_action <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibaction.class.php.html#a70">70</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>static array get_reserved_action(
+)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Zurückgeben des Array mit den reservierten Aktionen<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
 
   <hr />
 	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line 47]</span></h3>
+	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibaction.class.php.html#a58">58</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -236,6 +260,15 @@ $core = null])</code>
     </td></tr></table><br />
 	
 		Initilalisieren der Funktion<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
 
 	
         <h4>Parameters:</h4>
@@ -261,33 +294,8 @@ $core = null])</code>
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
   <hr />
-	<a name="methodget_reserved_action"></a>
-	<h3>method get_reserved_action <span class="smalllinenumber">[line 59]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>array get_reserved_action(
-)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Zurückgeben des Array mit den reservierten Aktionen<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>return:</b>&nbsp;&nbsp;</td><td>$_reserved_action</td>
-  </tr>
-</table>
-</div>
-<br /><br />
-
-	
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
 	<a name="method_exe_reserved_action"></a>
-	<h3>method _exe_reserved_action <span class="smalllinenumber">[line 64]</span></h3>
+	<h3>method _exe_reserved_action <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibaction.class.php.html#a77">77</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -298,6 +306,18 @@ $function)</code>
     </td></tr></table><br />
 	
 		<br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>todo:</b>&nbsp;&nbsp;</td><td>Documentation</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
 
 	
         <h4>Parameters:</h4>
@@ -312,28 +332,12 @@ $function)</code>
     </div><br />
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
-  <hr />
-	<a name="method_exe_reserved_mail"></a>
-	<h3>method _exe_reserved_mail <span class="smalllinenumber">[line 70]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void _exe_reserved_mail(
-)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		<br /><br />
-
-	
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
 </div><br />
 
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Sat, 11 Apr 2009 12:39:11 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Mon, 13 Apr 2009 22:59:52 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

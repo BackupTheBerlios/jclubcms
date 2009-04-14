@@ -109,8 +109,8 @@ h2 {
 .commentname {
 	font-weight: bold; 
 	font-size: 11px; 
-	background-image: url('images/guestbookbg.gif'); 
-	background-position: right;
+	background-image: url('images/guestbookbg2.gif'); 
+	background-position: left;
 	background-repeat: repeat-y;
 	padding: 3px;
 }

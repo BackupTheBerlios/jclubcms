@@ -1,4 +1,15 @@
 <?php
+/**
+ * Dieses Modul ist für das Mailversenden zuständig.
+ * 
+ * Dieses Modul beinhaltet die Funktionen zum Mailversand und
+ * zum Versenden des Bestätigungsmail verantwortlich sowie 
+ * für das Versenden des angegebenen Mails nach der erfolgreichen Bestätigung.
+ * 
+ * @package JClubCMS
+ * @author Simon Däster
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License version 3
+ */
 require_once ADMIN_DIR.'lib/module.interface.php';
 require_once ADMIN_DIR.'lib/captcha.class.php';
 require_once ADMIN_DIR.'lib/formularcheck.class.php';
@@ -11,6 +22,7 @@ require_once ADMIN_DIR.'lib/mailsend.class.php';
  *
  * @package JClubCMS
  * @author Simon Däster
+ * @uses Mysql Für Verbindungen zur MySQL-DB.
  * File: mailmodule.class.php
  * Classes: Mailmodule
  * @requieres PHP5
@@ -106,7 +118,7 @@ class Mailmodule implements Module
 		} elseif (key_exists('nav_id', $gpc['GET']) && is_numeric($gpc['GET']['nav_id'])) {
 			$this->_checkmail_send($gpc['GET']['nav_id']);
 		} else {
-			throw new CMSException('Die Parameternangaben sind ungültig. Bitte geben Sie richtige Parameter an oder lassen Sie es', EXCEPTION_MODULE_CODE);
+			throw new CMSException(array('mail' => 'invalid_param'), EXCEPTION_MODULE_CODE);
 		}
 
 	}
@@ -135,18 +147,18 @@ class Mailmodule implements Module
 
 		/* nav_id angegeben? */
 		if (!key_exists('nav_id', $this->_gpc['GET'])) {
-			throw new CMSException('Parameter `nav_id` nicht angegeben', EXCEPTION_MODULE_CODE, 'Parameter fehlt');
+			throw new CMSException(array('mail' => 'param_navid'), EXCEPTION_MODULE_CODE, "", array('mail' => 'param_missing'));
 		}
 
 
 		/* darf modul mit nav_id mail senden? */
 		if ($this->_get_tabledata($mod_navID) == false) {
-			throw new CMSException('Angegebenes Modul unterstützt kein Mailversand', EXCEPTION_MODULE_CODE, 'Keine Mailunterstüzung');
+			throw new CMSException(array('mail' => 'modul_no_mail'), EXCEPTION_MODULE_CODE, array('mail' => 'no_support'));
 		}
 
 
 		if ($this->_check_mailtable() == false) {
-			throw new CMSException('Angegebene Tabelle oder Tabellenstruktur nicht vorhanden', EXCEPTION_MODULE_CODE, 'Keine passende Tabelle');
+			throw new CMSException(array('mail' => 'no_matching_table1'), EXCEPTION_MODULE_CODE, array('mail' => 'no_matching_table2'));
 		}
 
 
@@ -156,7 +168,7 @@ class Mailmodule implements Module
 
 			//Formular-Kontrolle
 			if ($this->_gpc['POST']['entry_id'] != $this->_gpc['GET']['entry_id']) {
-				throw new CMSException("Sie benutzen das falsche Formular für diese Mailadresse", EXCEPTION_MODULE_CODE, 'Datenkollision');
+				throw new CMSException(array('mail' => 'wrong_form'), EXCEPTION_MODULE_CODE, array('mail' => 'data_collaps'));
 			}
 
 			//Benutzung einfacher Variablen
@@ -394,7 +406,7 @@ class Mailmodule implements Module
 		/* Error-Einträge */
 		if (isset($error)) {
 			$data['dump_errors'] = true;
-			$data['error_title'] = 'Fehler im Formular';
+			$data['error_title'] = $this->_configvars['Form_Error']['error_in_form'];
 			$data['error_contents'] = $error;
 		}
 

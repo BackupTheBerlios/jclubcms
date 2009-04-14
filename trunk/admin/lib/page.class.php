@@ -1,19 +1,21 @@
 <?php
-
 /**
- * Diese Klasse ist fuer die Darstellung der Seite verantworlich. Sie bietet geeignete Methoden fuer die Menudarstellung und
- * Seitennavigation an (vormals in pagesnav.class gelagert)
+ * Beinhaltet die Elemente für die Darstelung der Seite.
  * 
- * @author Simon Daester
+ * @author Simon Däster
  * @package JClubCMS
- * File: page.class.php
- * class: Page
- * requires: mysql.class.php, Smarty.class.php
- * 
- *
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3
  */
 
-
+/**
+ * Diese Klasse ist fuer die Darstellung der Seite verantworlich. 
+ * Sie bietet geeignete Methoden fuer die Menudarstellung und
+ * Seitennavigation an (vormals in pagesnav.class gelagert)
+ * @author Simon Däster
+ * @package JClubCMS
+ * @uses Mysql
+ * @uses Smarty
+ */
 
 class Page
 {

@@ -11,8 +11,7 @@ require_once ADMIN_DIR.'lib/smilies.class.php';
  * @todo Klasse aufbauen und Funktionen integrieren
  * @package JClubCMS
  * @author Simon Däster
- * contentadmin.class.php
- * 
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License version 3
  */
 class Menuadmin implements Module
 {
@@ -47,14 +46,14 @@ class Menuadmin implements Module
 	 *
 	 * @var string
 	 */
-	private $_timeformat = '%e.%m.%Y %k:%i';
+	private $_timeformat = TIMEFORMAT;
 
 	/**
 	 * Texte aus der Config-Datei
 	 *
 	 * @var array
 	 */
-	private $_configvars = array();
+	private $_config_textes = array();
 
 	/**
 	 * Nav_ID dieses Moduls
@@ -87,17 +86,16 @@ class Menuadmin implements Module
 	public function action($gpc)
 	{
 		//Daten initialisieren
-		global $dir_smilies;
 		$this->_gpc['POST'] = $gpc['POST'];
 		$this->_gpc['GET'] = $gpc['GET'];
 
 		/* Daten laden */
-		$this->_smarty->config_load('textes.de.conf', 'Editor');
-		$this->_configvars['Editor'] = $this->_smarty->get_config_vars();
-		$this->_smarty->config_load('textes.de.conf', 'Editor-Entry');
-		$this->_configvars['Editor-Entry'] = $this->_smarty->get_config_vars();
-		$this->_smarty->config_load('textes.de.conf', 'Editor-Error');
-		$this->_configvars['Editor-Error'] = $this->_smarty->get_config_vars();
+		$section_load = array('Editor', 'Editor-Entry', 'Editor-Error', 'Menu');
+		foreach ($section_load as $section) {
+			$this->_smarty->config_load('textes.de.conf', $section);
+			$this->_config_textes["$section"] = $this->_smarty->get_config_vars();
+		}
+		
 
 		$this->_nav_id = $this->_smarty->get_template_vars('local_link');
 
@@ -120,6 +118,7 @@ class Menuadmin implements Module
 				default:
 					$this->_view();
 			}
+			return true;
 
 		} else {
 			$this->_view();
@@ -159,10 +158,6 @@ class Menuadmin implements Module
 
 		$menu_data = $this->_getMenues($start, $number, false);
 
-
-		$this->_mysql->saverecords('assoc');
-		$content_data = $this->_mysql->get_records();
-
 		foreach($menu_data as $key => $value) {
 			$str = "";
 			for ($i = 0; $i < $value['level']; $i++) {
@@ -187,7 +182,7 @@ class Menuadmin implements Module
 
 	private function _create()
 	{
-		$lang_vars = $this->_configvars['Editor'];
+		$lang_vars = $this->_config_textes['Editor'];
 		if ($this->_isformsend()) {
 			$answer = array();
 			$success = $this->_checkformdata($answer);
@@ -213,9 +208,9 @@ class Menuadmin implements Module
 	{
 		/*Parameter kontrollieren */
 		if (!is_int($ID) || $ID < 1) {
-			throw new CMSException('1. Parameter ist nicht gültig. Typ Int ist verlangt.', EXCEPTION_MODULE_CODE, 'Laufzeit-Fehler');
+			throw new CMSException(array('menu' => 'wrong_param_int'), EXCEPTION_MODULE_CODE, array('menu' => 'runtime_error'));
 		}
-		$lang_vars = $this->_configvars['Editor'];
+		$lang_vars = $this->_config_textes['Editor'];
 		if ($this->_isformsend()) {
 			$answer = array();
 			$success = $this->_checkformdata($answer);
@@ -241,26 +236,27 @@ class Menuadmin implements Module
 	 */
 	private function _del($ID)
 	{
-		$linktext = "JA";
-		$linktext2 = "NEIN";
+		
 		$this->_tplfile = 'menu_del.tpl';
 		$post = $this->_gpc['POST'];
-		$lang_vars = $this->_configvars['Editor'];
+		$editor_textes = $this->_config_textes['Editor'];
+		$linktext1 = $editor_textes['link_form_text1'];
+		$linktext2 = $editor_textes['link_form_text2'];
 
 		if (!is_int($ID) || $ID < 1) {
-			throw new CMSException('1. Parameter ist nicht gültig. Typ Int ist verlangt.', EXCEPTION_MODULE_CODE, 'Laufzeit-Fehler');
+			throw new CMSException(array('menu' => 'wrong_param_int'), EXCEPTION_MODULE_CODE, array('menu' => 'runtime_error'));
 		}
 
-		if (key_exists('weiter', $post) && $post['weiter'] == $linktext) {
+		if (key_exists('weiter', $post) && $post['weiter'] == $linktext1) {
 
 			$this->_mysql->query("DELETE FROM  `menu` WHERE `menu_ID` = '$ID' LIMIT 1");
 
 
-			$this->_send_feedback($lang_vars['del_title'], $lang_vars['del_menu'],
-			"?nav_id=$this->_nav_id", $lang_vars['link_text']);
+			$this->_send_feedback($editor_textes['del_title'], $editor_textes['del_menu'],
+			"?nav_id=$this->_nav_id", $editor_textes['link_text']);
 		} elseif (key_exists('nein', $post) && $post['nein'] == $linktext2) {
-			$this->_send_feedback($lang_vars['abort_title'], $lang_vars['abort_content'],
-			"?nav_id=$this->_nav_id", $lang_vars['link_text']);
+			$this->_send_feedback($editor_textes['abort_title'], $editor_textes['abort_content'],
+			"?nav_id=$this->_nav_id", $editor_textes['link_text']);
 		} else {
 			$this->_tplfile = 'menu_del.tpl';
 			$sql = "SELECT `menu_name`, `menu_topid`, `menu_position`, `menu_page`, `menu_pagetyp`, `menu_modvar`, `menu_display`"
@@ -280,7 +276,7 @@ class Menuadmin implements Module
 
 			$this->_smarty->assign($data);
 			$this->_smarty->assign(array('menu_pagename' => $m_linkname, 'del_ID' => $ID,
-			'linktext' => $linktext, 'linktext2' => $linktext2));
+			'linktext' => $linktext1, 'linktext2' => $linktext2));
 
 		}
 
@@ -303,7 +299,7 @@ class Menuadmin implements Module
 			foreach ($post['menu_check'] as $key => $value) {
 				$pos_value = $post['menu_position'][$key];
 				if (!is_numeric($pos_value)) {
-					$this->_smarty->assign('info', "Erlaubte Werte f&uuml;r Positionen sind nur Zahlenwerte, keine anderen.");
+					$this->_smarty->assign('info', $this->_config_textes['Menu']['only_numeric']);
 					$break = true;
 					break;
 				} else {
@@ -312,7 +308,7 @@ class Menuadmin implements Module
 				
 				$disp_value = $post['menu_display'][$key];
 				if ($disp_value != '0' && $disp_value != '1') {
-					$this->_smarty->assign('info', "Erlaubte Werte f&uuml;r Annzeige sind nur 0 und 1, keine anderen.");
+					$this->_smarty->assign('info', $this->_config_textes['Menu']['only_bit']);
 					$break = true;
 					break;
 				} else {
@@ -345,7 +341,7 @@ class Menuadmin implements Module
 	{
 		/*Parameter kontrollieren */
 		if (!is_array($data) || empty($data)) {
-			throw new CMSException('1. Parameter ist nicht gültig. Typ Array ist verlangt.', EXCEPTION_MODULE_CODE, 'Laufzeit-Fehler');
+			throw new CMSException(array('menu' => 'wrong_param_array'), EXCEPTION_MODULE_CODE, array('menu' => 'runtime_error'));
 		}
 
 
@@ -368,11 +364,8 @@ class Menuadmin implements Module
 		$this->_mysql->query($sql);
 
 		if ($this->_mysql->insert_id() == $data['m_topid']) {
-			$error_str = "DAS UNMÖGLICHE WURDE VOLLBRACHT, GRATULIERE!!!<br />. "
-			."Soeben wurde menu-id zur topid gewählt. Hast du ein wenig gehackt???"
-			."Bitte das rückgängig machen (zurück-button des Browsers), ansonsten wird das Menu nie erscheinen, "
-			."auch nicht im Editierbereich. Falls das geschieht, ist der Administrator zu informieren (mehr unter Hilfe)";
-			throw new Exception($error_str, EXCEPTION_CORE_CODE, 'GLÜCKSPILZ');
+			$error_str = $this->_config_textes['Menu']['menu_ID_impossible'];
+			throw new Exception($error_str, EXCEPTION_CORE_CODE, $this->_config_textes['Menu']['lucky_dog']);
 		}
 
 
@@ -389,12 +382,12 @@ class Menuadmin implements Module
 	{
 		/*Parameter kontrollieren */
 		if (!is_array($data) || empty($data)) {
-			throw new CMSException('1. Parameter ist nicht gültig. Typ Array ist verlangt.', EXCEPTION_MODULE_CODE, 'Laufzeit-Fehler');
+			throw new CMSException(array('menu' => 'wrong_param_array'), EXCEPTION_MODULE_CODE, array('menu' => 'runtime_error'));
 		}
 
 
 		if (!key_exists('m_ID', $data) || !is_numeric($data['m_ID'])) {
-			throw new CMSException('Daten ungültig. Menu-ID verlangt.', EXCEPTION_MODULE_CODE, 'Laufzeit-Fehler');
+			throw new CMSException(array('menu' => 'no_menu_id'), EXCEPTION_MODULE_CODE, array('menu' => 'runtime_error'));
 		}
 
 		$sql = "UPDATE `menu` SET `menu_topid` = '".$this->_mysql->escapeString($data['m_topid'])."', `menu_position` = '".$this->_mysql->escapeString($data['m_pos'])."'";
@@ -436,8 +429,8 @@ class Menuadmin implements Module
 	{
 		$answer = array();
 
-		$entry_vars = $this->_configvars['Editor-Entry'];
-		$error_vars = $this->_configvars['Editor-Error'];
+		$entry_vars = $this->_config_textes['Editor-Entry'];
+		$error_vars = $this->_config_textes['Editor-Error'];
 
 		$formcheck = new Formularcheck();
 
@@ -514,7 +507,7 @@ class Menuadmin implements Module
 	{
 		$this->_tplfile = 'menu_editor.tpl';
 		$smarty_array = array();
-		$lang_vars = $this->_configvars['Editor-Entry'];
+		$lang_vars = $this->_config_textes['Editor-Entry'];
 
 
 
@@ -542,7 +535,7 @@ class Menuadmin implements Module
 				}
 
 			} else {
-				throw new CMSException('Angegeben ID für Menueintrag ist nicht vorhanden', EXCEPTION_MODULE_CODE, 'Ungültige ID');
+				throw new CMSException(array('menu' => 'no_machting_id'), EXCEPTION_MODULE_CODE, array('menu' => 'invalid_id'));
 			}
 
 		} elseif ($tk_std_values == false) {
@@ -615,7 +608,7 @@ class Menuadmin implements Module
 
 			$i = 0;
 			$count_nav['top'][0] = 0;
-			foreach ($nav_arr as $key => $value) {
+			foreach ($nav_arr as $value) {
 				if ($value['menu_topid'] == 0) {
 					//$i = $value['menu_ID'];
 					$i++;

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+{config_load file='textes.de.conf' section=$section}
 <html>
 	<head>
 		<title>{$forward_title}</title>
@@ -11,8 +12,8 @@
 	<body>
 		<div id="header">&nbsp;</div>
 		<div id="forward">
-			{$forward_text}<br />
-			<a href="{$forward_link}">{$forward_linktext}</a>
+			{#forward_text#}<br />
+			<a href="{$forward_link}">{#forward_linktext#}</a>
 		</div>
 	</body>
 </html>

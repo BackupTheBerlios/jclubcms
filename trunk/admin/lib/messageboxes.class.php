@@ -1,4 +1,15 @@
 <?php
+/**
+ * Messageboxes ist eine Abstraktion von gängingen Meitteilungsboxen
+ * 
+ * Messageboxes ermöglicht die standardisierte Variante von
+ * <ul><li>Speichern</li><li>Auslesen</li><li>Ändern</li></ul>
+ * von Daten, die in einer Mysql-Tabelle vorhanden sind.
+ * 
+ * @package JClubCMS
+ * @author Simon Däster
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3
+ */
 require_once ADMIN_DIR.'lib/captcha.class.php';
 require_once ADMIN_DIR.'lib/mysql.class.php';
 require_once ADMIN_DIR.'lib/formularcheck.class.php';
@@ -29,16 +40,32 @@ if (!defined('MSGBOX_FORMCHECK_INVALID')) {
 	define('MSGBOX_FORMCHECK_INVALID', 4);
 }
 /**
- * Dem Konstruktor wird der Aufbau der Tabelle mit einem Array weitergegeben. WerteIn diesem Array unbeding vorkommen muss ID
- * und content. Weiter nueztliche Dine sind ref_ID, name, time, hp, mail. So koennen die Daten nach time geordenet werden 
- * oder hp/mail verifiziert werden. Sie sind nicht absolut noetig, aber hilfreich. Damit diese richtig behandelt werden,
- * muessen sie mit den richtigen Array-keys uebermittelt werden. Natuerlich koennen weitere Daten angegeben werden,
- * die werden aber nicht besonders behandelt. Diese koennen mit nummerierten keys weitergegeben werden.
+* Die Klasse MessageBoxes ist verantwortlich für das Verwalten von Nachrichten in der Datenbank. 
+ * Nachrichten können News, Gästebucheinträge, Nachrichten u.ä. sein.
+ * 
+ * Möglichkeiten der Klassen:
+ * <ul><li>Nachrichten in die Datenbank eintragen</li>
+ * <li>zu Nachrichten Kommentare schreiben</li>
+ * <li>Nachrichten löschen</li>
+ * <li>Nachrichten zurückgeben</li>
+ * <li>überprüfen, ob einen Nachricht ein Kommentar einer anderen Nachricht ist.</li></ul>
+ * Weiter verfügt die Klasse über eine Methode, die angegeben Einträge auf Standart-Werte und leere String 
+ * prüft. Dies ist nützlich, wenn ein Modul überprüfen will, ob keine 
+ * dieser Werte vorhanden sind.
+ * 
+ * Dem Konstruktor wird der Aufbau der Tabelle mit einem Array
+ * weitergegeben. WerteIn diesem Array unbeding vorkommen muss 
+ * ID und content. Weiter nueztliche Dine sind ref_ID, name, time, 
+ * hp, mail. So koennen die Daten nach time geordenet werden  oder 
+ * hp/mail verifiziert werden. Sie sind nicht absolut noetig, aber 
+ * hilfreich. Damit diese richtig behandelt werden, muessen sie mit 
+ * den richtigen Array-keys uebermittelt werden. Natuerlich koennen 
+ * weitere Daten angegeben werden, die werden aber nicht besonders 
+ * behandelt. Diese koennen mit nummerierten keys weitergegeben werden.
  * @author Simon Däster
  * @package JClubCMS
- * File: messageboxes.class.php
- * Classes: messageboxes
- * @requieres PHP5
+ * @uses Mysql Zugriff auf Datenbank
+ * @uses Formularcheck Plausibilitätsüberprüfung von Formularen
  * 
  */
 class Messageboxes {
@@ -79,44 +106,46 @@ class Messageboxes {
 	 * Baut die Klasse auf. Kontrolliert, ob ein MySQL-Objetk weitergegeben wurde und testet (mittels anderer
 	 * Methoden), ob der Tabellenname und die Struktur stimmen.
 	 *
-	 * @param mysql $mysql Mysql-Objekt
+	 * @param Mysql $mysql Mysql-Objekt
 	 * @param string $tablename Tabellenname
 	 * @param array $tablestruct Struktur der Tabelle
+	 * @uses Mysql Für die Verbindung zur Mysql-DB
+	 * @uses Formularcheck Plausibilitätsüberprüfung von Formularen
+	 * @uses CMSException
 	 */
-
 	public function __construct($mysql, $tablename, $tablestruct)
 	{
 		//Argumente ueberpruefen
-		if ($mysql instanceof mysql) {
+		if ($mysql instanceof Mysql) {
 			$this->_mysql = $mysql;
 		} else {
-			throw new CMSException('Falsche Parameterangaben. 1. Parameter ist kein mysql-objekt', EXCEPTION_LIBARY_CODE);
+			throw new CMSException(array('msg_box' => 'wrong_param_mysql'), EXCEPTION_LIBARY_CODE);
 		}
 
 		if (is_string($tablename)) {
 			$this->_tablename = $this->_mysql->escapeString($tablename);
-		} elseif (!$this->_errorexists) {
-			throw new CMSException('Falsche Parameterangaben. 2. Parameter ist kein String', EXCEPTION_LIBARY_CODE);
+		} else {
+			throw new CMSException(array('msg_box' => 'wrong_param_string'), EXCEPTION_LIBARY_CODE);
 		}
 
 		//Ist $tabelstruct ein Array, wird die objekt-eigenschaft verfolstaendigt.
 		if (is_array($tablestruct)) {
 
 			if (!$this->_checkTable($tablestruct)) {
-				throw new CMSException('Falsche Parameterangaben. Keine passende Mysql-Tabelle vorhanden', EXCEPTION_LIBARY_CODE);
+				throw new CMSException(array('msg_box' => 'wrong_param_mysqltab'), EXCEPTION_LIBARY_CODE);
 			}
 
 			if (!$this->_fillStruct($tablestruct)) {
-				throw new CMSException('Falsche Parameterangaben. 3. Parameter beinhahlte nicht ein Index ID, Content- oder Zeit-Schluessel', EXCEPTION_LIBARY_CODE);
+				throw new CMSException(array('msg_box' => 'wrong_param_key'), EXCEPTION_LIBARY_CODE);
 			}
 
 
 		} else {
-			throw new CMSException('Falsche Parameterangaben. 3. Parameter ist kein Array', EXCEPTION_LIBARY_CODE);
+			throw new CMSException(array('msg_box' => 'wrong_param_array'), EXCEPTION_LIBARY_CODE);
 		}
 
 		//Eigene Objekte initialisieren
-		$this->_formCheck = new FormularCheck();
+		$this->_formCheck = new Formularcheck();
 
 	}
 
@@ -126,16 +155,18 @@ class Messageboxes {
 	 *
 	 * @param array $tabledata einzugebende Daten
 	 * @return boolean Liefert bei Erfolg true, sonst Exception
+	 * @uses Mysql Für die Verbindung zur Mysql-DB
+	 * @uses CMSException
 	 */
 
 	public function addEntry($tabledata)
 	{
 		if ($tabledata['content'] == "") {
-			throw new CMSException('Falsche Parameterangaben. Kein Text angegeben', EXCEPTION_LIBARY_CODE);
+			throw new CMSException(array('msg_box' => 'wrong_param_text'), EXCEPTION_LIBARY_CODE);
 		}
 
 		if ($this->_form_checked == false) {
-			throw  new CMSException('Eingaben wurde nicht auf Gültigkeit ueberprueft', EXCEPTION_LIBARY_CODE);
+			throw  new CMSException(array('msg_box' => 'no_check_valid'), EXCEPTION_LIBARY_CODE);
 		}
 
 		//Formular-Check durchführen
@@ -190,20 +221,22 @@ class Messageboxes {
 	 * @param num $id ID der referenzierenden Beitrags
 	 * @param array $tabledata einzugebende Daten
 	 * @return boolean Liefert bei Erfolg true, sonst Exception
+	 * @uses Mysql Für die Verbindung zur Mysql-DB
+	 * @uses CMSException
 	 */	
 
 	public function commentEntry($id, array $tabledata)
 	{
 		if (!is_int($id)) {
-			throw new CMSException('Falsche Parameterangaben. Angegeben ID ist kein Int-Wert', EXCEPTION_LIBARY_CODE);
+			throw new CMSException(array('msg_box' => 'wrong_param_int'), EXCEPTION_LIBARY_CODE);
 		}
 
 		if ($tabledata['content'] == "") {
-			throw new CMSException('Falsche Parameterangaben. Kein Text angegeben', EXCEPTION_LIBARY_CODE);
+			throw new CMSException(array('msg_box' => 'wrong_param_text'), EXCEPTION_LIBARY_CODE);
 		}
 
 		if ($this->_form_checked == false) {
-			throw  new CMSException('Eingaben wurde nicht auf Gültigkeit ueberprueft', EXCEPTION_LIBARY_CODE);
+			throw  new CMSException(array('msg_box' => 'wrong_param_int'), EXCEPTION_LIBARY_CODE);
 		}
 
 		//Formular-Check durchfuehren
@@ -255,22 +288,24 @@ class Messageboxes {
 	 *
 	 * @param array $tabledata einzugebende Daten
 	 * @param array $tablestddata Standartdaten aus dem Formular, welche nicht gebraucht werden duerfen.
+	 * @uses Mysql Für die Verbindung zur Mysql-DB
+	 * @uses CMSException
 	 */
 
 	public function editEntry($tabledata)
 	{
 		if ($this->_form_checked == false) {
-			throw  new CMSException('Eingaben wurde nicht auf Gültigkeit ueberprueft', EXCEPTION_LIBARY_CODE);
+			throw  new CMSException(array('msg_box' => 'no_check_valid'), EXCEPTION_LIBARY_CODE);
 		}
 
 
 		if ($tabledata['content'] == "") {
-			throw new CMSException('Falsche Parameterangaben. Kein Text angegeben', EXCEPTION_LIBARY_CODE);
+			throw new CMSException(array('msg_box' => 'wrong_param_text'), EXCEPTION_LIBARY_CODE);
 		}
 
 
 		if ($tabledata['ID'] == ""  || !is_numeric($tabledata['ID'])) {
-			throw new CMSException('Falsche Parameterangaben. ID nicht angegeben', EXCEPTION_LIBARY_CODE);
+			throw new CMSException(array('msg_box' => 'wrong_param_int'), EXCEPTION_LIBARY_CODE);
 		}
 
 		$sql = "UPDATE `$this->_tablename` SET  ";
@@ -309,6 +344,8 @@ class Messageboxes {
 	 * @param string $timeformat Zeitformat nach Mysql
 	 * @param boolean $comments Kommentare auch senden
 	 * @return array Eintrag, bei Fehler false
+	 * @uses Mysql Für die Verbindung zur Mysql-DB
+	 * @uses CMSException
 	 */
 
 	public function getEntry($id, $timeformat = "", $comments = true)
@@ -316,11 +353,11 @@ class Messageboxes {
 		$msg_array = array();
 
 		if (!is_numeric($id)) {
-			throw new CMSException('Falsche Parameterangaben. 1. Argument ist kein Zahlenwert', EXCEPTION_LIBARY_CODE);
+			throw new CMSException(array('msg_box' => 'wrong_param_num'), EXCEPTION_LIBARY_CODE);
 		}
 
 		if(!is_string($timeformat)) {
-			throw new CMSException('Falsche Parameterangaben. 2. Argument ist kein String', EXCEPTION_LIBARY_CODE);
+			throw new CMSException(array('msg_box' => 'wrong_param_string'), EXCEPTION_LIBARY_CODE);
 		}
 
 		/*Haupt-Nachricht*/
@@ -347,10 +384,6 @@ class Messageboxes {
 				}
 			}
 		}
-
-
-
-
 		return $msg_array;
 
 	}
@@ -367,6 +400,8 @@ class Messageboxes {
 	 * @param string $corder Reihenfolge der Kommentare DESC|ASC
 	 * @param string $timeformat Zeitformat nach Mysql
 	 * @return array Eintraege, bei Fehler false
+	 * @uses Mysql Für die Verbindung zur Mysql-DB
+	 * @uses CMSException
 	 */
 
 	public function getEntries($entries_pp, $page, $order = 'DESC', $corder = 'ASC', $timeformat = "")
@@ -377,16 +412,16 @@ class Messageboxes {
 
 
 		if (!is_numeric($entries_pp) && !is_numeric($page)) {
-			throw new CMSException('Falsche Parameterangaben. Angegebene Argumente sind keine Zahlenwerte', EXCEPTION_LIBARY_CODE);
+			throw new CMSException(array('msg_box' => 'wrong_param_num'), EXCEPTION_LIBARY_CODE);
 		}
 
 
 		//Ordnungsbedingung fuer Mysql-Query
 		if ($order != 'ASC' && $order != 'DESC' && $order != "") {
-			throw new CMSException('Falsche Parameterangaben. 3. Parameter nicht zulässig', EXCEPTION_LIBARY_CODE);
+			throw new CMSException(array('msg_box' => 'wrong_param_invalid'), EXCEPTION_LIBARY_CODE);
 
 		} elseif ($corder != 'ASC' && $corder != 'DESC' && $corder != "") {
-			throw new CMSException('Falsche Parameterangaben. 4. Parameter nicht zulässig', EXCEPTION_LIBARY_CODE);
+			throw new CMSException(array('msg_box' => 'wrong_param_invalid'), EXCEPTION_LIBARY_CODE);
 
 		} elseif (isset($this->_tablestruct['time']) && !empty($this->_tablestruct['time']) && $order != "" && $corder != "") {
 			//Ordnungsbedingungen-Strings in top-nachrichten und kommentaren
@@ -459,12 +494,14 @@ class Messageboxes {
 	 * Loescht einen Eintrag aus der Datenbank inkl. alle Kommentaren
 	 *
 	 * @param int $id
+	 * @uses Mysql Für die Verbindung zur Mysql-DB
+	 * @uses CMSException
 	 */
 
 	public function delEntry($id)
 	{
 		if (!is_int($id)) {
-			throw new CMSException('Falsche Parameterangaben. Parameter nicht zulässig', EXCEPTION_LIBARY_CODE);
+			throw new CMSException(array('msg_box' => 'wrong_param_invalid'), EXCEPTION_LIBARY_CODE);
 		}
 
 		if (array_key_exists('ref_ID', $this->_tablestruct)) {
@@ -492,13 +529,15 @@ class Messageboxes {
 	 * Gibt an, ob die angegeben ID ein Kommentar ist oder nicht
 	 *
 	 * @param int $id
-	 * @return boolean
+	 * @return boolean 
+	 * @uses Mysql Für die Verbindung zur Mysql-DB
+	 * @uses CMSException
 	 */
 
 	public function is_comment($id)
 	{
 		if (!is_numeric($id)) {
-			throw new CMSException('Parameter ungültig', EXCEPTION_LIBARY_CODE);
+			throw new CMSException(array('msg_box' => 'wrong_param_invalid'), EXCEPTION_LIBARY_CODE);
 		}
 
 		$this->_mysql->query("SELECT `{$this->_tablestruct['ref_ID']}` FROM `{$this->_tablename}` "
@@ -525,6 +564,8 @@ class Messageboxes {
 	 * @param array $tabledata
 	 * @param array $stddata Standartangaben
 	 * @return array $arr_rtn Ergebnis
+	 * @uses Formularcheck Plausibilitätsüberprüfung von Formularen
+	 * @uses CMSException
 	 */
 
 	public function formCheck($tabledata, $stddata)
@@ -533,7 +574,7 @@ class Messageboxes {
 		//$ok = true;
 
 		if (!is_array($tabledata)) {
-			throw  new CMSException('Falsche Parameterangaben in Funktion '.__FUNCTION__.'. 1. Parameter kein Array', EXCEPTION_LIBARY_CODE);
+			throw  new CMSException(array('msg_box' => 'wrong_param_array'), EXCEPTION_LIBARY_CODE, __FUNCTION__);
 		}
 
 		$check_arr = $this->_formCheck->field_check_arr($tabledata, $stddata);
@@ -563,11 +604,9 @@ class Messageboxes {
 
 		}
 
-
 		$this->_form_checked = true;
 
 		return $arr_rtn;
-
 	}
 
 
@@ -578,6 +617,8 @@ class Messageboxes {
 	 * @param string $time
 	 * @param string $timeformat
 	 * @return string formatierte Zeit, bei Fehler false
+	 * @uses Mysql Für die Verbindung zur Mysql-DB
+	 * @uses CMSException
 	 */
 
 	private function _formatTime($time, $timeformat)
@@ -588,7 +629,7 @@ class Messageboxes {
 			$arr = $this->_mysql->fetcharray('assoc');
 			return $arr['time'];
 		} else {
-			throw new CMSException('Falsche Parameterangaben. Timeformat-String oder Time-String falsch', EXCEPTION_LIBARY_CODE);
+			throw new CMSException(array('msg_box' => 'wrong_param_time'), EXCEPTION_LIBARY_CODE);
 		}
 
 
@@ -602,6 +643,7 @@ class Messageboxes {
 	 *
 	 * @param array $tablestruct Array vom Konstruktor
 	 * @return boolean Erfolg
+	 * @uses Mysql Für die Verbindung zur Mysql-DB
 	 */
 
 	private function _fillStruct($tablestruct)
@@ -628,6 +670,7 @@ class Messageboxes {
 	 *
 	 * @param array $tablestruct
 	 * @return boolean Erfolg
+	 * @uses Mysql Für die Verbindung zur Mysql-DB
 	 */
 
 	private function _checkTable($tablestruct)

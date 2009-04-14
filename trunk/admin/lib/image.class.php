@@ -1,8 +1,16 @@
 <?php
-
 /**
- * Die Klasse image ist zustaendig fuer Grafikfunktionen
- * Sie speichert die Informationen ueber ein Bild ab, kann diese Informationen senden
+
+ * Beinhaltet die Elemente für Grafikfunktionen.
+ * 
+ * @author Simon Däster
+ * @package JClubCMS
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3
+ */
+/**
+ * Die Klasse Image ist zustaendig fuer Grafikfunktionen
+ * 
+ * Image speichert die Informationen ueber ein Bild ab, kann diese Informationen senden
  * und das Bild selber ausgeben
  * Wenn keine Bilddatei vorhanden ist, dann wird automatisch ein Fehlerbild erstellt
  * Um Thumbs zu erstellen, kann die Funktion "copy" verwendet werden.
@@ -10,25 +18,55 @@
  * Dazu kann man einfach die Grössen belassen
  * !Achtung: Vorhandene Dateien werden ohne Abfrage überschrieben!!!
  *
- * Diese Klasse ist nicht fuer die Administration der Bilder zustaendig
- * Die Klasse wird fuer jedes Bild gebraucht, um es darzustellen und noetige
+ * Diese Klasse ist nicht für die Administration der Bilder zuständig
+ * Die Klasse wird für jedes Bild gebraucht, um es darzustellen und nötige
  * Informationen zum jeweiligen Bild zu erhalten
  *
  * @author Simon Däster
  * @package JClubCMS
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3
  * File: image.class.php
  * Classes: image
  * @requieres PHP5
  */
-
-
 class Image {
 
+	/**
+	 * Datei zum Bild
+	 *
+	 * @var string
+	 */
 	private $file = null;
+	/**
+	 * Binäre Bildinformation
+	 *
+	 * @var binary
+	 */
 	private $im = null;
+	/**
+	 * Grafikformat
+	 *
+	 * @var string
+	 */
 	private $graphicformat = "jpeg";
+	/**
+	 * Höhe des Bildes
+	 *
+	 * @var numeric
+	 */
 	private $height = null;
+	/**
+	 * Breite des Bildes
+	 *
+	 * @var numeric
+	 */
 	private $width = null;
+	/**
+	 * Texte für die Bilder bei Fehlern
+	 *
+	 * @var array
+	 */
+	private $textes = array();
 
 
 	/*------------------
@@ -44,17 +82,19 @@ class Image {
 	 * 
 	 * @param string $file Bilddatei
 	 */
-
 	public function __construct($file) 
 	{
+		global $system_textes;
+		$this->_textes = $system_textes[LANGUAGE_ABR]['img'];
+		
 		if($file != "" && is_file($file) && file_exists($file)) {
-			$this->file = $file;
+			$this->_file = $file;
 
 			$this->get_infos();
 
 		} else {
-			$this->file = "";			
-			$this->create_image(180, 100, 'Bild nicht gefunden');
+			$this->_file = "";			
+			$this->create_image(180, 100, $this->_textes['img_not_found']);
 		}
 
 
@@ -73,23 +113,24 @@ class Image {
 	 * @param string $col_text Die Textfarbe im String mit RGB-Werten
 	 */
 
-	public function create_image($width, $height, $text="Bild nicht gefunden", $col_background = "000000000", $col_text="050255070") 	{
+	public function create_image($width, $height, $text="", $background_color=BACKGROUND_COLOR, $text_color=TEXT_COLOR) 	{
 
 		//Fest vorgegeben
-		$this->graphicformat = "jpeg";
+		$this->_graphicformat = "jpeg";
 
-		$this->width = $width;
-		$this->height = $height;
+		$this->_width = $width;
+		$this->_height = $height;
+		
+		empty($text) ? $text = $this->_textes['img_not_found'] : $text = $text;
 
-		$this->im = imagecreatetruecolor($this->width, $this->height);
+		$this->_im = imagecreatetruecolor($this->_width, $this->_height);
 
 		//Aus den Parameter fuer Farbe (RGB-Werte) werden die Farben erstellt
-		$background_color = imagecolorallocate ($this->im, (int)substr($col_background, 0,3) , (int)substr($col_background, 3,3) , (int)substr($col_background, 6,3));
-		$text_color = imagecolorallocate($this->im, (int)substr($col_text, 0,3), (int)substr($col_text, 3,3), (int)substr($col_text, 6,3));
+		$background_color = imagecolorallocate ($this->_im, (int)substr($background_color, 0,3) , (int)substr($background_color, 3,3) , (int)substr($background_color, 6,3));
+		$text_color = imagecolorallocate($this->_im, (int)substr($text_color, 0,3), (int)substr($text_color, 3,3), (int)substr($text_color, 6,3));
 
-		imagefill($this->im, 0,0, $background_color);
-		imagestring($this->im, 5, 5, 35, $text, $text_color);
-		//throw new CMSException('TEST', EXCEPTION_LIBARY_CODE);
+		imagefill($this->_im, 0,0, $background_color);
+		imagestring($this->_im, 5, 5, 35, $text, $text_color);
 	}
 	
 
@@ -109,16 +150,16 @@ class Image {
 	{
 
 		if ($file != '' && is_file($file) && file_exists($file)) {
-			$this->create_image(300, 26, "Kopieren fehlgeschlagen");
+			$this->create_image(300, 26, $this->_textes['copy_failed']);
 		}
 		
-		if($this->im == null)
+		if($this->_im == null)
 		{
 			$this->get_im();
 		}
 		$new_im = imagecreatetruecolor($new_width, $new_height);
 
-		imagecopyresized($new_im, $this->im, 0, 0, 0, 0, $new_width, $new_height, $this->width, $this->height);
+		imagecopyresized($new_im, $this->_im, 0, 0, 0, 0, $new_width, $new_height, $this->_width, $this->_height);
 		eval("image$new_format(\$new_im, \$file);");
 		imagedestroy($new_im);
 		
@@ -134,15 +175,15 @@ class Image {
 	public function send_image() 
 	{
 
-		$format = $this->graphicformat;
+		$format = $this->_graphicformat;
 		
-		$im = $this->im;
+		$im = $this->_im;
 
 		header("Content-type: image/$format");
-		if ($this->im != null) {
+		if ($this->_im != null) {
 			eval("image$format(\$im);");
 		} else {
-			readfile($this->file);
+			readfile($this->_file);
 		}
 		
 		
@@ -162,8 +203,8 @@ class Image {
 
 	public function send_infos() 
 	{
-		return array("format" => $this->graphicformat,"width" => $this->width,
-		"height" => $this->height);
+		return array("format" => $this->_graphicformat,"width" => $this->_width,
+		"height" => $this->_height);
 	}
 
 
@@ -175,11 +216,11 @@ class Image {
 
 	public function __destruct() 
 	{
-		$file = null;
-		$im = null;
-		$graphicformat = null;
-		$height = null;
-		$width = null;
+		$this->_file = null;
+		$this->_im = null;
+		$this->_graphicformat = null;
+		$this->_height = null;
+		$this->_width = null;
 	}
 
 
@@ -199,35 +240,35 @@ class Image {
 	{
 
 		$supported = false;
-		$array_image = getimagesize($this->file);
+		$array_image = getimagesize($this->_file);
 
 		switch ($array_image[2]) {
 			case 1:
-				$this->graphicformat = "gif";
+				$this->_graphicformat = "gif";
 				
 				$supported = true;
 				break;
 
 			case 2:
-				$this->graphicformat = "jpeg";
+				$this->_graphicformat = "jpeg";
 				$supported = true;
 				break;
 
 			case 3:
-				$this->graphicformat = "png";				
+				$this->_graphicformat = "png";				
 				$supported = true;
 
 				break;
 
 			default:
 
-				$this->create_image(300, 26, "Format wird nicht unterstuetzt");
+				$this->create_image(300, 26, $this->_textes['format_not_supported']);
 				$supported = false;
 		}
 
 		if($supported) {
-			$this->width = $array_image[0];
-			$this->height = $array_image[1];
+			$this->_width = $array_image[0];
+			$this->_height = $array_image[1];
 		}
 
 	}
@@ -241,21 +282,21 @@ class Image {
 	private function get_im()
 	{
 		//Informationen wurden wahrsch. nicht geholt
-		if(empty($this->width) || empty($this->height))
+		if(empty($this->_width) || empty($this->_height))
 		{
 			$this->get_infos();
 		}
 		
-		switch($this->graphicformat)
+		switch($this->_graphicformat)
 		{
 			case 'gif':
-				$this->im = imagecreatefromgif($this->file);
+				$this->_im = imagecreatefromgif($this->_file);
 				return true;
 			case 'jpeg':
-				$this->im = imagecreatefromjpeg($this->file);
+				$this->_im = imagecreatefromjpeg($this->_file);
 				return true;
 			case 'png':
-				$this->im = imagecreatefrompng($this->file);
+				$this->_im = imagecreatefrompng($this->_file);
 				return true;
 			default:
 				return false;

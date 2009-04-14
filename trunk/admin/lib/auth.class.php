@@ -1,7 +1,18 @@
 <?php
-require_once ADMIN_DIR.'config/auth_textes.inc.php';
+/**
+ * Dieses File beinhaltet die Klassen und Methoden für die Authentifizeriung
+ * 
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3
+ * @package JClubCMS
+ * @author Simon Däster
+ */
+/**
+ * Wird gebraucht für das Session Handling
+ */
 require_once ADMIN_DIR.'lib/session.class.php';
 /**
+ * 
+ * Authorisierungsklasse für den Adminbereich
  * 
  * Diese Seite ist das Autorisierungs-Modul. Sie ist fuer das rechtmässige Einloggen
  * verantwortlich; sie schaut, ob der Benutzer noch aktiv ist und schmeisst in, wenn
@@ -10,9 +21,6 @@ require_once ADMIN_DIR.'lib/session.class.php';
  *
  * @author Simon Däster
  * @package JClubCMS
- * File: auth.class.php
- * class: Auth
- * @requires PHP5
  */
 
 class Auth
@@ -44,12 +52,20 @@ class Auth
 	 * @var int
 	 */
 	private $_user_id;
+	
+	/**
+	 * Texte für die Fehler
+	 *
+	 * @var array
+	 */
+	private $_textes = array();
 
 	/**
 	 * Oeffnet die Autorisierungsklasse
 	 *
-	 * @param smarty $smarty
-	 * @param mysql $mysql
+	 * @param Smarty $smarty
+	 * @param Mysql $mysql
+	 * @uses Smarty Als Template-System
 	 */
 
 	public function __construct($smarty, $mysql)
@@ -58,6 +74,9 @@ class Auth
 		$this->_mysql = $mysql;
 		$this->_session = new Session('s', $mysql);
 		$this->_smarty->assign('TEMPLATESET_DIR', TEMPLATESET_DIR);
+		
+		global $system_textes;
+		$this->_textes = $system_textes[LANGUAGE_ABR]['auth'];
 
 	}
 
@@ -66,13 +85,12 @@ class Auth
 	 *
 	 * @param array $post_array $_POST-Daten
 	 * @return boolean Antwort, ob sich jemand einloggt.
+	 * @uses Mysql Für die Verbindung zur Mysql-DB
+	 * @uses Smarty Als Template-System
 	 */
 
 	public function check4login(&$post_array)
 	{
-
-		
-		global $auth_error_noentry, $auth_error_failname, $auth_error_failpw, $auth_error_userinvalid, $auth_forward_linktext, $auth_forward_successlogin, $auth_forward_title;
 
 		//Login-Formular gesendet?
 		if (isset($post_array['login']) && $post_array['login'] == "Anmelden") {
@@ -84,7 +102,7 @@ class Auth
 				$this->_mysql->query("SELECT `user_ID` FROM `admin_users` WHERE `user_name` = '{$login_data['name']}' LIMIT 1");
 				
 				if (($data = $this->_mysql->fetcharray('assoc')) === false) {
-					$this->_smarty->assign('login_error', $auth_error_failname);
+					$this->_smarty->assign('login_error', $this->_textes['failname']);
 					$this->_smarty->display('login.tpl');
 					
 				} else {
@@ -96,18 +114,21 @@ class Auth
 						$this->_user_id = $data[0];
 						$this->_session->create_session($data[0]);
 
-						$this->_smarty->assign(array('forward_title' => $auth_forward_title, 'forward_text' => $auth_forward_successlogin, 'forward_linktext' => $auth_forward_linktext, 'forward_link' => "?".$this->_session->get_sessionstring()));
+						//Sektion der Sprachdatei weitergeben für die Texte im Template
+						$this->_smarty->assign('section', 'Login');
+						$this->_smarty->assign('forward_link', "?".$this->_session->get_sessionstring());
+						$this->_smarty->display('forward.tpl');
 						$this->_smarty->display('forward.tpl');
 
 
 					} elseif ($data == false) {
 
-						$this->_smarty->assign('login_error', $auth_error_failpw);
+						$this->_smarty->assign('login_error', $this->_textes['failpw']);
 						$this->_smarty->display('login.tpl');
 						
 					} else {
 						/* Query zwar richtig, aber user_ID ungültig */
-						$this->_smarty->assign('login_error', $auth_error_userinvalid);
+						$this->_smarty->assign('login_error', $this->_textes['userinvalid']);
 						$this->_smarty->display('login.tpl');
 					}
 				}
@@ -115,7 +136,7 @@ class Auth
 				return true;
 
 			} else {
-				$this->_smarty->assign('login_error', $auth_error_noentry);
+				$this->_smarty->assign('login_error', $this->_textes['noentry']);
 				$this->_smarty->display('login.tpl');
 				return true;
 
@@ -131,13 +152,11 @@ class Auth
 	 * 
 	 * @param array $get_array $_GET-Daten
 	 * @return boolean
+	 * @uses Smarty Als Template-System
 	 */
 
 	public function check4user($get_array)
 	{
-		global $session_timeout;
-
-		global $auth_error_nonactiv, $auth_error_sessioncorupt;
 
 		if ($this->_session->watch4session($get_array) == false) {
 			$this->_smarty->assign('file', "");
@@ -148,16 +167,16 @@ class Auth
 		if ($this->_session->checksession() == false) {
 
 			$this->_session->delete();
-			$this->_smarty->assign('error_text', $auth_error_sessioncorupt);
+			$this->_smarty->assign('error_text', $this->_textes['sessioncorupt']);
 			$this->_smarty->display('error_alone.tpl');
 
 			return false;
 		}
 
-		if ($this->_session->activ($session_timeout) == false) {
+		if ($this->_session->activ(SESSION_TIMEOUT) == false) {
 			$this->_session->delete();
 
-			$this->_smarty->assign('error_text', $auth_error_nonactiv);
+			$this->_smarty->assign('error_text', $this->_textes['nonactiv']);
 			$this->_smarty->display('error_alone.tpl');
 
 			return false;
@@ -170,15 +189,14 @@ class Auth
 
 	/**
 	 * Loggt den User aus
-	 *
+	 * @uses Smarty Als Template-System
 	 */
 
 	public function logout()
 	{
 		$this->_session->delete();
-
-		$this->_smarty->assign('forward_text', "Sie haben sich erfolgreich ausgeloggt");
-		$this->_smarty->assign('forward_linktext', "Zum Login");
+		//Sektion der Sprachdatei weitergeben für die Texte im Template
+		$this->_smarty->assign('section', 'Logout');
 		$this->_smarty->assign('forward_link', "?");
 		$this->_smarty->display('forward.tpl');
 	}
@@ -227,6 +245,7 @@ class Auth
 	 * Ueberprueft die Rechte.
 	 *
 	 * @param string $rightname Name des Rechts
+	 * @todo Correct Implementation
 	 */
 
 	private function _controlrights($rightname)

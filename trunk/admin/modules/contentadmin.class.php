@@ -1,7 +1,4 @@
 <?php
-require_once ADMIN_DIR.'lib/module.interface.php';
-require_once ADMIN_DIR.'lib/smilies.class.php';
-
 /**
  * Diese Datei ist für die Administration der Contents zuständig. Über dieses Modul
  * wird das Hinzufügen von neuen Inhalten (Contents), das Bearbeiten von bestehenden und 
@@ -10,11 +7,20 @@ require_once ADMIN_DIR.'lib/smilies.class.php';
  * @todo Klasse aufbauen und Funktionen integrieren
  * @package JClubCMS
  * @author Simon Däster
- * contentadmin.class.php
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License version 3
  */
 
 require_once ADMIN_DIR.'lib/module.interface.php';
 require_once ADMIN_DIR.'lib/smilies.class.php';
+require_once ADMIN_DIR.'lib/module.interface.php';
+require_once ADMIN_DIR.'lib/smilies.class.php';
+
+/**
+ * Diese Klasse ist verantwortlich für die Administration der Inhalte
+ * @todo Klassenbeschrieb
+ * @package JClubCMS
+ * @author Simon Däster
+ */
 
 class Contentadmin implements Module
 {
@@ -49,14 +55,14 @@ class Contentadmin implements Module
 	 *
 	 * @var string
 	 */
-	private $_timeformat = '%e.%m.%Y %k:%i';
+	private $_timeformat = TIMEFORMAT;
 
 	/**
 	 * Texte aus der Config-Datei
 	 *
 	 * @var array
 	 */
-	private $_configvars = array();
+	private $_config_textes = array();
 
 	/**
 	 * Nav_ID dieses Moduls
@@ -89,21 +95,20 @@ class Contentadmin implements Module
 	public function action($gpc)
 	{
 		//Daten initialisieren
-		global $dir_smilies;
 		$this->_gpc['POST'] = $gpc['POST'];
 		$this->_gpc['GET'] = $gpc['GET'];
 
 		/* Daten laden */
 		$this->_smarty->config_load('textes.de.conf', 'Editor');
-		$this->_configvars['Editor'] = $this->_smarty->get_config_vars();
+		$this->_config_textes['Editor'] = $this->_smarty->get_config_vars();
 		$this->_smarty->config_load('textes.de.conf', 'Editor-Entry');
-		$this->_configvars['Editor-Entry'] = $this->_smarty->get_config_vars();
+		$this->_config_textes['Editor-Entry'] = $this->_smarty->get_config_vars();
 		$this->_smarty->config_load('textes.de.conf', 'Editor-Error');
-		$this->_configvars['Editor-Error'] = $this->_smarty->get_config_vars();
+		$this->_config_textes['Editor-Error'] = $this->_smarty->get_config_vars();
 
 		$this->_nav_id = $this->_smarty->get_template_vars('local_link');
 
-		$this->_smilie = new Smilies($dir_smilies);
+		$this->_smilie = new Smilies(SMILIES_DIR);
 
 		if (key_exists('ref_ID', $this->_gpc['GET']) && is_numeric($this->_gpc['GET']['ref_ID'])) {
 			$id = (int)$this->_gpc['GET']['ref_ID'];
@@ -180,15 +185,15 @@ class Contentadmin implements Module
 
 	private function _create()
 	{
-		$lang_vars = $this->_configvars['Editor'];
+		$editor_textes = $this->_config_textes['Editor'];
 		if ($this->_isformsend()) {
 			$answer = array();
 			$success = $this->_checkformdata($answer);
 
 			if ($success == true) {
 				$this->_add2mysql($answer);
-				$this->_send_feedback($lang_vars['saved_title'], $lang_vars['saved_content'],
-				"?nav_id=$this->_nav_id", $lang_vars['link_text']);
+				$this->_send_feedback($editor_textes['saved_title'], $editor_textes['saved_content'],
+				"?nav_id=$this->_nav_id", $editor_textes['link_text']);
 			} else {
 				$this->_showeditor(false, $answer);
 			}
@@ -207,9 +212,9 @@ class Contentadmin implements Module
 
 		/*Parameter kontrollieren */
 		if (!is_int($ID) || $ID < 1) {
-			throw new CMSException('1. Parameter ist nicht gültig. Typ Int ist verlangt.', EXCEPTION_MODULE_CODE, 'Laufzeit-Fehler');
+			throw new CMSException(array('content' => 'wrong_param_int'), EXCEPTION_MODULE_CODE, "", array('content' => 'runtime_error'));
 		}
-		$lang_vars = $this->_configvars['Editor'];
+		$editor_textes = $this->_config_textes['Editor'];
 		if ($this->_isformsend()) {
 			$answer = array();
 			$success = $this->_checkformdata($answer);
@@ -217,8 +222,8 @@ class Contentadmin implements Module
 			if ($success == true) {
 				$answer['c_ID'] = $ID;
 				$this->_upd2mysql($answer);
-				$this->_send_feedback($lang_vars['edit_title'], $lang_vars['edit_content'],
-				"?nav_id=$this->_nav_id", $lang_vars['link_text']);
+				$this->_send_feedback($editor_textes['edit_title'], $editor_textes['edit_content'],
+				"?nav_id=$this->_nav_id", $editor_textes['link_text']);
 			} else {
 				$this->_showeditor(false, $answer);
 			}
@@ -235,14 +240,16 @@ class Contentadmin implements Module
 	 */
 	private function _del($ID)
 	{
-		$linktext = "JA";
-		$linktext2 = "NEIN";
+
 		$this->_tplfile = 'content_del.tpl';
 		$post = $this->_gpc['POST'];
-		$lang_vars = $this->_configvars['Editor'];
+		$editor_textes = $this->_config_textes['Editor'];
+		$linktext = $editor_textes['link_form_text1'];
+		$linktext2 = $editor_textes['link_form_text2'];
+		
 
 		if (!is_int($ID) || $ID < 1) {
-			throw new CMSException('1. Parameter ist nicht gültig. Typ Int ist verlangt.', EXCEPTION_MODULE_CODE, 'Laufzeit-Fehler');
+			throw new CMSException(array('content' => 'wrong_param_int'), EXCEPTION_MODULE_CODE, "", array('content' => 'runtime_error'));
 		}
 
 		if (key_exists('weiter', $post) && $post['weiter'] == $linktext) {
@@ -252,11 +259,11 @@ class Contentadmin implements Module
 			$this->_mysql->query("DELETE FROM `menu` WHERE `menu_page` = '$ID'  AND `menu_pagetyp` = 'pag'");
 
 
-			$this->_send_feedback($lang_vars['del_title'], $lang_vars['del_content'],
-			"?nav_id=$this->_nav_id", $lang_vars['link_text']);
+			$this->_send_feedback($editor_textes['del_title'], $editor_textes['del_content'],
+			"?nav_id=$this->_nav_id", $editor_textes['link_text']);
 		} elseif (key_exists('nein', $post) && $post['nein'] == $linktext2) {
-			$this->_send_feedback($lang_vars['abort_title'], $lang_vars['abort_content'],
-			"?nav_id=$this->_nav_id", $lang_vars['link_text']);
+			$this->_send_feedback($editor_textes['abort_title'], $editor_textes['abort_content'],
+			"?nav_id=$this->_nav_id", $editor_textes['link_text']);
 		} else {
 			$this->_tplfile = 'content_del.tpl';
 			$sql = "SELECT `content_title`, `content_text` FROM `content` WHERE `content_ID` = '$ID' LIMIT 1";
@@ -279,7 +286,7 @@ class Contentadmin implements Module
 	{
 		/*Parameter kontrollieren */
 		if (!is_array($data) || empty($data)) {
-			throw new CMSException('1. Parameter ist nicht gültig. Typ Array ist verlangt.', EXCEPTION_MODULE_CODE, 'Laufzeit-Fehler');
+			throw new CMSException(array('content' => 'wrong_param_array'), EXCEPTION_MODULE_CODE, "", array('content' => 'runtime_error'));
 		}
 
 		/*Modus Content hinzufügen */
@@ -327,17 +334,17 @@ class Contentadmin implements Module
 		/*Parameter kontrollieren */
 		//** Es werden nur gefüllte Array akzeptiert
 		if (!is_array($data) || empty($data)) {
-			throw new CMSException('1. Parameter ist nicht gültig. Typ Array ist verlangt.', EXCEPTION_MODULE_CODE, 'Laufzeit-Fehler');
+			throw new CMSException(array('content' => 'wrong_param_array'), EXCEPTION_MODULE_CODE, "", array('content' => 'runtime_error'));
 		}
 
 		//**Content-ID darf nur numerisch sein, weil sonst kein gültiger Abruf im Mysql stattfindet
 		if (!key_exists('c_ID', $data) || !is_numeric($data['c_ID'])) {
-			throw new CMSException('Daten ungültig. Content-ID verlangt.', EXCEPTION_MODULE_CODE, 'Laufzeit-Fehler');
+			throw new CMSException(array('content' => 'no_content_id'), EXCEPTION_MODULE_CODE, "", array('content' => 'runtime_error'));
 		}
 
 		//Wird das Menu nicht ignoriert, ein Schlüssel m_new nicht existiert und keine richtige Menu-ID vorliegt, wird hier abgebrochen
 		if ((!key_exists('m_ignore', $data) || $data['m_ignore'] != true) && !(key_exists('m_new', $data) && $data['m_new'] = "NEW_MEN_ID") && (!key_exists('m_ID', $data) || !is_numeric($data['m_ID']))) {
-			throw new CMSException('Daten ungültig. Menu-ID verlangt.', EXCEPTION_MODULE_CODE, 'Laufzeit-Fehler');
+			throw new CMSException(array('content' => 'no_menu_id'), EXCEPTION_MODULE_CODE, "", array('content' => 'runtime_error'));
 		}
 
 		/*Modus Content editieren*/
@@ -413,8 +420,8 @@ class Contentadmin implements Module
 	{
 		$answer = array();
 
-		$entry_vars = $this->_configvars['Editor-Entry'];
-		$error_vars = $this->_configvars['Editor-Error'];
+		$entry_vars = $this->_config_textes['Editor-Entry'];
+		$error_vars = $this->_config_textes['Editor-Error'];
 
 		$formcheck = new Formularcheck();
 
@@ -509,7 +516,7 @@ class Contentadmin implements Module
 	{
 		$this->_tplfile = 'content_editor.tpl';
 		$smarty_array = array();
-		$lang_vars = $this->_configvars['Editor-Entry'];
+		$lang_vars = $this->_config_textes['Editor-Entry'];
 
 
 
@@ -694,7 +701,7 @@ class Contentadmin implements Module
 	 * - Menupunkte verweisen auf Seiten/Module, die nicht erreichbar sind.
 	 * - Mehr als ein Menu-Punkt ist einem Inhalt/Modul zugewiesen
 	 * - Ein Inhalt/Modul wird nicht von einem Menu-Punkt verwiesen
-	 * 
+	 * @todo: Funktion schreiben
 	 *
 	 */
 
@@ -704,6 +711,4 @@ class Contentadmin implements Module
 	}
 
 }
-
-
 ?>

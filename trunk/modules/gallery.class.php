@@ -1,11 +1,17 @@
 <?php
-
+/**
+ * Dieses Modul ist für die Gallery zuständig, die Anzeige von Bildern
+ * in den verschiedenen Alben und richtigen Reihenfolge.
+ * 
+ * @package JClubCMS
+ * @author Simon Däster
+ * @license  http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3
+ */
 require_once ADMIN_DIR."lib/page.class.php";
 
 require_once ADMIN_DIR.'lib/module.interface.php';
 require_once ADMIN_DIR.'lib/messageboxes.class.php';
 require_once ADMIN_DIR.'lib/smilies.class.php';
-require_once USER_DIR.'config/gbook_textes.inc.php';
 
 /**
  * Dieses Modul ist für die Gallery zuständig, die Anzeige von Bildern
@@ -76,16 +82,15 @@ class Gallery implements Module
 
 	/**
 	 * Führt die einzelnen Methoden aus, abhaengig vom parameter
-	 *
+	 * @global string dir_smilies Used for the dir where the smilies-gif are saved
 	 * @param array $parameters POST, GET und COOKIE-Variablen
 	 */
 
 	public function action($gpc)
 	{
 		//Daten initialisieren
-		global $dir_smilies;
 		$this->_gpc = $gpc;
-		$this->_smilie = new Smilies($dir_smilies);
+		$this->_smilie = new Smilies(SMILIES_DIR);
 
 		/*
 		Unterstützung in der nächsten Version
@@ -196,7 +201,8 @@ class Gallery implements Module
 	 * Zeigt die Gallery an, genauer einen Teil der Bilder zu der gehörenden Gallery.
 	 * Eine Gallery kann in mehrere Seiten unterteilt sein, je nach der Anzahl der Bilder.
 	 * Eine Gallery kann eine übergeordnete Kategorie haben, jedoch keine übergeordnete Gallery.
-	 *
+	 * @global int gallery_pics_x Number of pictures in x
+	 * @global int $gallery_pics_y Number of pictures in y
 	 * @param int $gal_ID Gallery-ID
 	 */
 	private function _showGallery($gal_ID)
@@ -205,13 +211,12 @@ class Gallery implements Module
 		/* Anzeige-Config-Daten auslesen */
 		include_once(USER_DIR.'config/user-config.inc.php');
 
-		global $gallery_pics_x, $gallery_pics_y;
 
 		/*Aktuelle Seite ermitteln */
 		$page = Page::get_current_page($this->_gpc['GET']);
 
 		//Ein paar Daten berechnen
-		$bildproseite = (int)($gallery_pics_x * $gallery_pics_y);
+		$bildproseite = (int)(GALLERY_PICS_X * GALLERY_PICS_Y);
 		$start = (int)(($page-1)*$bildproseite);
 
 
@@ -242,7 +247,7 @@ class Gallery implements Module
 		$this->_smarty->assign("pages", $pages_array);
 		$this->_smarty->assign("gallery", $gallery_imgs);
 		$this->_smarty->assign(array('thispage' => $page, 'number' => $number, 'gal_ID' => $gal_ID,
-		'top_ID' => $root[(count($root) - 1)]['ID'], 'gallery_name' => $gallery_name, 'breakline' => $gallery_pics_x));
+		'top_ID' => $root[(count($root) - 1)]['ID'], 'gallery_name' => $gallery_name, 'breakline' => GALLERY_PICS_X));
 
 
 	}
@@ -349,7 +354,9 @@ class Gallery implements Module
 
 		if ($inc_hs == true) {
 			/*Hauptseite noch einfügen*/
-			$tmp_arr[++$i] = array('ID' => '0', 'name' => 'Hauptseite');
+			$this->_smarty->config_load('textes.de.conf', 'Gallery');
+			$gallery_textes = $this->_smarty->get_config_vars();
+			$tmp_arr[++$i] = array('ID' => '0', 'name' => $gallery_textes['mainsite']);
 			return array_reverse($tmp_arr);
 		} else {
 			return null;

@@ -1,23 +1,24 @@
 <?php
-
+/**
+ * 
+ * 
+ * @author David Däster
+ * @package JClubCMS
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3
+ */
 
 /**
  * Klasse fuer den den ganzen Mail-Ablauf
  * 
- * 1. Phase
- * 
- * - Hash-Berechnung 
- * 
- * - Ablage in Datenbank
- * 
- * - Versand Kontrollmail
- * 
- * 2. Phase
- * 
- * - Auslese aus Datenbank
- * 
- * - Versand des Mails
-
+ * Ablauf der Phasen
+ * <ol><li>1. Phase
+ * <ul><li>Hash-Berechnung</li>
+ * <li>Ablage in Datenbank</li>
+ * <li>Versand Kontrollmail</li></ul></li>
+ * <li>2. Phase
+ * <ul><li>Auslese aus Datenbank</li>
+ * <li>Versand des Mails</li>
+ * </ul></li></ol>
  * @author David Däster
  * @package JClubCMS
  * File: mailsend.class.php
@@ -41,7 +42,7 @@ class Mailsend {
 	/**
 	 * Versendet den Link um die Mail auszulösen
 	 *
-	 * @param object $mysql_link MysqlObjekt
+	 * @param Mysql $mysql_link MysqlObjekt
 	 * @param string $mail_reciver_name Mailempängername (aus Datenbank)
 	 * @param string $mail_reciver Mailempfänger (aus Datenbank)
 	 * @param string $mail_sender_name Mailsendername (aus Formular)
@@ -63,14 +64,17 @@ class Mailsend {
 		$hash = $this->_mail_hash();
 		$this->_mail2db($mysql_link, $hash);
 		
-                $header = 'From: Jclub.ch <mail_query@jclub.ch>'."\r\n"
-                          .'X-Mailer: PHP/' . phpversion();
-                $msg = "Um die Mail zu senden benutzen Sie bitte folgenden Link:\r\n"
-                   ."http://{$_SERVER['HTTP_HOST']}{$_SERVER['SCRIPT_NAME']}?mail&hash=".$hash;
-                $empfaenger = $this->_mail_sender;
-                $betreff = 'Bestaetigung des Mail-Sendens';
-                $failer = $this->_mail_send($empfaenger,$betreff,$msg,$header);
-                return $failer;
+		global $system_textes;
+		
+        $header = 'From: Jclub.ch <mail_query@jclub.ch>'."\r\n"
+                  .'X-Mailer: PHP/' . phpversion();
+        $msg = $system_textes[LANGUAGE_ABR]['mail']['link_send'].":\r\n"
+           ."http://{$_SERVER['HTTP_HOST']}{$_SERVER['SCRIPT_NAME']}?mail&hash=".$hash;
+        $empfaenger = $this->_mail_sender;
+        $betreff = $system_textes[LANGUAGE_ABR]['mail']['send_check'];
+        $failer = $this->_mail_send($empfaenger,$betreff,$msg,$header);
+        return $failer;
+
 	}
 
 	/**

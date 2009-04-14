@@ -40,8 +40,6 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---auth.class.php.html">		auth.class.php
 		</a><br>
-			<a href="../JClubCMS/_admin---config---auth_textes.inc.php.html">		auth_textes.inc.php
-		</a><br>
 			<a href="../JClubCMS/_admin---lib---bbcodes.class.php.html">		bbcodes.class.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---captcha.class.php.html">		captcha.class.php
@@ -64,13 +62,11 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---modules---gbookadmin.class.php.html">		gbookadmin.class.php
 		</a><br>
-			<a href="../JClubCMS/_config---gbook_textes.inc.php.html">		gbook_textes.inc.php
-		</a><br>
 			<a href="../JClubCMS/_admin---config---global-config.inc.php.html">		global-config.inc.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---image.class.php.html">		image.class.php
 		</a><br>
-			<a href="../JClubCMS/_admin---modules---image_send.class.php.html">		image_send.class.php
+			<a href="../JClubCMS/_admin---modules---imageadmin_send.class.php.html">		imageadmin_send.class.php
 		</a><br>
 			<a href="../JClubCMS/_modules---image_send.class.php.html">		image_send.class.php
 		</a><br>
@@ -78,13 +74,11 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---index.php.html">		index.php
 		</a><br>
-			<a href="../JClubCMS/_admin---modules---mailmodule.class.php.html">		mailmodule.class.php
+			<a href="../JClubCMS/_admin---modules---mailadminmodule.class.php.html">		mailadminmodule.class.php
 		</a><br>
 			<a href="../JClubCMS/_modules---mailmodule.class.php.html">		mailmodule.class.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---mailsend.class.php.html">		mailsend.class.php
-		</a><br>
-			<a href="../JClubCMS/_config---mail_textes.inc.php.html">		mail_textes.inc.php
 		</a><br>
 			<a href="../JClubCMS/_modules---members.class.php.html">		members.class.php
 		</a><br>
@@ -108,7 +102,7 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---smilies.class.php.html">		smilies.class.php
 		</a><br>
-			<a href="../JClubCMS/_admin---lib---timeparser.class.php.html">		timeparser.class.php
+			<a href="../JClubCMS/_admin---config---system_textes.inc.php.html">		system_textes.inc.php
 		</a><br>
 			<a href="../JClubCMS/_javascript---tinymce---tiny_mce_gzip.php.html">		tiny_mce_gzip.php
 		</a><br>
@@ -116,6 +110,10 @@
 		</a><br>
 	  </div><br />
       
+            <b>Interfaces:</b><br />
+        <div class="package">
+		    		<a href="../JClubCMS/Module.html">Module</a><br />
+	  </div>
       
             <b>Classes:</b><br />
         <div class="package">
@@ -145,7 +143,6 @@
 	    		<a href="../JClubCMS/Page.html">Page</a><br />
 	    		<a href="../JClubCMS/Session.html">Session</a><br />
 	    		<a href="../JClubCMS/Smilies.html">Smilies</a><br />
-	    		<a href="../JClubCMS/Timeparser.html">Timeparser</a><br />
 	  </div>
                 </td>
     <td>
@@ -163,14 +160,19 @@ Source Location: /admin/modules/moduladmin.class.php<br /><br />
 <div class="description">Diese Datei ist für die Administration der Contents zuständig.</div><br /><br />
 <h4>Author(s):</h4>
 <ul>
-          <li>Simon Däster  contentadmin.class.php</li>
-            </ul>
+          <li>Simon Däster</li>
+                  </ul>
 
 
 
 
-        
+            
 
+                <p class="implements">
+            Implements interfaces:
+            <ul>
+                <li><a href="../JClubCMS/Module.html">Module</a></li>            </ul>
+        </p>
         
 </td>
 
@@ -182,11 +184,6 @@ Source Location: /admin/modules/moduladmin.class.php<br /><br />
     <li><a href="../JClubCMS/Moduladmin.html#method__construct">__construct</a></li>
     <li><a href="../JClubCMS/Moduladmin.html#methodaction">action</a></li>
     <li><a href="../JClubCMS/Moduladmin.html#methodgettplfile">gettplfile</a></li>
-    <li><a href="../JClubCMS/Moduladmin.html#method_getinfo">_getinfo</a></li>
-    <li><a href="../JClubCMS/Moduladmin.html#method_isformsend">_isformsend</a></li>
-    <li><a href="../JClubCMS/Moduladmin.html#method_setinfo">_setinfo</a></li>
-    <li><a href="../JClubCMS/Moduladmin.html#method_updmods">_updmods</a></li>
-    <li><a href="../JClubCMS/Moduladmin.html#method_view">_view</a></li>
   </ul>
 </td>
 
@@ -206,16 +203,19 @@ Source Location: /admin/modules/moduladmin.class.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line 17]<br />
+[line <a href="../__filesource/fsource_JClubCMS__adminmodulesmoduladmin.class.php.html#a18">18</a>]<br />
 Diese Datei ist für die Administration der Contents zuständig.<br /><br /><p>Über dieses Modul wird das Hinzufügen von neuen Inhalten (Contents),  das Bearbeiten von bestehenden und das Archivieren (verstecken)  von vergangenen und Löschen zuständig.</p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>author:</b>&nbsp;&nbsp;</td><td>Simon Däster  contentadmin.class.php</td>
+    <td><b>author:</b>&nbsp;&nbsp;</td><td>Simon Däster</td>
   </tr>
   <tr>
     <td><b>todo:</b>&nbsp;&nbsp;</td><td>Klasse aufbauen und Funktionen integrieren</td>
+  </tr>
+  <tr>
+    <td><b>license:</b>&nbsp;&nbsp;</td><td><a href="http://opensource.org/licenses/gpl-3.0.html">GNU Public License version 3</a></td>
   </tr>
 </table>
 </div>
@@ -230,7 +230,7 @@ Diese Datei ist für die Administration der Contents zuständig.<br /><br /><p>�
 
   <hr />
 	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line 61]</span></h3>
+	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminmodulesmoduladmin.class.php.html#a62">62</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -242,8 +242,22 @@ $smarty)</code>
     </td></tr></table><br />
 	
 		Aufbau der Klasse<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
 
-	
+			<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../JClubCMS/Module.html#method__construct">Module::__construct()</a></dt>
+					</dl>
+		
         <h4>Parameters:</h4>
     <div class="tags">
     <table border="0" cellspacing="0" cellpadding="0">
@@ -263,7 +277,7 @@ $smarty)</code>
   </div>
   <hr />
 	<a name="methodaction"></a>
-	<h3>method action <span class="smalllinenumber">[line 74]</span></h3>
+	<h3>method action <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminmodulesmoduladmin.class.php.html#a75">75</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -275,8 +289,22 @@ $parameters)</code>
     </td></tr></table><br />
 	
 		Fuehrt die einzelnen Methoden aus, abhaengig vom parameter<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+</table>
+</div>
+<br /><br />
 
-	
+			<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../JClubCMS/Module.html#methodaction">Module::action()</a></dt>
+					</dl>
+		
         <h4>Parameters:</h4>
     <div class="tags">
     <table border="0" cellspacing="0" cellpadding="0">
@@ -296,7 +324,7 @@ $parameters)</code>
   </div>
   <hr />
 	<a name="methodgettplfile"></a>
-	<h3>method gettplfile <span class="smalllinenumber">[line 91]</span></h3>
+	<h3>method gettplfile <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminmodulesmoduladmin.class.php.html#a92">92</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -312,162 +340,19 @@ $parameters)</code>
   <tr>
     <td><b>return:</b>&nbsp;&nbsp;</td><td>Template-Datei</td>
   </tr>
-</table>
-</div>
-<br /><br />
-
-	
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="method_getinfo"></a>
-	<h3>method _getinfo <span class="smalllinenumber">[line 196]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>array|string _getinfo(
-[boolean
-$as_string = true])</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Speichert Strings in einem Array ab, das jederzeit verfügbar ist.<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td><b>return:</b>&nbsp;&nbsp;</td><td>Aktuelles Array (im Format String, wenn gewählt)</td>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
   </tr>
 </table>
 </div>
 <br /><br />
 
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">boolean&nbsp;&nbsp;</td>
-        <td><b>$as_string</b>&nbsp;&nbsp;</td>
-        <td>Daten in Array oder als String zurückgeben</td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="method_isformsend"></a>
-	<h3>method _isformsend <span class="smalllinenumber">[line 169]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>boolean _isformsend(
-)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Prüft, ob das Editor-Formular gesendet wurde.<br /><br /><p>Trifft dies zu, gibt die Methode true zurück, ansonsten false</p><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>return:</b>&nbsp;&nbsp;</td><td>Formular gesendet?</td>
-  </tr>
-</table>
-</div>
-<br /><br />
-
-	
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="method_setinfo"></a>
-	<h3>method _setinfo <span class="smalllinenumber">[line 181]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>array _setinfo(
-[string
-$string = null])</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Speichert Strings in einem Array ab, das jederzeit verfügbar ist.<br /><br /><br /><br />
-<h4>Tags:</h4>
-<div class="tags">
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><b>return:</b>&nbsp;&nbsp;</td><td>Aktuelles Array</td>
-  </tr>
-</table>
-</div>
-<br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">string&nbsp;&nbsp;</td>
-        <td><b>$string</b>&nbsp;&nbsp;</td>
-        <td>Zeichenkette, die gespeichert werden soll</td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="method_updmods"></a>
-	<h3>method _updmods <span class="smalllinenumber">[line 136]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void _updmods(
-array
-$data)</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Schaut nach veränderten Modulen und ändert den Status<br /><br /><br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">array&nbsp;&nbsp;</td>
-        <td><b>$data</b>&nbsp;&nbsp;</td>
-        <td>Daten</td>
-      </tr>
-        </table>
-    </div><br />
-        <div class="top">[ <a href="#top">Top</a> ]</div>
-  </div>
-  <hr />
-	<a name="method_view"></a>
-	<h3>method _view <span class="smalllinenumber">[line 101]</span></h3>
-	<div class="function">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>void _view(
-[int
-$number = 20])</code>
-    </td></tr></table>
-    </td></tr></table><br />
-	
-		Zeigt die einzelnen Contents an.<br /><br /><br /><br />
-
-	
-        <h4>Parameters:</h4>
-    <div class="tags">
-    <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-        <td class="type">int&nbsp;&nbsp;</td>
-        <td><b>$number</b>&nbsp;&nbsp;</td>
-        <td>Anzahl Einträge pro Seite</td>
-      </tr>
-        </table>
-    </div><br />
+			<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../JClubCMS/Module.html#methodgettplfile">Module::gettplfile()</a></dt>
+					</dl>
+		
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
 </div><br />
@@ -475,7 +360,7 @@ $number = 20])</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Sat, 11 Apr 2009 12:39:14 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Mon, 13 Apr 2009 23:00:09 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

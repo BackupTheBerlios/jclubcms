@@ -1,11 +1,15 @@
 <?php
 /**
- * Die Session-Klasse handelt mit den Session-Daten, welche in der Datenbank abgespitz sind.
+ * Beinhaltet die Klassen und Methoden für das Sessionhandling.
  * @author Simon Däster
  * @package JClubCMS
- * 
- * file: session.class.php
- * classes: session
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3
+ */
+/**
+ * Ermöglicht das Sessionhandling.
+ * Wird primär gebraucht für Bereiche mit Login.
+ * @author Simon Däster
+ * @package JClubCMS
  *
  */
 class Session {
@@ -89,7 +93,7 @@ class Session {
     
     public function activ($maxtime)
     {
-    	$this->_mysql->query("Select last_activity from `admin_session`where `session_id` = '{$this->_session_id}'");
+    	$this->_mysql->query("SELECT `last_activity` FROM `admin_session` WHERE `session_id` = '{$this->_session_id}'");
     	$lasttime = $this->_mysql->fetcharray();
 
     	$this->_mysql->query("SELECT TIME_TO_SEC(TIMEDIFF(NOW(), '{$lasttime[0]}')) as Diff");
@@ -166,7 +170,7 @@ class Session {
 	{
 		$i = 0;
 		/* Alte Session mit der gleichen User_ID löschen */
-		$sql = "SELECT `session_id` from `admin_session` WHERE `session_id` != '{$this->_session_id}'";
+		$sql = "SELECT `session_id` FROM `admin_session` WHERE `session_id` != '{$this->_session_id}'";
 		
 		$this->_mysql->query($sql);
 		$this->_mysql->saverecords('num');

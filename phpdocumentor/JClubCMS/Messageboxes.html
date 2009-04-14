@@ -40,8 +40,6 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---auth.class.php.html">		auth.class.php
 		</a><br>
-			<a href="../JClubCMS/_admin---config---auth_textes.inc.php.html">		auth_textes.inc.php
-		</a><br>
 			<a href="../JClubCMS/_admin---lib---bbcodes.class.php.html">		bbcodes.class.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---captcha.class.php.html">		captcha.class.php
@@ -64,13 +62,11 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---modules---gbookadmin.class.php.html">		gbookadmin.class.php
 		</a><br>
-			<a href="../JClubCMS/_config---gbook_textes.inc.php.html">		gbook_textes.inc.php
-		</a><br>
 			<a href="../JClubCMS/_admin---config---global-config.inc.php.html">		global-config.inc.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---image.class.php.html">		image.class.php
 		</a><br>
-			<a href="../JClubCMS/_admin---modules---image_send.class.php.html">		image_send.class.php
+			<a href="../JClubCMS/_admin---modules---imageadmin_send.class.php.html">		imageadmin_send.class.php
 		</a><br>
 			<a href="../JClubCMS/_modules---image_send.class.php.html">		image_send.class.php
 		</a><br>
@@ -78,13 +74,11 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---index.php.html">		index.php
 		</a><br>
-			<a href="../JClubCMS/_admin---modules---mailmodule.class.php.html">		mailmodule.class.php
+			<a href="../JClubCMS/_admin---modules---mailadminmodule.class.php.html">		mailadminmodule.class.php
 		</a><br>
 			<a href="../JClubCMS/_modules---mailmodule.class.php.html">		mailmodule.class.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---mailsend.class.php.html">		mailsend.class.php
-		</a><br>
-			<a href="../JClubCMS/_config---mail_textes.inc.php.html">		mail_textes.inc.php
 		</a><br>
 			<a href="../JClubCMS/_modules---members.class.php.html">		members.class.php
 		</a><br>
@@ -108,7 +102,7 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---smilies.class.php.html">		smilies.class.php
 		</a><br>
-			<a href="../JClubCMS/_admin---lib---timeparser.class.php.html">		timeparser.class.php
+			<a href="../JClubCMS/_admin---config---system_textes.inc.php.html">		system_textes.inc.php
 		</a><br>
 			<a href="../JClubCMS/_javascript---tinymce---tiny_mce_gzip.php.html">		tiny_mce_gzip.php
 		</a><br>
@@ -116,6 +110,10 @@
 		</a><br>
 	  </div><br />
       
+            <b>Interfaces:</b><br />
+        <div class="package">
+		    		<a href="../JClubCMS/Module.html">Module</a><br />
+	  </div>
       
             <b>Classes:</b><br />
         <div class="package">
@@ -145,7 +143,6 @@
 	    		<a href="../JClubCMS/Page.html">Page</a><br />
 	    		<a href="../JClubCMS/Session.html">Session</a><br />
 	    		<a href="../JClubCMS/Smilies.html">Smilies</a><br />
-	    		<a href="../JClubCMS/Timeparser.html">Timeparser</a><br />
 	  </div>
                 </td>
     <td>
@@ -160,12 +157,16 @@ Source Location: /admin/lib/messageboxes.class.php<br /><br />
 
 <h3><a href="#class_details">Class Overview</a></h3>
 <pre></pre><br />
-<div class="description"></div><br /><br />
+<div class="description">Dem Konstruktor wird der Aufbau der Tabelle mit einem Array weitergegeben. Werte in diesem Array unbeding vorkommen muss ID</div><br /><br />
+<h4>Author(s):</h4>
+<ul>
+          <li>Simon Däster</li>
+                        </ul>
 
 
 
 
-
+                
 
         
 </td>
@@ -178,6 +179,12 @@ Source Location: /admin/lib/messageboxes.class.php<br /><br />
     <li><a href="../JClubCMS/Messageboxes.html#method__construct">__construct</a></li>
     <li><a href="../JClubCMS/Messageboxes.html#methodaddEntry">addEntry</a></li>
     <li><a href="../JClubCMS/Messageboxes.html#methodcommentEntry">commentEntry</a></li>
+    <li><a href="../JClubCMS/Messageboxes.html#methoddelEntry">delEntry</a></li>
+    <li><a href="../JClubCMS/Messageboxes.html#methodeditEntry">editEntry</a></li>
+    <li><a href="../JClubCMS/Messageboxes.html#methodformCheck">formCheck</a></li>
+    <li><a href="../JClubCMS/Messageboxes.html#methodgetEntries">getEntries</a></li>
+    <li><a href="../JClubCMS/Messageboxes.html#methodgetEntry">getEntry</a></li>
+    <li><a href="../JClubCMS/Messageboxes.html#methodis_comment">is_comment</a></li>
   </ul>
 </td>
 
@@ -197,7 +204,25 @@ Source Location: /admin/lib/messageboxes.class.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line 46]<br />
+[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a52">52</a>]<br />
+Dem Konstruktor wird der Aufbau der Tabelle mit einem Array weitergegeben. Werte in diesem Array unbeding vorkommen muss ID<br /><br /><p>und content. Weiter nueztliche Dine sind ref_ID, name, time, hp, mail. So koennen die Daten nach time geordenet werden  oder hp/mail verifiziert werden. Sie sind nicht absolut noetig, aber hilfreich. Damit diese richtig behandelt werden,  muessen sie mit den richtigen Array-keys uebermittelt werden. Natuerlich koennen weitere Daten angegeben werden,  die werden aber nicht besonders behandelt. Diese koennen mit nummerierten keys weitergegeben werden.</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>author:</b>&nbsp;&nbsp;</td><td>Simon Däster</td>
+  </tr>
+  <tr>
+    <td><b>usedby:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/News.html">News</a></td>
+  </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Formularcheck.html">Formularcheck</a> - Plausibilitätsüberprüfung von Formularen</td>
+  </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Mysql.html">Mysql</a> - Für die Verbindung zur Mysql-DB</td>
+  </tr>
+</table>
+</div>
 </div><br /><br />
 <div class="top">[ <a href="#top">Top</a> ]</div><br />
 
@@ -209,26 +234,41 @@ Source Location: /admin/lib/messageboxes.class.php<br /><br />
 
   <hr />
 	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line 89]</span></h3>
+	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a97">97</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
 		<code>Messageboxes __construct(
-mysql
+<a href="../JClubCMS/Mysql.html">Mysql</a>
 $mysql, string
 $tablename, array
 $tablestruct)</code>
     </td></tr></table>
     </td></tr></table><br />
 	
-		Baut die Klasse auf.<br /><br /><p>Kontrolliert, ob ein MySQL-Objetk weitergegeben wurde und testet (mittels anderer Methoden), ob der Tabellenname und die Struktur stimmen.</p><br /><br /><br />
+		Baut die Klasse auf. Kontrolliert, ob ein MySQL-Objetk weitergegeben wurde und testet (mittels anderer  Methoden), ob der Tabellenname und die Struktur stimmen.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Mysql.html">Mysql</a> - Für die Verbindung zur Mysql-DB</td>
+  </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Formularcheck.html">Formularcheck</a> - Plausibilitätsüberprüfung von Formularen</td>
+  </tr>
+</table>
+</div>
+<br /><br />
 
 	
         <h4>Parameters:</h4>
     <div class="tags">
     <table border="0" cellspacing="0" cellpadding="0">
           <tr>
-        <td class="type">mysql&nbsp;&nbsp;</td>
+        <td class="type"><a href="../JClubCMS/Mysql.html">Mysql</a>&nbsp;&nbsp;</td>
         <td><b>$mysql</b>&nbsp;&nbsp;</td>
         <td>Mysql-Objekt</td>
       </tr>
@@ -248,7 +288,7 @@ $tablestruct)</code>
   </div>
   <hr />
 	<a name="methodaddEntry"></a>
-	<h3>method addEntry <span class="smalllinenumber">[line 133]</span></h3>
+	<h3>method addEntry <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a142">142</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -264,6 +304,12 @@ $tabledata)</code>
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td><b>return:</b>&nbsp;&nbsp;</td><td>Liefert bei Erfolg true, sonst Exception</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Mysql.html">Mysql</a> - Für die Verbindung zur Mysql-DB</td>
   </tr>
 </table>
 </div>
@@ -284,13 +330,13 @@ $tabledata)</code>
   </div>
   <hr />
 	<a name="methodcommentEntry"></a>
-	<h3>method commentEntry <span class="smalllinenumber">[line 197]</span></h3>
+	<h3>method commentEntry <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a207">207</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
 		<code>boolean commentEntry(
 num
-$id, array
+$id, 
 $tabledata)</code>
     </td></tr></table>
     </td></tr></table><br />
@@ -301,6 +347,12 @@ $tabledata)</code>
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td><b>return:</b>&nbsp;&nbsp;</td><td>Liefert bei Erfolg true, sonst Exception</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Mysql.html">Mysql</a> - Für die Verbindung zur Mysql-DB</td>
   </tr>
 </table>
 </div>
@@ -324,12 +376,303 @@ $tabledata)</code>
     </div><br />
         <div class="top">[ <a href="#top">Top</a> ]</div>
   </div>
+  <hr />
+	<a name="methoddelEntry"></a>
+	<h3>method delEntry <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a476">476</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void delEntry(
+int
+$id)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Loescht einen Eintrag aus der Datenbank inkl. alle Kommentaren<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Mysql.html">Mysql</a> - Für die Verbindung zur Mysql-DB</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$id</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodeditEntry"></a>
+	<h3>method editEntry <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a273">273</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void editEntry(
+array
+$tabledata, array
+$tablestddata)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Ueberprueft die Eintrage und fuegt sie in die MySQL-Tabelle per Update-Befehl ein.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Mysql.html">Mysql</a> - Für die Verbindung zur Mysql-DB</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">array&nbsp;&nbsp;</td>
+        <td><b>$tabledata</b>&nbsp;&nbsp;</td>
+        <td>einzugebende Daten</td>
+      </tr>
+          <tr>
+        <td class="type">array&nbsp;&nbsp;</td>
+        <td><b>$tablestddata</b>&nbsp;&nbsp;</td>
+        <td>Standartdaten aus dem Formular, welche nicht gebraucht werden duerfen.</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodformCheck"></a>
+	<h3>method formCheck <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a544">544</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>array formCheck(
+array
+$tabledata, array
+$stddata)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Kontrolliert die Daten auf Standarteintraege und leere Strings; ebenso wird die Mail-Adresse und die Homepage kontrolliert.<br /><br /><p>Zurueck kommt ein Array mit den Schluesseln vom $tabledata mit folgenden Angaben:  true -&gt; angaben richtig  false -&gt; angaben leer oder Standartwert  'invalid' -&gt; ungueltig (nur bei email)  string -&gt; korrigierter wert (nur bei hp)</p><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Ergebnis</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Formularcheck.html">Formularcheck</a> - Plausibilitätsüberprüfung von Formularen</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">array&nbsp;&nbsp;</td>
+        <td><b>$tabledata</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">array&nbsp;&nbsp;</td>
+        <td><b>$stddata</b>&nbsp;&nbsp;</td>
+        <td>Standartangaben</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodgetEntries"></a>
+	<h3>method getEntries <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a383">383</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>array getEntries(
+int
+$entries_pp, int
+$page, [string
+$order = 'DESC'], [string
+$corder = 'ASC'], [string
+$timeformat = &quot;&quot;])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Liefert die Tabelleneintraege im angegebenen Bereich (wenn moeglich) zeitlich geordnet und (wenn angegeben)  zeitformatiert zurueck.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Eintraege, bei Fehler false</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Mysql.html">Mysql</a> - Für die Verbindung zur Mysql-DB</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$entries_pp</b>&nbsp;&nbsp;</td>
+        <td>Eintraege pro Seite</td>
+      </tr>
+          <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$page</b>&nbsp;&nbsp;</td>
+        <td>Seite (startet bei 1)</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$order</b>&nbsp;&nbsp;</td>
+        <td>Reihenfolge der Haupteinträge DESC|ASC</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$corder</b>&nbsp;&nbsp;</td>
+        <td>Reihenfolge der Kommentare DESC|ASC</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$timeformat</b>&nbsp;&nbsp;</td>
+        <td>Zeitformat nach Mysql</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodgetEntry"></a>
+	<h3>method getEntry <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a328">328</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>array getEntry(
+int
+$id, [string
+$timeformat = &quot;&quot;], [boolean
+$comments = true])</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Liefert ein Tabelleneintrag mit der angegebenen ID und formatiert (wenn angegeben) die Zeit.<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>return:</b>&nbsp;&nbsp;</td><td>Eintrag, bei Fehler false</td>
+  </tr>
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Mysql.html">Mysql</a> - Für die Verbindung zur Mysql-DB</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$id</b>&nbsp;&nbsp;</td>
+        <td>ID des Eintrags</td>
+      </tr>
+          <tr>
+        <td class="type">string&nbsp;&nbsp;</td>
+        <td><b>$timeformat</b>&nbsp;&nbsp;</td>
+        <td>Zeitformat nach Mysql</td>
+      </tr>
+          <tr>
+        <td class="type">boolean&nbsp;&nbsp;</td>
+        <td><b>$comments</b>&nbsp;&nbsp;</td>
+        <td>Kommentare auch senden</td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
+  <hr />
+	<a name="methodis_comment"></a>
+	<h3>method is_comment <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a511">511</a>]</span></h3>
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>boolean is_comment(
+int
+$id)</code>
+    </td></tr></table>
+    </td></tr></table><br />
+	
+		Gibt an, ob die angegeben ID ein Kommentar ist oder nicht<br /><br /><br /><br />
+<h4>Tags:</h4>
+<div class="tags">
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td><b>access:</b>&nbsp;&nbsp;</td><td>public</td>
+  </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Mysql.html">Mysql</a> - Für die Verbindung zur Mysql-DB</td>
+  </tr>
+</table>
+</div>
+<br /><br />
+
+	
+        <h4>Parameters:</h4>
+    <div class="tags">
+    <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+        <td class="type">int&nbsp;&nbsp;</td>
+        <td><b>$id</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+        </table>
+    </div><br />
+        <div class="top">[ <a href="#top">Top</a> ]</div>
+  </div>
 </div><br />
 
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Sat, 11 Apr 2009 12:39:13 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Mon, 13 Apr 2009 23:00:08 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

@@ -1,18 +1,33 @@
 <?php
+/**
+ * Anzeige und Hinzufügen von Gästebucheinträgen
+ * 
+ * In dieser Datei sind die Klassen und Module für das Anzeigen und 
+ * Hinzufügen von Gästebucheinträgen konsolidiert.
+ * 
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License version 3
+ * @author Simon Däster
+ * @package JClubCMS
+ */
+/**
+ * Messageboxes für den standardisierten Zugriff auf Tabellen
+ */
 require_once ADMIN_DIR.'lib/messageboxes.class.php';
+/**
+ * Smilies für das anzeigen von Smilies
+ */
 require_once ADMIN_DIR.'lib/smilies.class.php';
+/**
+ * Das Module-Interface
+ */
 require_once ADMIN_DIR.'lib/module.interface.php';
-require_once USER_DIR.'config/gbook_textes.inc.php';
 /**
  * 
  * Diese Klasse ist zuständig für das Anzeigen und Hinzufügen der Gästebucheinträge.
- * 
  * @author Simon Däster
+ * @uses Mysql Für Verbindungen zur MySQL-DB.
  * @package JClubCMS
- * gbook.class.php
  */
-
-
 
 class Gbook implements Module {
 	/**
@@ -61,7 +76,7 @@ class Gbook implements Module {
 	 */
 	private $_msbox = null;
 
-	private $_timeformat = '%e.%m.%Y %k:%i';
+	private $_timeformat = TIMEFORMAT;
 
 	/**
 	 * Daten aus den Config-Dateien
@@ -95,12 +110,12 @@ class Gbook implements Module {
 	 * Führt die einzelnen Methoden aus, abhängig vom Parameter
 	 *
 	 * @param array $gpc $_POST- und $_GET-Arrays
+	 * @global string dir_smilies Used for the dir where the smilies-gif are saved
+	 * @global int gbook_entries_per_page
 	 * @return boolean
 	 */
 	public function action($gpc)
 	{
-
-		global $dir_smilies, $gbook_entries_per_page;
 
 		//Daten laden
 		$this->_smarty->config_load('textes.de.conf', 'Gbook');
@@ -114,7 +129,7 @@ class Gbook implements Module {
 		'content' => 'gbook_content', 'name' => 'gbook_name', 'time' => 'gbook_time', 'email' => 'gbook_email',
 		'hp' => 'gbook_hp', 'title' => 'gbook_title'));
 
-		$this->_smilie = new Smilies($dir_smilies);
+		$this->_smilie = new Smilies(SMILIES_DIR);
 
 		if (isset($this->_gpc['GET']['action'])) {
 			switch ($this->_gpc['GET']['action']) {
@@ -125,16 +140,16 @@ class Gbook implements Module {
 					$this->_comment();
 					break;
 				case 'view':
-					$this->_view($gbook_entries_per_page);
+					$this->_view(GBOOK_ENTRIES_PER_PAGE);
 					break;
 				case '':
-					$this->_view($gbook_entries_per_page);
+					$this->_view(GBOOK_ENTRIES_PER_PAGE);
 					break;
 				default:
-					throw new CMSException('Gewählte Option ist nicht möglich', EXCEPTION_MODULE_CODE);
+					throw new CMSException(array('gbook' => 'invalid_option'), EXCEPTION_MODULE_CODE);
 			}
 		} else {
-			$this->_view($gbook_entries_per_page);
+			$this->_view(GBOOK_ENTRIES_PER_PAGE);
 		}
 
 		return true;
@@ -154,7 +169,7 @@ class Gbook implements Module {
 	/**
 	 * Zeigt die Einträge an
 	 *
-	 * @param int $max_entries_pp Anzahl Einträge pro Seite
+	 * @param integer $max_entries_pp Anzahl Einträge pro Seite
 	 */
 
 	private function _view($max_entries_pp)

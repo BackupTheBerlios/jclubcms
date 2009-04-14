@@ -5,8 +5,7 @@
  *
  * @author Simon Däster
  * @package JClubCMS
- * File: module.interface.php
- * interace: Modules
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License version 3
  */
 
 interface Module

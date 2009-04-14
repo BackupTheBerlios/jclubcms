@@ -40,8 +40,6 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---auth.class.php.html">		auth.class.php
 		</a><br>
-			<a href="../JClubCMS/_admin---config---auth_textes.inc.php.html">		auth_textes.inc.php
-		</a><br>
 			<a href="../JClubCMS/_admin---lib---bbcodes.class.php.html">		bbcodes.class.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---captcha.class.php.html">		captcha.class.php
@@ -64,13 +62,11 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---modules---gbookadmin.class.php.html">		gbookadmin.class.php
 		</a><br>
-			<a href="../JClubCMS/_config---gbook_textes.inc.php.html">		gbook_textes.inc.php
-		</a><br>
 			<a href="../JClubCMS/_admin---config---global-config.inc.php.html">		global-config.inc.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---image.class.php.html">		image.class.php
 		</a><br>
-			<a href="../JClubCMS/_admin---modules---image_send.class.php.html">		image_send.class.php
+			<a href="../JClubCMS/_admin---modules---imageadmin_send.class.php.html">		imageadmin_send.class.php
 		</a><br>
 			<a href="../JClubCMS/_modules---image_send.class.php.html">		image_send.class.php
 		</a><br>
@@ -78,13 +74,11 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---index.php.html">		index.php
 		</a><br>
-			<a href="../JClubCMS/_admin---modules---mailmodule.class.php.html">		mailmodule.class.php
+			<a href="../JClubCMS/_admin---modules---mailadminmodule.class.php.html">		mailadminmodule.class.php
 		</a><br>
 			<a href="../JClubCMS/_modules---mailmodule.class.php.html">		mailmodule.class.php
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---mailsend.class.php.html">		mailsend.class.php
-		</a><br>
-			<a href="../JClubCMS/_config---mail_textes.inc.php.html">		mail_textes.inc.php
 		</a><br>
 			<a href="../JClubCMS/_modules---members.class.php.html">		members.class.php
 		</a><br>
@@ -108,7 +102,7 @@
 		</a><br>
 			<a href="../JClubCMS/_admin---lib---smilies.class.php.html">		smilies.class.php
 		</a><br>
-			<a href="../JClubCMS/_admin---lib---timeparser.class.php.html">		timeparser.class.php
+			<a href="../JClubCMS/_admin---config---system_textes.inc.php.html">		system_textes.inc.php
 		</a><br>
 			<a href="../JClubCMS/_javascript---tinymce---tiny_mce_gzip.php.html">		tiny_mce_gzip.php
 		</a><br>
@@ -116,6 +110,10 @@
 		</a><br>
 	  </div><br />
       
+            <b>Interfaces:</b><br />
+        <div class="package">
+		    		<a href="../JClubCMS/Module.html">Module</a><br />
+	  </div>
       
             <b>Classes:</b><br />
         <div class="package">
@@ -145,7 +143,6 @@
 	    		<a href="../JClubCMS/Page.html">Page</a><br />
 	    		<a href="../JClubCMS/Session.html">Session</a><br />
 	    		<a href="../JClubCMS/Smilies.html">Smilies</a><br />
-	    		<a href="../JClubCMS/Timeparser.html">Timeparser</a><br />
 	  </div>
                 </td>
     <td>
@@ -166,47 +163,24 @@ Source Location: /index.php<br /><br />
   <tr>
     <td><b>author:</b>&nbsp;&nbsp;</td><td>Simon Däster</td>
   </tr>
+  <tr>
+    <td><b>filesource:</b>&nbsp;&nbsp;</td><td><a href="../__filesource/fsource_JClubCMS__index.php.html">Source Code for this file</a></td>
+  </tr>
 </table>
 </div>
 <br /><br />
 <h4>Includes:</h4>
 <div class="tags">
-require_once(ADMIN_DIR."lib/core.class.php") [line 11]<br />
-require_once(<a href="../JClubCMS/_config---user-config.inc.php.html">USER_DIR."config/user-config.inc.php"</a>) [line 9]<br />
+require_once(<a href="../JClubCMS/_config---user-config.inc.php.html">USER_DIR.'config/user-config.inc.php'</a>) [line <a href="../__filesource/fsource_JClubCMS__index.php.html#a17">17</a>]<br />
+Konfigurationen laden*<br /><br />require_once(ADMIN_DIR.'lib/core.class.php') [line <a href="../__filesource/fsource_JClubCMS__index.php.html#a18">18</a>]<br />
 </div>
 <br /><br />
 <br /><br />
-  <hr />
-	<a name="defineADMIN_DIR"></a>
-	<h3>ADMIN_DIR <span class="smalllinenumber">[line 6]</span></h3>
-	<div class="tags">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>ADMIN_DIR = ./admin/</code>
-    </td></tr></table>
-    </td></tr></table>
-
-    Konstanten definieren*<br /><br />    <br />
-		</div>
-	<div class="top">[ <a href="#top">Top</a> ]</div><br /><br />
-  <hr />
-	<a name="defineUSER_DIR"></a>
-	<h3>USER_DIR <span class="smalllinenumber">[line 7]</span></h3>
-	<div class="tags">
-    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
-    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
-		<code>USER_DIR = ./</code>
-    </td></tr></table>
-    </td></tr></table>
-
-        <br />
-		</div>
-	<div class="top">[ <a href="#top">Top</a> ]</div><br /><br />
 <br />
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Sat, 11 Apr 2009 12:39:13 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Mon, 13 Apr 2009 23:00:04 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

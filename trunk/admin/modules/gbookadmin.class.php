@@ -1,17 +1,38 @@
 <?php
 /**
+ * Administration des Gästebuchs
+ * 
+ * Diese Datei beinhaltet alle Elemente für die Administration des Gästebuchs
  * @author Simon Däster
  * @package JClubCMS
- * gbookadmin.class.php
- * 
- * Diese Klasse ist zuständig für das Anzeigen und Hinzufügen der Gästebucheinträge.
- * 
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License version 3
  */
 
+/**
+ * Messageboxes für den standardisierten Zugriff auf Tabellen
+ */
 require_once ADMIN_DIR.'lib/messageboxes.class.php';
+/**
+ * Smilies für das Anzeigen von Smilies
+ */
 require_once ADMIN_DIR.'lib/smilies.class.php';
+/**
+ * Das Module-Interface
+ */
 require_once ADMIN_DIR.'lib/module.interface.php';
-require_once USER_DIR.'config/gbook_textes.inc.php';
+/**
+ * Diese Klasse ermöglicht die Administration des Gästebuchs
+ * 
+ * Diese Klasse beinhaltet die spezifischen Module für das Adminmenu
+ * um das Gästebuch zu verwalten.
+ * 
+ * Es ermöglicht folgende Funktionen:
+ * <ul><li>Anzeigen von Einträgen</li>
+ * <li>Editieren von Einträgen</li>
+ * <li>Löschen von Einträgen</li></ul> 
+ * @author Simon Däster
+ * @package JClubCMS 
+ */
 
 class Gbookadmin implements Module {
 	/**
@@ -23,7 +44,7 @@ class Gbookadmin implements Module {
 	/**
 	 * Mysql-Klasse
 	 *
-	 * @var mysql
+	 * @var Mysql
 	 */
 	private $_mysql = null;
 
@@ -58,7 +79,7 @@ class Gbookadmin implements Module {
 	 *
 	 * @var unknown_type
 	 */
-	private $_timeformat = '%e.%m.%Y %k:%i';
+	private $_timeformat = TIMEFORMAT;
 
 	/**
 	 * Daten aus den Config-Dateien
@@ -93,11 +114,10 @@ class Gbookadmin implements Module {
 	 *
 	 * @param array $gpc $_POST- und $_GET-Arrays
 	 * @return boolean
+	 * @uses Smarty als Template-System
 	 */
 	public function action($gpc)
 	{
-		global $dir_smilies;
-
 		//Daten laden
 		$this->_smarty->config_load('textes.de.conf', 'Gbook');
 		$this->_configvars['Gbook'] = $this->_smarty->get_config_vars();
@@ -113,10 +133,10 @@ class Gbookadmin implements Module {
 		'content' => 'gbook_content', 'name' => 'gbook_name', 'time' => 'gbook_time', 'email' => 'gbook_email',
 		'hp' => 'gbook_hp', 'title' => 'gbook_title'));
 
-		$this->_smilie = new Smilies($dir_smilies);
+		$this->_smilie = new Smilies(SMILIES_DIR);
 		
 		if ($this->_getStatus() == 'off') {
-			$this->_smarty->assign('info', 'Das Modul G&auml;stebuch ist deaktiviert. Benutzer k&ouml;nnen keine G&auml;stebucheintr&auml;ge anschauen');
+			$this->_smarty->assign('info', $this->_configvars['Gbook']['modul_deactivated']);
 		}
 
 		if (key_exists('action', $this->_gpc['GET'])) {
@@ -140,8 +160,7 @@ class Gbookadmin implements Module {
 					$this->_view(5);
 					break;
 				default:
-					throw new CMSException('Gewählte Option ist nicht möglich', EXCEPTION_MODULE_CODE);
-					return false;
+					throw new CMSException(array('gbook' => 'invalid_option'), EXCEPTION_MODULE_CODE);
 			}
 		} else {
 			$this->_view(5);
@@ -254,7 +273,7 @@ class Gbookadmin implements Module {
 				$this->_msbox->addEntry($answer);
 
 
-				$this->_send_feedback($gbook_vars['allright_title'], $gbook_vars['allright_content'], "?nav_id=$this->_nav_id", $mail_vars['allright_link']);
+				$this->_send_feedback($gbook_vars['allright_title'], $gbook_vars['allright_content'], "?nav_id=$this->_nav_id", $gbook_vars['allright_link']);
 
 
 
@@ -367,8 +386,9 @@ class Gbookadmin implements Module {
 	private function _del()
 	{
 		$gbook_vars = $this->_configvars['Gbook'];
-		$linktext = "JA";
-		$linktext2 = "NEIN";
+		$editor_textes = $this->_config_textes['Editor'];
+		$linktext = $editor_textes['link_form_text1'];
+		$linktext2 = $editor_textes['link_form_text2'];
 
 		/* Aufrum zum Löschen */
 		if (isset($this->_gpc['GET']['ref_ID']) && !isset($this->_gpc['POST']['weiter']) && !isset($this->_gpc['POST']['nein'])) {
@@ -404,7 +424,7 @@ class Gbookadmin implements Module {
 				$msg = $gbook_vars['calL_false_content'];
 			}
 
-			$this->_send_feedback($title, $msg, "?nav_id=$this->_nav_id", "Zum G&auml;stebuch");
+			$this->_send_feedback($title, $msg, "?nav_id=$this->_nav_id", $gbook_vars['allright_link']);
 		}
 
 	}
@@ -424,9 +444,6 @@ class Gbookadmin implements Module {
 	{
 		$gbook_vars = $this->_configvars['Gbook'];
 		$error_vars =$this->_configvars['Error'];
-
-		/* Formularcheck vorbereiten */
-		$formcheck = new Formularcheck();
 
 		/*Formulardaten */
 		if (!in_array('title', $blacklist)) {
@@ -459,8 +476,6 @@ class Gbookadmin implements Module {
 			}
 		}
 		
-		
-		/*$rtn_arr = $formcheck->field_check_arr($val, $std)*/
 		$rtn_arr = $this->_msbox->formCheck($val, $std);
 
 
@@ -569,7 +584,7 @@ class Gbookadmin implements Module {
 		/* Error-Einträge */
 		if (isset($error)) {
 			$data['dump_errors'] = true;
-			$data['error_title'] = 'Fehler im Formular';
+			$data['error_title'] = $this->_configvars['Form_Error']['error_title'];
 			$data['error_content'] = $error;
 		}
 

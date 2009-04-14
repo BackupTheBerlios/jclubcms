@@ -5,17 +5,22 @@
  * 
  * @author Simon Däster
  * @package JClubCMS
- * config.inc.php
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU Public License version 3
  */
 
 //**Templates Set tempates/default
 define('TEMPLATESET_DIR', 'templates/default');
 
 //---Session-Einstellungen---
-$session_timeout = 3600; //Anzahl Sekunden, bis Session ungültig ist;
+//Anzahl Sekunden, bis Session ungültig ist;
+define('SESSION_TIMEOUT',3600);
 
 /*---Admin-Menu---*/
-$admin_menu_shortlinks = true;
+define('ADMIN_MENU_USE_SHORTLINKS',true);
+
+
+/*------GBook-Settings----------*/
+define('GBOOK_ENTRIES_PER_PAGE',5);
 
 
 ?>

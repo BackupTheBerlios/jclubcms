@@ -1,13 +1,23 @@
 <?php
 /**
+ * @todo File Description
+ * 
+ * Fehlender Filebeschrieb
+ * 
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License version 3
  * @package JClubCMS
  * @author Simon Däster
- * File: action.class.php
- * Classes: Action
- * @requieres PHP5
  *
  */
 
+/**
+ * @todo ClassDescription
+ * 
+ * Fehlender Klassenbeschrieb
+ *
+ * @author Simon Däster
+ * @package JClubCMS
+ */
 class Action
 {
 	/**
@@ -61,16 +71,14 @@ class Action
 	{
 		return self::$_reserved_action;
 	}
-	
+	/**
+	 * @todo Documentation
+	 */
 	public function _exe_reserved_action($function)
 	{
+		$function = (string)($function);
 		include_once(ADMIN_DIR."lib/action/action_$function.class.php");
 	}
 	
-	
-	public function _exe_reserved_mail()
-	{
-		$mail = new Mailclient($this->_smarty, $this->_mysql);
-	}
 }
 ?>
