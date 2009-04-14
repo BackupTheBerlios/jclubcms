@@ -40,23 +40,32 @@ if (!defined('MSGBOX_FORMCHECK_INVALID')) {
 	define('MSGBOX_FORMCHECK_INVALID', 4);
 }
 /**
- * Die Klasse MessageBoxes ist verantwortlich für das Verwalten von Nachrichten in der Datenbank. Nachrichten können News, Gästebucheinträge, 
- * Nachrichten u.ä. sein. Die Klasse kann diese Nachrichten in die Datenbank eintragen, zu Nachrichten Kommentare schreiben, Nachrichten löschen,
- * Nachrichten zurückgeben und kontrollileren, ob einen Nachricht ein Kommentar einer anderen Nachricht ist. Weiter verfügt die Klasse über
- * eine Methode, die angegeben Einträge auf Standart-Werte und leere String prüft. Dies ist nützlich, wenn ein Modul überprüfen will, ob keine
+* Die Klasse MessageBoxes ist verantwortlich für das Verwalten von Nachrichten in der Datenbank. 
+ * Nachrichten können News, Gästebucheinträge, Nachrichten u.ä. sein.
+ * 
+ * Möglichkeiten der Klassen:
+ * <ul><li>Nachrichten in die Datenbank eintragen</li>
+ * <li>zu Nachrichten Kommentare schreiben</li>
+ * <li>Nachrichten löschen</li>
+ * <li>Nachrichten zurückgeben</li>
+ * <li>überprüfen, ob einen Nachricht ein Kommentar einer anderen Nachricht ist.</li></ul>
+ * Weiter verfügt die Klasse über eine Methode, die angegeben Einträge auf Standart-Werte und leere String 
+ * prüft. Dies ist nützlich, wenn ein Modul überprüfen will, ob keine 
  * dieser Werte vorhanden sind.
- * Dem Konstruktor wird der Aufbau der Tabelle mit einem Array weitergegeben. Werte in diesem Array unbeding vorkommen muss ID
- * und content. Weiter nueztliche Dine sind ref_ID, name, time, hp, mail. So koennen die Daten nach time geordenet werden 
- * oder hp/mail verifiziert werden. Sie sind nicht absolut noetig, aber hilfreich. Damit diese richtig behandelt werden,
- * muessen sie mit den richtigen Array-keys uebermittelt werden. Natuerlich koennen weitere Daten angegeben werden,
- * die werden aber nicht besonders behandelt. Diese koennen mit nummerierten keys weitergegeben werden.
+ * 
+ * Dem Konstruktor wird der Aufbau der Tabelle mit einem Array
+ * weitergegeben. WerteIn diesem Array unbeding vorkommen muss 
+ * ID und content. Weiter nueztliche Dine sind ref_ID, name, time, 
+ * hp, mail. So koennen die Daten nach time geordenet werden  oder 
+ * hp/mail verifiziert werden. Sie sind nicht absolut noetig, aber 
+ * hilfreich. Damit diese richtig behandelt werden, muessen sie mit 
+ * den richtigen Array-keys uebermittelt werden. Natuerlich koennen 
+ * weitere Daten angegeben werden, die werden aber nicht besonders 
+ * behandelt. Diese koennen mit nummerierten keys weitergegeben werden.
  * @author Simon Däster
  * @package JClubCMS
  * @uses Mysql Zugriff auf Datenbank
  * @uses Formularcheck Plausibilitätsüberprüfung von Formularen
- * File: messageboxes.class.php
- * Classes: messageboxes
- * @requieres PHP5
  * 
  */
 class Messageboxes {
@@ -102,6 +111,7 @@ class Messageboxes {
 	 * @param array $tablestruct Struktur der Tabelle
 	 * @uses Mysql Für die Verbindung zur Mysql-DB
 	 * @uses Formularcheck Plausibilitätsüberprüfung von Formularen
+	 * @uses CMSException
 	 */
 	public function __construct($mysql, $tablename, $tablestruct)
 	{
@@ -146,6 +156,7 @@ class Messageboxes {
 	 * @param array $tabledata einzugebende Daten
 	 * @return boolean Liefert bei Erfolg true, sonst Exception
 	 * @uses Mysql Für die Verbindung zur Mysql-DB
+	 * @uses CMSException
 	 */
 
 	public function addEntry($tabledata)
@@ -211,6 +222,7 @@ class Messageboxes {
 	 * @param array $tabledata einzugebende Daten
 	 * @return boolean Liefert bei Erfolg true, sonst Exception
 	 * @uses Mysql Für die Verbindung zur Mysql-DB
+	 * @uses CMSException
 	 */	
 
 	public function commentEntry($id, array $tabledata)
@@ -277,6 +289,7 @@ class Messageboxes {
 	 * @param array $tabledata einzugebende Daten
 	 * @param array $tablestddata Standartdaten aus dem Formular, welche nicht gebraucht werden duerfen.
 	 * @uses Mysql Für die Verbindung zur Mysql-DB
+	 * @uses CMSException
 	 */
 
 	public function editEntry($tabledata)
@@ -332,6 +345,7 @@ class Messageboxes {
 	 * @param boolean $comments Kommentare auch senden
 	 * @return array Eintrag, bei Fehler false
 	 * @uses Mysql Für die Verbindung zur Mysql-DB
+	 * @uses CMSException
 	 */
 
 	public function getEntry($id, $timeformat = "", $comments = true)
@@ -387,6 +401,7 @@ class Messageboxes {
 	 * @param string $timeformat Zeitformat nach Mysql
 	 * @return array Eintraege, bei Fehler false
 	 * @uses Mysql Für die Verbindung zur Mysql-DB
+	 * @uses CMSException
 	 */
 
 	public function getEntries($entries_pp, $page, $order = 'DESC', $corder = 'ASC', $timeformat = "")
@@ -480,6 +495,7 @@ class Messageboxes {
 	 *
 	 * @param int $id
 	 * @uses Mysql Für die Verbindung zur Mysql-DB
+	 * @uses CMSException
 	 */
 
 	public function delEntry($id)
@@ -515,6 +531,7 @@ class Messageboxes {
 	 * @param int $id
 	 * @return boolean 
 	 * @uses Mysql Für die Verbindung zur Mysql-DB
+	 * @uses CMSException
 	 */
 
 	public function is_comment($id)
@@ -548,6 +565,7 @@ class Messageboxes {
 	 * @param array $stddata Standartangaben
 	 * @return array $arr_rtn Ergebnis
 	 * @uses Formularcheck Plausibilitätsüberprüfung von Formularen
+	 * @uses CMSException
 	 */
 
 	public function formCheck($tabledata, $stddata)
@@ -600,6 +618,7 @@ class Messageboxes {
 	 * @param string $timeformat
 	 * @return string formatierte Zeit, bei Fehler false
 	 * @uses Mysql Für die Verbindung zur Mysql-DB
+	 * @uses CMSException
 	 */
 
 	private function _formatTime($time, $timeformat)
