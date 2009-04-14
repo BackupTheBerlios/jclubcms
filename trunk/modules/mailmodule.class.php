@@ -406,7 +406,7 @@ class Mailmodule implements Module
 		/* Error-Einträge */
 		if (isset($error)) {
 			$data['dump_errors'] = true;
-			$data['error_title'] = 'Fehler im Formular';
+			$data['error_title'] = $this->_configvars['Form_Error']['error_in_form'];
 			$data['error_contents'] = $error;
 		}
 

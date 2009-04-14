@@ -354,7 +354,9 @@ class Gallery implements Module
 
 		if ($inc_hs == true) {
 			/*Hauptseite noch einfügen*/
-			$tmp_arr[++$i] = array('ID' => '0', 'name' => 'Hauptseite');
+			$this->_smarty->config_load('textes.de.conf', 'Gallery');
+			$gallery_textes = $this->_smarty->get_config_vars();
+			$tmp_arr[++$i] = array('ID' => '0', 'name' => $gallery_textes['mainsite']);
 			return array_reverse($tmp_arr);
 		} else {
 			return null;

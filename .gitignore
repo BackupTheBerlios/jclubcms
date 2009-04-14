@@ -1,0 +1,5 @@
+.cache*
+.settings*
+!.gitignore
+trunk/admin/templates_c
+trunk/templates_c

@@ -13,7 +13,7 @@
  */
 require_once ADMIN_DIR.'lib/messageboxes.class.php';
 /**
- * Smilies für das anzeigen von Smilies
+ * Smilies für das Anzeigen von Smilies
  */
 require_once ADMIN_DIR.'lib/smilies.class.php';
 /**
@@ -33,6 +33,7 @@ require_once ADMIN_DIR.'lib/module.interface.php';
  * @author Simon Däster
  * @package JClubCMS 
  */
+
 class Gbookadmin implements Module {
 	/**
 	 * Templatefile
@@ -385,8 +386,9 @@ class Gbookadmin implements Module {
 	private function _del()
 	{
 		$gbook_vars = $this->_configvars['Gbook'];
-		$linktext = "JA";
-		$linktext2 = "NEIN";
+		$editor_textes = $this->_config_textes['Editor'];
+		$linktext = $editor_textes['link_form_text1'];
+		$linktext2 = $editor_textes['link_form_text2'];
 
 		/* Aufrum zum Löschen */
 		if (isset($this->_gpc['GET']['ref_ID']) && !isset($this->_gpc['POST']['weiter']) && !isset($this->_gpc['POST']['nein'])) {
@@ -422,7 +424,7 @@ class Gbookadmin implements Module {
 				$msg = $gbook_vars['calL_false_content'];
 			}
 
-			$this->_send_feedback($title, $msg, "?nav_id=$this->_nav_id", "Zum G&auml;stebuch");
+			$this->_send_feedback($title, $msg, "?nav_id=$this->_nav_id", $gbook_vars['allright_link']);
 		}
 
 	}
@@ -582,7 +584,7 @@ class Gbookadmin implements Module {
 		/* Error-Einträge */
 		if (isset($error)) {
 			$data['dump_errors'] = true;
-			$data['error_title'] = 'Fehler im Formular';
+			$data['error_title'] = $this->_configvars['Form_Error']['error_title'];
 			$data['error_content'] = $error;
 		}
 

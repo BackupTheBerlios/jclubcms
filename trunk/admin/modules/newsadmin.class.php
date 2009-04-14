@@ -64,7 +64,7 @@ class Newsadmin implements Module
 	 *
 	 * @var array
 	 */
-	private $_configvars = array();
+	private $_config_textes = array();
 	
 	/**
 	 * Navigations-ID des Gästebuches
@@ -100,9 +100,9 @@ class Newsadmin implements Module
 	
 		//Daten laden
 		$this->_smarty->config_load('textes.de.conf', 'News');
-		$this->_configvars['News'] = $this->_smarty->get_config_vars();
+		$this->_config_textes['News'] = $this->_smarty->get_config_vars();
 		$this->_smarty->config_load('textes.de.conf', 'Form_Error');
-		$this->_configvars['Error'] = $this->_smarty->get_config_vars();
+		$this->_config_textes['Error'] = $this->_smarty->get_config_vars();
 		
 		$this->_gpc = $gpc;
 
@@ -113,7 +113,7 @@ class Newsadmin implements Module
 		$this->_smilie = new Smilies(SMILIES_DIR);
 		
 		if ($this->_getStatus() == 'off') {
-			$this->_smarty->assign('info', 'Das Modul News ist deaktiviert. Benutzer k&ouml;nnen keine News anschauen');
+			$this->_smarty->assign('info', $this->_config_textes['News']['modul_deactivated']);
 		}
 
 		//Je nach Get-Parameter die zugehörige Anweisung ausfuehren
@@ -238,7 +238,7 @@ class Newsadmin implements Module
 
 	private function _add()
 	{
-		$news_vars = $this->_configvars['News'];
+		$news_vars = $this->_config_textes['News'];
 
 
 		if (isset($this->_gpc['POST']['btn_send']) && $this->_gpc['POST']['btn_send'] == 'Senden') {
@@ -282,7 +282,7 @@ class Newsadmin implements Module
 
 	private function _comment()
 	{
-		$news_vars = $this->_configvars['News'];
+		$news_vars = $this->_config_textes['News'];
 
 
 		if (isset($this->_gpc['POST']['btn_send']) && $this->_gpc['POST']['btn_send'] == 'Senden') {
@@ -326,7 +326,7 @@ class Newsadmin implements Module
 	private function _edit()
 	{
 		
-		$news_vars = $this->_configvars['News'];
+		$news_vars = $this->_config_textes['News'];
 
 		//Eingetragen und überprüfen
 		if (isset($this->_gpc['POST']['btn_send']) && $this->_gpc['POST']['btn_send'] == 'Senden') {
@@ -368,15 +368,16 @@ class Newsadmin implements Module
 
 	private function _del()
 	{
-		$news_vars = $this->_configvars['News'];
-		$linktext = "JA";
-		$linktext2 = "NEIN";
+		$news_textes = $this->_config_textes['News'];
+		$editor_textes = $this->_config_textes['Editor'];
+		$linktext = $editor_textes['link_form_text1'];
+		$linktext2 = $editor_textes['link_form_text2'];
 
 		/* Aufrum zum Löschen */
 		if (isset($this->_gpc['GET']['ref_ID']) && !isset($this->_gpc['POST']['weiter']) && !isset($this->_gpc['POST']['nein'])) {
 
 			$id = (int)$this->_gpc['GET']['ref_ID'];
-			$title = $news_vars['del_conf_title'];
+			$title = $news_textes['del_conf_title'];
 			$msg = $this->_msbox->getEntry($id);
 			$content = $this->_smilie->show_smilie($msg['news_content'], $this->_mysql);
 
@@ -392,21 +393,21 @@ class Newsadmin implements Module
 				/*Löschung erfolgreich*/
 			if (isset($this->_gpc['POST']['weiter']) && $this->_gpc['POST']['weiter'] == $linktext) {
 				$this->_msbox->delEntry((int)$this->_gpc['GET']['ref_ID']);
-				$title = $news_vars['del_done_title'];
-				$msg = $news_vars['del_done_content'];
+				$title = $news_textes['del_done_title'];
+				$msg = $news_textes['del_done_content'];
 
 				/*Löschung widerrufen */
 			} elseif (isset($this->_gpc['POST']['nein']) && $this->_gpc['POST']['nein'] == $linktext2) {
-				$title = $news_vars['del_abort_title'];
-				$msg = $news_vars['del_abort_conten'];
+				$title = $news_textes['del_abort_title'];
+				$msg = $news_textes['del_abort_conten'];
 				
 				/*Falscher Link*/
 			} else {
-				$title = $news_vars['call_false_title'];
-				$msg = $news_vars['calL_false_content'];
+				$title = $news_textes['call_false_title'];
+				$msg = $news_textes['calL_false_content'];
 			}
 
-			$this->_send_feedback($title, $msg, "?nav_id=$this->_nav_id", "Zum G&auml;stebuch");
+			$this->_send_feedback($title, $msg, "?nav_id=$this->_nav_id", $news_textes['allright_link']);
 		}
 
 	}
@@ -429,8 +430,8 @@ class Newsadmin implements Module
 	 */
 	private function _check_form(&$answer, $blacklist = array())
 	{
-		$news_vars = $this->_configvars['News'];
-		$error_vars =$this->_configvars['Error'];
+		$news_vars = $this->_config_textes['News'];
+		$error_vars =$this->_config_textes['Error'];
 
 		/*Formulardaten */
 		if (!in_array('title', $blacklist)) {
@@ -514,7 +515,7 @@ class Newsadmin implements Module
 			'entry_hp' => $news_arr['news_hp'], 'entry_time' => $news_arr['news_time']);
 		} else {
 			/* Standard-Einträge */
-			$news_vars = $this->_configvars['News'];
+			$news_vars = $this->_config_textes['News'];
 			$data += array('entry_title' => $news_vars['entry_title'],
 			'entry_content' => $news_vars['entry_content'], 'entry_name' => $news_vars['entry_name'],
 			'entry_email' => $news_vars['entry_email'],'entry_hp' => $news_vars['entry_hp'],);
@@ -560,7 +561,7 @@ class Newsadmin implements Module
 		/* Error-Einträge */
 		if (isset($error)) {
 			$data['dump_errors'] = true;
-			$data['error_title'] = 'Fehler im Formular';
+			$data['error_title'] = $this->_config_textes['News']['error_form'];
 			$data['error_content'] = $error;
 		}
 
