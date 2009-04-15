@@ -161,12 +161,12 @@ Source Location: /admin/lib/image.class.php<br /><br />
 <h4>Author(s):</h4>
 <ul>
           <li>Simon Däster</li>
-      </ul>
+            </ul>
 
 
 
 
-    
+        
 
         
 </td>
@@ -201,13 +201,18 @@ Source Location: /admin/lib/image.class.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line <a href="../__filesource/fsource_JClubCMS__adminlibimage.class.php.html#a31">31</a>]<br />
+[line <a href="../__filesource/fsource_JClubCMS__adminlibimage.class.php.html#a32">32</a>]<br />
 Die Klasse Image ist zustaendig fuer Grafikfunktionen<br /><br /><p>Image speichert die Informationen ueber ein Bild ab, kann diese Informationen senden  und das Bild selber ausgeben  Wenn keine Bilddatei vorhanden ist, dann wird automatisch ein Fehlerbild erstellt  Um Thumbs zu erstellen, kann die Funktion &quot;copy&quot; verwendet werden.  &quot;copy&quot; kann auch verwendet werden, um das Bild selber zu verändern.  Dazu kann man einfach die Grössen belassen  !Achtung: Vorhandene Dateien werden ohne Abfrage überschrieben!!!</p><p>Diese Klasse ist nicht für die Administration der Bilder zuständig  Die Klasse wird für jedes Bild gebraucht, um es darzustellen und nötige  Informationen zum jeweiligen Bild zu erhalten</p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td><b>author:</b>&nbsp;&nbsp;</td><td>Simon Däster</td>
+  </tr>
+  <tr>
+    <td><b>license:</b>&nbsp;&nbsp;</td><td><a href="http://opensource.org/licenses/gpl-3.0.html">GNU General Public License version 3
+ File: image.class.php
+ Classes: image</a></td>
   </tr>
 </table>
 </div>
@@ -363,9 +368,11 @@ $new_format[optional])</code>
 string
 $width, string
 $height, [string
-$text = &quot;&quot;], [string
-$col_background = &quot;000000000&quot;], [string
-$col_text = &quot;050255070&quot;])</code>
+$text = &quot;&quot;], [
+$background_color = BACKGROUND_COLOR], [
+$text_color = TEXT_COLOR], string
+$col_background, string
+$col_text)</code>
     </td></tr></table>
     </td></tr></table><br />
 	
@@ -408,6 +415,16 @@ $col_text = &quot;050255070&quot;])</code>
         <td class="type">string&nbsp;&nbsp;</td>
         <td><b>$col_text</b>&nbsp;&nbsp;</td>
         <td>Die Textfarbe im String mit RGB-Werten</td>
+      </tr>
+          <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>$background_color</b>&nbsp;&nbsp;</td>
+        <td></td>
+      </tr>
+          <tr>
+        <td class="type">&nbsp;&nbsp;</td>
+        <td><b>$text_color</b>&nbsp;&nbsp;</td>
+        <td></td>
       </tr>
         </table>
     </div><br />
@@ -471,7 +488,7 @@ $col_text = &quot;050255070&quot;])</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Mon, 13 Apr 2009 23:00:04 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Wed, 15 Apr 2009 13:13:54 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>
