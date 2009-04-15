@@ -1,6 +1,7 @@
+{config_load file="textes.de.conf" section="Gallery"}
 <div id="content">
 	<div id="content_txt">
-		<h1>Gallery</h1>
+		<h1>{#gallery#}</h1>
 		<table style="content_tab" align="center" width="700">
 			<tr class="content_tab_header">
 				<!--<td colspan="3"><div style="float: left">{foreach item=root_item from=$root}
@@ -23,7 +24,7 @@
 								</td>
 								<td>
 									<div align="center">
-									<a href="?nav_id={$local_link}&gal={$album.ID}" ><img src="{$TEMPLATESET_DIR}/style/icons/gallery.gif" />zur Bilder-&Uuml;bersicht</a>
+									<a href="?nav_id={$local_link}&gal={$album.ID}" ><img src="{$TEMPLATESET_DIR}/style/icons/gallery.gif" />{#to_images_overview#}</a>
 									</div>
 								</td>
 							</tr>
@@ -47,7 +48,7 @@
 				<td colspan="3">
 					<div style="float: left; font-size: 14px; vertical-align: middle; text-align: center;">{$filename}</div>
 					<div align="center">
-					Bild {$number} von {$count}</a>
+					{#image#} {$number} {#of#} {$count}</a>
 					</div>
 				</td>
 			</tr>

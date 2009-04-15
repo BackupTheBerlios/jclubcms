@@ -154,7 +154,7 @@ class News implements Module
 
 
 			foreach ($value['comments'] as $ckey => $cvalue) {
-				$news_array[$key]['comments'][$ckey]['news_content'] = $this->_smilie->show_smilie(nl2br(htmlentities($value['news_content'])), $this->_mysql);
+				$news_array[$key]['comments'][$ckey]['news_content'] = $this->_smilie->show_smilie(nl2br(htmlentities($cvalue['news_content'])), $this->_mysql);
 
 			}
 

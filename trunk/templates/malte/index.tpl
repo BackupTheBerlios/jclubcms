@@ -11,6 +11,7 @@
 		background-image: url('{$TEMPLATESET_DIR}/style/images/bg.jpg');
 	{rdelim}
 	</style>
+	{config_load file="textes.de.conf"}
 </head>
 
 <body>
@@ -37,7 +38,7 @@
 						<a href="index.php?nav_id={$topnav.menu_ID}"><strong>>> {$topnav.menu_name}<br /></strong></a>				
 					{/foreach}
 					
-					{if isset($subnav)}<br /><strong>>> Unterpunkte</strong><br />{/if}
+					{if isset($subnav)}<br /><strong>>> {#subpoints#}</strong><br />{/if}
 					{foreach item=subnav from=$subnav}
 						{if $subnav.level == 1}
 						<div style="float: left;">

@@ -1,6 +1,7 @@
-      <div id="content">
+{config_load file="textes.de.conf" section="Gallery"}      
+<div id="content">
 		<div id="contenttext">
-			<h2>Gallery</h2>
+			<h2>{#gallery}</h2>
 				<table class="content_tab" width="700" align="center" >
 				<tr class="content_tab_header">
 					<td colspan="3">
@@ -11,9 +12,9 @@
 					</td>
 				</tr>
 				<tr class="content_tab_header"> 
-					<th>Name</th>
-					<th>Kommentar</th>
-					<th>Erstellt</th>
+					<th>{#name#}</th>
+					<th>{#comment#}</th>
+					<th>{#created#}</th>
 				</tr>
 				
 				<tr class="content_tab_content1">
@@ -23,7 +24,7 @@
 				</tr>
 				<!--Kategorien-->
 				<tr class="content_tab_content2">
-					<td colspan="3">Kategorien</td>
+					<td colspan="3">{#categories#}</td>
 				</tr>
 			{foreach item=category from=$categories}
 			<tr class="content_tab_content1">
@@ -33,12 +34,12 @@
 			</tr>
 			{foreachelse}
 			<tr class="content_tab_content1" style="text-align:center">
-				<td colspan="3">Keine Kategorien</td>
+				<td colspan="3">{#no_categories#}</td>
 			</tr>
 			{/foreach}
 			<!--Gallerien-->
 			<tr class="content_tab_content2">
-				<td colspan="3">Gallerien</td>
+				<td colspan="3">{#galleries#}</td>
 			</tr>
 			{foreach item=gallery from=$galleries}
 			<tr class="content_tab_content1">
@@ -48,7 +49,7 @@
 			</tr>
 			{foreachelse}
 			<tr class="content_tab_content1" style="text-align:center">
-					<td colspan="3">Keine Gallerien</td>
+					<td colspan="3">{#no_galleries#}</td>
 			</tr>
 			{/foreach}
 			</table>
