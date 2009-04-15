@@ -1,8 +1,9 @@
+{config_load file="textes.de.conf" section="Menu"}
 <div id="content">
 	<div id="content_txt">
-	<h1>Menues</h1>
+	<h1>{#menues#}</h1>
 	<p style="background-color:#FF8822; text-align: center">{$info}</p>
-	<div align="left"><a href="?nav_id={$local_link}&action=new&amp;{$SID}">Neues Menu erstellen</a>
+	<div align="left"><a href="?nav_id={$local_link}&action=new&amp;{$SID}">{#menu_create#}</a>
 	<div align="center">{foreach item=page from=$pages}
 			{if $page.link != ""}<a href="{$page.link}">[{$page.page}]</a>{else}[{$page.page}]{/if}
 	{/foreach}</div>
@@ -14,22 +15,18 @@
 		{rdelim}
 	</script>
 	{assign var="pad" value="2"}
-	<p>Hier l&auml;sst sich das Menu anpassen. Mit einem Klick auf den Menu-Namen gelangst du zum Menu-Editor, wo sich das Menu &auml;ndern l&auml;sst.<br />
-	Doch mal zu dieser Seite. Mittels Angabe der Position kann man bestimmen, wo der Menu-Eintrag erscheinen soll. Die Eintr&auml;ge werden zuerst nach ihrer Tiefe 
-	und dann nach ihrer Position sortiert. <br />Falls du eine Position anpassen willst, w&auml;hlst du die neue Position im entsprechenden Eintrag aus. Danach vergewissere dich, dass das H&auml;ckchen am Rande
-	gesetz ist. Zum Schluss muss noch der Senden-Knopf gedr&uuml;ckt werden.<br />Die Seite wird neu geladen und du siehst das Resultat.<br />
-	Auf die gleiche Weise verl&auml;uft das Aktivieren/deaktivieren des Menu-Eintrages. Ist ein Eintrag deaktiviert, erscheint er nicht auf der Seite, ist aber weiterhin erreichbar, wenn auch versteckt.</p>
+	<p>{#info_exact#}</p>
 	<form name="menues" method="post" action="">
 		<table cellpadding="0" cellspacing="0" align="center" class="content_tab" style="max-width: 80%;min-width: 60%;font-size: 11px;">
 			<tr  class="content_tab_header" >	
-				<td style="padding: 6px">Name</td>
-				<td style="padding: 6px">Top-ID</td>
-				<td style="padding: 6px">Position</td>
-				<td style="padding: 6px">Verweistyp</td>
-				<td style="padding: 6px">Verweis-Id</td>
-				<td style="padding: 6px">Parameter</td>
-				<td style="padding: 6px">Anzeige</td>
-				<td style="padding: 6px">&auml;ndern</td>
+				<td style="padding: 6px">{#name#}</td>
+				<td style="padding: 6px">{#top_id#}</td>
+				<td style="padding: 6px">{#position#}</td>
+				<td style="padding: 6px">{#refer_typ#}</td>
+				<td style="padding: 6px">{#refer_id#}</td>
+				<td style="padding: 6px">{#param#}</td>
+				<td style="padding: 6px">{#prompt#}</td>
+				<td style="padding: 6px">{#change#}</td>
 			</tr>
 			{foreach name=menuausgabe item=menu  from=$menus}
 			<tr name="{$menu.menu_ID}" class="content_tab_content2" style="padding: 6px; {if $smarty.foreach.menuausgabe.iteration % 2 == 0}background-color: yellow;{/if}">	
@@ -47,14 +44,14 @@
 				<td style="padding: {$pad}px">{$menu.menu_modvar}</td>
 				<td style="padding: {$pad}px">
 					<select name="menu_display[{$menu.menu_ID}]" size="1" {if $menu.menu_display == 1}style="color: green; font-weight: bold"{else}style="color: red; font-weight: bold"{/if}  onclick="Check({$menu.menu_ID})">
-						<option value="1" {if $menu.menu_display == 1}selected="selected"{/if} style="color: green; font-weight: bold">aktiv</option>
-						<option value="0" {if $menu.menu_display != 1}selected="selected"{/if} style="color: red; font-weight: bold">inaktiv</option>
-					</select>{if $menu.menu_display == 1}aktiv{else}inaktiv{/if}
+						<option value="1" {if $menu.menu_display == 1}selected="selected"{/if} style="color: green; font-weight: bold">{#activ#}</option>
+						<option value="0" {if $menu.menu_display != 1}selected="selected"{/if} style="color: red; font-weight: bold">{#inactiv#}</option>
+					</select>{if $menu.menu_display == 1}{#activ#}{else}{#inactiv#}{/if}
 				</td>
 				<td style="padding: {$pad}px">
 					<input type="checkbox" name="menu_check[{$menu.menu_ID}]" value="{$menu.menu_ID}"/>&nbsp;
-					<a href="?nav_id={$local_link}&amp;action=edit&amp;ref_ID={$menu.menu_ID}&amp;{$SID}"><img src="{$TEMPLATESET_DIR}/style/icons/pencil.gif" alt="Pencil" title="&Auml;ndern"/></a>
-					&nbsp;<a href="?nav_id={$local_link}&amp;action=del&amp;ref_ID={$menu.menu_ID}&amp;{$SID}"><img src="{$TEMPLATESET_DIR}/style/icons/del.gif" alt="Kreuz" title="L&ouml;schen"/></a>
+					<a href="?nav_id={$local_link}&amp;action=edit&amp;ref_ID={$menu.menu_ID}&amp;{$SID}"><img src="{$TEMPLATESET_DIR}/style/icons/pencil.gif" alt="{#pencil#}" title="{#change#}"/></a>
+					&nbsp;<a href="?nav_id={$local_link}&amp;action=del&amp;ref_ID={$menu.menu_ID}&amp;{$SID}"><img src="{$TEMPLATESET_DIR}/style/icons/del.gif" alt="{#cross#} title="{#del#}"/></a>
 				</td>
 			</tr>
 				{/foreach}
@@ -63,11 +60,11 @@
 				</td>
 				<tr>
 				  <td class="formailer_options" colspan="8">
-				  <input type="submit" name="btn_senden" value="Senden">
-				  <input name="Clear" type="reset" id="Clear" value="Zur&uuml;cksetzen"></td>
+				  <input type="submit" name="btn_senden" value="{#send#}">
+				  <input name="Clear" type="reset" id="Clear" value="{#undo#}"></td>
 			</tr>
 		</table>
 	</form>
-	<div align="center">Erstellt in {$generated_time}s</div>
+	<div align="center">{#created_in#} {$generated_time}s</div>
 	</div>
 </div>

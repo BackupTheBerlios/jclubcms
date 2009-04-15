@@ -1,4 +1,5 @@
-      <div id="content">
+    {config_load file="textes.de.conf" section="Gbook"}  
+	<div id="content">
 		<div id="content_txt">
 		<p style="background-color:#FF8822; text-align: center">{$info}</p>
     <table width = 100% class="content_tab">
@@ -21,11 +22,11 @@
 				<td class="content_tab_content2">
 					<img src="{$TEMPLATESET_DIR}/style/icons/date.gif" /> {$gbook.time}<br />
 					<img src="{$TEMPLATESET_DIR}/style/icons/user.gif" /> {$gbook.name}<br />
-					<a href="?nav_id={$local_link}&action=mail&entry_id={$gbook.ID}&amp;{$SID}"><img src="{$TEMPLATESET_DIR}/style/icons/email.gif" /> E-mail</a>
-					{if $gbook.hp neq ""}<br /><a href="{$gbook.hp}" target="_blank"><img src="{$TEMPLATESET_DIR}/style/icons/house.gif" /> Website</a>{/if}
+					<a href="?nav_id={$local_link}&action=mail&entry_id={$gbook.ID}&amp;{$SID}"><img src="{$TEMPLATESET_DIR}/style/icons/email.gif" /> {#email#}</a>
+					{if $gbook.hp neq ""}<br /><a href="{$gbook.hp}" target="_blank"><img src="{$TEMPLATESET_DIR}/style/icons/house.gif" /> {#website#}</a>{/if}
 				</td>
 			</tr>
-			{* Innere Schlaufe f�r das Auslesen der Kommentare *}
+			{* Innere Schlaufe für das Auslesen der Kommentare *}
 		  {foreach key=schluessel item=comment from=$gbook.comments}
 		  <tr>
 			<td class="content_tab_content1">
@@ -34,8 +35,8 @@
 			<td class="content_tab_content2">
 			  <img src="{$TEMPLATESET_DIR}/style/icons/date.gif" /> {$comment.time}<br />
 			  <img src="{$TEMPLATESET_DIR}/style/icons/user.gif" /> {$comment.name}<br />
-			  <a href="?mail&nav_id={$local_link}&entry_id={$comment.ID}"><img src="{$TEMPLATESET_DIR}/style/icons/email.gif" /> E-mail</a><br />
-			  {if $comment.hp neq ""}<a href="http://{$comment.hp}"><img src="{$TEMPLATESET_DIR}/style/icons/house.gif" /> Website</a>{/if}
+			  <a href="?mail&nav_id={$local_link}&entry_id={$comment.ID}"><img src="{$TEMPLATESET_DIR}/style/icons/email.gif" /> {#email#}</a><br />
+			  {if $comment.hp neq ""}<a href="http://{$comment.hp}"><img src="{$TEMPLATESET_DIR}/style/icons/house.gif" /> {#website#}</a>{/if}
 			</td>
 		  </tr>
 		  {/foreach}
@@ -44,7 +45,7 @@
 	{if $dump_errors}
 	<table class="content_tab" align="center">
 		<tr>
-			<td class="formailer_header" style="background-color: #EC6442">{$error_title|default:"Einige Daten sind ung&uuml;ltig"}</td>
+			<td class="formailer_header" style="background-color: #EC6442">{$error_title|default:#error_invalid_data#}</td>
 		</tr>
 		<tr>
 			<td class="formailer_txt" style="background-color: #ED4B23; color:black">{$error_content}</td>
@@ -67,13 +68,13 @@
           </td>
         </tr>
         <tr>
-          <td class="formailer_options" colspan="2"><input type="submit" name="btn_send" value="Senden"><input name="Clear" type="reset" id="Clear" value="Zur&uuml;cksetzen"></td>
+          <td class="formailer_options" colspan="2"><input type="submit" name="btn_send" value="Senden"><input name="Clear" type="reset" id="Clear" value="{#undo#}"></td>
         </tr>
       </table>
     </form>
     <table cellpadding="0" cellspacing="0" align="center" class="content_tab">
      <tr>
-      <td class="formailer_header" colspan="2"><b>Smilie-Liste</b></td> 
+      <td class="formailer_header" colspan="2"><b>{#smilie_list#}</b></td> 
      </tr>
      <tr>
       <td class="formailer_txt">

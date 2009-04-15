@@ -8,7 +8,7 @@
 	<!--[if IE]>
 	<style type="text/css">@import url(./{$TEMPLATESET_DIR}/style/ie_style.css);</style>
 	<![endif]-->
-    
+	{config_load file="textes.de.conf"}
   </head>
 <body>
 	<div id="main">
@@ -29,13 +29,13 @@
     </div>
 	<div id="footer">
 		<div class="footer_txt">
-			&copy; 2007 by JG J-Club Balsthal
+		{#copyright#}
 		</div>
 	</div>
      <div id="subnavigation">
     
       {foreach item=subnav from=$subnav}    
-      {*F�r alle Level gr�sser gleich 3 ist die CSS-Klasse subnav3, sonst eine andere*}
+      {*F�r alle Level grösser gleich 3 ist die CSS-Klasse subnav3, sonst eine andere*}
       {if $subnav.level == 1}
       <div class="subnavigation_links">
       {elseif $subnav.level <= 3}
