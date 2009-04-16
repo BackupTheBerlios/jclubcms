@@ -397,19 +397,21 @@
 <li><div class="src-line"><a name="a354"></a>&nbsp;</div></li>
 <li><div class="src-line"><a name="a355"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">if&nbsp;</span><span class="src-sym">(</span><span class="src-var">$inc_hs&nbsp;</span>==&nbsp;<span class="src-id">true</span><span class="src-sym">)&nbsp;</span><span class="src-sym">{</span></div></li>
 <li><div class="src-line"><a name="a356"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-comm">/*Hauptseite&nbsp;noch&nbsp;einfügen*/</span></div></li>
-<li><div class="src-line"><a name="a357"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$tmp_arr</span><span class="src-sym">[</span>++<span class="src-var">$i</span><span class="src-sym">]&nbsp;</span>=&nbsp;<span class="src-key">array</span><span class="src-sym">(</span><span class="src-str">'ID'&nbsp;</span>=&gt;&nbsp;<span class="src-str">'0'</span><span class="src-sym">,&nbsp;</span><span class="src-str">'name'&nbsp;</span>=&gt;&nbsp;<span class="src-str">'Hauptseite'</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
-<li><div class="src-line"><a name="a358"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">return&nbsp;</span><a href="http://www.php.net/array_reverse">array_reverse</a><span class="src-sym">(</span><span class="src-var">$tmp_arr</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
-<li><div class="src-line"><a name="a359"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">}&nbsp;</span><span class="src-key">else&nbsp;</span><span class="src-sym">{</span></div></li>
-<li><div class="src-line"><a name="a360"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">return&nbsp;</span><span class="src-id">null</span><span class="src-sym">;</span></div></li>
-<li><div class="src-line"><a name="a361"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">}</span></div></li>
-<li><div class="src-line"><a name="a362"></a>&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">}</span></div></li>
-<li><div class="src-line"><a name="a363"></a><span class="src-sym">}</span></div></li>
-<li><div class="src-line"><a name="a364"></a><span class="src-php">?&gt;</span></div></li>
+<li><div class="src-line"><a name="a357"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$this</span><span class="src-sym">-&gt;</span><span class="src-var">_smarty</span><span class="src-sym">-&gt;</span><span class="src-id">config_load</span><span class="src-sym">(</span><span class="src-str">'textes.de.conf'</span><span class="src-sym">,&nbsp;</span><span class="src-str">'Gallery'</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a358"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$gallery_textes&nbsp;</span>=&nbsp;<span class="src-var">$this</span><span class="src-sym">-&gt;</span><span class="src-var">_smarty</span><span class="src-sym">-&gt;</span><span class="src-id">get_config_vars</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a359"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$tmp_arr</span><span class="src-sym">[</span>++<span class="src-var">$i</span><span class="src-sym">]&nbsp;</span>=&nbsp;<span class="src-key">array</span><span class="src-sym">(</span><span class="src-str">'ID'&nbsp;</span>=&gt;&nbsp;<span class="src-str">'0'</span><span class="src-sym">,&nbsp;</span><span class="src-str">'name'&nbsp;</span>=&gt;&nbsp;<span class="src-var">$gallery_textes</span><span class="src-sym">[</span><span class="src-str">'mainsite'</span><span class="src-sym">]</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a360"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">return&nbsp;</span><a href="http://www.php.net/array_reverse">array_reverse</a><span class="src-sym">(</span><span class="src-var">$tmp_arr</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a361"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">}&nbsp;</span><span class="src-key">else&nbsp;</span><span class="src-sym">{</span></div></li>
+<li><div class="src-line"><a name="a362"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">return&nbsp;</span><span class="src-id">null</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a363"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">}</span></div></li>
+<li><div class="src-line"><a name="a364"></a>&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">}</span></div></li>
+<li><div class="src-line"><a name="a365"></a><span class="src-sym">}</span></div></li>
+<li><div class="src-line"><a name="a366"></a><span class="src-php">?&gt;</span></div></li>
 </ol>
 </div>
         <div class="credit">
 		    <hr />
-		    Documentation generated on Mon, 13 Apr 2009 23:00:02 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Wed, 15 Apr 2009 13:31:32 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

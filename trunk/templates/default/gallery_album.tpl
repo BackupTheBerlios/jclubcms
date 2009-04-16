@@ -1,6 +1,7 @@
-      <div id="content">
+{config_load fiel="textes.de.conf" section="Gallery"}
+<div id="content">
 		<div id="content_txt">
-		<h1>Gallery</h1>
+		<h1>{#gallery#}</h1>
     <table width="700" align="center" class="content_tab">
       <colgroup>
         <col width="1*">
@@ -12,12 +13,12 @@
 		<td>{foreach item=root_item from=$root}
 		&gt; <a href="?nav_id=40&cat={$root_item.ID}">{$root_item.name}</a>
 		{/foreach} </td>
-		<td><a href="?nav_id={$local_link}&cat={$top_ID}" ><img src="{$TEMPLATESET_DIR}/style/icons/gallery.gif" />zur Gallery-&Uuml;bersicht</a></td>
-		<td align="right">{$number} Bilder</td>
+		<td><a href="?nav_id={$local_link}&cat={$top_ID}" ><img src="{$TEMPLATESET_DIR}/style/icons/gallery.gif" />{#to_gallery_overview#}</a></td>
+		<td align="right">{$number} {#images#}</td>
 	</tr>
 	<tr class="content_tab_content1" style="text-align:center; font-size:14px; font-weight: bold">
 		<td colspan="3">
-		{$gallery_name} - Seite {$thispage}
+		{$gallery_name} - {#page#} {$thispage}
 		</td>
 	</tr>
       <tr class="content_tab_content1">
@@ -39,7 +40,7 @@
 			<tr  class="content_tab_content1">
 		  {/if}
 		  {foreachelse}
-			<td>Keine Bilder vorhanden</td>
+			<td>{#no_images#}</td>
 		  {/foreach}
 		  </tr>
 		</table>
@@ -55,15 +56,15 @@
       </tr>
 	<tr class="content_tab_content1" style="text-align:center; font-size:14px; font-weight: bold">
 		<td colspan="3">
-		{$gallery_name} - Seite {$thispage}
+		{$gallery_name} - {#page#} {$thispage}
 		</td>
 	</tr>
      <tr class="content_tab_header">
 		<td>{foreach item=root_item from=$root}
 		&gt; <a href="?nav_id=40&cat={$root_item.ID}">{$root_item.name}</a>
 		{/foreach}</td>
-		<td><a href="?nav_id={$local_link}" ><img src="{$TEMPLATESET_DIR}/style/icons/gallery.gif" />zur Gallery-&Uuml;bersicht</a></td>
-		<td align="right">{$number} Bilder</td>
+		<td><a href="?nav_id={$local_link}" ><img src="{$TEMPLATESET_DIR}/style/icons/gallery.gif" />{#to_gallery_overview#}</a></td>
+		<td align="right">{$number} {#images#}</td>
 	</tr>
     </table>
     <br />

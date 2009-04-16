@@ -2,15 +2,15 @@
 	  
 	  <div id="content">
 		<div id="content_txt">
-		<h1>Mail schreiben</h1>
+		<h1>{#mail_write#}</h1>
 		<table width = 100% class="content_tab">
 		</table>
-		Mail an {$reciver_name}:
+		{#mail_to#} {$reciver_name}:
 		{*Fehlerausgabe wenn noetig*}
 		{if $dump_errors}
 		<table class="content_tab" align="center">
 			<tr>
-				<td class="formailer_header" style="background-color: #EC6442">{$error_title|default:"Einige Daten sind ungueltig"}</td>
+				<td class="formailer_header" style="background-color: #EC6442">{$error_title|default:#error_invalid_data#}}</td>
 			</tr>
 			<tr>
 				<td class="formailer_txt" style="background-color: #ED4B23">{foreach item=error_content from=$error_contents}<li>{$error_content}</li>{/foreach}</td>
@@ -39,19 +39,19 @@
                             <table border="0">
                               <tr>
                                 <td rowspan="2"><img src="?nav_id={$captcha_link}&img={$captcha_img}" /></td>
-                                <td><div style="font-size: 10px">Bitte den Text eingeben,<br /> der im Bild steht</div></td>
+                                <td><div style="font-size: 10px">{#wrote_text_of_image#}</div></td>
                                 
-                                <td><div style="font-size: 10px">Sollte der Text nicht erkennbar sein, neues Bild w&auml;hlen</div></td>
+                                <td><div style="font-size: 10px">{#unreadable_new_image#}</div></td>
                              </tr>
                               <tr>
                                 <td><input type="text" size="15" name="captcha_word" value="" /></td>
-                                <td><input type="submit" name="captcha_revoke" value="Anderes Bild bitte!" /></td>
+                                <td><input type="submit" name="captcha_revoke" value="{#new_image_please#}" /></td>
                               </tr>
                             </table>
                           </td>
                         </tr>
 			<tr>
-				<td class="formailer_options" colspan="2"><input type="submit" name="btn_send" value="Senden"><input name="Clear" type="reset" id="Clear" value="Zur&uuml;cksetzen"></td>
+				<td class="formailer_options" colspan="2"><input type="submit" name="btn_send" value="{#send#}"><input name="Clear" type="reset" id="Clear" value="{#undo#}"></td>
 			</tr>
 		</table>
 	</div>

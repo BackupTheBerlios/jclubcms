@@ -157,7 +157,7 @@ Source Location: /admin/lib/messageboxes.class.php<br /><br />
 
 <h3><a href="#class_details">Class Overview</a></h3>
 <pre></pre><br />
-<div class="description">Dem Konstruktor wird der Aufbau der Tabelle mit einem Array weitergegeben. Werte in diesem Array unbeding vorkommen muss ID</div><br /><br />
+<div class="description">Die Klasse MessageBoxes ist verantwortlich für das Verwalten von Nachrichten in der Datenbank.</div><br /><br />
 <h4>Author(s):</h4>
 <ul>
           <li>Simon Däster</li>
@@ -204,8 +204,8 @@ Source Location: /admin/lib/messageboxes.class.php<br /><br />
 <a name="class_details"></a>
 <h3>Class Details</h3>
 <div class="tags">
-[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a52">52</a>]<br />
-Dem Konstruktor wird der Aufbau der Tabelle mit einem Array weitergegeben. Werte in diesem Array unbeding vorkommen muss ID<br /><br /><p>und content. Weiter nueztliche Dine sind ref_ID, name, time, hp, mail. So koennen die Daten nach time geordenet werden  oder hp/mail verifiziert werden. Sie sind nicht absolut noetig, aber hilfreich. Damit diese richtig behandelt werden,  muessen sie mit den richtigen Array-keys uebermittelt werden. Natuerlich koennen weitere Daten angegeben werden,  die werden aber nicht besonders behandelt. Diese koennen mit nummerierten keys weitergegeben werden.</p><br /><br /><br />
+[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a71">71</a>]<br />
+Die Klasse MessageBoxes ist verantwortlich für das Verwalten von Nachrichten in der Datenbank.<br /><br /><p>Nachrichten können News, Gästebucheinträge, Nachrichten u.ä. sein.</p><p>Möglichkeiten der Klassen:  <ul><li>Nachrichten in die Datenbank eintragen</li><li>zu Nachrichten Kommentare schreiben</li><li>Nachrichten löschen</li><li>Nachrichten zurückgeben</li><li>überprüfen, ob einen Nachricht ein Kommentar einer anderen Nachricht ist.</li></ul>  Weiter verfügt die Klasse über eine Methode, die angegeben Einträge auf Standart-Werte und leere String  prüft. Dies ist nützlich, wenn ein Modul überprüfen will, ob keine  dieser Werte vorhanden sind.</p><p>Dem Konstruktor wird der Aufbau der Tabelle mit einem Array  weitergegeben. WerteIn diesem Array unbeding vorkommen muss  ID und content. Weiter nueztliche Dine sind ref_ID, name, time,  hp, mail. So koennen die Daten nach time geordenet werden  oder  hp/mail verifiziert werden. Sie sind nicht absolut noetig, aber  hilfreich. Damit diese richtig behandelt werden, muessen sie mit  den richtigen Array-keys uebermittelt werden. Natuerlich koennen  weitere Daten angegeben werden, die werden aber nicht besonders  behandelt. Diese koennen mit nummerierten keys weitergegeben werden.</p><br /><br /><br />
 <h4>Tags:</h4>
 <div class="tags">
 <table border="0" cellspacing="0" cellpadding="0">
@@ -219,7 +219,7 @@ Dem Konstruktor wird der Aufbau der Tabelle mit einem Array weitergegeben. Werte
     <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Formularcheck.html">Formularcheck</a> - Plausibilitätsüberprüfung von Formularen</td>
   </tr>
   <tr>
-    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Mysql.html">Mysql</a> - Für die Verbindung zur Mysql-DB</td>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Mysql.html">Mysql</a> - Zugriff auf Datenbank</td>
   </tr>
 </table>
 </div>
@@ -234,7 +234,7 @@ Dem Konstruktor wird der Aufbau der Tabelle mit einem Array weitergegeben. Werte
 
   <hr />
 	<a name="method__construct"></a>
-	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a97">97</a>]</span></h3>
+	<h3>constructor __construct <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a116">116</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -258,6 +258,9 @@ $tablestruct)</code>
   </tr>
   <tr>
     <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Formularcheck.html">Formularcheck</a> - Plausibilitätsüberprüfung von Formularen</td>
+  </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/CMSException.html">CMSException</a></td>
   </tr>
 </table>
 </div>
@@ -288,7 +291,7 @@ $tablestruct)</code>
   </div>
   <hr />
 	<a name="methodaddEntry"></a>
-	<h3>method addEntry <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a142">142</a>]</span></h3>
+	<h3>method addEntry <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a162">162</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -311,6 +314,9 @@ $tabledata)</code>
   <tr>
     <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Mysql.html">Mysql</a> - Für die Verbindung zur Mysql-DB</td>
   </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/CMSException.html">CMSException</a></td>
+  </tr>
 </table>
 </div>
 <br /><br />
@@ -330,7 +336,7 @@ $tabledata)</code>
   </div>
   <hr />
 	<a name="methodcommentEntry"></a>
-	<h3>method commentEntry <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a207">207</a>]</span></h3>
+	<h3>method commentEntry <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a228">228</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -353,6 +359,9 @@ $tabledata)</code>
   </tr>
   <tr>
     <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Mysql.html">Mysql</a> - Für die Verbindung zur Mysql-DB</td>
+  </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/CMSException.html">CMSException</a></td>
   </tr>
 </table>
 </div>
@@ -378,7 +387,7 @@ $tabledata)</code>
   </div>
   <hr />
 	<a name="methoddelEntry"></a>
-	<h3>method delEntry <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a476">476</a>]</span></h3>
+	<h3>method delEntry <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a501">501</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -397,6 +406,9 @@ $id)</code>
   </tr>
   <tr>
     <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Mysql.html">Mysql</a> - Für die Verbindung zur Mysql-DB</td>
+  </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/CMSException.html">CMSException</a></td>
   </tr>
 </table>
 </div>
@@ -417,7 +429,7 @@ $id)</code>
   </div>
   <hr />
 	<a name="methodeditEntry"></a>
-	<h3>method editEntry <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a273">273</a>]</span></h3>
+	<h3>method editEntry <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a295">295</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -437,6 +449,9 @@ $tablestddata)</code>
   </tr>
   <tr>
     <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Mysql.html">Mysql</a> - Für die Verbindung zur Mysql-DB</td>
+  </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/CMSException.html">CMSException</a></td>
   </tr>
 </table>
 </div>
@@ -462,7 +477,7 @@ $tablestddata)</code>
   </div>
   <hr />
 	<a name="methodformCheck"></a>
-	<h3>method formCheck <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a544">544</a>]</span></h3>
+	<h3>method formCheck <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a571">571</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -485,6 +500,9 @@ $stddata)</code>
   </tr>
   <tr>
     <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Formularcheck.html">Formularcheck</a> - Plausibilitätsüberprüfung von Formularen</td>
+  </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/CMSException.html">CMSException</a></td>
   </tr>
 </table>
 </div>
@@ -510,7 +528,7 @@ $stddata)</code>
   </div>
   <hr />
 	<a name="methodgetEntries"></a>
-	<h3>method getEntries <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a383">383</a>]</span></h3>
+	<h3>method getEntries <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a407">407</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -536,6 +554,9 @@ $timeformat = &quot;&quot;])</code>
   </tr>
   <tr>
     <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Mysql.html">Mysql</a> - Für die Verbindung zur Mysql-DB</td>
+  </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/CMSException.html">CMSException</a></td>
   </tr>
 </table>
 </div>
@@ -576,7 +597,7 @@ $timeformat = &quot;&quot;])</code>
   </div>
   <hr />
 	<a name="methodgetEntry"></a>
-	<h3>method getEntry <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a328">328</a>]</span></h3>
+	<h3>method getEntry <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a351">351</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -600,6 +621,9 @@ $comments = true])</code>
   </tr>
   <tr>
     <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Mysql.html">Mysql</a> - Für die Verbindung zur Mysql-DB</td>
+  </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/CMSException.html">CMSException</a></td>
   </tr>
 </table>
 </div>
@@ -630,7 +654,7 @@ $comments = true])</code>
   </div>
   <hr />
 	<a name="methodis_comment"></a>
-	<h3>method is_comment <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a511">511</a>]</span></h3>
+	<h3>method is_comment <span class="smalllinenumber">[line <a href="../__filesource/fsource_JClubCMS__adminlibmessageboxes.class.php.html#a537">537</a>]</span></h3>
 	<div class="function">
     <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code_border">
     <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
@@ -649,6 +673,9 @@ $id)</code>
   </tr>
   <tr>
     <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/Mysql.html">Mysql</a> - Für die Verbindung zur Mysql-DB</td>
+  </tr>
+  <tr>
+    <td><b>uses:</b>&nbsp;&nbsp;</td><td><a href="../JClubCMS/CMSException.html">CMSException</a></td>
   </tr>
 </table>
 </div>
@@ -672,7 +699,7 @@ $id)</code>
 
         <div class="credit">
 		    <hr />
-		    Documentation generated on Mon, 13 Apr 2009 23:00:08 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
+		    Documentation generated on Wed, 15 Apr 2009 13:31:38 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.1</a>
 	      </div>
       </td></tr></table>
     </td>

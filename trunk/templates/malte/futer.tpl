@@ -1,6 +1,7 @@
       <div id="content">
 		<div id="content_txt">
-		&copy; by JG J-Club Balsthal
+		{config_load file="textes.de.conf"}
+		{#copyright#}
 	</div>
 </div>
 </body>
