@@ -8,7 +8,7 @@
 	<!--[if IE]>
 	<style type="text/css">@import url(./{$TEMPLATESET_DIR}/style/ie_style.css);</style>
 	<![endif]-->
-    
+    {config_load file="textes.de.conf"}
   </head>
 <body>
 	<div id="main">
@@ -30,7 +30,7 @@
     </div>
 	<div id="footer">
 		<div class="footer_txt">
-			&copy; 2007 by JG J-Club Balsthal
+			{#copryight#}
 		</div>
 	</div>
      <div id="subnavigation">
@@ -52,6 +52,6 @@
     <!--Header Ende -->
     {include file="$file"|default:"main.tpl"}
     </div>
-	<!--Erstellt in {$generated_time}s-->
+	<!--{#created_in#} {$generated_time}s-->
   </body>
 </html>

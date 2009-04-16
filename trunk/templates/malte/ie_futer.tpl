@@ -1,6 +1,7 @@
-      <div id="content">
+{config_load file="textes.de.conf"}   
+<div id="content">
 		<div id="content_txt">
-		&copy; &nbsp; by &nbsp; JClub
+		{#copyright#}
 	</div>
 </div>
 </body>

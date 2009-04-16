@@ -2,7 +2,7 @@
 	  
 	  <div id="content">
 		<div id="content_txt">
-			<h2>Neuer Kommentar schreiben</h2>
+			<h2>{#wrote_new_comment#}</h2>
     <table width = 100% class="content_tab">
     </table>
     <table cellpadding="0" cellspacing="0" align="center" class="content_tab">
@@ -18,8 +18,8 @@
         <td class="content_tab_content2">
         <img src="{$TEMPLATESET_DIR}/style/icons/date.gif" /> {$gbook.gbook_time}<br />
         <img src="{$TEMPLATESET_DIR}/style/icons/user.gif" /> {$gbook.gbook_name}<br />
-        <a href="?mail&nav_id={$local_link}&entry_id={$gbook.gbook_email}"><img src="{$TEMPLATESET_DIR}/style/icons/email.gif" /> E-mail</a><br />
-        {if $gbook.gbook_hp neq ""}<a href="$gbook.gbook_hp"><img src="{$TEMPLATESET_DIR}/style/icons/house.gif" /> Website</a>{/if}
+        <a href="?mail&nav_id={$local_link}&entry_id={$gbook.gbook_email}"><img src="{$TEMPLATESET_DIR}/style/icons/email.gif" /> {#email#}</a><br />
+        {if $gbook.gbook_hp neq ""}<a href="$gbook.gbook_hp"><img src="{$TEMPLATESET_DIR}/style/icons/house.gif" /> {#website#}</a>{/if}
         </td>
       </tr>
       {* Innere Schlaufe für das Auslesen der Kommentare *}
@@ -31,8 +31,8 @@
         <td class="content_tab_content2">
           <img src="templates/style/icons/date.gif" /> {$comment.gbook_time}<br />
           <img src="templates/style/icons/user.gif" /> {$comment.gbook_name}<br />
-          <a href="?mail&nav_id={$local_link}&entry_id={$comment.gbook_email}"><img src="{$TEMPLATESET_DIR}/style/icons/email.gif" /> E-mail</a><br />
-          {if $comment.gbook_hp neq ""}<a href="http://{$comment.gbook_hp}"><img src="{$TEMPLATESET_DIR}/style/icons/house.gif" /> Website</a>{/if}
+          <a href="?mail&nav_id={$local_link}&entry_id={$comment.gbook_email}"><img src="{$TEMPLATESET_DIR}/style/icons/email.gif" /> {#email#}</a><br />
+          {if $comment.gbook_hp neq ""}<a href="http://{$comment.gbook_hp}"><img src="{$TEMPLATESET_DIR}/style/icons/house.gif" /> {#website#}</a>{/if}
        </td>
       </tr>
       {/foreach}
@@ -46,7 +46,7 @@
 	{if $dump_errors}
 	<table class="content_tab" align="center">
 		<tr>
-			<td class="formailer_header" style="background-color: #EC6442">{$error_title|default:"Einige Daten sind ung&uuml;ltig"}</td>
+			<td class="formailer_header" style="background-color: #EC6442">{$error_title|default:#error_invalid_data#}}</td>
 		</tr>
 		<tr>
 			<td class="formailer_txt" style="background-color: #ED4B23; color: #000000">{$error_content}</td>
@@ -57,7 +57,7 @@
       <input type="hidden" name="sessioncode" value="{$sessioncode}" />
       <table cellpadding="0" cellspacing="0" align="center" class="content_tab">
         <tr>
-          <td class="formailer_header" colspan="2">{$entry_title|default:#entry_titlet#}
+          <td class="formailer_header" colspan="2">{$entry_title|default:#entry_title#}
           </td>
         </tr>
         <tr>
@@ -74,25 +74,25 @@
             <table border="0">
               <tr>
                 <td rowspan="2"><img src="?nav_id={$captcha_link}&img={$captcha_img}" /></td>
-                <td><div style="font-size: 10px">Bitte den Text eingeben,<br /> der im Bild steht</div></td>
+                <td><div style="font-size: 10px">{#wrote_text_of_image#}</div></td>
                 
-                <td><div style="font-size: 10px">Sollte der Text nicht erkennbar sein, neues Bild w&auml;hlen</div></td>
+                <td><div style="font-size: 10px">{#unreadable_new_image#}/div></td>
               </tr>
               <tr>
                 <td><input type="text" size="15" name="captcha_word" value="{$content}" /></td>
-                <td><input type="submit" name="captcha_revoke" value="Anderes Bild bitte!" /></td>
+                <td><input type="submit" name="captcha_revoke" value="{#new_image_please#}" /></td>
               </tr>
             </table>
           </td>
         </tr>
         <tr>
-          <td class="formailer_options" colspan="2"><input type="submit" name="btn_send" value="Senden"><input name="Clear" type="reset" id="Clear" value="Zur&uuml;cksetzen"></td>
+          <td class="formailer_options" colspan="2"><input type="submit" name="btn_send" value="{#send#}"><input name="Clear" type="reset" id="Clear" value="{#undo#}"></td>
         </tr>
     </table>
     </form>
     <table cellpadding="0" cellspacing="0" align="center" class="content_tab">
      <tr>
-      <td class="formailer_header" colspan="2"><b>Smilie-Liste</b></td> 
+      <td class="formailer_header" colspan="2"><b>{#smilies#}</b></td> 
      </tr>
      <tr>
       <td class="formailer_txt">

@@ -85,8 +85,8 @@ define('THUMB_DIR', USER_DIR."graphics/gallery/thumbs/");
 define('THUMB_MAXHEIHGT', 150);
 define('THUMB_MAXWIDTH', 150);
 
-define(BACKGROUND_COLOR, '000000000');
-define(TEXT_COLOR, "050255070");
+define('BACKGROUND_COLOR', '000000000');
+define('TEXT_COLOR', "050255070");
 
 
 
